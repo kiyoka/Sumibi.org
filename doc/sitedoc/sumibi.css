@@ -1,0 +1,120 @@
+/* $Id: sumibi.css,v 1.1 2005/03/27 12:14:42 kiyoka Exp $ */
+
+body {
+	background-color: #ffe;
+}
+a:link    { color: #44f; }
+a:visited { color: #72f; }
+a:active  { color: #f33; }
+
+table tr.odd,table tr.dark {
+	background-color: #f0f0e0;
+	vertical-align: top;
+}
+
+table tr.even {
+	background-color: #f8f8e4;
+	vertical-align: top;
+}
+
+div.mirror {
+	background-color: #ddc;
+	text-align: right;
+	font-size: smaller;
+	font-family: helvetica, sans-serif;
+}
+div.copyright {
+	background-color: #ddc;
+	text-align: right;
+	font-size: smaller;
+	font-family: helvetica, sans-serif;
+}
+div.rcsid {
+	background-color: #ddc;
+	text-align: right;
+	font-size: smaller;
+	font-family: helvetica, sans-serif;
+}
+
+span.new {
+	font-family: helvetica, sans-serif;
+	font-weight: bold;
+	color: #d33;
+}
+span.updated {
+	font-family: helvetica, sans-serif;
+	font-weight: bold;
+	color: #3a5;
+}
+
+h1 {
+	font-family: helvetica, sans-serif;
+	font-size: 220%;
+	border-style: inset;
+	border-color: #000;
+	border-top-width:  0;
+	border-left-width: 0;
+	border-right-width:  0.15em;
+	border-bottom-width: 0.15em;
+}
+span.stitle{
+	font-size: 18pt;
+}
+span.h2small{
+	font-family: helvetica, sans-serif;
+	font-style: italic;
+	font-size: 12pt;
+}
+h2 {
+	background-color: #ddc;
+	color: #210;
+	border-style: inset;
+	border-color: #000;
+	border-top-width:    0;
+	border-left-width:   0;
+	border-right-width:  0.1em;
+	border-bottom-width: 0.1em;
+}
+h3 {
+	border-style: inset;
+	border-color: #999;
+	border-top-width:    0;
+	border-left-width:   0;
+	border-right-width:  0.1em;
+	border-bottom-width: 0.1em;
+}
+dd {
+        padding-top: 0.2em;
+        padding-bottom: 0.2em;
+}
+
+ol li {
+        padding-top: 0.2em;
+        padding-bottom: 0.2em;
+}
+ul li {
+        padding-top: 0.2em;
+        padding-bottom: 0.2em;
+	list-style-image : url( circle.png );
+}
+pre {
+	background-color: #fff;
+	padding: 0.3em;
+	border: 1px inset #885;
+	white-space: pre; /* Netscape 4.x needs it */
+}
+
+code {
+	margin-left:	3em;
+	margin-right:	3em;
+	color: 	black;
+	font-style:	normal;
+	font-weight:	normal;
+	padding: 	10px;
+	background-color:#f8f8ff;
+	border-color: 	#aaaaaa;
+	border-style: 	solid;
+	border-width: 1px;
+}
+
+/* EOF */
