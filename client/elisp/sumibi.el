@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el(auther: knak)
 ;;
-;;     $Date: 2005/02/15 14:45:21 $
+;;     $Date: 2005/02/20 09:11:15 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -112,7 +112,7 @@
   :group 'sumibi)
 
 (defcustom sumibi-server-encode 'euc-jp
-  "Sumibiサーバーと交換するときの文字エンコードを指定する。(euc-jp/sjis/utf-8)"
+  "Sumibiサーバーと交換するときの文字エンコードを指定する。(euc-jp/sjis/utf-8/iso-2022-jp)"
   :type  'string
   :group 'sumibi)
 
