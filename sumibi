@@ -3,7 +3,7 @@
 ;; "Sumibi" is a Ank kana kanji convert tool.
 ;;
 ;;   Copyright (C) 2002,2003,2004 Kiyoka Nishyama
-;;     $Date: 2004/12/25 07:55:20 $
+;;     $Date: 2004/12/26 14:17:24 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -171,6 +171,7 @@
 		   (id   (car x))
 		   (data (cdr x))
 		   (relative0 (cdr (assq 'relative0 data)))
+		   (okuri     (cdr (assq 'okuri     data)))
 		   (pre2  (assv id result-bigram-pre2))
 		   (pre1  (assv id result-bigram-pre1))
 		   (post1 (assv id result-bigram-post1))
@@ -199,7 +200,12 @@
 		      (list-ref sumibi-evaluate-balance 4)
 		      (if post2
 			  (cdr (assq 'relative2 (cdr post2)))
-			  0)))))
+			  0))))
+		   ;; 送りがながある単語の評価を落とす
+		   (total 
+		    (if (< 0 (string-length okuri))
+			(* total sumibi-evaluate-okurigana)
+			total)))
 
 	      (cons
 	       id
@@ -613,7 +619,11 @@
 
        (if (null? kouho-info)
 	   ;; 候補なしの場合ユーザー入力文字列をそのまま返す
-	   (cdr (assq 'orig tango-info))
+	   (let (
+		 (hiragana (cdr (assq 'hiragana tango-info)))
+		 (orig     (cdr (assq 'orig tango-info))))
+	     (or hiragana orig))
+
 	   ;; 一番評価値の高い候補を返す
 	   (let (
 		 (hiragana (cdr (assq 'hiragana tango-info)))
