@@ -1,11 +1,15 @@
+murakamiryuu , kinnyuu keizai no senmonka tachi ni kiku [ me-ru hen ] kaitousya ( keisaijyun ) . hensyuutyou kara . saikin , nikkei heikin kabuka ga ookiku ugoku kotoga arimasen . jiwajiwa to sukoshizutu sagatteiru you desuga , ookiku sagaru koto mo , medatte agaru kotomoarimasen . nazedesyouka .
+nihongo nyuuryoku henkan enjinn wo kaihatutyuu desu .
+jisyo wo tukuru niha kanarino jikan wo youshimasu . 
+Sumibi ha kantan na bunsyou wo surasura to kakeru koto wo mokuhyou toshiteimasu .
+kyouto giteisyo go no mokuhyou kyougi , 5 gatu ni jyunbi kaigou ten ondanka boushi kaigi .
+yuusei minneika , toshiake kara jimin to kyougi ten takenaka tantousyou .
 Internet jyou ni sonzaisuru musuu no dokyumento wo ko-pasu toshite riyoushi , jisyo wo sodatete tanoshimu shin kankaku no kanjihenkann enjinn no kaihatu wo mezashimasu .
 Sumibi ha toukeiteki apuro-chi wo tukatta ro-maji kanjihenkann enjinn desu .
 Opera shin ba-jyon no be-ta ban , koukai .
 sonoyouna gengo wo nyuuryoku suru tameno software wo input method to yobu .
 kana wo nyuuryoku shita ato ha , hituyou ni oujite kanji ni henkan shinakerebanaranai . 
-kyouto giteisyo go no mokuhyou kyougi , 5 gatu ni jyunbi kaigou ten ondanka boushi kaigi .
 kousei mae no gennkou wo motoni shiteori , katu kaki naoshita tokoro ga arunode , jissai ni keisai sareta mono toha kotonaru kasyo ga aru koto wo goryousyou kudasai .
-yuusei minneika , toshiake kara jimin to kyougi ten takenaka tantousyou .
 nennkin jimuhi 1000 okuen , rainendo mo hokenryou kara ryuuyou .
 cmmi ha tugi no youna kinou de install process wo kanri shimasu . konnna hito ni tukatte hoshii .
 mitui sumitomo nakaguro mizuho , furyousaiken hangen wo hantoshi maedaoshi tassei .
@@ -26,7 +30,6 @@ watashi no namae ha nakano desu .
 kana wo kanji ni henkan suru .
 ookina senkyo ga owarimashita . soshite meikaku na kekka ga demashita . tugi no jidai heto akiraka ni rekishi no haguruma ha mawatta to itte yoinodehanaidesyouka.
 futatu hanareta tango mo bigram te-buru ni hindo touroku suru .
-murakamiryuu , kinnyuu keizai no senmonka tachi ni kiku [ me-ru hen ] kaitousya ( keisai jyun ) . hensyutyou kara. saikin , nikkei heikin kabuka ga ookiku ugoku kotoga arimasen . jiwajiwa to sukoshizutu sagatteiru you desuga , ookiku sagaru koto mo , medatte agaru kotomoarimasen . nazedesyouka .
 henkan arugorizumu wo sakusei suru noha taihenn muzukashii desu . kokodeha kimono wo kiru . kokode hakimono wo kiru . nodo ga kawaku . jimen ga kawaku . saisoku sarenakereba kakou to shinai .
 ima demo kokkai niha seiji to kane no mondai ga takusan arimasu .
 MySQL no source code wo kaihen shite saihaifu suru baai de , henkou kasyo wo koukai shitemo kamawanainara GPL ban wo tukaeba yoi desu . 
