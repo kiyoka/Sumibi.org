@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el(auther: knak)
 ;;
-;;     $Date: 2005/01/26 16:05:12 $
+;;     $Date: 2005/01/27 14:57:54 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -52,9 +52,8 @@
 
 
 ;; ローマ字漢字変換時、対象とするローマ字を設定するための変数
-(defvar sumibi-skip-chars "a-zA-Z0-9 .,\\-+!\\[\\]")
+(defvar sumibi-skip-chars "a-zA-Z0-9 .,\\-+!\\[\\]?")
 (defvar sumibi-mode-map (make-sparse-keymap)         "漢字変換トグルマップ")
-
 (defvar sumibi-rK-trans-key "\C-j"
   "*漢字変換キーを設定する")
 
@@ -286,10 +285,10 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 
 ;; 全バッファで sumibi-mode を変更する
 (defun global-sumibi-mode (&optional arg)
-  "YC mode は ローマ字から直接漢字変換するための minor mode です。
-引数に正数を指定した場合は、YC mode を有効にします。
+  "Sumibi mode は ローマ字から直接漢字変換するための minor mode です。
+引数に正数を指定した場合は、Sumibi mode を有効にします。
 
-YC モードが有効になっている場合 \\<sumibi-mode-map>\\[sumibi-rK-trans] で
+Sumibi モードが有効になっている場合 \\<sumibi-mode-map>\\[sumibi-rK-trans] で
 point から行頭方向に同種の文字列が続く間を漢字変換します。
 
 同種の文字列とは以下のものを指します。
