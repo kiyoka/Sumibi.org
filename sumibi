@@ -3,7 +3,7 @@
 ;; "Sumibi" is a Ank kana kanji convert tool.
 ;;
 ;;   Copyright (C) 2002,2003,2004 Kiyoka Nishyama
-;;     $Date: 2004/12/16 14:58:39 $
+;;     $Date: 2004/12/18 15:01:53 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -160,11 +160,11 @@
 
 
 ;;
-;; 3つのNgramの結果から確率変数を求める
+;; 3つのNgramの結果から評価値を求める
 ;;
 (define (sumibi-compute-pacent result-word result-bigram result-skip-bigram)
-  (let (
-	(result
+  (let* (
+	 (result
 	 (map
 	  (lambda (x)
 	    (let* (
@@ -175,13 +175,19 @@
 		   (sk (assv id result-skip-bigram))
 		   (total
 		    (+
-		     relative0
-		     (if bi
-			 (cdr (assq 'relative1 (cdr bi)))
-			 0)
-		     (if sk
-			 (cdr (assq 'relative2 (cdr sk)))
-			 0))))
+		     (*
+		      (car sumibi-evaluate-balance)
+		      relative0)
+		     (*
+		      (cadr sumibi-evaluate-balance)
+		      (if bi
+			  (cdr (assq 'relative1 (cdr bi)))
+			  0))
+		     (*
+		      (caddr sumibi-evaluate-balance)
+		      (if sk
+			  (cdr (assq 'relative2 (cdr sk)))
+			  0)))))
 
 	      (cons
 	       id
@@ -194,14 +200,16 @@
 			   '((relative2 . 0)))
 		       `((total . ,total))))))
 
-	  result-word)))
+	  result-word))
 
-    (when sumibi-debug
-	  (begin
-	    (display "pacent:")
-	    (pretty-print result)
-	    (newline)))
-
+	 ;; 結果を、評価値の高い順にソートする
+	 (result
+	  (sort result
+		(lambda (x y)
+		  (>
+		   (cdr (assq 'total x))
+		   (cdr (assq 'total y)))))))
+    
     result))
 	
 
@@ -306,9 +314,11 @@
 	 (sum-query-string
 	  (string-append "SELECT SUM(freq_base) FROM bigram WHERE " where-exp-pre1))
 	 (_
-	  (sumibi-select-query query 
-			       sum-query-string
-			       "d"))
+	  (if (null? id-list-pre1)
+	      '((1))
+	      (sumibi-select-query query 
+				   sum-query-string
+				   "d")))
 	 (sum-str (number->string (caar _)))
 
 	 (bigram-query-string
@@ -344,9 +354,11 @@
 	 (sum-query-string
 	  (string-append "SELECT SUM(freq_base) FROM skip_bigram WHERE " where-exp-pre2))
 	 (_
-	  (sumibi-select-query query 
-			       sum-query-string
-			       "d"))
+	  (if (null? id-list-pre2)
+	      '((1))
+	      (sumibi-select-query query 
+				   sum-query-string
+				   "d")))
 	 (sum-str (number->string (caar _)))
 
 	 (skip-bigram-query-string
@@ -363,7 +375,7 @@
 		  (display (format "#search4# = ~s" skip-bigram-query-string)) (newline))))
 
 	 (result-skip-bigram
-	  (if (null? id-list-pre1)
+	  (if (null? id-list-pre2)
 	      '()
 	      (map
 	       (lambda (x)
@@ -419,14 +431,17 @@
 	      (list-ref rensa-bunsetu 2)))
 	      
 	;; 候補が存在するものについて実際に計算する
-	(sumibi-compute-candidate-pacent-sub rensa-bunsetu query))))
+	`(
+	  ,(car (list-ref rensa-bunsetu 2))
+	  ,(sumibi-compute-candidate-pacent-sub rensa-bunsetu query)))))
+
 
 
 ;;
-;; 変換する。
-;;  連鎖する単語の評価値を求め、一番評価値の高い候補に確定する
+;; 変換候補リストを作成する
+;;  連鎖する単語の評価値を求め、一番評価値の高い候補に並べる
 ;;
-(define (sumibi-decide-henkan kouho-list query)
+(define (sumibi-make-henkan-kouho kouho-list query)
   (let* (
 	 ;; ダミーの文節データ
 	 (dummy-bunsetu
@@ -466,8 +481,62 @@
 	    kouho-list-pre1
 	    kouho-list))))
 
+    (when sumibi-debug
+	  (begin
+	    (display "point-result:")
+	    (pretty-print point-result)
+	    (newline)))
+
+
     point-result))
 	     
+
+;;
+;; 変換する。
+;;  一番評価値の高い候補を結果として返す
+;;
+(define (sumibi-output-decided-sentence henkan-kouho-list query)
+  (map
+   (lambda (bunsetu)
+     (let (
+	   ;; 単語情報
+	   (tango-info (car  bunsetu))
+	   (kouho-info (cadr bunsetu)))
+
+       (when sumibi-debug
+	     (begin
+	       (display "#5#")
+	       (write tango-info)
+	       (newline)
+	       (display "#6#")
+	       (write kouho-info)
+	       (newline)))
+
+       (if (null? kouho-info)
+	   ;; 候補なしの場合ユーザー入力文字列をそのまま返す
+	   (cdr (assq 'orig tango-info))
+	   ;; 一番評価値の高い候補を返す
+	   (let (
+		 (hiragana (cdr (assq 'hiragana tango-info)))
+		 (orig     (cdr (assq 'orig tango-info)))
+		 (tango    (cdr (assq 'tango   (car kouho-info))))
+		 (okuri    (cdr (assq 'okuri   (car kouho-info))))
+		 (yomi     (cdr (assq 'yomi    (car kouho-info)))))
+
+	     (if hiragana
+		 (if (< 0 (string-length okuri))
+		     (let ((okuri-string
+			    (substring hiragana
+				       (string-length yomi)
+				       (+ (string-length yomi)
+					  (- (string-length hiragana) (string-length yomi))))))
+		       (string-append
+			tango
+			okuri-string))
+		     tango)
+		 orig)))))
+
+   henkan-kouho-list))
 
 	
 ;;
@@ -484,8 +553,8 @@
 		(write bunsetu-list)
 		(newline)))
 
-	 ;; 候補リストを求める。
-	 (kouho-list
+	 ;; 候補を検索する
+	 (lookup-list
 	  (map
 	   (lambda (x)
 	     (sumibi-lookup-candidate-bunsetu x query))
@@ -494,15 +563,23 @@
 	  (when sumibi-debug
 		(begin
 		  (display "#1#")
-		  (write kouho-list)
+		  (write lookup-list)
 		  (newline))))
 
-	 ;; 決定IDのリスト
-	 (decided-list (sumibi-decide-henkan kouho-list query)))
+	 ;; 評価値順の候補リストを求める
+	 (henkan-kouho-list (sumibi-make-henkan-kouho lookup-list query))
+	 
+	 ;; 候補から単語を決定して出力する。
+	 (decide-list (sumibi-output-decided-sentence henkan-kouho-list query)))
 
-    ;; 候補から単語を決定して出力する。
-    ;;(sumibi-output-decided-sentence decided-list query)))
-    #t))
+    (when sumibi-debug
+	  (begin
+	    (display "#9#")
+	    (display (string-join
+		      decide-list
+		      "/"))
+	    (newline)))))
+
     
 
 ;; Main -------------------------------------------------------
