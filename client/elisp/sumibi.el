@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/03/06 05:37:50 $
+;;     $Date: 2005/03/06 07:20:14 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -338,7 +338,7 @@
     ;; UNDO抑制開始
     (sumibi-disable-undo)
 
-    (delete-region b e))
+    (delete-region b e)
 
     ;; リスト初期化
     (setq sumibi-marker-list '())
