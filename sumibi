@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji convert tool.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;     $Date: 2005/01/18 15:23:44 $
+;;     $Date: 2005/01/31 14:51:59 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -84,6 +84,10 @@
 
 ;;
 ;; 文節の読みから、候補となる単語を列挙する。
+;;  引数:
+;;   str    ... 文節文字列
+;;   method ... メソッドを示すシンボル ( h k j など )
+;;
 ;;  戻り値: 
 ;;   (
 ;;    (
@@ -98,7 +102,7 @@
 ;;      (freq     . 頻度:回数)
 ;;   )
 ;;
-(define (sumibi-lookup-candidate-bunsetu str query)
+(define (sumibi-lookup-candidate-bunsetu str method query)
   (let* (
 	 (hiragana (sumibi-roman->kana str))
 	 (katakana (if hiragana
@@ -107,33 +111,57 @@
 	 (okuri-pattern-list (if hiragana
 				 (sumibi-make-okurigana-pattern-list hiragana)
 				 '()))
-	 (strict-query 
-	  (string-append
-	   (format "(SELECT id, tango, yomi, okuri, freq_base FROM word WHERE (yomi = ~s AND okuri = '')) "  str)
-	   (if hiragana
-	       (format "UNION (SELECT id, tango, yomi, okuri, freq_base FROM word WHERE (yomi = ~s AND okuri = '')) " hiragana)
-	       "")
-	   (if katakana
-	       (format "UNION (SELECT id, tango, yomi, okuri, freq_base FROM word WHERE (tango = ~s AND okuri = '')) " katakana)
-	       "")))
+	 (std-query      (format "SELECT id, tango, yomi, okuri, freq_base FROM word WHERE (yomi  = ~s AND okuri = '') "  str))
+	 (yomi-query     
+	  (if hiragana
+	      (format "SELECT id, tango, yomi, okuri, freq_base FROM word WHERE (yomi  = ~s AND okuri = '') "  hiragana)
+	      #f))
+	 (hiragana-query 
+	  (if hiragana
+	      (format "SELECT id, tango, yomi, okuri, freq_base FROM word WHERE (tango = ~s AND okuri = '') "  hiragana)
+	      #f))
+	 (katakana-query
+	  (if katakana
+	      (format "SELECT id, tango, yomi, okuri, freq_base FROM word WHERE (tango = ~s AND okuri = '') "  katakana)
+	      #f))
 
 	 ;; かなに直した読みでマッチングする。
 	 ;; または 元の英語綴のままで直接マッチングする
-	 (query-string
-	  (string-append
-	   strict-query
-	   (if (> 1 (length okuri-pattern-list))
-	       ""
-	       (string-append
-		"UNION (SELECT id, tango, yomi, word.okuri, word.freq_base FROM word RIGHT JOIN okuri USING ( okuri ) WHERE "
-		(string-join
-		 (map 
-		  (lambda (x)
-		    (format " (yomi = ~s AND okuri.okuri = ~s AND kana = ~s) " (car x) (cadr x) (caddr x)))
-		  okuri-pattern-list)
-		 " OR ")
-		" ) "))
-	   ))
+	 (okuri-query
+	  (if (> 1 (length okuri-pattern-list))
+	      #f
+	      (string-append
+	       "SELECT id, tango, yomi, word.okuri, word.freq_base FROM word RIGHT JOIN okuri USING ( okuri ) WHERE "
+	       (string-join
+		(map 
+		 (lambda (x)
+		   (format " (yomi = ~s AND okuri.okuri = ~s AND kana = ~s) " (car x) (cadr x) (caddr x)))
+		 okuri-pattern-list)
+		" OR "))))
+
+	 (query-string 
+	  (cond
+	   ;; ひらがな固定
+	   ((and (eq? method 'h) hiragana-query)
+	    hiragana-query
+	    )
+	   ;; カタナカ固定
+	   ((and (eq? method 'k) katakana-query)
+	    katakana-query
+	    )
+	   (else
+	    (string-append
+	     "       ( " std-query " ) "
+	     (if yomi-query
+		 (string-append " UNION ( " yomi-query " ) ")
+		 "")
+	     (if katakana-query
+		 (string-append " UNION ( " katakana-query " ) ")
+		 "")
+	     (if okuri-query
+		 (string-append " UNION ( " okuri-query " ) ")
+		 "")
+	     ))))
 
 	 (result
 	  (map
@@ -152,6 +180,7 @@
     (when sumibi-debug
 	  (begin
 	    (display (format "bunsetu = ~s" hiragana)) (newline)
+	    (display (format "method  = ~S" method)) (newline)
 	    (display (format "#search1# = ~s" query-string)) (newline)
 	    (display "result1:")
 	    (display result)
@@ -159,7 +188,15 @@
     `(
       (
        (orig     . ,str)
-       (hiragana . ,hiragana)
+       ,(cond
+	 ;; ひらがな固定
+	 ((and (eq? method 'h) hiragana-query)
+	  `(hiragana . ,hiragana))
+	 ;; カタナカ固定
+	 ((and (eq? method 'k) katakana-query)
+	  `(hiragana . ,katakana))
+	 (else
+	  `(hiragana . ,hiragana)))
        )
       ,result)))
 
@@ -692,7 +729,15 @@
 	 (lookup-list
 	  (map
 	   (lambda (x)
-	     (sumibi-lookup-candidate-bunsetu x query))
+	     (let* (
+		    (tango x)
+		    (match (rxmatch #/\.([a-zA-Z0-9]+)$/ x))
+		    (method (if match
+				(begin
+				  (set! tango (rxmatch-before match))
+				  (string->symbol (match 1)))
+				#f)))
+	       (sumibi-lookup-candidate-bunsetu tango method query)))
 	   bunsetu-list))
 	 (_
 	  (when sumibi-debug
@@ -740,9 +785,9 @@
 	 (query (dbi-make-query connection))
 	 )
 
-    ;; 外部との動作モードを決定する
+    ;; 外部とのI/Fの取りかたを選択する。
     (case sumibi-interface
-      ;; CGI モード
+      ;; CGI モード ( EUCコードで返す )
       ('cgi
        (cgi-main
 	(lambda (params)
@@ -751,7 +796,7 @@
 	    ,(cgi-header :content-type "text/plain"
 			 :charset      "EUC-JP")
 	    ,(write-to-string (sumibi-convert-sentence (cgi-get-parameter "string" params) query))))))
-      ;; 標準入力モード
+      ;; 標準入出力モード
       (else
        (let* (
 	      ;; 第一引数を捨てる
