@@ -97,7 +97,21 @@
 	 (p
 	  (img (@ (src "select3.png")))))
 
-	(li "候補選択キー操作一覧"))))
+	(li "候補選択キー操作一覧")
+	(table (@ (title "候補選択キー操作一覧"))
+	       (thead
+		(tr  (td "キー操作") (td "アクション")))
+	       (tbody
+		(tr   (td "C-m")   (td "候補選択確定"))
+		(tr   (td "C-g")   (td "候補選択キャンセル"))
+		(tr   (td "C-b")   (td "前方の文節に移動"))
+		(tr   (tr(td "C-f")   (td "後方の文節に移動")))
+		(tr   (tr(td "C-a")   (td "最初の文節に移動")))
+		(tr   (tr(td "C-j")   (td "次の候補に切りかえる")))
+		(tr   (tr(td "space") (td "次の候補に切りかえる")))
+		(tr   (tr(td "C-p")   (td "前の候補に切りかえる")))
+		(tr   (tr(td "C-n")   (td "次の候補に切りかえる"))))))))
+	 
 
      (*subsection
       "変換のコツ"
@@ -118,6 +132,6 @@
 
 
 ;; ページの出力
-(output "sumibi.el ( Emacs client )" (L:body))
+(output 'el (L:body))
 
 

@@ -10,6 +10,8 @@
      (a (@ (href "mailto:kiyoka@netfort.gr.jp"))
 	"email: Kiyoka Nishiyama"))
 
+    ,L:tab
+
     (*section
      "Sumibiとは？"
      "What is Sumibi?"
@@ -53,4 +55,4 @@
 
 
 ;; ページの出力
-(output "Sumibi" (L:body))
+(output 'sumibi (L:body))
