@@ -11,10 +11,13 @@
 
 N: Kiyoka Nishiyama
 E: kiyoka@netfort.gr.jp
-D: Author of original Sumibi server and sumibi.el
+D: Author of original Sumibi server
+D: Auther of original sumibi.el (Emacs client)
 W: http://www.netfort.gr.jp/~kiyoka/
 
 N: Kato Atsushi
 E: atusi@pure.ne.jp
+D: Auther of Sumibi.pm (Perl module)
+D: Auther of Sumibi Ajax Client (Ajax Client)
 D: Patch for 0.1.1
 W: http://www.pure.ne.jp/~learner/
