@@ -1,3 +1,8 @@
+Internet jyou ni aru musuu no dokyumento wo ko-pasu toshite riyoushi , jisyo wo sodatete tanoshimu shin kankaku no kanji henkan enjin no kaihatu wo mezashimasu .
+Sumibi ha toukeiteki apuro-chi wo tukatta ro-maji kanji henkan enjin desu .
+yuusei minneika , toshiake kara jimin to kyougi ten takenaka tantousyou .
+kyouto giteisyo go no mokuhyou kyougi , 5 gatu ni jyunbi kaigou ten ondanka boushi kaigi .
+nennkin jimuhi 1000 okuen , rainendo mo hokenryou kara ryuuyou .
 kana wo nyuuryoku shita ato ha , hituyou ni oujite kanji ni henkan shinakereba naranai . 
 sonoyouna gengo wo nyuuryoku suru tameno software wo input method to yobu .
 cmmi ha tugi no youna kinou de install process wo kanri shimasu . konnna hito ni tukatte hoshii .
