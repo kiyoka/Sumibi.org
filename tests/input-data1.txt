@@ -1,11 +1,12 @@
-kana wo nyuuryoku shita ato ha , hituyou ni oujite kanji ni henkan shinakereba naranai . 
-kyouto giteisyo go no mokuhyou kyougi , 5 gatu ni jyunbi kaigou ten ondanka boushi kaigi .
-Internet jyou ni aru musuu no dokyumento wo ko-pasu toshite riyoushi , jisyo wo sodatete tanoshimu shin kankaku no kanjihenkann enjinn no kaihatu wo mezashimasu .
+Internet jyou ni sonzaisuru musuu no dokyumento wo ko-pasu toshite riyoushi , jisyo wo sodatete tanoshimu shin kankaku no kanjihenkann enjinn no kaihatu wo mezashimasu .
 Sumibi ha toukeiteki apuro-chi wo tukatta ro-maji kanjihenkann enjinn desu .
+Opera shin ba-jyon no be-ta ban , koukai .
+sonoyouna gengo wo nyuuryoku suru tameno software wo input method to yobu .
+kana wo nyuuryoku shita ato ha , hituyou ni oujite kanji ni henkan shinakerebanaranai . 
+kyouto giteisyo go no mokuhyou kyougi , 5 gatu ni jyunbi kaigou ten ondanka boushi kaigi .
 kousei mae no gennkou wo motoni shiteori , katu kaki naoshita tokoro ga arunode , jissai ni keisai sareta mono toha kotonaru kasyo ga aru koto wo goryousyou kudasai .
 yuusei minneika , toshiake kara jimin to kyougi ten takenaka tantousyou .
 nennkin jimuhi 1000 okuen , rainendo mo hokenryou kara ryuuyou .
-sonoyouna gengo wo nyuuryoku suru tameno software wo input method to yobu .
 cmmi ha tugi no youna kinou de install process wo kanri shimasu . konnna hito ni tukatte hoshii .
 mitui sumitomo nakaguro mizuho , furyousaiken hangen wo hantoshi maedaoshi tassei .
 o-punso-su purogurama ga ganbatte sakusei shita sofutouxea gaaru .

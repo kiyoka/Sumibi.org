@@ -3,7 +3,7 @@
 ;; "Sumibi" is a Ank kana kanji convert tool.
 ;;
 ;;   Copyright (C) 2002,2003,2004 Kiyoka Nishyama
-;;     $Date: 2004/12/18 15:01:53 $
+;;     $Date: 2004/12/25 07:55:20 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -162,7 +162,7 @@
 ;;
 ;; 3つのNgramの結果から評価値を求める
 ;;
-(define (sumibi-compute-pacent result-word result-bigram result-skip-bigram)
+(define (sumibi-compute-pacent result-bigram-pre2 result-bigram-pre1 result-word result-bigram-post1 result-bigram-post2)
   (let* (
 	 (result
 	 (map
@@ -171,32 +171,50 @@
 		   (id   (car x))
 		   (data (cdr x))
 		   (relative0 (cdr (assq 'relative0 data)))
-		   (bi (assv id result-bigram))
-		   (sk (assv id result-skip-bigram))
+		   (pre2  (assv id result-bigram-pre2))
+		   (pre1  (assv id result-bigram-pre1))
+		   (post1 (assv id result-bigram-post1))
+		   (post2 (assv id result-bigram-post2))
 		   (total
 		    (+
 		     (*
-		      (car sumibi-evaluate-balance)
-		      relative0)
-		     (*
-		      (cadr sumibi-evaluate-balance)
-		      (if bi
-			  (cdr (assq 'relative1 (cdr bi)))
+		      (list-ref sumibi-evaluate-balance 0)
+		      (if pre2
+			  (cdr (assq 'relative-2 (cdr pre2)))
 			  0))
 		     (*
-		      (caddr sumibi-evaluate-balance)
-		      (if sk
-			  (cdr (assq 'relative2 (cdr sk)))
+		      (list-ref sumibi-evaluate-balance 1)
+		      (if pre1
+			  (cdr (assq 'relative-1 (cdr pre1)))
+			  0))
+		     (*
+		      (list-ref sumibi-evaluate-balance 2)
+		      relative0)
+		     (*
+		      (list-ref sumibi-evaluate-balance 3)
+		      (if post1
+			  (cdr (assq 'relative1 (cdr post1)))
+			  0))
+		     (*
+		      (list-ref sumibi-evaluate-balance 4)
+		      (if post2
+			  (cdr (assq 'relative2 (cdr post2)))
 			  0)))))
 
 	      (cons
 	       id
 	       (append data
-		       (if bi
-			   (cdr bi)
+		       (if pre1
+			   (cdr pre1)
+			   '((relative-1 . 0)))
+		       (if pre2
+			   (cdr pre2)
+			   '((relative-2 . 0)))
+		       (if post1
+			   (cdr post1)
 			   '((relative1 . 0)))
-		       (if sk
-			   (cdr sk)
+		       (if post2
+			   (cdr post2)
 			   '((relative2 . 0)))
 		       `((total . ,total))))))
 
@@ -214,16 +232,116 @@
 	
 
 ;;
-;; 3 連鎖した 単語候補から、全組合せの確率変数を求める
+;; 前後に2連鎖した単語候補から、全組合せの共起確率を求める
 ;;
 (define (sumibi-compute-candidate-pacent-sub rensa-bunsetu query)
+
+  ;; 総あたりのwhere句を生成する
+  (define (make-souatari-where-exp id-list1 id-list2)
+    (if (null? id-list2)
+	""
+	(string-join
+	 (map
+	  (lambda (x)
+	    (format " id_base = ~d  AND  id_m1 = ~d " (car x) (cadr x)))
+	  (cartesian-product-right
+	   (list
+	    id-list1
+	    id-list2)))
+	 " OR ")))
+
+
+  ;; 共起頻度を集計し％で結果を求める
+  (define (exec-bigram-search-pre id-list table-name where-exp key debug-message query)
+    (let* (
+	   (sum-query-string
+	    (string-append "SELECT SUM(freq_base) FROM " table-name " WHERE " where-exp))
+	   (_
+	    (if (null? id-list)
+		'((1))
+		(sumibi-select-query query 
+				     sum-query-string
+				     "d")))
+	   (sum-str (number->string (caar _)))
+	   
+	   (bigram-query-string
+	    (string-append
+	     "    SELECT id_base, SUM( " table-name ".freq_base ), " sum-str ", SUM( " table-name ".freq_base )/ " sum-str " ,word.tango, okuri "
+	     "      FROM " table-name " JOIN word ON id_base = word.id "
+	     "      WHERE " where-exp
+	     "    GROUP BY id_base ;"
+	     ))
+	   
+	   (_
+	    (when sumibi-debug
+		  (begin
+		    (display (format "~a = ~s" debug-message bigram-query-string)) (newline))))
+	   
+	   (result-bigram
+	    (if (null? id-list)
+		'()
+		(map
+		 (lambda (x)
+		   `(
+		     ,(list-ref x 0)
+		     (freq1     . ,(list-ref x 1))
+		     (sum1      . ,(list-ref x 2))
+		     (,(string->symbol key) . ,(list-ref x 3))
+		     (tango     . ,(list-ref x 4))
+		     (okuri     . ,(list-ref x 5))))
+		 (sumibi-select-query query 
+				      bigram-query-string
+				      "ddddss")))))))
+
+  ;; 共起頻度を集計し％で結果を求める
+  (define (exec-bigram-search-post id-list table-name where-exp key debug-message query)
+    (let* (
+	   (sum-query-string
+	    (string-append "SELECT SUM(freq_base) FROM " table-name " WHERE " where-exp))
+	   (_
+	    (if (null? id-list)
+		'((1))
+		(sumibi-select-query query 
+				     sum-query-string
+				     "d")))
+	   (sum-str (number->string (caar _)))
+	   
+	   (bigram-query-string
+	    (string-append
+	     "    SELECT id_m1, SUM( " table-name ".freq_base ), " sum-str ", SUM( " table-name ".freq_base )/ " sum-str " ,word.tango, okuri "
+	     "      FROM " table-name " JOIN word ON id_m1 = word.id "
+	     "      WHERE " where-exp
+	     "    GROUP BY id_base ;"
+	     ))
+	   
+	   (_
+	    (when sumibi-debug
+		  (begin
+		    (display (format "~a = ~s" debug-message bigram-query-string)) (newline))))
+	   
+	   (result-bigram
+	    (if (null? id-list)
+		'()
+		(map
+		 (lambda (x)
+		   `(
+		     ,(list-ref x 0)
+		     (freq1     . ,(list-ref x 1))
+		     (sum1      . ,(list-ref x 2))
+		     (,(string->symbol key) . ,(list-ref x 3))
+		     (tango     . ,(list-ref x 4))
+		     (okuri     . ,(list-ref x 5))))
+		 (sumibi-select-query query 
+				      bigram-query-string
+				      "ddddss")))))))
+
   (let* (
-	 ;; 注目位置の単語候補
-	 (id-list
+	 ;; 二つ前の単語の候補ID
+	 (id-list-pre2
 	  (map
 	   (lambda (x)
-	     (car  x))
-	   (cadr (list-ref rensa-bunsetu 2))))
+	     (car x))
+	   (cadr (list-ref rensa-bunsetu 0))))
 
 	 ;; 一つ前の単語の候補ID
 	 (id-list-pre1
@@ -232,14 +350,29 @@
 	     (car x))
 	   (cadr (list-ref rensa-bunsetu 1))))
 
-	 ;; 二つ前の単語の候補ID
-	 (id-list-pre2
+	 ;; 注目位置の単語候補
+	 (id-list
+	  (map
+	   (lambda (x)
+	     (car  x))
+	   (cadr (list-ref rensa-bunsetu 2))))
+
+	 ;; 一つ後ろの単語の候補ID
+	 (id-list-post1
 	  (map
 	   (lambda (x)
 	     (car x))
-	   (cadr (list-ref rensa-bunsetu 0))))
+	   (cadr (list-ref rensa-bunsetu 3))))
 
-	 ;; 三つの単語の候補IDを全て検索するWHERE句
+	 ;; 二つ後ろの単語の候補ID
+	 (id-list-post2
+	  (map
+	   (lambda (x)
+	     (car x))
+	   (cadr (list-ref rensa-bunsetu 4))))
+
+
+	 ;; 単語の候補IDを全て総あたり検索するWHERE句
 	 (where-exp
 	  (string-join
 	   (map
@@ -248,29 +381,17 @@
 	    id-list)
 	   " OR "))
 	 (where-exp-pre1
-	  (if (null? id-list-pre1)
-	      ""
-	      (string-join
-	       (map
-		(lambda (x)
-		  (format " id_base = ~d  AND  id_m1 = ~d " (car x) (cadr x)))
-		(cartesian-product-right
-		 (list
-		  id-list
-		  id-list-pre1)))
-	       " OR ")))
+	  (make-souatari-where-exp
+	   id-list id-list-pre1))
 	 (where-exp-pre2
-	  (if (null? id-list-pre2)
-	      ""
-	      (string-join
-	       (map
-		(lambda (x)
-		  (format " id_base = ~d  AND  id_m1 = ~d " (car x) (cadr x)))
-		(cartesian-product-right
-		 (list
-		  id-list
-		  id-list-pre2)))
-	       " OR ")))
+	  (make-souatari-where-exp
+	   id-list id-list-pre2))
+	 (where-exp-post1
+	  (make-souatari-where-exp
+	   id-list-post1 id-list))
+	 (where-exp-post2
+	  (make-souatari-where-exp
+	   id-list-post2 id-list))
 
 	 ;; 頻度総計を求める
 	 (sum-query-string
@@ -310,103 +431,42 @@
 				"dsssddd")))
 
 
-	 ;; 頻度総計を求める
-	 (sum-query-string
-	  (string-append "SELECT SUM(freq_base) FROM bigram WHERE " where-exp-pre1))
-	 (_
-	  (if (null? id-list-pre1)
-	      '((1))
-	      (sumibi-select-query query 
-				   sum-query-string
-				   "d")))
-	 (sum-str (number->string (caar _)))
+	 ;; 頻度総計を求める(pre1)
+	 (result-bigram-pre1
+	  (exec-bigram-search-pre id-list-pre1 "bigram" where-exp-pre1 "relative-1" "#search-pre1" query))
 
-	 (bigram-query-string
-	  (string-append
-	   "    SELECT id_base, SUM( bigram.freq_base ), " sum-str ", SUM( bigram.freq_base )/ " sum-str " ,word.tango, okuri "
-	   "      FROM bigram JOIN word ON id_base = word.id "
-	   "      WHERE " where-exp-pre1
-	   "    GROUP BY id_base ;"
-	   ))
+	 ;; 頻度総計を求める(pre2)
+	 (result-bigram-pre2
+	  (exec-bigram-search-pre id-list-pre2 "skip_bigram" where-exp-pre2 "relative-2" "#search-pre2" query))
 
-	 (_
-	  (when sumibi-debug
-		(begin
-		  (display (format "#search3# = ~s" bigram-query-string)) (newline))))
+	 ;; 頻度総計を求める(post1)
+	 (result-bigram-post1
+	  (exec-bigram-search-post id-list-post1 "bigram" where-exp-post1 "relative1" "#search-post1" query))
 
-	 (result-bigram
-	  (if (null? id-list-pre1)
-	      '()
-	      (map
-	       (lambda (x)
-		 `(
-		   ,(list-ref x 0)
-		   (freq1     . ,(list-ref x 1))
-		   (sum1      . ,(list-ref x 2))
-		   (relative1 . ,(list-ref x 3))
-		   (tango     . ,(list-ref x 4))
-		   (okuri     . ,(list-ref x 5))))
-	       (sumibi-select-query query 
-				    bigram-query-string
-				    "ddddss"))))
-
-	 ;; 頻度総計を求める
-	 (sum-query-string
-	  (string-append "SELECT SUM(freq_base) FROM skip_bigram WHERE " where-exp-pre2))
-	 (_
-	  (if (null? id-list-pre2)
-	      '((1))
-	      (sumibi-select-query query 
-				   sum-query-string
-				   "d")))
-	 (sum-str (number->string (caar _)))
-
-	 (skip-bigram-query-string
-	  (string-append
-	   "    SELECT id_base, SUM( skip_bigram.freq_base ), " sum-str ", SUM( skip_bigram.freq_base )/ " sum-str " ,word.tango, okuri "
-	   "      FROM skip_bigram JOIN word ON id_base = word.id "
-	   "      WHERE " where-exp-pre2
-	   "    GROUP BY id_base ;"
-	   ))
-
-	 (_
-	  (when sumibi-debug
-		(begin
-		  (display (format "#search4# = ~s" skip-bigram-query-string)) (newline))))
-
-	 (result-skip-bigram
-	  (if (null? id-list-pre2)
-	      '()
-	      (map
-	       (lambda (x)
-		 `(
-		   ,(list-ref x 0)
-		   (freq2     . ,(list-ref x 1))
-		   (sum2      . ,(list-ref x 2))
-		   (relative2 . ,(list-ref x 3))
-		   (tango     . ,(list-ref x 4))
-		   (okuri     . ,(list-ref x 5))))
-	       (sumibi-select-query query 
-				    skip-bigram-query-string
-				    "ddddss"))))
-	 )
+	 ;; 頻度総計を求める(post2)
+	 (result-bigram-post2
+	  (exec-bigram-search-post id-list-post2 "skip_bigram" where-exp-post2 "relative2" "#search-post2" query)))
 
     (when sumibi-debug
 	  (begin
-	    (display "result2:")   (pretty-print result-word)    (newline)
-	    (display "result3:")   (pretty-print result-bigram)  (newline)
-	    (display "result4:")   (pretty-print result-skip-bigram)  (newline)
+	    (display "result-pre2:")   (pretty-print result-bigram-pre2)   (newline)
+	    (display "result-pre1:")   (pretty-print result-bigram-pre1)   (newline)
+	    (display "result-base:")   (pretty-print result-word)          (newline)
+	    (display "result-post1:")  (pretty-print result-bigram-post1)  (newline)
+	    (display "result-post2:")  (pretty-print result-bigram-post2)  (newline)
 	    ))
 
     (sumibi-compute-pacent
+     result-bigram-pre2
+     result-bigram-pre1
      result-word
-     result-bigram
-     result-skip-bigram)))
+     result-bigram-post1
+     result-bigram-post2)))
 
 
 
 ;;
-;; 3 連鎖した 単語候補から、全組合せの確率変数を求める
+;; 前後に2連鎖した単語候補から、全組合せの共起確率を求める
 ;;
 (define (sumibi-compute-candidate-pacent rensa-bunsetu query)
   (when sumibi-debug
@@ -458,28 +518,62 @@
 	      ))
 	    ))
 
+	 ;; スライドデータ1:先頭の単語の前にゼロ個ダミーを結合したもの
+	 (kouho-list-pre0
+	  (append
+	   kouho-list
+	   (list dummy-bunsetu)
+	   (list dummy-bunsetu)
+	   (list dummy-bunsetu)
+	   (list dummy-bunsetu)))
+
 	 ;; スライドデータ1:先頭の単語の前に１つダミーを結合したもの
 	 (kouho-list-pre1
 	  (append
 	   (list dummy-bunsetu)
-	   kouho-list))
+	   kouho-list
+	   (list dummy-bunsetu)
+	   (list dummy-bunsetu)
+	   (list dummy-bunsetu)))
 
 	 ;; スライドデータ2:先頭の単語の前に２つダミーを結合したもの
 	 (kouho-list-pre2
 	  (append
 	   (list dummy-bunsetu)
 	   (list dummy-bunsetu)
+	   kouho-list
+	   (list dummy-bunsetu)
+	   (list dummy-bunsetu)))
+
+	 ;; スライドデータ2:先頭の単語の前に３つダミーを結合したもの
+	 (kouho-list-pre3
+	  (append
+	   (list dummy-bunsetu)
+	   (list dummy-bunsetu)
+	   (list dummy-bunsetu)
+	   kouho-list
+	   (list dummy-bunsetu)))
+
+	 ;; スライドデータ2:先頭の単語の前に４つダミーを結合したもの
+	 (kouho-list-pre4
+	  (append
+	   (list dummy-bunsetu)
+	   (list dummy-bunsetu)
+	   (list dummy-bunsetu)
+	   (list dummy-bunsetu)
 	   kouho-list))
 
-	 ;; bigram, skip-bigram を使って可能性のある連鎖頻度を全パターン求める
+	 ;; bigram, skip-bigram を使って可能性のある共起頻度を全パターン求める
 	 (point-result
 	  (map
 	   (lambda (rensa-bunsetu)
 	     (sumibi-compute-candidate-pacent rensa-bunsetu query))
 	   (zip
+	    kouho-list-pre4
+	    kouho-list-pre3
 	    kouho-list-pre2
 	    kouho-list-pre1
-	    kouho-list))))
+	    kouho-list-pre0))))
 
     (when sumibi-debug
 	  (begin
@@ -496,6 +590,11 @@
 ;;  一番評価値の高い候補を結果として返す
 ;;
 (define (sumibi-output-decided-sentence henkan-kouho-list query)
+
+  (define (sumibi-is-kigou str)
+    (not
+     (rxmatch #/^[a-zA-Z0-9]+$/ str)))
+
   (map
    (lambda (bunsetu)
      (let (
@@ -523,7 +622,7 @@
 		 (okuri    (cdr (assq 'okuri   (car kouho-info))))
 		 (yomi     (cdr (assq 'yomi    (car kouho-info)))))
 
-	     (if hiragana
+	     (if (or hiragana (sumibi-is-kigou orig))
 		 (if (< 0 (string-length okuri))
 		     (let ((okuri-string
 			    (substring hiragana
@@ -574,12 +673,13 @@
 
     (when sumibi-debug
 	  (begin
-	    (display "#9#")
-	    (display (string-join
-		      decide-list
-		      "/"))
-	    (newline)))))
-
+	    (let ((r 
+		   (string-join
+		    decide-list
+		    "/")))
+	      (display "#9#")
+	      (display r)
+	      (newline))))))
     
 
 ;; Main -------------------------------------------------------
