@@ -62,7 +62,7 @@ hosted by
 		 ,(cadr (assoc key page-alist)))
 		(author " Kiyoka Nishiyama ")
 		(hp " http://www.sumibi.org/ ")
-		(date " $Date: 2005/03/27 04:42:06 $ "))
+		(date " $Date: 2005/03/27 12:06:41 $ "))
 	  ,tree
 	  ))))
 
