@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/03/01 14:46:00 $
+;;     $Date: 2005/03/01 15:39:25 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -185,6 +185,7 @@
 (defvar sumibi-cand-n   nil)		; 文節候補番号
 (defvar sumibi-cand-n-backup   nil)	; 文節候補番号 ( 候補選択キャンセル用 )
 (defvar sumibi-cand-max nil)		; 文節候補数
+(defvar sumibi-last-fix "")		; 最後に確定した文字列
 (defvar sumibi-henkan-list nil)		; 文節リスト
 (defvar sumibi-repeat 0)		; 繰り返し回数
 (defvar sumibi-marker-list '())		; 文節開始、終了位置リスト: 次のような形式 ( ( 1 . 2 ) ( 5 . 7 ) ... ) 
@@ -306,6 +307,8 @@
     (let (
 	   (cnt 0))
 
+      (setq sumibi-last-fix "")
+
       ;; 変換したpointの保持
       (setq sumibi-fence-start (point-marker))
       (when select-mode (insert "|"))
@@ -326,6 +329,9 @@
 		(end         (point-marker))
 		(ov          (make-overlay start end)))
 
+	   ;; 確定文字列の作成
+	   (setq sumibi-last-fix (concat sumibi-last-fix insert-word))
+	   
 	   ;; 選択中の場所を装飾する。
 	   (overlay-put ov 'face 'normal)
 	   (when (and select-mode
@@ -440,9 +446,14 @@
       (sumibi-debug-print (format "3:%d\n" (marker-position sumibi-fence-end)))
     
       ;; カーソル直前が 全角で漢字以外 だったら候補選択モードに移行する。
+      ;; また、最後に確定した文字列と同じかどうかも確認する。
       (when (and
 	     (<= (marker-position sumibi-fence-start) (point))
-	     (<= (point) (marker-position sumibi-fence-end)))
+	     (<= (point) (marker-position sumibi-fence-end))
+	     (string-equal sumibi-last-fix (buffer-substring 
+					    (marker-position sumibi-fence-start)
+					    (marker-position sumibi-fence-end))))
+					    
 	;; 直前に変換したfenceの範囲に入っていたら、変換モードに移行する。
 	(let
 	    ((cnt 0))
