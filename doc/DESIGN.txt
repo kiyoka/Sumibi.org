@@ -57,16 +57,27 @@
     - '/' から後ろだけを変換する
     - ' ' を文節の区切り文字とする
     - '  ' スペース二個を一つの ' ' スペースとする
-  - 単語
+
+  - 単語の属性指定
     - -xxxx で xxxx を平仮名とみなす
-    - #xxxx で xxxx をカタカナとみなす
-    - $xxxx で xxxx を記号とみなす
-    - !xxxx で xxxx をank のままで無変換とみなす
+    - :xxxx で xxxx をカタカナとみなす
+    - +xxxx で xxxx を漢字仮名交じりとみなす
+    - !xxxx で xxxx をankのままで無変換とみなす
+    - @xxxx で xxxx を全角とみなす
+    - #xxxx で xxxx を数字とみなす
+
+  - 単語の属性指定(オブジェクト思考言語風)
+    - xxxx.h   で xxxx を平仮名とみなす
+    - xxxx.k   で xxxx をカタカナとみなす
+    - xxxx.j   で xxxx を漢字仮名交じりとみなす
+    - xxxx.l   で xxxx をankのままで無変換とみなす
+    - xxxx.L   で xxxx を全角とみなす
+    - xxxx.num で xxxx を数字とみなす
 
   - C-j で直前までのわかち書きされた ANK文字列を一括変換する。
 
   ※ 入力例
-      /watashi no namae ha nakano deha nai[C-j]
+      /watashi no namae ha nakano dehanai[C-j]
          ↓
       私の名前は中野ではない
 

@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el(auther: knak)
 ;;
-;;     $Date: 2005/01/25 14:46:35 $
+;;     $Date: 2005/01/26 16:05:12 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -33,7 +33,7 @@
   :group 'input-method
   :group 'Japanese)
 
-(defcustom sumibi-server-url "http://localhost/cgi-bin/public/sumibi.cgi"
+(defcustom sumibi-server-url "https://localhost/cgi-bin/public/sumibi.cgi"
   "SumibiサーバーのURLを指定する。"
   :type  'string
   :group 'sumibi)
@@ -45,13 +45,14 @@
 
 
 (defvar sumibi-mode nil             "漢字変換トグル変数")
+(defvar sumibi-mode-line-string     " Sumibi")
 (defvar sumibi-henkan-mode nil      "漢字変換モード変数")
 (or (assq 'sumibi-mode minor-mode-alist)
-    (setq minor-mode-alist (cons '(sumibi-mode " sumibi") minor-mode-alist)))
+    (setq minor-mode-alist (cons '(sumibi-mode sumibi-mode-line-string) minor-mode-alist)))
 
 
 ;; ローマ字漢字変換時、対象とするローマ字を設定するための変数
-(defvar sumibi-skip-chars "a-zA-Z0-9 .,\\-+!")
+(defvar sumibi-skip-chars "a-zA-Z0-9 .,\\-+!\\[\\]")
 (defvar sumibi-mode-map (make-sparse-keymap)         "漢字変換トグルマップ")
 
 (defvar sumibi-rK-trans-key "\C-j"
@@ -106,21 +107,27 @@
 ;; ローマ字で書かれた文章をSumibiサーバーを使って変換する
 ;;
 (defun sumibi-henkan-request (yomi)
-  (read
-   (shell-command-to-string
-    (concat
-     "wget"
-     " "
-     "--non-verbose"
-     " "
-     sumibi-server-url
-     " "
-     (concat "--post-data='string=" yomi "'")
-     " "
-     "--output-document=-"
-     " "
-     ))))
-   
+  (let (
+	(result '()))
+
+    (message "Requesting to sumibi server...")
+    (setq result
+	  (read
+	   (shell-command-to-string
+	    (concat
+	     "wget"
+	     " "
+	     "--non-verbose"
+	     " "
+	     sumibi-server-url
+	     " "
+	     (concat "--post-data='string=" yomi "'")
+	     " "
+	     "--output-document=-"
+	     " "
+	     ))))
+    result))
+
 
 ;; リージョンをローマ字漢字変換する関数
 ;; ひらがな漢字変換も可能
@@ -312,7 +319,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
   (sumibi-input-mode -1))
 (register-input-method
  "japanese-sumibi" "Japanese" 'sumibi-activate
- "あ" "Romaji -> Kanji&Kana"
+ "" "Romaji -> Kanji&Kana"
  nil)
 
 ;; input-method として登録する。
