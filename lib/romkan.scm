@@ -594,11 +594,11 @@
 
 ;; 平仮名->カタカナ 変換
 (define (romkan-hiragana->katakana str)
-  (string-tr str "あ-ん" "ア-ン"))
+  (string-tr str "あ-んぁぃぅぇぉゃゅょっー" "ア-ンァィゥェォャュョッー"))
 
 ;; カタカナ->平仮名 変換
 (define (romkan-katakana->hiragana str)
-  (string-tr str "ア-ン" "あ-ん"))
+  (string-tr str "ア-ンァィゥェォャュョッー" "あ-んぁぃぅぇぉゃゅょっー"))
 
 ;; カタカナの文字列かどうかを評価する
 (define (romkan-is-katakana str)
