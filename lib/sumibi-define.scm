@@ -6,4 +6,4 @@
 (define sumibi-evaluate-balance   '(0.2 0.3 0.1 0.3 0.2))
 
 ;; 送りがな付きの単語の評価値計数
-(define sumibi-evaluate-okurigana (/ 1.0 20.0))
+(define sumibi-evaluate-okurigana (/ 1.0 30.0))
