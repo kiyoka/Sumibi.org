@@ -41,6 +41,8 @@ thinkgnu:
 	find /home/park/sumibi_corpus/thinkgnu -name '*.TXT' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 postgres:
 	find /home/park/sumibi_corpus/postgres8.1 -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
+gauche-refj:
+	find /home/park/sumibi_corpus/gauche-refj -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 cnet:
 	find /home/park/sumibi_corpus/japan.cnet.com -name '*.htm' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 itmedia:
