@@ -5,7 +5,7 @@ SUMIYAKI=../sumiyaki
 
 
 h: 
-	$(SUMIBI) < input-data1.txt > result_list.log
+	$(SUMIBI) < input-data1.txt | grep "#9#" > result_list.log
 
 h1:
 	head -1 input-data1.txt | $(SUMIBI) > result.log
