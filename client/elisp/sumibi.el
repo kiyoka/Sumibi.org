@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/03/24 13:12:32 $
+;;     $Date: 2005/03/24 13:58:40 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -86,8 +86,8 @@
   :type  'string
   :group 'sumibi)
 
-(defcustom sumibi-wget "wget"
-  "wgetコマンドの絶対パスを設定する"
+(defcustom sumibi-curl "curl"
+  "curlコマンドの絶対パスを設定する"
   :type  'string
   :group 'sumibi)
 
@@ -171,15 +171,12 @@
 	(result 
 	 (shell-command-to-string
 	  (concat
-	   sumibi-wget
-	   " --non-verbose "
-	   (format "--timeout=%d " sumibi-server-timeout)
-	   "--tries=1 "
+	   sumibi-curl " --silent "
+	   (format "--connect-timeout %d " sumibi-server-timeout)
 	   sumibi-server-url " "
-	   (format "--post-data='string=%s&encode=%S' " yomi sumibi-server-encode)
+	   (format "--data 'string=%s&encode=%S' " yomi sumibi-server-encode)
 	   (when sumibi-server-cert-file
-	     (format "--sslcafile='%s' --sslcheckcert=1 " sumibi-server-cert-file))
-	   "--output-document=- "
+	     (format "--cacert '%s' " sumibi-server-cert-file))
 	   ))))
     (sumibi-debug-print (format "henkan-result:%S\n" result))
     (if (eq (string-to-char result) ?\( )
