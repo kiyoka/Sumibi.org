@@ -12,7 +12,7 @@
 ;; 送りがな付きの単語の評価値計数
 (define sumibi-evaluate-okurigana (/ 1.0 30.0))
 
-;; 外部との動作インターフェースモード
+;; 外部との動作インターフェースモード ( 'std  か 'cgi )
 (define sumibi-interface 'std)
 
 ;; ユーザー設定を読み込む
