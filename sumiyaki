@@ -3,7 +3,7 @@
 ;; "Sumiyaki" is a maintenance tool for Sumibi.
 ;;
 ;;   Copyright (C) 2002,2003,2004 Kiyoka Nishyama
-;;     $Date: 2004/12/18 09:30:43 $
+;;     $Date: 2005/01/07 16:47:42 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -135,7 +135,7 @@
 				  "INDEX index_tango_okuri ( tango(20), okuri ),"
 				  "INDEX index_tango_yomi ( tango(20), yomi(20) ),"
 				  "INDEX index_yomi_okuri ( yomi(20), okuri )"
-				  " ) TYPE=InnoDB ;" )))
+				  " )  ;" )))
 		(_ (sumibi-query query "INSERT INTO word VALUES (0, 'n', NULL, NULL, NULL, NULL, 1, 0);"))
 		(_ (sumibi-query query "INSERT INTO word VALUES (0, 'U', NULL, NULL, NULL, NULL, 1, 0);"))
 		(_ (sumibi-query query 
@@ -147,7 +147,7 @@
 				  "freq_user INT,"
 				  "INDEX index_base ( id_base ),"
 				  "PRIMARY KEY (id_m1, id_base)"
-				  " ) TYPE=InnoDB ;" )))
+				  " )  ;" )))
 		(_ (sumibi-query query 
 				 (string-append
 				  "CREATE TABLE IF NOT EXISTS skip_bigram ("
@@ -157,7 +157,7 @@
 				  "freq_user INT,"
 				  "INDEX index_base ( id_base ),"
 				  "PRIMARY KEY (id_m1, id_base)"
-				  " ) TYPE=InnoDB ;" )))
+				  " )  ;" )))
 		(_ (sumibi-query query 
 				 (string-append
 				  "CREATE TABLE IF NOT EXISTS okuri ("
@@ -165,14 +165,14 @@
 				  "kana  CHAR(255),"
 				  "freq_base INT,"
 				  "PRIMARY KEY ( okuri, kana )"
-				  " ) TYPE=InnoDB ;" )))
+				  " )  ;" )))
 		(_ (sumibi-query query 
 				 (string-append
 				  "CREATE TABLE IF NOT EXISTS file ("
 				  "filename VARCHAR(255) NOT NULL,"
 				  "date     DATETIME     NOT NULL,"
 				  "PRIMARY KEY (filename)"
-				  " ) TYPE=InnoDB ;" ))))))
+				  " )  ;" ))))))
 	((skk)
 	 (sumibi-skkdict-load input-port connection))
 	((load)

@@ -3,7 +3,7 @@
 ;; "Sumibi" is a Ank kana kanji convert tool.
 ;;
 ;;   Copyright (C) 2002,2003,2004 Kiyoka Nishyama
-;;     $Date: 2005/01/05 14:39:51 $
+;;     $Date: 2005/01/07 16:47:42 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -54,9 +54,11 @@
 			1))
 	   (okuri-kana-part (substring hiragana (+ i 1) (string-length hiragana))))
 
-       (display "kanji-part      = ") (display kanji-part) (newline)
-       (display "okuri-part      = ") (display okuri-part) (newline)
-       (display "okuri-kana-part = ") (display okuri-kana-part) (newline)
+       (when sumibi-debug
+	     (begin
+	       (display "kanji-part      = ") (display kanji-part) (newline)
+	       (display "okuri-part      = ") (display okuri-part) (newline)
+	       (display "okuri-kana-part = ") (display okuri-kana-part) (newline)))
        (set! okuri-pattern-list (cons
 				 `(,kanji-part
 				   ,okuri-part
@@ -492,12 +494,13 @@
 	   (cadr center))))
 
     (if (null? id-list)
-	(if sumibi-debug
-	    (begin
-	      (display "#kouho none#: ")
-	      (write (list-ref rensa-bunsetu 2))
-	      (newline)
-	      (list-ref rensa-bunsetu 2)))
+	(begin
+	  (if sumibi-debug
+	      (begin
+		(display "#kouho none#: ")
+		(write (list-ref rensa-bunsetu 2))
+		(newline)))
+	  (list-ref rensa-bunsetu 2))
 	
 	;; 候補が存在するものについて実際に計算する
 	`(
@@ -702,22 +705,8 @@
 	 ;; 変換候補リストを完成させて返す。
 	 (complete-henkan-kouho-list (sumibi-output-henkan-kouho-list henkan-kouho-list)))
 
-    (when sumibi-debug
-	  (begin
-	    (let ((r
-		   (string-join
-		    (map
-		     (lambda (x)
-		       (car x))
-		     complete-henkan-kouho-list)
-		    "/")))
-	      (display "#8#")
-	      (pretty-print complete-henkan-kouho-list)
-	      (newline)
-	      (display "#9#")
-	      (write r)
-	      (newline))))))
-
+    ;; 結果を返す
+    complete-henkan-kouho-list))
 
 
 ;; Main -------------------------------------------------------
@@ -766,7 +755,7 @@
 					  sumibi-sumibidb-password
 					  sumibi-sumibidb-name))
 	 (query (dbi-make-query connection))
-	 (reqstr ""))
+	 )
 
     ;; analyze command line by line
 
@@ -775,9 +764,18 @@
 	  (sumibi-convert-sentence (car (port->string-list input-port)) query)))
     (for-each 
      (lambda (x)
-       (display "#9#") (display x) (newline)
-       #?=x
-       (sumibi-convert-sentence x query))
+       (let* ( 
+	      (result (sumibi-convert-sentence x query))
+	      (r
+	       (string-join
+		(map
+		 (lambda (b)
+		   (car b))
+		 result)
+		"/")))
+	 #?=x
+	 (display "#9#") (display x) (newline)
+	 (display "#9#") (display r)   (newline)))
      (port->string-list input-port)))
   
   (exit 0))
