@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el(auther: knak)
 ;;
-;;     $Date: 2005/01/19 14:57:09 $
+;;     $Date: 2005/01/25 14:46:35 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -33,7 +33,7 @@
   :group 'input-method
   :group 'Japanese)
 
-(defcustom sumibi-server-url "http://localhost/cgi-bin/sumibi.cgi"
+(defcustom sumibi-server-url "http://localhost/cgi-bin/public/sumibi.cgi"
   "SumibiサーバーのURLを指定する。"
   :type  'string
   :group 'sumibi)
@@ -51,7 +51,7 @@
 
 
 ;; ローマ字漢字変換時、対象とするローマ字を設定するための変数
-(defvar sumibi-skip-chars "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ .,0123456789")
+(defvar sumibi-skip-chars "a-zA-Z0-9 .,\\-+!")
 (defvar sumibi-mode-map (make-sparse-keymap)         "漢字変換トグルマップ")
 
 (defvar sumibi-rK-trans-key "\C-j"
@@ -133,7 +133,7 @@
 	   (yomi (buffer-substring b e))
 	   (henkan-list (sumibi-henkan-request yomi)))
 
-      (sumibi-debug-print (format "henkan-inupt:%s\n"  yomi))
+      (sumibi-debug-print (format "henkan-input :%s\n"  yomi))
       (sumibi-debug-print (format "henkan-result:%S\n" henkan-list))
 
       (condition-case err
@@ -174,6 +174,8 @@
   (setq sumibi-henkan-separeter (if sumibi-use-fence " " ""))
   (when sumibi-henkan-list
     (delete-region b e)
+    (when (eq (preceding-char) ?/)
+      (delete-region b (- b 1)))
     (let (
 	  (henkan-list
 	   (mapcar
