@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/03/02 14:20:25 $
+;;     $Date: 2005/03/06 05:37:50 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -244,11 +244,10 @@
 ;; リージョンをローマ字漢字変換する関数
 (defun sumibi-henkan-region (b e)
   "指定された region を漢字変換する"
-  (interactive "*r")
   (sumibi-init)
   (when (/= b e)
     (let* (
-	   (yomi (buffer-substring b e))
+	   (yomi (buffer-substring-no-properties b e))
 	   (henkan-list (sumibi-henkan-request yomi)))
 
       (if henkan-list
@@ -292,14 +291,54 @@
 	    (t nil) )) ))
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; undo 情報の制御
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; undo buffer 退避用変数
+(defvar sumibi-buffer-undo-list nil)
+(make-variable-buffer-local 'sumibi-buffer-undo-list)
+(defvar sumibi-buffer-modified-p nil)
+(make-variable-buffer-local 'sumibi-buffer-modified-p)
 
-;; 現在の変換エリアの表示を行う関数
+(defvar sumibi-blink-cursor nil)
+(defvar sumibi-cursor-type nil)
+;; undo buffer を退避し、undo 情報の蓄積を停止する関数
+(defun sumibi-disable-undo ()
+  (when (not (eq buffer-undo-list t))
+    (setq sumibi-buffer-undo-list buffer-undo-list)
+    (setq sumibi-buffer-modified-p (buffer-modified-p))
+    (setq buffer-undo-list t)))
+
+;; 退避した undo buffer を復帰し、undo 情報の蓄積を再開する関数
+(defun sumibi-enable-undo ()
+  (when (not sumibi-buffer-modified-p) (set-buffer-modified-p nil))
+  (when sumibi-buffer-undo-list
+    (setq buffer-undo-list sumibi-buffer-undo-list)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 現在の変換エリアの表示を行う
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun sumibi-get-display-string ()
+  (let ((cnt 0))
+    (mapconcat
+     (lambda (x)
+       ;; 変換結果文字列を返す。
+       (let ((word (nth (nth cnt sumibi-cand-n) x)))
+	 (sumibi-debug-print (format "word:[%d] %s\n" cnt word))
+	 (setq cnt (+ 1 cnt))
+	 word))
+     sumibi-henkan-list
+     "")))
+
+
 (defun sumibi-display-function (b e select-mode)
   (setq sumibi-henkan-separeter (if sumibi-use-fence " " ""))
   (when sumibi-henkan-list
-    (delete-region b e)
-    (when (eq (preceding-char) ?/)
-      (delete-region b (- b 1)))
+    ;; UNDO抑制開始
+    (sumibi-disable-undo)
+
+    (delete-region b e))
 
     ;; リスト初期化
     (setq sumibi-marker-list '())
@@ -336,7 +375,7 @@
 	   (overlay-put ov 'face 'normal)
 	   (when (and select-mode
 		      (eq cnt sumibi-cand))
-	     (overlay-put ov 'face 'underline))
+	     (overlay-put ov 'face 'bold))
 
 	   (push `(,start . ,end) sumibi-marker-list)
 	   (sumibi-debug-print (format "insert:[%s] point:%d-%d\n" insert-word (marker-position start) (marker-position end))))
@@ -354,6 +393,8 @@
     (sumibi-debug-print (format "total-point:%d-%d\n"
 				(marker-position sumibi-fence-start)
 				(marker-position sumibi-fence-end)))
+    ;; UNDO再開
+    (sumibi-enable-undo)
     ))
 
 
@@ -475,13 +516,19 @@
       ;; カーソル直前が alphabet だったら
       (let ((end (point))
 	    (gap (sumibi-skip-chars-backward)))
-	(goto-char end)
 	(when (/= gap 0)
-	;; 意味のある入力が見つかったので変換する
-	  (when (sumibi-henkan-region (+ end gap) end)
-	    (progn
-	      (sumibi-display-function (+ end gap) end nil)
-	      (sumibi-select-kakutei))))))
+	  ;; 意味のある入力が見つかったので変換する
+	  (let (
+		(b (+ end gap))
+		(e end))
+	    (when (sumibi-henkan-region b e)
+	      (if (eq (char-before b) ?/)
+		  (setq b (- b 1)))
+	      (delete-region b e))
+	      (insert (sumibi-get-display-string))
+	      (setq e (point))
+	      (sumibi-display-function b e nil)
+	      (sumibi-select-kakutei)))))
 
      
      ((sumibi-kanji (preceding-char))
