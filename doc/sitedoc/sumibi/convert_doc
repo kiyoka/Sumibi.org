@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CSS="-html4.css.url:../jf_modify.css -html4.css.include:link -masterLocale:ja -locale:en,ja"
+CSS="-html4.css.url:../sumibi.css -html4.css.include:link -masterLocale:ja -locale:en,ja"
 
 target_dir=$1
 base=$2
