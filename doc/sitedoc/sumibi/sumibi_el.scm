@@ -33,6 +33,9 @@
 	(li "Debian GNU/Linux 3.0")
 	(li "Red Hat Enterprise 3.0")
 	(li "cygwin ( 最新版 )"))
+       (p "httpsプロキシーサーバーを使用するには以下の例のように環境変数を設定する必要があります。")
+       (program
+	"export http_proxy=http://your.proxy.server:8080/")
        (li ".emacsに次のコードを追加します。")
        (program
 	";; CAcert.crtの保存パス\n"
@@ -123,6 +126,7 @@
 	  (tr   (td "C-b")   (td "前方の文節に移動"))
 	  (tr   (td "C-f")   (td "後方の文節に移動"))
 	  (tr   (td "C-a")   (td "最初の文節に移動"))
+	  (tr   (td "C-e")   (td "最後の文節に移動"))
 	  (tr   (td "C-j")   (td "次の候補に切りかえる"))
 	  (tr   (td "space") (td "次の候補に切りかえる"))
 	  (tr   (td "C-n")   (td "次の候補に切りかえる"))
