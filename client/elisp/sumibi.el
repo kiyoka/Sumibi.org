@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/03/06 07:20:14 $
+;;     $Date: 2005/03/06 13:38:13 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -524,18 +524,15 @@
 	    (when (sumibi-henkan-region b e)
 	      (if (eq (char-before b) ?/)
 		  (setq b (- b 1)))
-	      (delete-region b e))
+	      (delete-region b e)
+	      (goto-char b)
 	      (insert (sumibi-get-display-string))
 	      (setq e (point))
 	      (sumibi-display-function b e nil)
-	      (sumibi-select-kakutei)))))
+	      (sumibi-select-kakutei))))))
 
      
      ((sumibi-kanji (preceding-char))
-    
-      (sumibi-debug-print (format "1:%d\n" (marker-position sumibi-fence-start)))
-      (sumibi-debug-print (format "2:%d\n" (point)))
-      (sumibi-debug-print (format "3:%d\n" (marker-position sumibi-fence-end)))
     
       ;; カーソル直前が 全角で漢字以外 だったら候補選択モードに移行する。
       ;; また、最後に確定した文字列と同じかどうかも確認する。
@@ -590,11 +587,33 @@
 
 ;; ローマ字漢字変換時、変換対象とするローマ字を読み飛ばす関数
 (defun sumibi-skip-chars-backward ()
-  (let ((pos (or (and (markerp (mark-marker)) (marker-position (mark-marker)))
-		 1)))
-    (skip-chars-backward sumibi-skip-chars (and (< pos (point)) pos))))
+  (let* (
+	 ;; マークされている位置を求める。
+	 (pos (or (and (markerp (mark-marker)) (marker-position (mark-marker)))
+		  1))
+	 ;; 条件にマッチする間、前方方向にスキップする。
+	 (result (save-excursion
+		   (skip-chars-backward sumibi-skip-chars (and (< pos (point)) pos))))
+	 (indent 0))
 
+    ;; インデント位置を求める。
+    (save-excursion
+      (goto-char (point-at-bol))
+      (setq indent (skip-chars-forward "\\t " (point-at-eol))))
 
+;;    (sumibi-debug-print (format "(point) = %d  result = %d  indent = %d\n" (point) result indent))
+;;    (sumibi-debug-print (format "a = %d b = %d \n" (+ (point) result) (+ (point-at-bol) indent)))
+
+    (if (< (+ (point) result)
+	   (+ (point-at-bol) indent))
+	;; インデント位置でストップする。
+	(- 
+	 (+ (point-at-bol) indent)
+	 (point))
+
+      result)))
+    
+  
 
 ;;;
 ;;; human interface
