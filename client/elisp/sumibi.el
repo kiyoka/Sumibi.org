@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el(auther: knak)
 ;;
-;;     $Date: 2005/02/08 15:27:24 $
+;;     $Date: 2005/02/08 16:29:13 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -28,39 +28,48 @@
 ;;; 最新版配布元: http://sourceforge.jp/projects/sumibi/
 
 ;;; 本バージョン 0.1.0 はアルファ版です。
-;;; 機能的に不十分である事を御了承ください。
+;;; 機能的に不十分なところがあります。御了承ください。
 ;;; 不明な点や改善したい点があればSumibiのメーリングリストに参加して
 ;;; フィードバックをおねがいします。
 ;;;
-;;; また、Sumibiに興味を持っていただいた方はEmacs Lisperかどうかにかかわらず
+;;; また、Sumibiに興味を持っていただいた方はプログラマかどうかにかかわらず
 ;;; 気軽にプロジェクトに参加してください。
 ;;;
 ;;; 本バージョンには次のような制限があります。
 ;;;   1. 本パッケージにはEmacs用のクライアントのみ含まれています。
 ;;;      1) sumibi.orgで動作しているSumibi serverに接続して利用します。 
 ;;;      2) SSL証明書を使用し、最低限のセキュリティーは確保しています。 
-;;;      3) Sumibi Server側もアルファ版ため、不安定であることを御了承ください。
+;;;         SSL証明書は CAcert( http://www.cacert.org/ )のものを使っています。
+;;;      3) Sumibi Server側もアルファ版のため、不安定であることを御了承ください。
 ;;;      4) Sumibi Server側のソースコードもGPLであり、sourceforge.jpのCVSで公開されています。
 ;;;
-;;;   2. 変換候補を選択する部分等、多くの機能が実装されていません。
+;;;   2. 変換候補を選択する部分をはじめ、多くの機能が実装されていません。
 ;;;
-;;;   3.バグが沢山あります。
+;;;   3.バグが沢山あります。^_^;
+;;;
 
 ;;; インストール
-;;;   1. sumibi.elをEmacsのロードパスにコピーします。
+;;;   1. Emacsにapel-10.6以上をインストールします。
 ;;;
-;;;   2. CAcert.crtを適当な場所にコピーします。 (例: /home/xxxx/emacs ディレクトリーなど )
+;;;   2. sumibi.elをEmacsのロードパスにコピーします。
 ;;;
-;;;   3. wget 1.9.1以上をSSL機能を有効にしてインストールします。
+;;;   3. CAcert.crtを適当な場所にコピーします。 (例: /home/xxxx/emacs ディレクトリーなど )
+;;;
+;;;   4. wget 1.9.1以上をSSL機能を有効にしてインストールします。
 ;;;      (cygwinに入っているwgetがそのまま利用できることを確認しています。)
 ;;;
-;;;   4. .emacsに次のコードを追加します。
+;;;   5. .emacsに次のコードを追加します。
 ;;;      (setq sumibi-debug t)		  ; デバッグフラグON
 ;;;      (setq sumibi-server-cert-file "/home/xxxx/emacs/CAcert.crt")  ; ファイルCAcert.crtの保存パス
 ;;;      (load "sumibi.el")
 ;;;      (global-sumibi-mode 1)
 ;;;
-;;;   5. Emacsを再起動し、Emacsのメニューバーに "Sumibi"の文字が表示されれば成功です。
+;;;      ※変数 sumibi-server-cert-file を nil にするとSSL証明書を利用しなくても通信できます。
+;;;        但し、この設定ではセキュリティーが弱くなりますので、ローカルでSumibi Serverを立てない限りは
+;;;        おすすめしません。
+;;;
+;;;   6. Emacsを再起動し、Emacsのメニューバーに "Sumibi"の文字が表示されれば成功です。
+;;;
 
 ;;; 使いかた
 ;;;   1. 基本的な使いかた
@@ -87,7 +96,6 @@
 ;;;     SKKに慣れている人でないと感覚がつかめないかもしれませんが、"変換精度"のような多くの複合語
 ;;;     は最初から辞書に含まれているので、"henkanseido"と言う具合に指定しましょう。
 ;;;
-;;;
 
 ;;; 
 ;;;
@@ -108,7 +116,7 @@
   :type  'string
   :group 'sumibi)
 
-(defcustom sumibi-server-cert-file "/home/kiyoka/emacs/CAcert.crt"
+(defcustom sumibi-server-cert-file "/home/xxxx/emacs/CAcert.crt"
   "Sumibiサーバーと通信する時のSSL証明書ファイルを指定する。"
   :type  'string
   :group 'sumibi)
