@@ -3,7 +3,7 @@
 ;; "Sumibi" is a Ank kana kanji convert tool.
 ;;
 ;;   Copyright (C) 2002,2003,2004 Kiyoka Nishyama
-;;     $Date: 2004/12/26 14:17:24 $
+;;     $Date: 2005/01/05 14:10:21 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -30,6 +30,7 @@
 (use srfi-13)
 (use dbi)
 (use gauche.collection)
+(use util.list)
 (require 'pretty-print)
 (require 'collect)
 (load "sumibi/skkdict-load.scm")
@@ -124,7 +125,7 @@
 		(string-join
 		 (map 
 		  (lambda (x)
-		    (format " (yomi = ~s AND word.okuri = ~s AND kana = ~s) " (car x) (cadr x) (caddr x)))
+		    (format " (yomi = ~s AND okuri.okuri = ~s AND kana = ~s) " (car x) (cadr x) (caddr x)))
 		  okuri-pattern-list)
 		 " OR ")
 		" ) "))
@@ -249,7 +250,7 @@
 	(string-join
 	 (map
 	  (lambda (x)
-	    (format " id_base = ~d  AND  id_m1 = ~d " (car x) (cadr x)))
+	    (format " (id_base = ~d  AND  id_m1 = ~d) " (car x) (cadr x)))
 	  (cartesian-product-right
 	   (list
 	    id-list1
@@ -480,13 +481,15 @@
 	  (display "#2#:")
 	  (pretty-print rensa-bunsetu)
 	  (newline)))
-  (let (
+  (let* (
 	;; 注目している単語の候補ID
-	(id-list
-	 (map
-	  (lambda (x)
-	    (car x))
-	  (cadr (list-ref rensa-bunsetu 2)))))
+	 (center(list-ref rensa-bunsetu 2))
+
+	 (id-list
+	  (map
+	   (lambda (x)
+	     (car x))
+	   (cadr center))))
 
     (if (null? id-list)
 	(if sumibi-debug
@@ -495,12 +498,11 @@
 	      (write (list-ref rensa-bunsetu 2))
 	      (newline)
 	      (list-ref rensa-bunsetu 2)))
-	      
+	
 	;; 候補が存在するものについて実際に計算する
 	`(
 	  ,(car (list-ref rensa-bunsetu 2))
 	  ,(sumibi-compute-candidate-pacent-sub rensa-bunsetu query)))))
-
 
 
 ;;
@@ -513,7 +515,7 @@
 	 (dummy-bunsetu
 	  '(
 	    (
-	     (orig     . "")
+	     (orig     . #f)
 	     (hiragana . #f))
 	    (
 	     (0 ;; id
@@ -579,7 +581,13 @@
 	    kouho-list-pre3
 	    kouho-list-pre2
 	    kouho-list-pre1
-	    kouho-list-pre0))))
+	    kouho-list-pre0)))
+
+	 ;; 前後 ２個づつの要素を削除する
+	 (point-result
+	  (take*
+	   (drop* point-result 2)
+	   (- (length point-result) 4))))
 
     (when sumibi-debug
 	  (begin
@@ -592,14 +600,44 @@
 	     
 
 ;;
-;; 変換する。
-;;  一番評価値の高い候補を結果として返す
+;; 完成した文節を返す。
 ;;
-(define (sumibi-output-decided-sentence henkan-kouho-list query)
+(define (sumibi-output-henkan-kouho tango-info kouho-info)
 
-  (define (sumibi-is-kigou str)
+  (define (is-kigou str)
     (not
      (rxmatch #/^[a-zA-Z0-9]+$/ str)))
+
+  ;; 一番評価値の高い順に完成した文節を返す
+  (map
+   (lambda (x)
+     (let (
+	   (hiragana (cdr (assq 'hiragana tango-info)))
+	   (orig     (cdr (assq 'orig tango-info)))
+	   (tango    (cdr (assq 'tango   x)))
+	   (okuri    (cdr (assq 'okuri   x)))
+	   (yomi     (cdr (assq 'yomi    x))))
+    
+       (if (or hiragana (is-kigou orig))
+	   (if (< 0 (string-length okuri))
+	       (let ((okuri-string
+		      (substring hiragana
+				 (string-length yomi)
+				 (+ (string-length yomi)
+				    (- (string-length hiragana) (string-length yomi))))))
+		 (string-append
+		  tango
+		  okuri-string))
+	       tango)
+	   orig)))
+   kouho-info))
+
+
+;;
+;; 変換する。
+;;  一番評価値の高い順に完成した文節を返す。
+;;
+(define (sumibi-output-henkan-kouho-list henkan-kouho-list)
 
   (map
    (lambda (bunsetu)
@@ -622,28 +660,11 @@
 	   (let (
 		 (hiragana (cdr (assq 'hiragana tango-info)))
 		 (orig     (cdr (assq 'orig tango-info))))
-	     (or hiragana orig))
+	     (list 
+	      (or hiragana orig)))
 
-	   ;; 一番評価値の高い候補を返す
-	   (let (
-		 (hiragana (cdr (assq 'hiragana tango-info)))
-		 (orig     (cdr (assq 'orig tango-info)))
-		 (tango    (cdr (assq 'tango   (car kouho-info))))
-		 (okuri    (cdr (assq 'okuri   (car kouho-info))))
-		 (yomi     (cdr (assq 'yomi    (car kouho-info)))))
-
-	     (if (or hiragana (sumibi-is-kigou orig))
-		 (if (< 0 (string-length okuri))
-		     (let ((okuri-string
-			    (substring hiragana
-				       (string-length yomi)
-				       (+ (string-length yomi)
-					  (- (string-length hiragana) (string-length yomi))))))
-		       (string-append
-			tango
-			okuri-string))
-		     tango)
-		 orig)))))
+	   ;; 候補値の高い順に完成した文節を返す。
+	   (sumibi-output-henkan-kouho tango-info kouho-info))))
 
    henkan-kouho-list))
 
@@ -678,19 +699,16 @@
 	 ;; 評価値順の候補リストを求める
 	 (henkan-kouho-list (sumibi-make-henkan-kouho lookup-list query))
 	 
-	 ;; 候補から単語を決定して出力する。
-	 (decide-list (sumibi-output-decided-sentence henkan-kouho-list query)))
+	 ;; 変換候補リストを完成させて返す。
+	 (complete-henkan-kouho-list (sumibi-output-henkan-kouho-list henkan-kouho-list)))
 
     (when sumibi-debug
 	  (begin
-	    (let ((r 
-		   (string-join
-		    decide-list
-		    "/")))
 	      (display "#9#")
-	      (display r)
-	      (newline))))))
-    
+	      (pretty-print complete-henkan-kouho-list)
+	      (newline)))))
+
+
 
 ;; Main -------------------------------------------------------
 (define (main args)
