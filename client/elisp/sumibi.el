@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el(auther: knak)
 ;;
-;;     $Date: 2005/01/15 14:59:29 $
+;;     $Date: 2005/01/18 15:23:57 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -33,7 +33,7 @@
   :group 'input-method
   :group 'Japanese)
 
-(defcustom sumibi-server-url "https://sumibi.dyndns.org/cgi-bin/sumibi.cgi"
+(defcustom sumibi-server-url "http://localhost/cgi-bin/sumibi.cgi"
   "SumibiサーバーのURLを指定する。"
   :type  'string
   :group 'sumibi)
@@ -44,17 +44,128 @@
   :group 'sumibi)
 
 
-(defvar sumibi-mode nil         "漢字変換トグル変数")
+(defvar sumibi-mode nil             "漢字変換トグル変数")
+(defvar sumibi-henkan-mode nil      "漢字変換モード変数")
 (or (assq 'sumibi-mode minor-mode-alist)
     (setq minor-mode-alist (cons '(sumibi-mode " sumibi") minor-mode-alist)))
 
 
 ;; ローマ字漢字変換時、対象とするローマ字を設定するための変数
-(defvar sumibi-skip-chars nil)
+(defvar sumibi-skip-chars "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ")
 (defvar sumibi-mode-map (make-sparse-keymap)         "漢字変換トグルマップ")
 
 (defvar sumibi-rK-trans-key "\C-j"
   "*漢字変換キーを設定する")
+
+;;; sumibi basic output
+(defvar sumibi-fence-yomi nil)		; 変換読み
+(defvar sumibi-fence-start nil)		; fence 始端位置
+(defvar sumibi-fence-end nil)		; fence 終端位置
+(defvar sumibi-henkan-separeter " ")	; fence mode separeter
+(defvar sumibi-henkan-buffer nil)	; 表示用バッファ
+(defvar sumibi-henkan-length nil)	; 表示用バッファ長
+(defvar sumibi-henkan-revpos nil)	; 文節始端位置
+(defvar sumibi-henkan-revlen nil)	; 文節長
+
+;;; sumibi basic local
+(defvar sumibi-mark nil)			; 文節番号
+(defvar sumibi-mark-list nil)		; 文節候補番号 
+(defvar sumibi-mark-max nil)		; 文節候補数
+(defvar sumibi-henkan-list nil)		; 文節リスト
+(defvar sumibi-kouho-list nil)		; 文節候補リスト
+(defvar sumibi-repeat 0)			; 繰り返し回数
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 表示系関数群
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defvar sumibi-use-fence t)
+(defvar sumibi-use-color nil)
+
+;;
+;; 初期化
+;;
+(defun sumibi-init ()
+  ;; 現状は初期化不要
+  t)
+
+
+;;
+;; ローマ字で書かれた文章をSumibiサーバーを使って変換する
+;;
+(defun sumibi-henkan-request (yomi)
+  (read
+   (shell-command-to-string
+    (concat
+     "wget"
+     " "
+     "--non-verbose"
+     " "
+     sumibi-server-url
+     " "
+     (concat "--post-data='string=" yomi "'")
+     " "
+     "--output-document=-"
+     " "
+     ))))
+   
+
+;; リージョンをローマ字漢字変換する関数
+;; ひらがな漢字変換も可能
+(defun sumibi-henkan-region (b e)
+  "指定された region を漢字変換する"
+  (interactive "*r")
+  (sumibi-init)
+  (when (/= b e)
+    (let* (
+	   (yomi (buffer-substring b e))
+	   (henkan-list (sumibi-henkan-request yomi)))
+
+      (condition-case err
+	  (progn
+	    (setq sumibi-henkan-mode t
+		  sumibi-fence-start (copy-marker b)
+		  sumibi-fence-end (copy-marker e)
+		  sumibi-fence-yomi yomi
+		  sumibi-henkan-list henkan-list
+		  sumibi-mark-list (make-list (length sumibi-henkan-list) 0)
+		  sumibi-mark-max (make-list (length sumibi-henkan-list) 0)
+		  sumibi-mark 0
+		  sumibi-bunsetsu-yomi-list nil))
+	(sumibi-trap-server-down
+	 (beep)
+	 (message (error-message-string err))
+	 (setq sumibi-henkan-mode nil)) ))))
+
+
+;; カーソル前の文字種を返却する関数
+(eval-and-compile
+  (if (>= emacs-major-version 20)
+      (progn
+	(defalias 'sumibi-char-charset (symbol-function 'char-charset))
+	(when (and (boundp 'byte-compile-depth)
+		   (not (fboundp 'char-category)))
+	  (defalias 'char-category nil))) ; for byte compiler
+    (defun sumibi-char-charset (ch)
+      (cond ((equal (char-category ch) "a") 'ascii)
+	    ((equal (char-category ch) "k") 'katakana-jisx0201)
+	    ((string-match "[SAHK]j" (char-category ch)) 'japanese-jisx0208)
+	    (t nil) )) ))
+
+
+
+;; 現在の変換エリアの表示を行う関数
+(defun sumibi-display-function (b e)
+  (setq sumibi-henkan-separeter (if sumibi-use-fence " " ""))
+  (when sumibi-henkan-list
+    (delete-region b e)
+    (let (
+	  (henkan-list
+	   (mapcar
+	    (lambda (x)
+	      (insert (car x)))
+	    sumibi-henkan-list))))))
+
 
 
 ;; ローマ字漢字変換関数
@@ -66,28 +177,11 @@
   (cond
 
    (sumibi-henkan-mode
-    ;; 変換中に呼ばれたら sumibi-henkan-mode-map に定義されている関数を呼ぶ
-    (setq sumibi-repeat (if (eq last-command 'sumibi-rK-trans) (1+ sumibi-repeat) 0))
-    (funcall (lookup-key sumibi-henkan-mode-map sumibi-rK-trans-key))
-    (if (and (not sumibi-select-mode) (>= sumibi-repeat sumibi-select-count))
-	(sumibi-select)
-      (sumibi-post-command-function)))
-
-   ((or (eq last-command 'sumibi-kakutei)
-	(eq last-command 'sumibi-cancel))	; reconversion after sumibi-cancel
-    ;; 確定直後に呼ばれたら再変換
-    (delete-region sumibi-fence-start sumibi-fence-end)
-    (insert sumibi-fence-yomi)
-    (set-marker sumibi-fence-end (point))
-    (sumibi-henkan-region sumibi-fence-start sumibi-fence-end))
-
+    ;; 変換中に呼ばれたら 次の候補を選択する
+    )
    (t
     ;; 上記以外で呼ばれたら新規変換
-    (setq sumibi-repeat 0)
     (cond
-
-     ((eq ?\) (preceding-char))
-      (call-interactively 'eval-print-last-sexp))
 
      ((eq (sumibi-char-charset (preceding-char)) 'ascii)
       ;; カーソル直前が alphabet だったら
@@ -98,19 +192,36 @@
 	  (setq sumibi-fence-yomi (buffer-substring (+ end gap) end))
 	  (if (not (string= sumibi-fence-yomi ""))
 	      (setq sumibi-henkan-mode t))
-	  (sumibi-henkan-region (+ end gap) end))))
-
+	  (sumibi-henkan-region (+ end gap) end))
+	(sumibi-display-function (+ end gap) end)
+	(setq sumibi-henkan-mode nil)))
+	
      ((sumibi-nkanji (preceding-char))
       ;; カーソル直前が 全角で漢字以外 だったら
-      (let ((end (point))
-	    (start (let* ((pos (or (and (mark-marker)
-					(marker-position (mark-marker))) 1))
-			  (mark-check (>= pos (point))))
-		     (while (and (or mark-check (< pos (point)))
-				 (sumibi-nkanji (preceding-char)))
-		       (backward-char))
-		     (point))))
-	(sumibi-henkan-region start end) ))))))
+      )))))
+
+;      (let ((end (point))
+;	    (start (let* ((pos (or (and (mark-marker)
+;					(marker-position (mark-marker))) 1))
+;			  (mark-check (>= pos (point))))
+;		     (while (and (or mark-check (< pos (point)))
+;				 (sumibi-nkanji (preceding-char)))
+;		       (backward-char))
+;		     (point))))
+;	(sumibi-henkan-region start end) ))))))
+
+
+;; 全角で漢字以外の判定関数
+(defun sumibi-nkanji (ch)
+  (and (eq (sumibi-char-charset ch) 'japanese-jisx0208)
+       (not (string-match "[亜-瑤]" (char-to-string ch)))))
+
+;; ローマ字漢字変換時、変換対象とするローマ字を読み飛ばす関数
+(defun sumibi-skip-chars-backward ()
+  (let ((pos (or (and (markerp (mark-marker)) (marker-position (mark-marker)))
+		 1)))
+    (skip-chars-backward sumibi-skip-chars (and (< pos (point)) pos))))
+
 
 
 ;;;
@@ -137,10 +248,10 @@
 
 ;; buffer 毎に sumibi-mode を変更する
 (defun sumibi-mode (&optional arg)
-  "YC mode は ローマ字から直接漢字変換するための minor mode です。
-引数に正数を指定した場合は、YC mode を有効にします。
+  "Sumibi mode は ローマ字から直接漢字変換するための minor mode です。
+引数に正数を指定した場合は、Sumibi mode を有効にします。
 
-YC モードが有効になっている場合 \\<sumibi-mode-map>\\[sumibi-rK-trans] で
+Sumibi モードが有効になっている場合 \\<sumibi-mode-map>\\[sumibi-rK-trans] で
 point から行頭方向に同種の文字列が続く間を漢字変換します。
 
 同種の文字列とは以下のものを指します。
