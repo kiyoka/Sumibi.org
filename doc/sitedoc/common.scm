@@ -35,8 +35,8 @@ hosted by
      (doc (@ (xml:lang "ja"))
 	  (head (title ,title)
 		(author " Kiyoka Nishiyama ")
-		(hp " http://sumibi.org/ ")
-		(date " $Date: 2005/03/23 16:08:37 $ "))
+		(hp " http://www.sumibi.org/ ")
+		(date " $Date: 2005/03/24 14:51:34 $ "))
 	  ,tree
 	   ))))
 

@@ -18,8 +18,12 @@
        (li "Emacsにapel-10.6以上をインストールします。")
        (li "sumibi.elをEmacsのロードパスにコピーします。")
        (li "CAcert.crtを適当な場所にコピーします。 (例: /home/xxxx/emacs ディレクトリーなど )")
-       (li "wget 1.9.1以上をSSL機能を有効にしてビルドし、インストールします。")
-       (p "(cygwinに入っているwgetがそのまま利用できることを確認しています。)")
+       (li "curl 7.9.5以上をSSL機能を有効にしてビルドし、インストールします。")
+       (p "以下のディストリビューションでは curlが標準でサポートされていることを確認しました。")
+       (ul
+	(li "Debian GNU/Linux 3.0")
+	(li "Red Hat Enterprise 3.0")
+	(li "cygwin ( 最新版 )"))
        (li ".emacsに次のコードを追加します。")
        (program
 	";; CAcert.crtの保存パス\n"
@@ -30,7 +34,7 @@
 	"※変数 sumibi-server-cert-file を nil にするとSSL証明書を利用しなくても通信できます。"
 	"但し、この設定ではSumibi Serverとの通信の安全性が下がりますので、"
 	"sumibi.orgで提供しているSumibi Serverを利用する場合は、証明書の使用をおすすめします。")
-       (li "Emacsを再起動し、Emacsのメニューバーに \"Sumibi\"の文字が表示されれば成功です。"))))
+       (li "Emacsを再起動し、Emacsのモードラインに \"Sumibi\"の文字が表示されれば成功です。"))))
 
     (*section 
      "キー操作"
