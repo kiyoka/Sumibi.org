@@ -1,12 +1,16 @@
-Sumibi ha kantan na bunsyou wo surasura to kakeru koto wo mokuhyou toshiteimasu .
-kousei mae no gennkou wo motoni shiteori , katu kaki naoshita tokoro ga aru node , jissai ni keisai sareta mono toha kotonaru kasyo ga aru koto wo goryousyou kudasai .
-murakamiryuu , kinnyuu keizai no senmonka tachi ni kiku [ me-ru hen ] kaitousya ( keisaijyun ) . hensyuutyou kara . saikin , nikkei heikin kabuka ga ookiku ugoku kotoga arimasen . jiwajiwa to sukoshizutu sagatteiru you desuga , ookiku sagaru koto mo , medatte agaru kotomoarimasen . nazedesyouka .
-nihongo nyuuryoku henkan enjinn wo kaihatutyuu desu .
-jisyo wo tukuru niha kanarino jikan wo youshimasu . 
-kyouto giteisyo go no mokuhyou kyougi , 5 gatu ni jyunbi kaigou ten ondanka boushi kaigi .
-yuusei minneika , toshiake kara jimin to kyougi ten takenaka tantousyou .
-Internet jyou ni sonzaisuru musuu no dokyumento wo ko-pasu toshite riyoushi , jisyo wo sodatete tanoshimu shin kankaku no kanjihenkann enjinn no kaihatu wo mezashimasu .
+tango henkan ha [ watashi.h ] wo [ watashi ] ni henkan suru toiuyouna , hitotu no tango nomi wo henkan suru houshiki dearu . 
+emacs no version ha ika no toori desu .
+kisya no kisya ga kisya de kisya suru .
 Sumibi ha toukeiteki apuro-chi wo tukatta ro-maji kanjihenkann enjinn desu .
+Sumibi ha kantan na bunsyou wo surasura to kakeru koto wo mokuhyou to shiteimasu .
+Linux kernel no konpairu ha dare demo kantann ni dekiru wake deha arimasenn .
+kousei mae no gennkou wo motoni shiteori , katu kaki naoshita tokoro ga aru node , jissai ni keisai sareta mono toha kotonaru kasyo ga aru koto wo goryousyou kudasai .
+yuusei minneika , toshiake kara jimin to kyougi ten takenaka tantousyou .
+jisyo wo tukuru niha kanarino jikan wo youshimasu . 
+nihongo nyuuryoku henkan enjinn wo kaihatutyuu desu .
+murakamiryuu , kinnyuu keizai no senmonka tachi ni kiku [ me-ru hen ] kaitousya ( keisaijyun ) . hensyuutyou kara . saikin , nikkei heikin kabuka ga ookiku ugoku kotoga arimasen . jiwajiwa to sukoshizutu sagatteiru you desuga , ookiku sagaru koto mo , medatte agaru kotomoarimasen . nazedesyouka .
+kyouto giteisyo go no mokuhyou kyougi , 5 gatu ni jyunbi kaigou ten ondanka boushi kaigi .
+Internet jyou ni sonzaisuru musuu no dokyumento wo ko-pasu toshite riyoushi , jisyo wo sodatete tanoshimu shin kankaku no kanjihenkann enjinn no kaihatu wo mezashimasu .
 Opera shin ba-jyon no be-ta ban , koukai .
 sonoyouna gengo wo nyuuryoku suru tameno software wo input method to yobu .
 kana wo nyuuryoku shita ato ha , hituyou ni oujite kanji ni henkan shinakerebanaranai . 
@@ -20,8 +24,6 @@ shin riri-su deha eigo document wo fukumemashita .
 senmonka tachini kiku zadankai deno en'yasu to kinnyuu fuan . 
 kana wo kanji ni henkan surutameno houhou toshiteha , tango henkanhoushiki ya tannbunsetu henkanhoushiki , rennbunnsetu hennkannhoushiki nadono bunnrui gaaru . 
 kono dokyumento ha , UNIX USER 2004 5 gatugou ni keisai sareta tokusyuu [ saiteki na nihongo nyuuryoku kankyou wo hakkutu seyo ] wo  hensyuubu no kyoka wo ete HTML ka shitamonodesu .
-emacs no version ha ika no toori desu .
-Linux kernel no konpairu ha dare demo kantann ni dekiru wake deha arimasenn .
 saiteki na nihongo nyuuryoku wo hakkutu seyo .
 murakamiryuu ga hakkou shiteiru japan mail media wo JMM to iu .
 Gauche reference manyuaru syujyu no risuto shori ru-chin . iretate no o cha . 
@@ -39,7 +41,6 @@ gyoumu application de RDBMS ni youkyuu sareru youken ha samazama desu .
 tatoeba transaction ga jyuuryou na youken nara , houfu na transaction kinou wo motu RDBMS ga saiteki kamo shiremasen . 
 RDBMS sentei ni kansuru porishi- . mokuteki wo tassei dekiruka no mikiwame ga jyuuyou .
 anthy no tokutyou ha security ni taishite hairyo shiteiru koto , keizokuteki ni mentenansu sareteiru koto dearu . anthy ha yu-za- kengen de dousa shi , taninn ni kojinjisyo ya gakusyuurireki wo katte ni nusumi mirareru koto ha nai . 
-tango henkan ha [ watashi ] wo [ watashi ] ni henkan suru toiuyouna , hitotu no tango nomi wo henkan suru houshiki dearu . 
 sekai niha , mojisuu ga oosugite ki-bo-do kara tyokusetu nyuuryoku dekinai gengo ga ikutuka aru . mochiron , nihongo mo sono naka no hitotu da . 
 inagaki gorou to katori shingo ha SMAP no member desu .
 niwa niha 2 wa niwatori ga iru . boku no namae ha nishiyama desu .

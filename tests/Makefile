@@ -39,6 +39,8 @@ uu:
 	find /home/park/sumibi_corpus/unixuser -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 thinkgnu:
 	find /home/park/sumibi_corpus/thinkgnu -name '*.TXT' -exec $(SUMIYAKI) -l {} \; > ~/park/log
+postgres:
+	find /home/park/sumibi_corpus/postgres8.1 -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 cnet:
 	find /home/park/sumibi_corpus/japan.cnet.com -name '*.htm' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 itmedia:
