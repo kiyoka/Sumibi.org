@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji convert tool.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;     $Date: 2005/02/01 14:17:02 $
+;;     $Date: 2005/02/20 09:11:15 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -802,11 +802,18 @@
 	       (cgi-output-character-encoding "SJIS")
 	       (cgi-header :content-type "text/plain"
 			   :charset      "Shift-JIS"))
-	      (else
+	      ((eq? 'sjis   (string->symbol (cgi-get-parameter "encode" params)))
 	       (list
 		(cgi-output-character-encoding "utf-8")
 		(cgi-header :content-type "text/plain"
-			    :charset      "utf-8"))))
+			    :charset      "utf-8")))
+	      (else
+	       (list
+		(cgi-output-character-encoding "ISO2022JP")
+		(cgi-header :content-type "text/plain"
+			    :charset      "iso-2022-jp"))))
+	       
+	    
 	    ,(write-to-string (sumibi-convert-sentence (cgi-get-parameter "string" params) query))))))
       ;; 標準入出力モード
       (else
