@@ -250,21 +250,35 @@
   '(
     ("si"   . "shi")
     ("ci"   . "chi")
+    ("ti"   . "chi")
+    ("hu"   . "fu")
 
     ("tu"   . "tsu")
     ("sya"  . "sha")
     ("syu"  . "shu")
     ("syo"  . "sho")
 
+    ("zi"   . "ji")
     ("jya"  . "ja")
     ("jyu"  . "ju")
     ("jyo"  . "jo")
+    ("zya"  . "ja")
+    ("zyu"  . "ju")
+    ("zyo"  . "jo")
 
     ("tya"  . "cha")
     ("tyu"  . "chu")
     ("tyo"  . "cho")
 
     ("dhi"  . "dyi")
+
+    ("la"   . "xa")
+    ("li"   . "xi")
+    ("lu"   . "xu")
+    ("le"   . "xe")
+    ("lo"   . "xo")
+    ("xtu"  . "tt")
+    ("xtsu" . "tt")
     ))
 
 
