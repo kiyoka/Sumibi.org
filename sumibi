@@ -1,9 +1,9 @@
 #!/usr/local/bin/gosh
 ;;
-;; "Sumibi" is a Ank kana kanji convert tool.
+;; "Sumibi" is an Ank kana kanji convert tool.
 ;;
-;;   Copyright (C) 2002,2003,2004 Kiyoka Nishyama
-;;     $Date: 2005/01/08 02:33:04 $
+;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
+;;     $Date: 2005/01/14 15:09:26 $
 ;;
 ;; This file is part of Sumibi
 ;;
