@@ -1,0 +1,12 @@
+;; sumiyaki db
+(define sumibi-sumiyakidb-name       "host=hostname;db=sumi")
+(define sumibi-sumiyakidb-user       "username")
+(define sumibi-sumiyakidb-password   "password")
+
+;; sumibi db
+(define sumibi-sumibidb-name         "host=hostname;db=sumi")
+(define sumibi-sumibidb-user         "username")
+(define sumibi-sumibidb-password     "password")
+
+;; debug flag on
+(set! sumibi-debug #t)
