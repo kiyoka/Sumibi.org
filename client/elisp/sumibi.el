@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/03/24 13:58:40 $
+;;     $Date: 2005/03/27 13:45:12 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -44,11 +44,10 @@
 ;;;      4) 将来Sumibi Serverのプロトコルは変更になります。
 ;;;      5) Sumibi Server側のソースコードもGPLです。sourceforge.jpのCVSで公開されています。
 ;;;
-;;;   2.バグが沢山あります。^_^;
+;;;   2. バグがまだまだあります。^_^;
 ;;;
 ;;;
-;;; インストール方法、使いかたは添付のドキュメントを参照してください。
-;;; 最新のドキュメントが以下のWebサイトにありますのであわせて参照してください。
+;;; インストール方法、使いかたは以下のWebサイトにありますのであわせて参照してください。
 ;;;   http://www.sumibi.org/
 ;;;
 

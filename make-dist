@@ -1,0 +1,59 @@
+#!/bin/sh
+
+VERSION=0.1.1
+
+#### make-dist: create an Sumibi distribution tar file from the current
+#### source tree.  This basically creates a duplicate directory
+#### structure, and then hard links into it only those files that should
+#### be distributed.  This means that if you add a file with an odd name,
+#### you should make sure that this script will include it.
+
+# Copyright (C) 1995, 1997, 1998, 2000, 2001, 2002 Free Software Foundation, Inc.
+#
+# This file is part of GNU Sumibi.
+#
+# GNU Sumibi is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# GNU Sumibi is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with GNU Sumibi; see the file COPYING.  If not, write to the
+# Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+# Boston, MA 02111-1307, USA.
+
+progname="$0"
+
+### Exit if a command fails.
+#set -e
+
+### Print out each line we read, for debugging's sake.
+#set -v
+
+LANGUAGE=C
+LC_ALL=C
+LC_MESSAGES=
+LANG=
+export LANGUAGE LC_ALL LC_MESSAGES LANG
+
+## Don't restrict access to any files.
+umask 0
+
+
+
+TARGET=../sumibi-${VERSION}
+
+mkdir       -p $TARGET
+/bin/cp     ./doc/COPYING             $TARGET
+/bin/cp     ./doc/CHANGELOG           $TARGET
+/bin/cp     ./doc/CREDITS             $TARGET
+/bin/cp     ./certs/CAcert.crt        $TARGET
+/bin/cp     ./client/elisp/sumibi.el  $TARGET
+
+cd ..
+tar zcf sumibi-${VERSION}.tar.gz  sumibi-${VERSION}
