@@ -3,7 +3,7 @@
 ;; "Sumibi" is a Ank kana kanji convert tool.
 ;;
 ;;   Copyright (C) 2002,2003,2004 Kiyoka Nishyama
-;;     $Date: 2004/12/16 14:44:58 $
+;;     $Date: 2004/12/16 14:58:39 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -32,10 +32,9 @@
 (use gauche.collection)
 (require 'pretty-print)
 (require 'collect)
-(load "./skkdict_load.scm")
-(load "./corpus_load.scm")
-(load "./sumibi_define.scm")
-
+(load "sumibi/skkdict-load.scm")
+(load "sumibi/corpus-load.scm")
+(load "sumibi/sumibi-define.scm")
 
 
 ;;
