@@ -29,8 +29,8 @@
      "Use it now!"
      (*ja
       (ul
-       (li (*link "Webブラウザから使う" "ajax/"))
-       (li (*link "Emacsに組みこむ" "sumibi_el_ja.html"))))
+       (li (*link "Webブラウザから使う" "http://www.sumibi.org/sumibi-ajax/"))
+       (li (*link "Emacsに組みこむ" "sumibi_el.html"))))
      (*en
       (p
        ("sorry , Japanese only ..."))))
@@ -40,7 +40,7 @@
 ;;     "More and more..."
 ;;     (*ja
 ;;      (ul
-;;       (li (*link "Sumibi Serverを自分で用意する" "ajax/"))
+;;       (li (*link "Sumibi Serverを自分で用意する" "http://www.sumibi.org/sumibi-ajax/"))
 ;;       (li (*link "辞書を育てる" "sumibi_el_ja.html"))))
 ;;     (*en
 ;;      (p

@@ -9,6 +9,14 @@
     ,L:tab
 
     (*section
+     "このドキュメントについて"
+     "About this document"
+     (*en
+      (p "No documents in English, sorry..." ))
+     (*ja
+      (p "このドキュメントは、sumibi.el 0.1.1についての解説です。")))
+
+    (*section
      "インストール"
      "How to install"
      (*en
@@ -83,39 +91,42 @@
       #f
       (*ja
        (ol
-	(li "候補選択の例")
-	(p "変換直後の文字列の上にカーソルをあわせ、C-jキーを押すと候補選択モードに移行します。")
+	(li "とにかく候補選択を開始するには")
 	(ul
 	 (li "カーソルが文末にある状態で[C-j]を押す。")
 	 (p
 	  (img (@ (src "before_select1.png"))))
 	 (li "C-jを押すと、候補選択モードに移行します。")
 	 (p
-	  (img (@ (src "select1.png"))))
+	  (img (@ (src "select1.png")))))
+	(li "候補選択したい箇所から候補選択を開始するには")
+	(ul
 	 (li "候補選択したい部分にカーソルを合わせて[C-j]を押す。")
 	 (p
 	  (img (@ (src "before_select2.png"))))
 	 (li "候補選択モードに移行します。")
 	 (p
-	  (img (@ (src "select2.png"))))
+	  (img (@ (src "select2.png")))))
+	(li "候補の順送り")
+	(ul
 	 (li "[C-j]で次の変換候補が順番に出てきます。")
 	 (p
 	  (img (@ (src "select3.png")))))
 
 	(li "候補選択キー操作一覧")
-	(table (@ (title "候補選択キー操作一覧"))
-	       (thead
-		(tr  (td "キー操作") (td "アクション")))
-	       (tbody
-		(tr   (td "C-m")   (td "候補選択確定"))
-		(tr   (td "C-g")   (td "候補選択キャンセル"))
-		(tr   (td "C-b")   (td "前方の文節に移動"))
-		(tr   (tr(td "C-f")   (td "後方の文節に移動")))
-		(tr   (tr(td "C-a")   (td "最初の文節に移動")))
-		(tr   (tr(td "C-j")   (td "次の候補に切りかえる")))
-		(tr   (tr(td "space") (td "次の候補に切りかえる")))
-		(tr   (tr(td "C-p")   (td "前の候補に切りかえる")))
-		(tr   (tr(td "C-n")   (td "次の候補に切りかえる"))))))))
+	(table 
+	 (thead
+	  (tr  (td "キー操作") (td "アクション")))
+	 (tbody
+	  (tr   (td "C-m")   (td "候補選択確定"))
+	  (tr   (td "C-g")   (td "候補選択キャンセル"))
+	  (tr   (td "C-b")   (td "前方の文節に移動"))
+	  (tr   (td "C-f")   (td "後方の文節に移動"))
+	  (tr   (td "C-a")   (td "最初の文節に移動"))
+	  (tr   (td "C-j")   (td "次の候補に切りかえる"))
+	  (tr   (td "space") (td "次の候補に切りかえる"))
+	  (tr   (td "C-n")   (td "次の候補に切りかえる"))
+	  (tr   (td "C-p")   (td "前の候補に切りかえる")))))))
 	 
 
      (*subsection

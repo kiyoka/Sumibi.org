@@ -1,3 +1,10 @@
+#
+# このMakefileはSumibiのドキュメントサイトをビルドするためのものです。
+#
+# ビルドに必要なツールは以下の通りです。
+#   1. SmartDoc version 1.2b
+#   2. sxmlvnv  sxmlcnv version 0.1.0
+#
 
 
 all :

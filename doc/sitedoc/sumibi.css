@@ -1,4 +1,4 @@
-/* $Id: sumibi.css,v 1.1 2005/03/27 12:14:42 kiyoka Exp $ */
+/* $Id: sumibi.css,v 1.2 2005/03/27 13:30:06 kiyoka Exp $ */
 
 body {
 	background-color: #ffe;
@@ -95,7 +95,7 @@ ol li {
 ul li {
         padding-top: 0.2em;
         padding-bottom: 0.2em;
-	list-style-image : url( circle.png );
+	list-style-image : url( fireball.png );
 }
 pre {
 	background-color: #fff;
