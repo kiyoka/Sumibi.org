@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el(auther: knak)
 ;;
-;;     $Date: 2005/02/03 13:19:08 $
+;;     $Date: 2005/02/03 14:07:11 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -191,6 +191,12 @@
 	  (henkan-list
 	   (mapcar
 	    (lambda (x)
+	      (if (and
+		   (not (eq (preceding-char) ?\ ))
+		   (not (eq (point-at-bol) (point)))
+		   (eq (sumibi-char-charset (preceding-char)) 'ascii)
+		   (eq (sumibi-char-charset (string-to-char (car x))) 'ascii))
+		  (insert " "))
 	      (insert (car x)))
 	    sumibi-henkan-list))))))
 
