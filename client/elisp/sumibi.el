@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el(auther: knak)
 ;;
-;;     $Date: 2005/02/08 16:29:13 $
+;;     $Date: 2005/02/09 11:01:32 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -37,7 +37,7 @@
 ;;;
 ;;; 本バージョンには次のような制限があります。
 ;;;   1. 本パッケージにはEmacs用のクライアントのみ含まれています。
-;;;      1) sumibi.orgで動作しているSumibi serverに接続して利用します。 
+;;;      1) sumibi.orgで動作しているSumibi Serverに接続して利用します。 
 ;;;      2) SSL証明書を使用し、最低限のセキュリティーは確保しています。 
 ;;;         SSL証明書は CAcert( http://www.cacert.org/ )のものを使っています。
 ;;;      3) Sumibi Server側もアルファ版のため、不安定であることを御了承ください。
@@ -55,12 +55,12 @@
 ;;;
 ;;;   3. CAcert.crtを適当な場所にコピーします。 (例: /home/xxxx/emacs ディレクトリーなど )
 ;;;
-;;;   4. wget 1.9.1以上をSSL機能を有効にしてインストールします。
+;;;   4. wget 1.9.1以上をSSL機能を有効にしてビルドし、インストールします。
 ;;;      (cygwinに入っているwgetがそのまま利用できることを確認しています。)
 ;;;
 ;;;   5. .emacsに次のコードを追加します。
-;;;      (setq sumibi-debug t)		  ; デバッグフラグON
-;;;      (setq sumibi-server-cert-file "/home/xxxx/emacs/CAcert.crt")  ; ファイルCAcert.crtの保存パス
+;;;      (setq sumibi-debug t)		  ; デバッグフラグON ( デバッグメッセージ様に *sumibi-debug*というバッファが作られる )
+;;;      (setq sumibi-server-cert-file "/home/xxxx/emacs/CAcert.crt")  ; CAcert.crtの保存パス
 ;;;      (load "sumibi.el")
 ;;;      (global-sumibi-mode 1)
 ;;;
@@ -88,13 +88,13 @@
 
 ;;; 変換のコツ
 ;;;   1. なるべく長い文章で変換する。
-;;;     Sumibiエンジンはなるべく長い文章をいっぺんに変換したほうが変換精度が上がります。
+;;;     Sumibiエンジンはなるべく長い文章を一括変換したほうが変換精度が上がります。
 ;;;     理由は、Sumibiエンジンの仕組みにあります。
 ;;;     Sumibiエンジンは文脈の中の単語の列びから、統計的にどの単語が相応しいかを選択します。
 ;;;
 ;;;   2. SKKの辞書に含まれていそうな単語を指定する。
 ;;;     SKKに慣れている人でないと感覚がつかめないかもしれませんが、"変換精度"のような多くの複合語
-;;;     は最初から辞書に含まれているので、"henkanseido"と言う具合に指定しましょう。
+;;;     は最初から辞書に含まれているので、"henkanseido"と言う具合に指定すると、確実に変換できます。
 ;;;
 
 ;;; 
@@ -112,7 +112,7 @@
   :group 'sumibi)
 
 (defcustom sumibi-server-encode 'euc-jp
-  "Sumibiサーバーと交換するときの文字エンコードを指定する。"
+  "Sumibiサーバーと交換するときの文字エンコードを指定する。(euc-jp/sjis/utf-8)"
   :type  'string
   :group 'sumibi)
 
