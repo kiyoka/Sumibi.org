@@ -1,0 +1,15 @@
+
+	This is at least a partial credits of people that have
+	contributed to the Sumibi project.
+	Formatted in a format that allows for easy grepping and
+	beautification by scripts.  The fields are: name (N), email (E),
+	web-address (W), PGP key ID and fingerprint (P), description (D).
+	Thanks,
+
+                           Kiyoka Nishiyama
+----------
+
+N: Kiyoka Nishiyama
+E: kiyoka@netfort.gr.jp
+D: Author of original Sumibi server and sumibi.el
+W: http://www.netfort.gr.jp/~kiyoka/

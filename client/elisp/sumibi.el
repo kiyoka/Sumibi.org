@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/03/01 15:39:25 $
+;;     $Date: 2005/03/02 14:20:25 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -367,7 +367,13 @@
       'sumibi-kakutei-and-self-insert)
     (setq i (1+ i))))
 (define-key sumibi-select-mode-map "\C-m"                   'sumibi-select-kakutei)
+(define-key sumibi-select-mode-map "\C-g"                   'sumibi-select-cancel)
+(define-key sumibi-select-mode-map "\C-b"                   'sumibi-select-prev-word)
+(define-key sumibi-select-mode-map "\C-f"                   'sumibi-select-next-word)
+(define-key sumibi-select-mode-map "\C-a"                   'sumibi-select-first-word)
+(define-key sumibi-select-mode-map "\C-e"                   'sumibi-select-last-word)
 (define-key sumibi-select-mode-map sumibi-rK-trans-key      'sumibi-select-next)
+(define-key sumibi-select-mode-map " "                      'sumibi-select-next)
 
 
 ;; 変換を確定し入力されたキーを再入力する関数
@@ -384,31 +390,67 @@
    (marker-position sumibi-fence-end)
    sumibi-select-mode))
 
-;; 変換を確定する関数
+;; 候補選択を確定する
 (defun sumibi-select-kakutei ()
   "候補選択を確定する"
   (interactive)
-  (sumibi-debug-print "KAKUTEI\n" )
+  ;; 候補番号リストをバックアップする。
+  (setq sumibi-cand-n-backup (copy-list sumibi-cand-n))
   (setq sumibi-select-mode nil)
   (sumibi-select-update-display))
 
-;; 次の候補に進める。
+;; 候補選択をキャンセルする
+(defun sumibi-select-cancel ()
+  "候補選択をキャンセルする"
+  (interactive)
+  ;; カレント候補番号をバックアップしていた候補番号で復元する。
+  (setq sumibi-cand-n (copy-list sumibi-cand-n-backup))
+  (setq sumibi-select-mode nil)
+  (sumibi-select-update-display))
+
+;; 次の候補に進める
 (defun sumibi-select-next ()
   "次の候補に進める"
   (interactive)
   (let (
 	(n sumibi-cand))
 
-    (sumibi-debug-print (format "sumibi-cand-n = %s\n" sumibi-cand-n))
-
     ;; 次の候補に
     (setcar (nthcdr n sumibi-cand-n) (+ 1 (nth n sumibi-cand-n)))
     (when (>= (nth n sumibi-cand-n) (nth n sumibi-cand-max))
       (setcar (nthcdr n sumibi-cand-n) 0))
 
-    (sumibi-debug-print (format " → %s\n" sumibi-cand-n))
     (sumibi-select-update-display)))
 
+;; 前の文節に移動する
+(defun sumibi-select-prev-word ()
+  "前の文節に移動する"
+  (interactive)
+  (when (< 0 sumibi-cand)
+    (setq sumibi-cand (- sumibi-cand 1)))
+  (sumibi-select-update-display))
+
+;; 次の文節に移動する
+(defun sumibi-select-next-word ()
+  "次の文節に移動する"
+  (interactive)
+  (when (< sumibi-cand (- (length sumibi-cand-n) 1))
+    (setq sumibi-cand (+ 1 sumibi-cand)))
+  (sumibi-select-update-display))
+
+;; 最初の文節に移動する
+(defun sumibi-select-first-word ()
+  "最初の文節に移動する"
+  (interactive)
+  (setq sumibi-cand 0)
+  (sumibi-select-update-display))
+
+;; 最後の文節に移動する
+(defun sumibi-select-last-word ()
+  "最後の文節に移動する"
+  (interactive)
+  (setq sumibi-cand (- (length sumibi-cand-n) 1))
+  (sumibi-select-update-display))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -428,6 +470,7 @@
 
    (t
     (cond
+
      ((eq (sumibi-char-charset (preceding-char)) 'ascii)
       ;; カーソル直前が alphabet だったら
       (let ((end (point))
@@ -435,9 +478,11 @@
 	(goto-char end)
 	(when (/= gap 0)
 	;; 意味のある入力が見つかったので変換する
-	  (progn
-	    (when (sumibi-henkan-region (+ end gap) end)
-	      (sumibi-display-function (+ end gap) end nil))))))
+	  (when (sumibi-henkan-region (+ end gap) end)
+	    (progn
+	      (sumibi-display-function (+ end gap) end nil)
+	      (sumibi-select-kakutei))))))
+
      
      ((sumibi-kanji (preceding-char))
     
