@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el(auther: knak)
 ;;
-;;     $Date: 2005/02/09 11:01:32 $
+;;     $Date: 2005/02/15 14:45:21 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -121,6 +121,11 @@
   :type  'string
   :group 'sumibi)
 
+(defcustom sumibi-server-timeout 10
+  "Sumibiサーバーと通信する時のタイムアウトを指定する。(秒数)"
+  :type  'integer
+  :group 'sumibi)
+ 
 (defcustom sumibi-stop-chars "(){}<>"
   "*漢字変換文字列を取り込む時に変換範囲に含めない文字を設定する"
   :type  'string
@@ -198,6 +203,8 @@
 	  (concat
 	   "wget "
 	   "--non-verbose "
+	   (format "--timeout=%d " sumibi-server-timeout)
+	   "--tries=1 "
 	   sumibi-server-url " "
 	   (format "--post-data='string=%s&encode=%S' " yomi sumibi-server-encode)
 	   (when sumibi-server-cert-file
