@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el(auther: knak)
 ;;
-;;     $Date: 2005/02/03 14:07:11 $
+;;     $Date: 2005/02/08 14:22:18 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -40,6 +40,11 @@
 
 (defcustom sumibi-server-encode 'euc-jp
   "Sumibiサーバーと交換するときの文字エンコードを指定する。"
+  :type  'string
+  :group 'sumibi)
+
+(defcustom sumibi-server-cert-file "/home/kiyoka/emacs/CAcert.crt"
+  "Sumibiサーバーと通信する時のSSL証明書ファイルを指定する。"
   :type  'string
   :group 'sumibi)
 
@@ -111,26 +116,29 @@
 ;; ローマ字で書かれた文章をSumibiサーバーを使って変換する
 ;;
 (defun sumibi-henkan-request (yomi)
-  (let (
-	(result '()))
+  (sumibi-debug-print (format "henkan-input :%s\n"  yomi))
 
-    (message "Requesting to sumibi server...")
-    (setq result
-	  (read
-	   (shell-command-to-string
-	    (concat
-	     "wget"
-	     " "
-	     "--non-verbose"
-	     " "
-	     sumibi-server-url
-	     " "
-	     (format "--post-data='string=%s&encode=%S'" yomi sumibi-server-encode)
-	     " "
-	     "--output-document=-"
-	     " "
-	     ))))
-    result))
+  (message "Requesting to sumibi server...")
+  (let (
+	(result 
+	 (shell-command-to-string
+	  (concat
+	   "wget "
+	   "--non-verbose "
+	   sumibi-server-url " "
+	   (format "--post-data='string=%s&encode=%S' " yomi sumibi-server-encode)
+	   (when sumibi-server-cert-file
+	     (format "--sslcafile='%s' --sslcheckcert=1 " sumibi-server-cert-file))
+	   "--output-document=- "
+	   ))))
+    (sumibi-debug-print (format "henkan-result:%S\n" result))
+    (if (eq (string-to-char result) ?\( )
+	(progn
+	 (message nil)
+	 (read result))
+      (progn
+	(message result)
+	nil))))
 
 
 ;; リージョンをローマ字漢字変換する関数
@@ -144,24 +152,23 @@
 	   (yomi (buffer-substring b e))
 	   (henkan-list (sumibi-henkan-request yomi)))
 
-      (sumibi-debug-print (format "henkan-input :%s\n"  yomi))
-      (sumibi-debug-print (format "henkan-result:%S\n" henkan-list))
-
-      (condition-case err
-	  (progn
-	    (setq sumibi-henkan-mode t
-		  sumibi-fence-start (copy-marker b)
-		  sumibi-fence-end (copy-marker e)
-		  sumibi-fence-yomi yomi
-		  sumibi-henkan-list henkan-list
-		  sumibi-mark-list (make-list (length sumibi-henkan-list) 0)
-		  sumibi-mark-max (make-list (length sumibi-henkan-list) 0)
-		  sumibi-mark 0
-		  sumibi-bunsetsu-yomi-list nil))
-	(sumibi-trap-server-down
-	 (beep)
-	 (message (error-message-string err))
-	 (setq sumibi-henkan-mode nil)) ))))
+      (if henkan-list
+	  (condition-case err
+	      (progn
+		(setq sumibi-henkan-mode t
+		      sumibi-fence-start (copy-marker b)
+		      sumibi-fence-end (copy-marker e)
+		      sumibi-fence-yomi yomi
+		      sumibi-henkan-list henkan-list
+		      sumibi-mark-list (make-list (length sumibi-henkan-list) 0)
+		      sumibi-mark-max (make-list (length sumibi-henkan-list) 0)
+		      sumibi-mark 0
+		      sumibi-bunsetsu-yomi-list nil))
+	    (sumibi-trap-server-down
+	     (beep)
+	     (message (error-message-string err))
+	     (setq sumibi-henkan-mode nil)) )
+	nil))))
 
 
 ;; カーソル前の文字種を返却する関数
@@ -311,7 +318,23 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 
 ;; sumibi-mode を変更する共通関数
 (defun sumibi-mode-internal (arg global)
-  )
+  (or (local-variable-p 'sumibi-mode (current-buffer))
+      (make-local-variable 'sumibi-mode))
+  (if global
+      (progn
+	(setq-default sumibi-mode t)
+	(sumibi-kill-sumibi-mode))
+    (setq sumibi-mode t)))
+
+
+;; buffer local な sumibi-mode を削除する関数
+(defun sumibi-kill-sumibi-mode ()
+  (let ((buf (buffer-list)))
+    (while buf
+      (set-buffer (car buf))
+      (kill-local-variable 'sumibi-mode)
+      (setq buf (cdr buf)))))
+
 
 ;; 全バッファで sumibi-input-mode を変更する
 (defun sumibi-input-mode (&optional arg)
