@@ -5,7 +5,7 @@
 
 
 (define (L:body)
-  '(body 
+  '(body
     (center
      (a (@ (href "mailto:kiyoka@netfort.gr.jp"))
 	"email: Kiyoka Nishiyama"))
@@ -29,7 +29,9 @@
      (ul 
       (li "ローマ字入力のみをサポートします。")
       (li "分かち書きで文節区切りを指定します。")
-      ))))
+      ))
+    ,W:sf-logo
+    ))
 
 
 ;; ページの出力
