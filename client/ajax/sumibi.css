@@ -1,0 +1,95 @@
+
+th{
+	border-style:dotted;
+	border-width:1px;
+	background-color:#eeeeee;
+}
+
+body{
+	color:#444422;
+}
+
+h1{
+	border-style: dotted;
+	border-width: 0px 0px 1px 0px;
+	width:700px;
+}
+
+h1{
+	font-size:250%;
+}
+
+h1, h2{
+	padding: 0px 1px 1px 1px;
+	margin:1px;
+}
+
+h2{
+	border-style: dotted;
+	border-width: 0px 0px 1px 0px;
+}
+
+div.sidebar{
+	position:absolute;
+	top:45px;
+	left:500px;
+	width:200px;
+}
+
+#r, #q{
+	width:210px;
+	height:50px;
+}
+
+div.sidebar div{
+	width:190px;
+	border-style:dotted;
+	border-width:1px 1px 1px 1px;
+	padding: 0px 5px 2px 5px;
+	background-color:#eeeeee;
+}
+
+div.help{
+	width:480px;
+}
+
+div.copy{
+	width:700px;
+	text-align:center;
+}
+
+div.vary{
+	background-color:#eeeeee;
+	width:470px;
+	padding:2px 2px 2px 2px;
+	margin:1px 0px 7px 0px;
+	border-style:dotted;
+	border-width:1px;
+}
+div.convert{
+	width:450px;
+}
+
+div.main h2{
+	width:460px;
+}
+
+h3{
+	padding: 1px 0px 0px 0px;
+	margin: 0px;
+}
+
+div.sidebar p{
+	padding: 1px 1px 1px 2px;
+	margin:0px;
+}
+#defined{
+	width:460px;
+	height:150px;
+	background-color:#fefefe;
+}
+
+li{
+   padding: 0px;
+   margin: 0px 0px 0px 2px;
+}
