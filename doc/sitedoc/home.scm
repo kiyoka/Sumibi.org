@@ -6,10 +6,6 @@
 
 (define (L:body)
   '(body
-    (center
-     (a (@ (href "mailto:kiyoka@netfort.gr.jp"))
-	"email: Kiyoka Nishiyama"))
-
     ,L:tab
 
     (*section
