@@ -37,8 +37,12 @@ yamagata:
 	find /home/park/sumibi_corpus/Yamagata -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 uu:
 	find /home/park/sumibi_corpus/unixuser -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
+thinkgnu:
+	find /home/park/sumibi_corpus/thinkgnu -name '*.TXT' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 cnet:
 	find /home/park/sumibi_corpus/japan.cnet.com -name '*.htm' -exec $(SUMIYAKI) -l {} \; > ~/park/log
+itmedia:
+	find /home/park/sumibi_corpus/www.itmedia.co.jp -name '*.html' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 
 sum:
 	$(SUMIYAKI) -s > ~/park/summary.txt
