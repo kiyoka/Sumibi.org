@@ -17,14 +17,15 @@
      (*link "GNU General Public License (GPL2)" "http://www.gnu.org/licenses/gpl.html"))
     ;; sourceforge link logo
     (W:sf-logo
-     '(native
-       (@ (format "html"))
-       "
+     (native
+      (@ (format "html"))
+      "
 <hr>
 hosted by 
-<A href=\"http://sourceforge.net\"> <IMG src=\"http://sourceforge.net/sflogo.php?group_id=82608\" width=\"88\" height=\"31\" border=\"0\" alt=\"SourceForge Logo\"></A>
+<a href=\"http://sourceforge.jp/\"><img src=\"http://sourceforge.jp/sflogo.php?group_id=1476\" width=\"96\" height=\"31\" border=\"0\" alt=\"SourceForge.jp\"></a>
+
 "
-       ))))
+      ))))
     
 
 (define (output title tree)
@@ -36,7 +37,7 @@ hosted by
 	  (head (title ,title)
 		(author " Kiyoka Nishiyama ")
 		(hp " http://sumibi.org/ ")
-		(date " $Date: 2005/03/21 15:27:01 $ "))
+		(date " $Date: 2005/03/22 16:19:21 $ "))
 	  ,tree
 	   ))))
 
