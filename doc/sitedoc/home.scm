@@ -1,7 +1,7 @@
 #!/usr/local/bin/gosh /usr/local/bin/sxmlcnv
 
 
-(load "common.scm")
+(load "./common.scm")
 
 
 (define (L:body)
