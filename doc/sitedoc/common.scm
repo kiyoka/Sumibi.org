@@ -23,7 +23,6 @@
 <hr>
 hosted by 
 <a href=\"http://sourceforge.jp/\"><img src=\"http://sourceforge.jp/sflogo.php?group_id=1476\" width=\"96\" height=\"31\" border=\"0\" alt=\"SourceForge.jp\"></a>
-
 "
       ))))
     
@@ -37,7 +36,7 @@ hosted by
 	  (head (title ,title)
 		(author " Kiyoka Nishiyama ")
 		(hp " http://sumibi.org/ ")
-		(date " $Date: 2005/03/22 16:19:21 $ "))
+		(date " $Date: 2005/03/23 16:08:37 $ "))
 	  ,tree
 	   ))))
 

@@ -15,8 +15,8 @@
      "What is Sumibi?"
      (*ja
       (ul 
-       (li "Sumibiはオープンソースのローマ字漢字変換入力メソッドです。")
-       (li "Internet上のドキュメントを読み込んでひとりでに賢くなる新感覚の変換エンジンを持っています。")
+       (li "Sumibiはオープンソースの日本語入力メソッドです。")
+       (li "Internet上のドキュメントを読み込んでひとりでに賢くなる新感覚の漢字変換エンジンを持っています。")
        (li (*link "sourceforge.jp" "http://sourceforge.jp/projects/sumibi/") "にて、開発しています。")
        (li ,W:GPL "のもとで配布されています。")))
      (*en
@@ -27,20 +27,30 @@
        (li "You can use and redistribute Sumibi under the terms of the " ,W:GPL))))
 
     (*section 
-     "とりあえず使ってみる。"
+     "さっそく使ってみる"
      "Use it now!"
      (*ja
       (ul
        (li (*link "Webブラウザから使う" "ajax/"))
-       (li (*link "Emacsに組みこむ" "sumibi_el.html"))))
+       (li (*link "Emacsに組みこむ" "sumibi_el_ja.html"))))
      (*en
-      (ul
-       (li (*link "on your Web browser" "ajax/"))
-       (li (*link "on Emacs editor" "sumibi_el.html")))))
+      (p
+       ("sorry , Japanese only ..."))))
+       
+;;    (*section 
+;;     "もっと使いこなす"
+;;     "More and more..."
+;;     (*ja
+;;      (ul
+;;       (li (*link "Sumibi Serverを自分で用意する" "ajax/"))
+;;       (li (*link "辞書を育てる" "sumibi_el_ja.html"))))
+;;     (*en
+;;      (p
+;;       ("sorry , Japanese only ..."))))
 
     ,W:sf-logo
     ))
 
 
 ;; ページの出力
-(output "Home" (L:body))
+(output "Sumibi" (L:body))
