@@ -26,7 +26,7 @@
 	  (head (title ,title)
 		(author " Kiyoka Nishiyama ")
 		(hp " http://sumibi.org/ ")
-		(date " $Date: 2005/03/21 14:59:48 $ "))
+		(date " $Date: 2005/03/21 15:06:31 $ "))
 	  ,tree
 	  (native
 	   (@ (format "html"))
