@@ -1,9 +1,10 @@
-Internet jyou ni aru musuu no dokyumento wo ko-pasu toshite riyoushi , jisyo wo sodatete tanoshimu shin kankaku no kanji henkan enjin no kaihatu wo mezashimasu .
-Sumibi ha toukeiteki apuro-chi wo tukatta ro-maji kanji henkan enjin desu .
-yuusei minneika , toshiake kara jimin to kyougi ten takenaka tantousyou .
-kyouto giteisyo go no mokuhyou kyougi , 5 gatu ni jyunbi kaigou ten ondanka boushi kaigi .
-nennkin jimuhi 1000 okuen , rainendo mo hokenryou kara ryuuyou .
 kana wo nyuuryoku shita ato ha , hituyou ni oujite kanji ni henkan shinakereba naranai . 
+kyouto giteisyo go no mokuhyou kyougi , 5 gatu ni jyunbi kaigou ten ondanka boushi kaigi .
+Internet jyou ni aru musuu no dokyumento wo ko-pasu toshite riyoushi , jisyo wo sodatete tanoshimu shin kankaku no kanjihenkann enjinn no kaihatu wo mezashimasu .
+Sumibi ha toukeiteki apuro-chi wo tukatta ro-maji kanjihenkann enjinn desu .
+kousei mae no gennkou wo motoni shiteori , katu kaki naoshita tokoro ga arunode , jissai ni keisai sareta mono toha kotonaru kasyo ga aru koto wo goryousyou kudasai .
+yuusei minneika , toshiake kara jimin to kyougi ten takenaka tantousyou .
+nennkin jimuhi 1000 okuen , rainendo mo hokenryou kara ryuuyou .
 sonoyouna gengo wo nyuuryoku suru tameno software wo input method to yobu .
 cmmi ha tugi no youna kinou de install process wo kanri shimasu . konnna hito ni tukatte hoshii .
 mitui sumitomo nakaguro mizuho , furyousaiken hangen wo hantoshi maedaoshi tassei .
@@ -12,7 +13,6 @@ free na renbunsetu henkan enjin de henkan arugorizumu no kairyou ga genzai demo 
 source kara build sezu binary ban wo install seyo .
 shin riri-su deha eigo document wo fukumemashita .
 senmonka tachini kiku zadankai deno en'yasu to kinnyuu fuan . 
-kousei mae no gennkou wo moto ni shiteori , katu kaki naoshita tokoro ga arunode , jissai ni keisai sareta mono toha kotonaru kasyo ga aru koto wo goryousyou kudasai .
 kana wo kanji ni henkan surutameno houhou toshiteha , tango henkanhoushiki ya tannbunsetu henkanhoushiki , rennbunnsetu hennkannhoushiki nadono bunnrui gaaru . 
 kono dokyumento ha , UNIX USER 2004 5 gatugou ni keisai sareta tokusyuu [ saiteki na nihongo nyuuryoku kankyou wo hakkutu seyo ] wo  hensyuubu no kyoka wo ete HTML ka shitamonodesu .
 emacs no version ha ika no toori desu .
@@ -33,11 +33,11 @@ sansyou kei no performance ga jyuuyou nara houfu na kinou ha hituyou de naikamo 
 toukyou syouken torihikijyo oohike ten oohaba hanraku - endaka to bei kabuyasu wo iyake .
 gyoumu application de RDBMS ni youkyuu sareru youken ha samazama desu .
 tatoeba transaction ga jyuuryou na youken nara , houfu na transaction kinou wo motu RDBMS ga saiteki kamo shiremasen . 
-RDBMS sentei ni kansuru porishi- . mokuteki wo tassei dekiruka no mikiwake ga jyuuyou .
+RDBMS sentei ni kansuru porishi- . mokuteki wo tassei dekiruka no mikiwame ga jyuuyou .
 anthy no tokutyou ha security ni taishite hairyo shiteiru koto , keizokuteki ni mentenansu sareteiru koto dearu . anthy ha yu-za- kengen de dousa shi , taninn ni kojinjisyo ya gakusyuurireki wo katte ni nusumi mirareru koto ha nai . 
 tango henkan ha [ watashi ] wo [ watashi ] ni henkan suru toiuyouna , hitotu no tango nomi wo henkan suru houshiki dearu . 
 sekai niha , mojisuu ga oosugite ki-bo-do kara tyokusetu nyuuryoku dekinai gengo ga ikutuka aru . mochiron , nihongo mo sono naka no hitotu da . 
 inagaki gorou to katori shingo ha SMAP no member desu .
 niwa niha 2 wa niwatori ga iru . boku no namae ha nishiyama desu .
 eiyou seibun ha kettouchi no kontoro-ru ya ketuatu antei ni kouka ga arimasu .
-hatuga genmai niha kono gyaba wo hajime syokukmotusen'i ya bitamin' ten mineraru rui ga hakumai ni kurabe kakudan ni ooku fukumareteimasu maru
+hatuga genmai niha kono gyaba wo hajime syokumotusenni ya bitamin' ten mineraru rui ga hakumai ni kurabe kakudan ni ooku fukumareteimasu maru
