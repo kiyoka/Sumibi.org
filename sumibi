@@ -3,7 +3,7 @@
 ;; "Sumibi" is a Ank kana kanji convert tool.
 ;;
 ;;   Copyright (C) 2002,2003,2004 Kiyoka Nishyama
-;;     $Date: 2005/01/05 14:10:21 $
+;;     $Date: 2005/01/05 14:39:51 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -704,9 +704,19 @@
 
     (when sumibi-debug
 	  (begin
-	      (display "#9#")
+	    (let ((r
+		   (string-join
+		    (map
+		     (lambda (x)
+		       (car x))
+		     complete-henkan-kouho-list)
+		    "/")))
+	      (display "#8#")
 	      (pretty-print complete-henkan-kouho-list)
-	      (newline)))))
+	      (newline)
+	      (display "#9#")
+	      (write r)
+	      (newline))))))
 
 
 
