@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/03/06 13:38:13 $
+;;     $Date: 2005/03/07 13:16:04 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -599,7 +599,7 @@
     ;; インデント位置を求める。
     (save-excursion
       (goto-char (point-at-bol))
-      (setq indent (skip-chars-forward "\\t " (point-at-eol))))
+      (setq indent (skip-chars-forward "\t " (point-at-eol))))
 
 ;;    (sumibi-debug-print (format "(point) = %d  result = %d  indent = %d\n" (point) result indent))
 ;;    (sumibi-debug-print (format "a = %d b = %d \n" (+ (point) result) (+ (point-at-bol) indent)))
