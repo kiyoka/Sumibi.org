@@ -11,6 +11,7 @@
       "sumibi.el ( Emacs client )"
       "sumibi_el_ja.html")))
 
+
 (define SmartDoc:abbrev-table
   ;; A table to expand abbreviations
   ;; It's a fully static table (it uses the quote rather than a quasi-quote)
@@ -61,7 +62,7 @@ hosted by
 		 ,(cadr (assoc key page-alist)))
 		(author " Kiyoka Nishiyama ")
 		(hp " http://www.sumibi.org/ ")
-		(date " $Date: 2005/03/27 04:02:24 $ "))
+		(date " $Date: 2005/03/27 04:34:56 $ "))
 	  ,tree
 	  ))))
 
