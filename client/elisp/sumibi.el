@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el(auther: knak)
 ;;
-;;     $Date: 2005/01/30 15:42:32 $
+;;     $Date: 2005/02/01 14:17:02 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -120,7 +120,7 @@
 	     " "
 	     sumibi-server-url
 	     " "
-	     (concat "--post-data='string=" yomi "'")
+	     (concat "--post-data='string=" yomi "&encode=euc-jp'")
 	     " "
 	     "--output-document=-"
 	     " "
