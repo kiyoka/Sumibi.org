@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/03/07 13:16:04 $
+;;     $Date: 2005/03/09 14:49:27 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -375,7 +375,7 @@
 	   (overlay-put ov 'face 'normal)
 	   (when (and select-mode
 		      (eq cnt sumibi-cand))
-	     (overlay-put ov 'face 'bold))
+	     (overlay-put ov 'face 'highlight))
 
 	   (push `(,start . ,end) sumibi-marker-list)
 	   (sumibi-debug-print (format "insert:[%s] point:%d-%d\n" insert-word (marker-position start) (marker-position end))))
