@@ -1,0 +1,38 @@
+kana wo nyuuryoku shita ato ha , hituyou ni oujite kanji ni henkan shinakereba naranai . 
+sonoyouna gengo wo nyuuryoku suru tameno software wo input method to yobu .
+cmmi ha tugi no youna kinou de install process wo kanri shimasu . konnna hito ni tukatte hoshii .
+mitui sumitomo nakaguro mizuho , furyousaiken hangen wo hantoshi maedaoshi tassei .
+o-punso-su purogurama ga ganbatte sakusei shita sofutouxea gaaru .
+free na renbunsetu henkan enjin de henkan arugorizumu no kairyou ga genzai demo keizokuteki ni tudukerareteiru noha anthy dake dearu . 
+source kara build sezu binary ban wo install seyo .
+shin riri-su deha eigo document wo fukumemashita .
+senmonka tachini kiku zadankai deno en'yasu to kinnyuu fuan . 
+kousei mae no gennkou wo moto ni shiteori , katu kaki naoshita tokoro ga arunode , jissai ni keisai sareta mono toha kotonaru kasyo ga aru koto wo goryousyou kudasai .
+kana wo kanji ni henkan surutameno houhou toshiteha , tango henkanhoushiki ya tannbunsetu henkanhoushiki , rennbunnsetu hennkannhoushiki nadono bunnrui gaaru . 
+kono dokyumento ha , UNIX USER 2004 5 gatugou ni keisai sareta tokusyuu [ saiteki na nihongo nyuuryoku kankyou wo hakkutu seyo ] wo  hensyuubu no kyoka wo ete HTML ka shitamonodesu .
+emacs no version ha ika no toori desu .
+Linux kernel no konpairu ha dare demo kantann ni dekiru wake deha arimasenn .
+saiteki na nihongo nyuuryoku wo hakkutu seyo .
+murakamiryuu ga hakkou shiteiru japan mail media wo jmm to iu .
+Gauche reference manyuaru syujyu no risuto shori ru-chin . iretate no o cha . 
+anthy no genkou shippitu jiten ni okeru saishinban no anteiban ha , 2004 nen 3 gatu ni riri-su sareta anthy-5100b dearu .
+watashi no namae ha nakano desu .
+kana wo kanji ni henkan suru .
+ookina senkyo ga owarimashita . soshite meikaku na kekka ga demashita . tugi no jidai heto akiraka ni rekishi no haguruma ha mawatta to itte yoinodehanaidesyouka.
+futatu hanareta tango mo bigram te-buru ni hindo touroku suru .
+murakamiryuu , kinnyuu keizai no senmonka tachi ni kiku [ me-ru hen ] kaitousya ( keisai jyun ) . hensyutyou kara. saikin , nikkei heikin kabuka ga ookiku ugoku kotoga arimasen . jiwajiwa to sukoshizutu sagatteiru you desuga , ookiku sagaru koto mo , medatte agaru kotomoarimasen . nazedesyouka .
+henkan arugorizumu wo sakusei suru noha taihenn muzukashii desu . kokodeha kimono wo kiru . kokode hakimono wo kiru . nodo ga kawaku . jimen ga kawaku . saisoku sarenakereba kakou to shinai .
+ima demo kokkai niha seiji to kane no mondai ga takusan arimasu .
+MySQL no source code wo kaihen shite saihaifu suru baai de , henkou kasyo wo koukai shitemo kamawanainara GPL ban wo tukaeba yoi desu . 
+sansyou kei no performance ga jyuuyou nara houfu na kinou ha hituyou de naikamo shiremasen .
+toukyou syouken torihikijyo oohike ten oohaba hanraku - endaka to bei kabuyasu wo iyake .
+gyoumu application de RDBMS ni youkyuu sareru youken ha samazama desu .
+tatoeba transaction ga jyuuryou na youken nara , houfu na transaction kinou wo motu RDBMS ga saiteki kamo shiremasen . 
+RDBMS sentei ni kansuru porishi- . mokuteki wo tassei dekiruka no mikiwake ga jyuuyou .
+anthy no tokutyou ha security ni taishite hairyo shiteiru koto , keizokuteki ni mentenansu sareteiru koto dearu . anthy ha yu-za- kengen de dousa shi , taninn ni kojinjisyo ya gakusyuurireki wo katte ni nusumi mirareru koto ha nai . 
+tango henkan ha [ watashi ] wo [ watashi ] ni henkan suru toiuyouna , hitotu no tango nomi wo henkan suru houshiki dearu . 
+sekai niha , mojisuu ga oosugite ki-bo-do kara tyokusetu nyuuryoku dekinai gengo ga ikutuka aru . mochiron , nihongo mo sono naka no hitotu da . 
+inagaki gorou to katori shingo ha SMAP no member desu .
+niwa niha 2 wa niwatori ga iru . boku no namae ha nishiyama desu .
+eiyou seibun ha kettouchi no kontoro-ru ya ketuatu antei ni kouka ga arimasu .
+hatuga genmai niha kono gyaba wo hajime syokukmotusen'i ya bitamin' ten mineraru rui ga hakumai ni kurabe kakudan ni ooku fukumareteimasu maru
