@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el(auther: knak)
 ;;
-;;     $Date: 2005/02/01 14:17:02 $
+;;     $Date: 2005/02/03 13:19:08 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -35,6 +35,11 @@
 
 (defcustom sumibi-server-url "https://sumibi.org/cgi-bin/sumibi/unstable/sumibi.cgi"
   "SumibiサーバーのURLを指定する。"
+  :type  'string
+  :group 'sumibi)
+
+(defcustom sumibi-server-encode 'euc-jp
+  "Sumibiサーバーと交換するときの文字エンコードを指定する。"
   :type  'string
   :group 'sumibi)
 
@@ -120,7 +125,7 @@
 	     " "
 	     sumibi-server-url
 	     " "
-	     (concat "--post-data='string=" yomi "&encode=euc-jp'")
+	     (format "--post-data='string=%s&encode=%S'" yomi sumibi-server-encode)
 	     " "
 	     "--output-document=-"
 	     " "
@@ -325,5 +330,5 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (set-language-info "Japanese" 'input-method "japanese-sumibi")
 (setq default-input-method "japanese-sumibi")
 
-(defconst sumibi-version "0.0.1")
+(defconst sumibi-version "0.1.0")
 (provide 'sumibi)

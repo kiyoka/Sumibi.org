@@ -602,9 +602,8 @@
 
 ;; カタカナの文字列かどうかを評価する
 (define (romkan-is-katakana str)
-  (rxmatch #/^[ア-ンー]+$/ str))
+  (rxmatch #/^[ア-ンァィゥェォャュョッー]+$/ str))
 
 ;; 平仮名の文字列かどうかを評価する
 (define (romkan-is-hiragana str)
-  (rxmatch #/^[あ-んー]+$/ str))
-
+  (rxmatch #/^[あ-んぁぃぅぇぉゃゅょっー]+$/ str))
