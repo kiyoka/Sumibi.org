@@ -14,8 +14,18 @@
     (W:gauche
      (*link "Gauche" "http://www.shiro.dreamhost.com/scheme/gauche/index.html"))
     (W:GPL
-     (*link "GNU General Public License (GPL2)" "http://www.gnu.org/licenses/gpl.html"))))
-
+     (*link "GNU General Public License (GPL2)" "http://www.gnu.org/licenses/gpl.html"))
+    ;; sourceforge link logo
+    (W:sf-logo
+     '(native
+       (@ (format "html"))
+       "
+<hr>
+hosted by 
+<A href=\"http://sourceforge.net\"> <IMG src=\"http://sourceforge.net/sflogo.php?group_id=82608\" width=\"88\" height=\"31\" border=\"0\" alt=\"SourceForge Logo\"></A>
+"
+       ))))
+    
 
 (define (output title tree)
   (SXML->XML 
@@ -26,18 +36,10 @@
 	  (head (title ,title)
 		(author " Kiyoka Nishiyama ")
 		(hp " http://sumibi.org/ ")
-		(date " $Date: 2005/03/21 15:06:31 $ "))
+		(date " $Date: 2005/03/21 15:27:01 $ "))
 	  ,tree
-	  (native
-	   (@ (format "html"))
-	   "
-<hr>
-hosted by 
-<A href=\"http://sourceforge.net\"> <IMG src=\"http://sourceforge.net/sflogo.php?group_id=82608\" width=\"88\" height=\"31\" border=\"0\" alt=\"SourceForge Logo\"></A>
-"
-	   )))))
+	   ))))
+
 
 	  
-
-
 
