@@ -279,6 +279,11 @@
     ("lo"   . "xo")
     ("xtu"  . "tt")
     ("xtsu" . "tt")
+
+    ("ttya" . "ccha")
+    ("ttyu" . "cchu")
+    ("ttyo" . "ccho")
+
     ))
 
 
