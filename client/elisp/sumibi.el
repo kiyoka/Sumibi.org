@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/03/09 14:49:27 $
+;;     $Date: 2005/03/13 11:26:48 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -59,7 +59,6 @@
 ;;;      (cygwinに入っているwgetがそのまま利用できることを確認しています。)
 ;;;
 ;;;   5. .emacsに次のコードを追加します。
-;;;      (setq sumibi-debug t)		  ; デバッグフラグON ( デバッグメッセージ様に *sumibi-debug*というバッファが作られる )
 ;;;      (setq sumibi-server-cert-file "/home/xxxx/emacs/CAcert.crt")  ; CAcert.crtの保存パス
 ;;;      (load "sumibi.el")
 ;;;      (global-sumibi-mode 1)
@@ -126,7 +125,7 @@
   :type  'integer
   :group 'sumibi)
  
-(defcustom sumibi-stop-chars ":(){}<>"
+(defcustom sumibi-stop-chars ";:(){}<>"
   "*漢字変換文字列を取り込む時に変換範囲に含めない文字を設定する"
   :type  'string
   :group 'sumibi)
@@ -209,7 +208,7 @@
 ;; ローマ字で書かれた文章をSumibiサーバーを使って変換する
 ;;
 (defun sumibi-henkan-request (yomi)
-  (sumibi-debug-print (format "henkan-input :%s\n"  yomi))
+  (sumibi-debug-print (format "henkan-input :[%s]\n"  yomi))
 
   (message "Requesting to sumibi server...")
   (let (
@@ -549,7 +548,7 @@
 	  (setq sumibi-select-mode t)
 	  (setq sumibi-cand 0)		; 文節番号初期化
 	  
-	  (sumibi-debug-print "henkan mode ON\n")
+1	  (sumibi-debug-print "henkan mode ON\n")
 	  
 	  ;; カーソル位置がどの文節に乗っているかを調べる。
 	  (mapcar
@@ -599,10 +598,10 @@
     ;; インデント位置を求める。
     (save-excursion
       (goto-char (point-at-bol))
-      (setq indent (skip-chars-forward "\t " (point-at-eol))))
+      (setq indent (skip-chars-forward (concat "\t " sumibi-stop-chars) (point-at-eol))))
 
-;;    (sumibi-debug-print (format "(point) = %d  result = %d  indent = %d\n" (point) result indent))
-;;    (sumibi-debug-print (format "a = %d b = %d \n" (+ (point) result) (+ (point-at-bol) indent)))
+    (sumibi-debug-print (format "(point) = %d  result = %d  indent = %d\n" (point) result indent))
+    (sumibi-debug-print (format "a = %d b = %d \n" (+ (point) result) (+ (point-at-bol) indent)))
 
     (if (< (+ (point) result)
 	   (+ (point-at-bol) indent))
@@ -612,7 +611,6 @@
 	 (point))
 
       result)))
-    
   
 
 ;;;
