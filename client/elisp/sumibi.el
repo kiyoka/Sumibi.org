@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el(auther: knak)
 ;;
-;;     $Date: 2005/02/20 09:11:15 $
+;;     $Date: 2005/02/20 14:45:56 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -215,7 +215,12 @@
     (if (eq (string-to-char result) ?\( )
 	(progn
 	 (message nil)
-	 (read result))
+	 (condition-case err
+	     (read result)
+	   (end-of-file
+	    (progn
+	      (message "Parse error for parsing result of Sumibi Server.")
+	      nil))))
       (progn
 	(message result)
 	nil))))
@@ -243,7 +248,8 @@
 		      sumibi-mark-list (make-list (length sumibi-henkan-list) 0)
 		      sumibi-mark-max (make-list (length sumibi-henkan-list) 0)
 		      sumibi-mark 0
-		      sumibi-bunsetsu-yomi-list nil))
+		      sumibi-bunsetsu-yomi-list nil)
+		t)
 	    (sumibi-trap-server-down
 	     (beep)
 	     (message (error-message-string err))
@@ -299,6 +305,7 @@
 
    (sumibi-henkan-mode
     ;; 変換中に呼ばれたら 次の候補を選択する
+    (error "not implemented...")
     )
    (t
     ;; 上記以外で呼ばれたら新規変換
@@ -309,13 +316,16 @@
       (let ((end (point))
 	    (gap (sumibi-skip-chars-backward)))
 	(goto-char end)
-	(when (/= gap 0)
-	  (setq sumibi-fence-yomi (buffer-substring (+ end gap) end))
-	  (if (not (string= sumibi-fence-yomi ""))
-	      (setq sumibi-henkan-mode t))
-	  (sumibi-henkan-region (+ end gap) end))
-	(sumibi-display-function (+ end gap) end)
-	(setq sumibi-henkan-mode nil)))
+	(if (/= gap 0)
+	    ;; 意味のある入力が見つかったので変換する
+	    (progn
+	      (when (sumibi-henkan-region (+ end gap) end)
+		(sumibi-display-function (+ end gap) end))
+	      (setq sumibi-henkan-mode nil))
+	  ;; 変換すべき入力が無かった。
+	  (progn
+	    (setq sumibi-fence-yomi (buffer-substring (+ end gap) end))
+	    (setq sumibi-henkan-mode nil)))))
 	
      ((sumibi-nkanji (preceding-char))
       ;; カーソル直前が 全角で漢字以外 だったら
