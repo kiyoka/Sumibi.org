@@ -6,13 +6,14 @@
 
 (define (L:body)
   '(body
-    (center
-     (a (@ (href "mailto:kiyoka@netfort.gr.jp"))
-	"email: Kiyoka Nishiyama"))
+    ,L:tab
 
     (*section
      "インストール"
-     #f
+     "How to install"
+     (*en
+      (p "No documents in English, sorry..." ))
+
      (*ja
       (ol
        (li "Emacsにapel-10.6以上をインストールします。")
@@ -41,7 +42,11 @@
 
     (*section 
      "キー操作"
-     #f
+     "Key bindings"
+
+     (*en
+      (p "No documents in English, sorry..." ))
+
      (*subsection
       "変換"
       #f
@@ -116,16 +121,17 @@
      (*subsection
       "変換のコツ"
       #f
-      (ul
-       (li "なるべく長い文章で変換する。")
-       (p
-	"Sumibiエンジンはなるべく長い文章を一括変換したほうが変換精度が上がります。\n"
-	"理由は、Sumibiエンジンの仕組みにあります。\n"
-	"Sumibiエンジンは文脈中の単語の列びから、統計的にどの単語が相応しいかを判断します。\n")
-       (li "SKKの辞書に含まれていそうな単語を指定する。")
-       (p
-	"SKKに慣れている人でないと感覚がつかめないかもしれませんが、\"変換精度\"のような多くの複合語\n"
-	"は最初から辞書に登録されているので、\"henkanseido\"と言う風に指定すると、確実に変換できます。\n"))))
+      (*ja
+       (ul
+	(li "なるべく長い文章で変換する。")
+	(p
+	 "Sumibiエンジンはなるべく長い文章を一括変換したほうが変換精度が上がります。\n"
+	 "理由は、Sumibiエンジンの仕組みにあります。\n"
+	 "Sumibiエンジンは文脈中の単語の列びから、統計的にどの単語が相応しいかを判断します。\n")
+	(li "SKKの辞書に含まれていそうな単語を指定する。")
+	(p
+	 "SKKに慣れている人でないと感覚がつかめないかもしれませんが、\"変換精度\"のような多くの複合語\n"
+	 "は最初から辞書に登録されているので、\"henkanseido\"と言う風に指定すると、確実に変換できます。\n")))))
 
     ,W:sf-logo
     ))
