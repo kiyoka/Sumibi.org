@@ -9,12 +9,6 @@
 (use text.tr)
 
 
-;; DBI の設定を読み込む
-(define sumibi-debug #f)
-(load "~/.sumibi")
-
-
-
 ;; SQLのSELECTコマンドを発行して、結果をリストで取得する
 ;; カラムの型は、この関数専用のフォーマットで与える
 ;; 例)

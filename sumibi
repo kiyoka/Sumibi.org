@@ -3,7 +3,7 @@
 ;; "Sumibi" is a Ank kana kanji convert tool.
 ;;
 ;;   Copyright (C) 2002,2003,2004 Kiyoka Nishyama
-;;     $Date: 2005/01/07 16:47:42 $
+;;     $Date: 2005/01/08 02:33:04 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -31,11 +31,13 @@
 (use dbi)
 (use gauche.collection)
 (use util.list)
+(use www.cgi)
+(use text.tree)
 (require 'pretty-print)
 (require 'collect)
+(load "sumibi/sumibi-define.scm")
 (load "sumibi/skkdict-load.scm")
 (load "sumibi/corpus-load.scm")
-(load "sumibi/sumibi-define.scm")
 
 
 ;;
@@ -731,25 +733,6 @@
     (exit 4))
 
   (let* (
-	 (command #f)
-
-	 ;; Dropping the first argument.
-	 (_ (cdr args))
-
-	 ;; Checking switches.
-	 (_ (parse-options
-	     _
-	     (
-	      ("h" () (display-help)))))
-
-	 (input-port
-	  (open-input-string 
-	   (port->string
-	    (open-input-conversion-port
-	     (current-input-port)
-	     "*JP"
-	     :buffer-size (* 10 1024)))))
-   
 	 (connection (dbi-make-connection driver 
 					  sumibi-sumibidb-user
 					  sumibi-sumibidb-password
@@ -757,25 +740,50 @@
 	 (query (dbi-make-query connection))
 	 )
 
-    ;; analyze command line by line
+    ;; 外部との動作モードを決定する
+    (case sumibi-interface
+      ;; CGI モード
+      ('cgi
+       (cgi-main
+	(lambda (params)
+	  `(
+	    ,(cgi-header :content-type "text/plain"
+			 :charset      "UTF-8")
+	    ,(write-to-string (sumibi-convert-sentence (cgi-get-parameter "string" params) query))))))
+      ;; 標準入力モード
+      (else
+       (let* (
+	      ;; 第一引数を捨てる
+	      (_ (cdr args))
+	      
+	      ;; optionのチェック
+	      (_ (parse-options
+		  _
+		  (
+		   ("h" () (display-help)))))
+	      
+	      (input-port
+	       (open-input-string 
+		(port->string
+		 (open-input-conversion-port
+		  (current-input-port)
+		  "*JP"
+		  :buffer-size (* 10 1024))))))
 
-    (if #f
-	(begin
-	  (sumibi-convert-sentence (car (port->string-list input-port)) query)))
-    (for-each 
-     (lambda (x)
-       (let* ( 
-	      (result (sumibi-convert-sentence x query))
-	      (r
-	       (string-join
-		(map
-		 (lambda (b)
-		   (car b))
-		 result)
-		"/")))
-	 #?=x
-	 (display "#9#") (display x) (newline)
-	 (display "#9#") (display r)   (newline)))
-     (port->string-list input-port)))
+	 (for-each 
+	  (lambda (x)
+	    (let* ( 
+		   (result (sumibi-convert-sentence x query))
+		   (r
+		    (string-join
+		     (map
+		      (lambda (b)
+			(car b))
+		      result)
+		     "/")))
+	      #?=x
+	      (display "#9#") (display x) (newline)
+	      (display "#9#") (display r)   (newline)))
+	  (port->string-list input-port))))))
   
   (exit 0))
