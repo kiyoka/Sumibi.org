@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el(auther: knak)
 ;;
-;;     $Date: 2005/01/18 15:23:57 $
+;;     $Date: 2005/01/19 14:57:09 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -51,11 +51,23 @@
 
 
 ;; ローマ字漢字変換時、対象とするローマ字を設定するための変数
-(defvar sumibi-skip-chars "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ")
+(defvar sumibi-skip-chars "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ .,0123456789")
 (defvar sumibi-mode-map (make-sparse-keymap)         "漢字変換トグルマップ")
 
 (defvar sumibi-rK-trans-key "\C-j"
   "*漢字変換キーを設定する")
+
+
+
+;;--- デバッグメッセージ出力
+(defvar sumibi-debug nil)		; デバッグフラグ
+(defmacro sumibi-debug-print (string)
+  `(if sumibi-debug
+       (let ((buffer (get-buffer-create "*sumibi-debug*")))
+	 (with-current-buffer buffer
+	   (goto-char (point-max))
+	   (insert ,string)))))
+
 
 ;;; sumibi basic output
 (defvar sumibi-fence-yomi nil)		; 変換読み
@@ -120,6 +132,9 @@
     (let* (
 	   (yomi (buffer-substring b e))
 	   (henkan-list (sumibi-henkan-request yomi)))
+
+      (sumibi-debug-print (format "henkan-inupt:%s\n"  yomi))
+      (sumibi-debug-print (format "henkan-result:%S\n" henkan-list))
 
       (condition-case err
 	  (progn
