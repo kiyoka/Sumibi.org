@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/03/13 11:26:48 $
+;;     $Date: 2005/03/14 14:16:43 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -362,8 +362,15 @@
 
 	 (let* (
 		(start       (point-marker))
-		(insert-word (nth (nth cnt sumibi-cand-n) x))
-		(_           (insert insert-word))
+		(_n          (nth cnt sumibi-cand-n))
+		(_max        (nth cnt sumibi-cand-max))
+		(insert-word (nth _n x))
+		(_     
+		 (if (eq cnt sumibi-cand)
+		     (progn
+		      (insert insert-word)
+		      (message (format "candidate (%d/%d)" (+ _n 1) _max)))
+		   (insert insert-word)))
 		(end         (point-marker))
 		(ov          (make-overlay start end)))
 
@@ -414,6 +421,8 @@
 (define-key sumibi-select-mode-map "\C-e"                   'sumibi-select-last-word)
 (define-key sumibi-select-mode-map sumibi-rK-trans-key      'sumibi-select-next)
 (define-key sumibi-select-mode-map " "                      'sumibi-select-next)
+(define-key sumibi-select-mode-map "\C-p"                   'sumibi-select-prev)
+(define-key sumibi-select-mode-map "\C-n"                   'sumibi-select-next)
 
 
 ;; 変換を確定し入力されたキーを再入力する関数
@@ -448,6 +457,19 @@
   (setq sumibi-select-mode nil)
   (sumibi-select-update-display))
 
+;; 前の候補に進める
+(defun sumibi-select-prev ()
+  "前の候補に進める"
+  (interactive)
+  (let (
+	(n sumibi-cand))
+
+    ;; 前の候補に切りかえる
+    (setcar (nthcdr n sumibi-cand-n) (- (nth n sumibi-cand-n) 1))
+    (when (> 0 (nth n sumibi-cand-n))
+      (setcar (nthcdr n sumibi-cand-n) (- (nth n sumibi-cand-max) 1)))
+    (sumibi-select-update-display)))
+
 ;; 次の候補に進める
 (defun sumibi-select-next ()
   "次の候補に進める"
@@ -455,7 +477,7 @@
   (let (
 	(n sumibi-cand))
 
-    ;; 次の候補に
+    ;; 次の候補に切りかえる
     (setcar (nthcdr n sumibi-cand-n) (+ 1 (nth n sumibi-cand-n)))
     (when (>= (nth n sumibi-cand-n) (nth n sumibi-cand-max))
       (setcar (nthcdr n sumibi-cand-n) 0))
@@ -548,7 +570,7 @@
 	  (setq sumibi-select-mode t)
 	  (setq sumibi-cand 0)		; 文節番号初期化
 	  
-1	  (sumibi-debug-print "henkan mode ON\n")
+	  (sumibi-debug-print "henkan mode ON\n")
 	  
 	  ;; カーソル位置がどの文節に乗っているかを調べる。
 	  (mapcar
