@@ -8,8 +8,8 @@
 (use srfi-1)
 (use slib)
 (use dbi)
-(load "./romkan.scm")
-(load "./dbiutil.scm")
+(load "sumibi/romkan.scm")
+(load "sumibi/dbiutil.scm")
 
 
 ;; 文字列を 1文字 1件のリストにして返す
