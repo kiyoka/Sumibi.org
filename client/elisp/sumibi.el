@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/03/27 13:45:12 $
+;;     $Date: 2005/04/07 14:15:11 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -27,7 +27,7 @@
 ;;;     配布条件: GPL
 ;;; 最新版配布元: http://sourceforge.jp/projects/sumibi/
 
-;;; 本バージョン 0.1.1 はベータ版です。
+;;; 本バージョン 0.1.2 はベータ版です。
 ;;; 機能的に不十分なところがあります。御了承ください。
 ;;; 不明な点や改善したい点があればSumibiのメーリングリストに参加して
 ;;; フィードバックをおねがいします。
@@ -50,6 +50,10 @@
 ;;; インストール方法、使いかたは以下のWebサイトにありますのであわせて参照してください。
 ;;;   http://www.sumibi.org/
 ;;;
+
+;;; Code:
+
+(require 'cl)
 
 ;;; 
 ;;;
@@ -309,7 +313,9 @@
 	      (not (eq (preceding-char) ?\ ))
 	      (not (eq (point-at-bol) (point)))
 	      (eq (sumibi-char-charset (preceding-char)) 'ascii)
-	      (eq (sumibi-char-charset (string-to-char (car x))) 'ascii))
+	      (and
+	       (< 0 (length (car x)))
+	       (eq (sumibi-char-charset (string-to-char (car x))) 'ascii)))
 	     (insert " "))
 
 	 (let* (
@@ -330,7 +336,7 @@
 	   (setq sumibi-last-fix (concat sumibi-last-fix insert-word))
 	   
 	   ;; 選択中の場所を装飾する。
-	   (overlay-put ov 'face 'normal)
+	   (overlay-put ov 'face 'default)
 	   (when (and select-mode
 		      (eq cnt sumibi-cand))
 	     (overlay-put ov 'face 'highlight))
@@ -676,9 +682,12 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (set-language-info "Japanese" 'input-method "japanese-sumibi")
 (setq default-input-method "japanese-sumibi")
 
-(defconst sumibi-version "0.1.1")
+(defconst sumibi-version "0.1.2pre")
 (defun sumibi-version (&optional arg)
   "入力モード変更"
   (interactive "P")
   (message sumibi-version))
 (provide 'sumibi)
+
+;; Sumibi モードをバッファ全体で有効にする
+(global-sumibi-mode 1)
