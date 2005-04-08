@@ -40,7 +40,7 @@
 
      (*ja
       (ol
-       (li "Emacsにapel-10.6以上をインストールします。")
+       (li "Emacs,XEmacsにapel-10.4以上をインストールします。")
        (li "sumibi.elをEmacsのロードパスにコピーします。")
        (li "CAcert.crtを適当な場所にコピーします。 (例: /home/xxxx/emacs ディレクトリーなど )")
        (li "curl 7.9.5以上をSSL機能を有効にしてビルドし、インストールします。")
@@ -51,7 +51,8 @@
 	(li "cygwin ( 最新版 )"))
        (p "httpsプロキシーサーバーを使用するには以下の例のように環境変数を設定する必要があります。")
        (program
-	"export http_proxy=http://your.proxy.server:8080/")
+	"export http_proxy=http://your.proxy.server:8080/\n"
+	"export https_proxy=http://your.proxy.server:8080/")
        (li ".emacsに次のコードを追加します。")
        (program
 	";; CAcert.crtの保存パス\n"
