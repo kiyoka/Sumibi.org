@@ -231,6 +231,7 @@
     ("ん" . "n")
     ("ん" . "n'")
     ("でぃ" . "dyi")
+    ("っでぃ" . "ddyi")
     ("ー" . "-")
     ("ちぇ" . "che")
     ("っちぇ" . "cche")
@@ -267,10 +268,13 @@
     ("zyo"  . "jo")
 
     ("tya"  . "cha")
+    ("tyi"  . "chi")
     ("tyu"  . "chu")
+    ("tye"  . "che")
     ("tyo"  . "cho")
 
     ("dhi"  . "dyi")
+    ("ddhi" . "ddyi")
 
     ("la"   . "xa")
     ("li"   . "xi")
@@ -281,7 +285,9 @@
     ("xtsu" . "tt")
 
     ("ttya" . "ccha")
+    ("ttyi" . "cchi")
     ("ttyu" . "cchu")
+    ("ttye" . "cche")
     ("ttyo" . "ccho")
 
     ))

@@ -8,6 +8,10 @@
     3. XEmacs対応
       - 'normal というface名がGNU Emacsにしか無いので廃止した。共通に存在する 'default に変更した。
       - string-to-char() に空文字列を与えたときの動作がXEmacsでは nil になる現象に対応した。
+  - sumibi
+    1. 以下のローマ字表記を追加した。
+        tyi, tye, ttyi, ttye, ddhi
+
 
 [0.1.1]
   1. 入出力エンコードとして jis を追加サポートした。
