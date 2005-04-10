@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/04/10 04:07:46 $
+;;     $Date: 2005/04/10 13:35:09 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -750,7 +750,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (set-language-info "Japanese" 'input-method "japanese-sumibi")
 (setq default-input-method "japanese-sumibi")
 
-(defconst sumibi-version "0.1.2pre")
+(defconst sumibi-version "0.1.2")
 (defun sumibi-version (&optional arg)
   "入力モード変更"
   (interactive "P")
