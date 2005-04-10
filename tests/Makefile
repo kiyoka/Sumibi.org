@@ -47,8 +47,6 @@ cnet:
 	find /home/park/sumibi_corpus/japan.cnet.com -name '*.htm' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 itmedia:
 	find /home/park/sumibi_corpus/www.itmedia.co.jp -name '*.html' -exec $(SUMIYAKI) -l {} \; > ~/park/log
-cvsbook:
-	find /home/park/sumibi_corpus/cvsbook -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 hatena:
 	find /home/park/sumibi_corpus/hatena -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 

@@ -1,10 +1,13 @@
 
 [0.1.2]
   - sumibi.el
-    1. copy-list関数を使うので、(require 'cl) を追加した。
-    2. グローバル変換モードをデフォルトとした。(global-sumibi-mode 1) を sumibi.el の最後で定義した。
-    3. XEmacs対応: 'normal というface名がGNU Emacsにしか無いので廃止した。共通に存在する 'default に変更した。
-    4. XEmacs対応: string-to-char() に空文字列を与えたときの動作がXEmacsでは nil になる現象に対応した。
+    1. copy-list関数を利用するので (require 'cl) を追加した。
+    2. (load "sumibi")だけでインストールが完了する様にした。
+      - グローバル変換モードをデフォルトとした。(global-sumibi-mode 1) を sumibi.el の最後で定義した。
+      - SSL証明書をsumibi.elに埋め込み、起動時に証明書ファイルをテンポラリ生成するようにした。
+    3. XEmacs対応
+      - 'normal というface名がGNU Emacsにしか無いので廃止した。共通に存在する 'default に変更した。
+      - string-to-char() に空文字列を与えたときの動作がXEmacsでは nil になる現象に対応した。
 
 [0.1.1]
   1. 入出力エンコードとして jis を追加サポートした。
