@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/04/10 13:35:09 $
+;;     $Date: 2005/04/11 14:32:33 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -64,7 +64,7 @@
   :group 'input-method
   :group 'Japanese)
 
-(defcustom sumibi-server-url "https://sumibi.org/cgi-bin/sumibi/unstable/sumibi.cgi"
+(defcustom sumibi-server-url "https://sumibi.org/cgi-bin/sumibi/testing/sumibi.cgi"
   "SumibiサーバーのURLを指定する。"
   :type  'string
   :group 'sumibi)
@@ -210,10 +210,16 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 ;;
 (defun sumibi-init ()
 
+  ;; テンポラリファイルを作成する。
+  (defun sumibi-make-temp-file (base)
+    (if	(functionp 'make-temp-file)
+	(make-temp-file base)
+      (concat "/tmp/" (make-temp-name base))))
+
   (when (not sumibi-init)
     ;; SSL証明書ファイルをテンポラリファイルとして作成する。
     (setq sumibi-server-cert-file 
-	  (make-temp-file
+	  (sumibi-make-temp-file
 	   "sumibi.certfile"))
     (sumibi-debug-print (format "cert-file :[%s]\n" sumibi-server-cert-file))
     (with-temp-buffer
@@ -743,7 +749,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
   (sumibi-input-mode -1))
 (register-input-method
  "japanese-sumibi" "Japanese" 'sumibi-activate
- "" "Romaji -> Kanji&Kana"
+ "" "Roman -> Kanji&Kana"
  nil)
 
 ;; input-method として登録する。
