@@ -34,6 +34,16 @@
      (*en
       (p
        ("sorry , Japanese only ..."))))
+
+    (*section 
+     "もっと知る"
+     "Learn more..."
+     (*ja
+      (ul
+       (li (*link "よくある質問を読む" "faq.html"))))
+     (*en
+      (p
+       ("sorry , Japanese only ..."))))
        
 ;;    (*section 
 ;;     "もっと使いこなす"
