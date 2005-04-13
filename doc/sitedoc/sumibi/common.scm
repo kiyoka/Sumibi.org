@@ -9,7 +9,10 @@
       "sumibi.html")
     ( el 
       "sumibi.el ( Emacs client )"
-      "sumibi_el.html")))
+      "sumibi_el.html")
+    ( faq
+      "FAQ"
+      "faq.html")))
 
 
 (define SmartDoc:abbrev-table
@@ -62,7 +65,7 @@ hosted by
 		 ,(cadr (assoc key page-alist)))
 		(author " Kiyoka Nishiyama ")
 		(hp " http://www.sumibi.org/ ")
-		(date " $Date: 2005/03/27 12:06:41 $ "))
+		(date " $Date: 2005/04/13 14:00:46 $ "))
 	  ,tree
 	  ))))
 
