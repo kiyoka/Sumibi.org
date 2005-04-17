@@ -1,4 +1,8 @@
 
+[0.1.3]
+  - sumibi.el
+    1. curlのエラーがミニバッファに表示されるようにした。
+
 [0.1.2]
   - sumibi.el
     1. copy-list関数を利用するので (require 'cl) を追加した。

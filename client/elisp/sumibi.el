@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/04/11 14:32:33 $
+;;     $Date: 2005/04/17 13:59:45 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -246,7 +246,7 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 	(result 
 	 (shell-command-to-string
 	  (concat
-	   sumibi-curl " --silent "
+	   sumibi-curl " --silent --show-error "
 	   (format "--connect-timeout %d " sumibi-server-timeout)
 	   sumibi-server-url " "
 	   (format "--data 'string=%s&encode=%S' " yomi sumibi-server-encode)
@@ -756,7 +756,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (set-language-info "Japanese" 'input-method "japanese-sumibi")
 (setq default-input-method "japanese-sumibi")
 
-(defconst sumibi-version "0.1.2")
+(defconst sumibi-version "0.1.3pre")
 (defun sumibi-version (&optional arg)
   "入力モード変更"
   (interactive "P")
