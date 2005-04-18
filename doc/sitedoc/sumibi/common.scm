@@ -30,6 +30,8 @@
      (*link "Gauche" "http://www.shiro.dreamhost.com/scheme/gauche/index.html"))
     (W:GPL
      (*link "GNU General Public License (GPL2)" "http://www.gnu.org/licenses/gpl.html"))
+    (W:CAcert
+     (*link "CAcert.org" "http://www.cacert.org/"))
     ;; sourceforge link logo
     (W:sf-logo
      (native
@@ -46,7 +48,7 @@ hosted by
       (@ (format "html"))
       ,(map
 	(lambda (x)
-	  (format "<a href=\"~a\"> [~a] </a>"
+	  (format "[<a href=\"~a\">~a</a>]"
 		  (caddr x)
 		  (cadr x)))
 	page-alist)))
@@ -65,7 +67,7 @@ hosted by
 		 ,(cadr (assoc key page-alist)))
 		(author " Kiyoka Nishiyama ")
 		(hp " http://www.sumibi.org/ ")
-		(date " $Date: 2005/04/13 14:00:46 $ "))
+		(date " $Date: 2005/04/18 14:47:10 $ "))
 	  ,tree
 	  ))))
 
