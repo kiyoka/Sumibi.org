@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-#use strict;
+use strict;
 use SOAP::Transport::HTTP;
 
 my $server = SOAP::Transport::HTTP::CGI
@@ -13,7 +13,10 @@ sub version {
     return "0.3.0";
 }
 
-sub choose {
-    my $random = int(rand(9))+1;
-    return $random;
+sub status {
+    return "not implemented";
+}
+
+sub convert {
+    return "not implemented";
 }
