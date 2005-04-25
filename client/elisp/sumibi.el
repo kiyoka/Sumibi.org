@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/04/23 14:24:03 $
+;;     $Date: 2005/04/25 15:11:59 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -134,6 +134,18 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 (defcustom sumibi-stop-chars ";:(){}<>"
   "*漢字変換文字列を取り込む時に変換範囲に含めない文字を設定する"
   :type  'string
+  :group 'sumibi)
+
+(defcustom sumibi-replace-keyword-list '(
+					 ("no" . "no.h")
+					 ("ha" . "ha.h")
+					 ("ga" . "ga.h")
+					 ("wo" . "wo.h")
+					 ("ni" . "ni.h")
+					 ("de" . "de.h"))
+
+  "Sumibiサーバーに文字列を送る前に置換するキーワードを設定する"
+  :type  'sexp
   :group 'sumibi)
 
 (defcustom sumibi-curl "curl"
@@ -270,6 +282,20 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 	nil))))
 
 
+;; 置換キーワードを解決する
+(defun sumibi-replace-keyword (str)
+  (let (
+	(word-list (split-string str)))
+    (mapconcat
+     (lambda (x)
+       (let ((val (assoc x sumibi-replace-keyword-list)))
+	 (if val
+	     (cdr val)
+	   x)))
+     word-list
+     " ")))
+
+
 ;; リージョンをローマ字漢字変換する関数
 (defun sumibi-henkan-region (b e)
   "指定された region を漢字変換する"
@@ -277,7 +303,7 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
   (when (/= b e)
     (let* (
 	   (yomi (buffer-substring-no-properties b e))
-	   (henkan-list (sumibi-henkan-request yomi)))
+	   (henkan-list (sumibi-henkan-request (sumibi-replace-keyword yomi))))
 
       (if henkan-list
 	  (condition-case err
