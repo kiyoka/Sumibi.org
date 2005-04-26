@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/04/25 15:11:59 $
+;;     $Date: 2005/04/26 15:08:28 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -27,12 +27,12 @@
 ;;;     配布条件: GPL
 ;;; 最新版配布元: http://sourceforge.jp/projects/sumibi/
 
-;;; 本バージョン 0.2.0 はベータ版です。
-;;; 機能的に不十分なところがあります。御了承ください。
+;;; 本バージョン 0.2.0 は安定版です。
+;;; 動作は安定しているとは思いますが機能的にはまだまだ不足しています。御了承ください。
 ;;; 不明な点や改善したい点があればSumibiのメーリングリストに参加して
 ;;; フィードバックをおねがいします。
 ;;;
-;;; また、Sumibiに興味を持っていただいた方はプログラマかどうかにかかわらず
+;;; また、Sumibiに興味を持っていただいた方はあなたがプログラマかどうかにかかわらず、
 ;;; 気軽にプロジェクトに参加してください。
 ;;;
 ;;; 本バージョンには次のような制限があります。
@@ -40,9 +40,8 @@
 ;;;      1) sumibi.orgで動作しているSumibi Serverに接続して利用します。 
 ;;;      2) SSL証明書を使用し、最低限のセキュリティーは確保しています。 
 ;;;         SSL証明書は CAcert( http://www.cacert.org/ )のものを使っています。
-;;;      3) Sumibi Server側もベータ版のため、不安定であることを御了承ください。
-;;;      4) 将来Sumibi Serverのプロトコルは変更になります。
-;;;      5) Sumibi Server側のソースコードもGPLです。sourceforge.jpのCVSで公開されています。
+;;;      3) 将来Sumibi Serverのプロトコルは変更になります。
+;;;      4) Sumibi Server側のソースコードもGPLです。sourceforge.jpのCVSで公開されています。
 ;;;
 ;;;   2. バグがまだまだあります。^_^;
 ;;;
@@ -782,7 +781,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (set-language-info "Japanese" 'input-method "japanese-sumibi")
 (setq default-input-method "japanese-sumibi")
 
-(defconst sumibi-version "0.2.0pre")
+(defconst sumibi-version "0.2.0")
 (defun sumibi-version (&optional arg)
   "入力モード変更"
   (interactive "P")
