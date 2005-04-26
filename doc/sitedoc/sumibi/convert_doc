@@ -1,9 +1,13 @@
 #!/bin/bash
 
-CSS="-toc:true -html4.css.url:../sumibi.css -html4.encoding:UTF-8 -html4.css.include:link -masterLocale:ja -locale:en,ja"
+CSS="-html4.css.url:../sumibi.css -html4.encoding:UTF-8 -html4.css.include:link -masterLocale:ja -locale:en,ja"
 
 target_dir=$1
 base=$2
+CSS_OP=""
+if [[ "$3" != "" ]] ; then
+    CSS_OP="-toc:true"
+fi
 
 sxmlcnv  -p  ${base}.scm > ${base}.sdoc
-/usr/local/bin/sdoc ${CSS} ${base}.sdoc
+/usr/local/bin/sdoc ${CSS} ${CSS_OP} ${base}.sdoc
