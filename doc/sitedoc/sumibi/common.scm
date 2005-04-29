@@ -7,9 +7,12 @@
     ( sumibi    
       "Sumibi"
       "sumibi.html")
-    ( el 
-      "sumibi.el ( Emacs client )"
-      "sumibi_el.html")
+    ( el-stable
+      "sumibi.el (stable)"
+      "sumibi_el_stable.html")
+    ( el-testing
+      "sumibi.el (testing)"
+      "sumibi_el_testing.html")
     ( faq
       "FAQ"
       "faq.html")))
@@ -67,7 +70,7 @@ hosted by
 		 ,(cadr (assoc key page-alist)))
 		(author " Kiyoka Nishiyama ")
 		(hp " http://www.sumibi.org/ ")
-		(date " $Date: 2005/04/18 14:47:10 $ "))
+		(date " $Date: 2005/04/29 09:58:32 $ "))
 	  ,tree
 	  ))))
 

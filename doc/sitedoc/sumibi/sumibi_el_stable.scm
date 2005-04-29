@@ -14,7 +14,7 @@
      (*en
       (p "No documents in English, sorry..." ))
      (*ja
-      (p "このドキュメントは、sumibi.el 0.1.2についての解説です。")))
+      (p "このドキュメントは、sumibi.el 0.2.0についての解説です。")))
 
     (*section
      "sumibi.elの特徴"
@@ -212,6 +212,12 @@
 	(li "sumibi-stop-chars")
 	(p "C-j キーでローマ字を変換する時、変換文章の停止文字を指定します。\n"
 	   "sumibi.elは C-j キーを押されるとカーソル位置から前方方向に sumibi-stop-chars で定義された停止文字にマッチするまでを捜査し、変換対象とします。")
+	(li "sumibi-replace-keyword-list")
+	(p  "Sumibiサーバーに文字列を送る前に置換するキーワードを設定します。")
+	(p  "lispの連想リスト形式で指定します。")
+	(p  "デフォルトでは no ha ga wo ni de にそれぞれ .h メソッドを指定した形に置換するようになっています。")
+	(p  "最初から、ひらがなや、カタカナ固定にしたいキーワードを追加すると便利でしょう。"
+	    "例)node → node.h など")
 	(li "sumibi-curl")
 	(p "curlコマンドの絶対パスを指定します。通常は変更する必要はありません。")))))
 
@@ -220,6 +226,6 @@
 
 
 ;; ページの出力
-(output 'el (L:body))
+(output 'el-stable (L:body))
 
 
