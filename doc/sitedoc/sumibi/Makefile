@@ -10,5 +10,6 @@
 all :
 	/bin/mkdir -p ../../../web
 	./convert_doc ../../../web sumibi
-	./convert_doc ../../../web sumibi_el
-	./convert_doc ../../../web faq           t
+	./convert_doc ../../../web sumibi_el_stable
+	./convert_doc ../../../web sumibi_el_testing
+	./convert_doc ../../../web faq                t

@@ -220,6 +220,6 @@
 
 
 ;; ページの出力
-(output 'el (L:body))
+(output 'el-testing (L:body))
 
 
