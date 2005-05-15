@@ -1,4 +1,26 @@
 #!/usr/bin/perl -w
+#
+# "sumibi.cgi" is an SOAP server for sumibi engine.
+#
+#   Copyright (C) 2005 Kiyoka Nishyama
+#     $Date: 2005/05/15 11:21:14 $
+#
+# This file is part of Sumibi
+#
+# Sumibi is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+# 
+# Sumibi is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with Sumibi; see the file COPYING.
+#
+#
 
 use strict;
 use SOAP::Transport::HTTP;
