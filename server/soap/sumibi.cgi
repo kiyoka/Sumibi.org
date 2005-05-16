@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2005/05/15 15:39:11 $
+#     $Date: 2005/05/16 15:12:37 $
 #
 # This file is part of Sumibi
 #
@@ -28,7 +28,7 @@ use SOAP::Transport::HTTP;
 my $VERSION = "0.3.0";
 
 my $server = SOAP::Transport::HTTP::CGI
-    -> dispatch_to( 'SumibiConvert' )
+    -> dispatch_to( 'urn:SumibiConvert' )
     -> handle
     ;
 

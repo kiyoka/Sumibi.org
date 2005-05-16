@@ -6,7 +6,7 @@
   change as we refine and extend our APIs.
   
      Copyright (C) 2005 Kiyoka Nishyama
-       $Date: 2005/05/15 15:39:11 $
+       $Date: 2005/05/16 15:12:37 $
   
    This file is part of Sumibi
   
@@ -25,7 +25,7 @@
   
 -->
 
-<!-- Revision $Date: 2005/05/15 15:39:11 $ -->
+<!-- Revision $Date: 2005/05/16 15:12:37 $ -->
 
 <definitions name="SumibiConvert"
              targetNamespace="urn:SumibiConvert"
@@ -71,6 +71,14 @@
 
   <!-- note, ie and oe are ignored by server; all traffic is UTF-8. -->
 
+  <message name="doGetVersion">
+    <part name="in"             type="xsd:string"/>
+  </message>
+
+  <message name="doGetVersionResponse">
+    <part name="return"         type="xsd:string"/>
+  </message>
+
   <message name="doSumibiConvert">
     <part name="query"          type="xsd:string"/>
     <part name="sumi"           type="xsd:string"/>
@@ -86,6 +94,11 @@
 
   <portType name="SumibiConvertPort">
 
+    <operation name="doGetVersion">
+      <input message="xsd:doGetVersion"/>
+      <output message="xsd:doGetVersionResponse"/>
+    </operation>
+
     <operation name="doSumibiConvert">
       <input message="typens:doSumibiConvert"/>
       <output message="typens:doSumibiConvertResponse"/>
@@ -100,8 +113,22 @@
     <soap:binding style="rpc"
                   transport="http://schemas.xmlsoap.org/soap/http"/>
 
+    <operation name="doGetVersion">
+      <soap:operation soapAction="urn:SumibiConvert#doGetVersion"/>
+      <input>
+        <soap:body use="encoded"
+                   namespace="urn:SumibiConvert"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded"
+                   namespace="urn:SumibiConvert"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
     <operation name="doSumibiConvert">
-      <soap:operation soapAction="urn:SumibiConvertAction"/>
+      <soap:operation soapAction="urn:SumibiConvert#doSumibiConvert"/>
       <input>
         <soap:body use="encoded"
                    namespace="urn:SumibiConvert"
