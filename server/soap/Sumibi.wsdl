@@ -6,7 +6,7 @@
   change as we refine and extend our APIs.
   
      Copyright (C) 2005 Kiyoka Nishyama
-       $Date: 2005/05/16 15:12:37 $
+       $Date: 2005/05/17 14:52:14 $
   
    This file is part of Sumibi
   
@@ -25,7 +25,7 @@
   
 -->
 
-<!-- Revision $Date: 2005/05/16 15:12:37 $ -->
+<!-- Revision $Date: 2005/05/17 14:52:14 $ -->
 
 <definitions name="SumibiConvert"
              targetNamespace="urn:SumibiConvert"
@@ -42,10 +42,16 @@
     <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" 
                 targetNamespace="urn:SumibiResult">
             
+      <xsd:complexType name="SumibiStatus">
+        <xsd:all>
+          <xsd:element name="version"           type="xsd:string"/>
+        </xsd:all>
+      </xsd:complexType>
+
       <xsd:complexType name="SumibiResult">
         <xsd:all>
-          <xsd:element name="convertTime"                 type="xsd:double"/>
-          <xsd:element name="resultElements"              type="typens:ResultElementArray"/>
+          <xsd:element name="convertTime"       type="xsd:double"/>
+          <xsd:element name="resultElements"    type="typens:ResultElementArray"/>
         </xsd:all>
       </xsd:complexType>
 
@@ -71,12 +77,12 @@
 
   <!-- note, ie and oe are ignored by server; all traffic is UTF-8. -->
 
-  <message name="doGetVersion">
+  <message name="doGetStatus">
     <part name="in"             type="xsd:string"/>
   </message>
 
-  <message name="doGetVersionResponse">
-    <part name="return"         type="xsd:string"/>
+  <message name="doGetStatusResponse">
+    <part name="return"         type="typens:SumibiStatus"/>
   </message>
 
   <message name="doSumibiConvert">
@@ -90,13 +96,22 @@
     <part name="return"         type="typens:SumibiResult"/>
   </message>
 
+  <message name="doSumibiConvertSexpResponse">
+    <part name="return"         type="xsd:string"/>
+  </message>
+
   <!-- Port for Sumibi Web APIs, "SumibiConvert" -->
 
   <portType name="SumibiConvertPort">
 
-    <operation name="doGetVersion">
-      <input message="xsd:doGetVersion"/>
-      <output message="xsd:doGetVersionResponse"/>
+    <operation name="doGetStatus">
+      <input message="xsd:doGetStatus"/>
+      <output message="xsd:doGetStatusResponse"/>
+    </operation>
+
+    <operation name="doSumibiConvertSexp">
+      <input message="typens:doSumibiConvert"/>
+      <output message="typens:doSumibiConvertSexpResponse"/>
     </operation>
 
     <operation name="doSumibiConvert">
@@ -113,8 +128,22 @@
     <soap:binding style="rpc"
                   transport="http://schemas.xmlsoap.org/soap/http"/>
 
-    <operation name="doGetVersion">
-      <soap:operation soapAction="urn:SumibiConvert#doGetVersion"/>
+    <operation name="doGetStatus">
+      <soap:operation soapAction="urn:SumibiConvert#doGetStatus"/>
+      <input>
+        <soap:body use="encoded"
+                   namespace="urn:SumibiConvert"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded"
+                   namespace="urn:SumibiConvert"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="doSumibiConvertSexp">
+      <soap:operation soapAction="urn:SumibiConvert#doSumibiConvertSexp"/>
       <input>
         <soap:body use="encoded"
                    namespace="urn:SumibiConvert"

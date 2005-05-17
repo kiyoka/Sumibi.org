@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2005/05/16 15:12:37 $
+#     $Date: 2005/05/17 14:52:14 $
 #
 # This file is part of Sumibi
 #
@@ -28,35 +28,42 @@ use SOAP::Transport::HTTP;
 my $VERSION = "0.3.0";
 
 my $server = SOAP::Transport::HTTP::CGI
-    -> dispatch_to( 'urn:SumibiConvert' )
+    -> dispatch_to( 'SumibiConvert' )
     -> handle
     ;
 
 package SumibiConvert;
 
-# サーバーのバージョンを返す。
-sub doGetVersion {
-    return $VERSION;
-}
-
-
 # サーバーの状態を返す
-sub status {
-    return( 'result',
-	    [
-	     { version => $VERSION },
-	     { sumi => [ "sumi_current", "sumi_current2" ] }
-	    ]
+sub doGetStatus {
+    return( 
+	{ version => $VERSION,  sumi => [ "sumi_current", "sumi_current2" ] }
 	);
 }
 
 # 変換:S式で返す
-sub convert_sexp {
+sub doSumibiConvertSexp {
     shift;
     my( $input_str );
 
-    return( 'result',
-	    "((\"変換\" \"返還\" \"ヘンカン\") (\"エンジン\" \"猿人\" \"円陣\" \"遠人\"))"
+    return( 
+	"(" .
+	" (" .
+	"  ((  type . \"j\") (  word . \"変換\"      )) " .
+	"  ((  type . \"j\") (  word . \"返還\"      )) " .
+	"  ((  type . \"j\") (  word . \"ヘンカン\"  )) " .
+	"  ((  type . \"h\") (  word . \"へんかん\"  )) " .
+	"  ((  type . \"k\") (  word . \"ヘンカン\"  )) " .
+	" )" .
+	" (" .
+	"  ((  type . \"j\") (  word . \"エンジン\"  )) " .
+	"  ((  type . \"j\") (  word . \"猿人\"      )) " .
+	"  ((  type . \"j\") (  word . \"円陣\"      )) " .
+	"  ((  type . \"j\") (  word . \"遠人\"      )) " .
+	"  ((  type . \"h\") (  word . \"えんじん\"  )) " .
+	"  ((  type . \"k\") (  word . \"エンジン\"  )) " .
+	" )" .
+	")"
 	);
 }
 
