@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2005/05/17 14:52:14 $
+#     $Date: 2005/05/18 14:55:00 $
 #
 # This file is part of Sumibi
 #
@@ -73,18 +73,21 @@ sub doSumibiConvert {
     my( $input_str ) = @_;
 
     return ( 
-	[
-	 {  no => 0, candidate  => 0, type => "j", word => "変換"      },
-	 {  no => 0, candidate  => 1, type => "j", word => "返還"      },
-	 {  no => 0, candidate  => 2, type => "j", word => "ヘンカン"  },
-	 {  no => 0, candidate  => 3, type => "h", word => "へんかん"  },
-	 {  no => 0, candidate  => 4, type => "k", word => "ヘンカン"  },
-	 {  no => 1, candidate  => 0, type => "j", word => "エンジン"  },
-	 {  no => 1, candidate  => 1, type => "j", word => "猿人"      },
-	 {  no => 1, candidate  => 2, type => "j", word => "円陣"      },
-	 {  no => 1, candidate  => 3, type => "j", word => "遠人"      },
-	 {  no => 1, candidate  => 4, type => "h", word => "えんじん"  },
-	 {  no => 1, candidate  => 5, type => "k", word => "エンジン"  }
-	]
+	{  convertTime => 5, 
+	   resultElements => 
+	       [
+		{  no => 0, candidate  => 0, type => "j", word => "変換"      },
+		{  no => 0, candidate  => 1, type => "j", word => "返還"      },
+		{  no => 0, candidate  => 2, type => "j", word => "ヘンカン"  },
+		{  no => 0, candidate  => 3, type => "h", word => "へんかん"  },
+		{  no => 0, candidate  => 4, type => "k", word => "ヘンカン"  },
+		{  no => 1, candidate  => 0, type => "j", word => "エンジン"  },
+		{  no => 1, candidate  => 1, type => "j", word => "猿人"      },
+		{  no => 1, candidate  => 2, type => "j", word => "円陣"      },
+		{  no => 1, candidate  => 3, type => "j", word => "遠人"      },
+		{  no => 1, candidate  => 4, type => "h", word => "えんじん"  },
+		{  no => 1, candidate  => 5, type => "k", word => "エンジン"  }
+	       ]
+	}
 	);
 }
