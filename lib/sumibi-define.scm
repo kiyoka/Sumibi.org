@@ -20,3 +20,10 @@
     (load         "./.sumibi")
     (when (file-exists? (expand-path "~/.sumibi"))
 	  (load         "~/.sumibi")))
+
+;; デバッグモードの時だけ、slibを読みこむ
+(when sumibi-debug
+      (begin
+	(use slib)
+	(require 'pretty-print)
+	(require 'collect)))
