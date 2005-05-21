@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji convert tool.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;     $Date: 2005/05/18 14:24:54 $
+;;     $Date: 2005/05/21 13:40:40 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -90,6 +90,8 @@
 ;;    (
 ;;      orig     . 検索文字列
 ;;      hiragana . ひらがなに変換した文字列 ( #f もあり得る )
+;;      katakana . カタカナに変換した文字列 ( #f もあり得る )
+;;      alpha    . アルファベットに変換した文字列 ( #f もあり得る )
 ;;    )
 ;;    (
 ;;      単語ID
@@ -142,7 +144,7 @@
 	   ((and (eq? method 'h) hiragana-query)
 	    hiragana-query
 	    )
-	   ;; カタナカ固定
+	   ;; カタカナ固定
 	   ((and (eq? method 'k) katakana-query)
 	    katakana-query
 	    )
@@ -183,18 +185,24 @@
 	    (display result)
 	    (newline)))
     `(
-      (
-       (orig     . ,str)
-       ,(cond
+      ,(append
+	`((orig     . ,str))
+	(cond
 	 ;; ひらがな固定
 	 ((and (eq? method 'h) hiragana-query)
-	  `(hiragana . ,hiragana))
-	 ;; カタナカ固定
+	  `((hiragana . ,hiragana)
+	    (katakana . #f)
+	    (alpha    . #f)))
+	 ;; カタカナ固定
 	 ((and (eq? method 'k) katakana-query)
-	  `(hiragana . ,katakana))
+	  `((hiragana . #f)
+	    (katakana . ,katakana)
+	    (alpha    . #f)))
 	 (else
-	  `(hiragana . ,hiragana)))
-       )
+	  `((hiragana . ,hiragana)
+	    (katakana . ,katakana)
+	    (alpha    . ,str)))))
+	
       ,result)))
 
 
@@ -657,18 +665,19 @@
 	   (okuri    (cdr (assq 'okuri   x)))
 	   (yomi     (cdr (assq 'yomi    x))))
     
-       (if (or hiragana (is-kigou orig))
-	   (if (< 0 (string-length okuri))
-	       (let ((okuri-string
-		      (substring hiragana
-				 (string-length yomi)
-				 (+ (string-length yomi)
-				    (- (string-length hiragana) (string-length yomi))))))
-		 (string-append
-		  tango
-		  okuri-string))
-	       tango)
-	   orig)))
+       `( "j" 
+	  ,(if (or hiragana (is-kigou orig))
+	       (if (< 0 (string-length okuri))
+		   (let ((okuri-string
+			  (substring hiragana
+				     (string-length yomi)
+				     (+ (string-length yomi)
+					(- (string-length hiragana) (string-length yomi))))))
+		     (string-append
+		      tango
+		      okuri-string))
+		   tango)
+	       orig))))
    kouho-info))
 
 
@@ -684,7 +693,7 @@
 	   ;; 単語情報
 	   (tango-info (car  bunsetu))
 	   (kouho-info (cadr bunsetu)))
-
+       
        (when sumibi-debug
 	     (begin
 	       (display "#5#")
@@ -693,17 +702,25 @@
 	       (display "#6#")
 	       (write kouho-info)
 	       (newline)))
-
-       (if (null? kouho-info)
-	   ;; 候補なしの場合ユーザー入力文字列をそのまま返す
-	   (let (
-		 (hiragana (cdr (assq 'hiragana tango-info)))
-		 (orig     (cdr (assq 'orig tango-info))))
-	     (list 
-	      (or hiragana orig)))
-
-	   ;; 候補値の高い順に完成した文節を返す。
-	   (sumibi-output-henkan-kouho tango-info kouho-info))))
+       
+       (let (
+	     (orig     (cdr (assq 'orig tango-info)))
+	     (hiragana (cdr (assq 'hiragana tango-info)))
+	     (katakana (cdr (assq 'katakana tango-info)))
+	     (alpha    (cdr (assq 'alpha    tango-info))))
+	 
+	 (append
+	  ;; 候補値の高い順に完成した文節を返す。
+	  (sumibi-output-henkan-kouho tango-info kouho-info)
+	  
+	  ;; 必須項目 ひらがな、カタカナ、アルファベットをリストの最後に追加する。
+	  (filter-map 
+	   (lambda (x)
+	     x)
+	   (list
+	    (if hiragana        `("h" ,hiragana) #f)
+	    (if katakana        `("k" ,katakana) #f)
+	    (if alpha           `("l" ,alpha   ) #f)))))))
 
    henkan-kouho-list))
 
@@ -745,7 +762,7 @@
 
 	 ;; 評価値順の候補リストを求める
 	 (henkan-kouho-list (sumibi-make-henkan-kouho lookup-list query))
-	 
+
 	 ;; 変換候補リストを完成させて返す。
 	 (complete-henkan-kouho-list (sumibi-output-henkan-kouho-list henkan-kouho-list)))
 
@@ -840,6 +857,7 @@
 		  "*JP"
 		  :buffer-size (* 10 1024))))))
 
+
 	 (for-each 
 	  (lambda (x)
 	    (let* ( 
@@ -848,7 +866,7 @@
 		    (string-join
 		     (map
 		      (lambda (b)
-			(car b))
+			(cadar b))
 		      result)
 		     "/")))
 	      #?=x

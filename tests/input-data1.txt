@@ -1,3 +1,7 @@
+watashi no.h namae ha.h nakano desu .
+kyouha ii tenki nanode , sukoshi ashi wo nobashite kaimono ni ikimashita .
+kyoudai no.h mawari niha igokochi no ii.h kissaten ga takusan arimasu .
+hakushi ga hyakunin iru mura
 tango henkan ha [ watashi.h ] wo [ watashi ] ni henkan suru toiuyouna , hitotu no tango nomi wo henkan suru houshiki dearu . 
 emacs no version ha ika no toori desu .
 kisya no kisya ga kisya de kisya suru .
