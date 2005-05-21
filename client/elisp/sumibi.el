@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/04/29 10:21:27 $
+;;     $Date: 2005/05/21 14:48:30 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -381,7 +381,7 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
        (let ((word (nth (nth cnt sumibi-cand-n) x)))
 	 (sumibi-debug-print (format "word:[%d] %s\n" cnt word))
 	 (setq cnt (+ 1 cnt))
-	 word))
+	 (cadr word)))
      sumibi-henkan-list
      "")))
 
@@ -413,15 +413,15 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 	      (not (eq (point-at-bol) (point)))
 	      (eq (sumibi-char-charset (preceding-char)) 'ascii)
 	      (and
-	       (< 0 (length (car x)))
-	       (eq (sumibi-char-charset (string-to-char (car x))) 'ascii)))
+	       (< 0 (length (cadar x)))
+	       (eq (sumibi-char-charset (string-to-char (cadar x))) 'ascii)))
 	     (insert " "))
 
 	 (let* (
 		(start       (point-marker))
 		(_n          (nth cnt sumibi-cand-n))
 		(_max        (nth cnt sumibi-cand-max))
-		(insert-word (nth _n x))
+		(insert-word (cadr (nth _n x)))
 		(_     
 		 (if (eq cnt sumibi-cand)
 		     (progn
