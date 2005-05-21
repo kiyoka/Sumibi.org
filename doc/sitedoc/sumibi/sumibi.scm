@@ -41,7 +41,8 @@
      "Learn more..."
      (*ja
       (ul
-       (li (*link "よくある質問を読む" "faq.html"))))
+       (li (*link "よくある質問を読む" "faq.html"))
+       (li (*link "Sumibi.orgの状態を見る" "/sumibi/mrtg/"))))
      (*en
       (p
        ("sorry , Japanese only ..."))))
