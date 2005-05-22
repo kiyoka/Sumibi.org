@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/05/22 02:14:22 $
+;;     $Date: 2005/05/22 02:21:07 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -471,6 +471,7 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
     (setq i (1+ i))))
 (define-key sumibi-select-mode-map "\C-m"                   'sumibi-select-kakutei)
 (define-key sumibi-select-mode-map "\C-g"                   'sumibi-select-cancel)
+(define-key sumibi-select-mode-map "q"                      'sumibi-select-cancel)
 (define-key sumibi-select-mode-map "\C-b"                   'sumibi-select-prev-word)
 (define-key sumibi-select-mode-map "\C-f"                   'sumibi-select-next-word)
 (define-key sumibi-select-mode-map "\C-a"                   'sumibi-select-first-word)
