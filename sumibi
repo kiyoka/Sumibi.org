@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji convert tool.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;     $Date: 2005/05/21 13:40:40 $
+;;     $Date: 2005/05/22 01:04:15 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -718,9 +718,10 @@
 	   (lambda (x)
 	     x)
 	   (list
-	    (if hiragana        `("h" ,hiragana) #f)
+	    (if alpha           `("l" ,alpha   ) #f)
 	    (if katakana        `("k" ,katakana) #f)
-	    (if alpha           `("l" ,alpha   ) #f)))))))
+	    (if hiragana        `("h" ,hiragana) #f)
+	    ))))))
 
    henkan-kouho-list))
 
