@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/05/22 12:00:19 $
+;;     $Date: 2005/05/22 12:14:42 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -476,10 +476,16 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 (define-key sumibi-select-mode-map "\C-f"                   'sumibi-select-next-word)
 (define-key sumibi-select-mode-map "\C-a"                   'sumibi-select-first-word)
 (define-key sumibi-select-mode-map "\C-e"                   'sumibi-select-last-word)
-(define-key sumibi-select-mode-map sumibi-rK-trans-key      'sumibi-select-next)
-(define-key sumibi-select-mode-map " "                      'sumibi-select-next)
 (define-key sumibi-select-mode-map "\C-p"                   'sumibi-select-prev)
 (define-key sumibi-select-mode-map "\C-n"                   'sumibi-select-next)
+(define-key sumibi-select-mode-map "b"                      'sumibi-select-prev-word)
+(define-key sumibi-select-mode-map "f"                      'sumibi-select-next-word)
+(define-key sumibi-select-mode-map "a"                      'sumibi-select-first-word)
+(define-key sumibi-select-mode-map "e"                      'sumibi-select-last-word)
+(define-key sumibi-select-mode-map "p"                      'sumibi-select-prev)
+(define-key sumibi-select-mode-map "n"                      'sumibi-select-next)
+(define-key sumibi-select-mode-map sumibi-rK-trans-key      'sumibi-select-next)
+(define-key sumibi-select-mode-map " "                      'sumibi-select-next)
 (define-key sumibi-select-mode-map "j"                      'sumibi-select-kanji)
 (define-key sumibi-select-mode-map "h"                      'sumibi-select-hiragana)
 (define-key sumibi-select-mode-map "k"                      'sumibi-select-katakana)
