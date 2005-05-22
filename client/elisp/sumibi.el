@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/05/22 01:04:15 $
+;;     $Date: 2005/05/22 02:14:22 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -479,6 +479,10 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 (define-key sumibi-select-mode-map " "                      'sumibi-select-next)
 (define-key sumibi-select-mode-map "\C-p"                   'sumibi-select-prev)
 (define-key sumibi-select-mode-map "\C-n"                   'sumibi-select-next)
+(define-key sumibi-select-mode-map "j"                      'sumibi-select-kanji)
+(define-key sumibi-select-mode-map "h"                      'sumibi-select-hiragana)
+(define-key sumibi-select-mode-map "k"                      'sumibi-select-katakana)
+(define-key sumibi-select-mode-map "l"                      'sumibi-select-alphabet)
 
 
 ;; 変換を確定し入力されたキーを再入力する関数
@@ -570,6 +574,38 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
   (setq sumibi-cand (- (length sumibi-cand-n) 1))
   (sumibi-select-update-display))
 
+
+;; 指定された type の候補に強制的に切りかえる
+(defun sumibi-select-by-type ( _type )
+  (let* (
+	 (n sumibi-cand)
+	 (kouho (nth n sumibi-henkan-list))
+	 (_element (assoc _type kouho)))
+
+    ;; 連想リストから _type で引いた index 番号を設定するだけで良い。
+    (when _element
+      (setcar (nthcdr n sumibi-cand-n) (nth 2 _element))
+      (sumibi-select-update-display))))
+
+(defun sumibi-select-kanji ()
+  "漢字候補に強制的に切りかえる"
+  (interactive)
+  (sumibi-select-by-type 'j))
+
+(defun sumibi-select-hiragana ()
+  "ひらがな候補に強制的に切りかえる"
+  (interactive)
+  (sumibi-select-by-type 'h))
+
+(defun sumibi-select-katakana ()
+  "カタカナ候補に強制的に切りかえる"
+  (interactive)
+  (sumibi-select-by-type 'k))
+
+(defun sumibi-select-alphabet ()
+  "アルファベット候補に強制的に切りかえる"
+  (interactive)
+  (sumibi-select-by-type 'l))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ローマ字漢字変換関数
