@@ -61,14 +61,20 @@
 
 	     (let* (
 		    ;; '("わらu" "/笑/嗤/")
-		    (field (string-split x #[\s]))
+		    (field #?=(list
+			       (string-scan x 
+					    " "
+					    'before)
+			       (string-scan x 
+					    " "
+					    'after)))
 		    ;; '("笑;ab" "嗤")
 		    (_ (cdr (drop-right (string-split (cadr field) "/") 1)))
 		    ;; '("笑" "嗤")
 		    (words
 		     (map
 		      (lambda (x)
-			(or (string-scan x 
+			(or #?=(string-scan x 
 					 ";"
 					 'before)
 			    x))
