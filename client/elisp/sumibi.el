@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/05/22 12:14:42 $
+;;     $Date: 2005/05/24 13:49:36 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -252,20 +252,23 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
   (sumibi-debug-print (format "henkan-input :[%s]\n"  yomi))
 
   (message "Requesting to sumibi server...")
-  (let (
-	(result 
-	 (shell-command-to-string
+  (let* (
+	 (_command 
 	  (concat
-	   sumibi-curl " --silent --show-error "
+	   sumibi-curl " --data-binary --silent --show-error "
 	   (format "--connect-timeout %d " sumibi-server-timeout)
 	   sumibi-server-url " "
 	   (format "--data 'string=%s&encode=%S' " yomi sumibi-server-encode)
 	   (when sumibi-server-use-cert
 	     (if (not sumibi-server-cert-file)
 		 (error "Error : cert file create miss!")
-	       (format "--cacert '%s' " sumibi-server-cert-file)))
-	   ))))
+	       (format "--cacert '%s' " sumibi-server-cert-file)))))
+	 (result 
+	  (shell-command-to-string
+	   _command)))
+
     (sumibi-debug-print (format "henkan-result:%S\n" result))
+    (sumibi-debug-print (format "curl-command:%s\n" _command))
     (if (eq (string-to-char result) ?\( )
 	(progn
 	 (message nil)
