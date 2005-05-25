@@ -14,7 +14,7 @@
      (*en
       (p "No documents in English, sorry..." ))
      (*ja
-      (p "このドキュメントは、sumibi.el 0.1.2についての解説です。")))
+      (p "このドキュメントは、sumibi.el 0.3.0についての解説です。")))
 
     (*section
      "sumibi.elの特徴"
@@ -134,18 +134,19 @@
 	(li "候補選択キー操作一覧")
 	(table 
 	 (thead
-	  (tr  (td "キー操作") (td "アクション")))
+	  (tr  (td "第一のキー操作") (td "第二のキー操作") (td "アクション")))
 	 (tbody
-	  (tr   (td "C-m")   (td "候補選択確定"))
-	  (tr   (td "C-g")   (td "候補選択キャンセル"))
-	  (tr   (td "C-b")   (td "前方の文節に移動"))
-	  (tr   (td "C-f")   (td "後方の文節に移動"))
-	  (tr   (td "C-a")   (td "最初の文節に移動"))
-	  (tr   (td "C-e")   (td "最後の文節に移動"))
-	  (tr   (td "C-j")   (td "次の候補に切りかえる"))
-	  (tr   (td "space") (td "次の候補に切りかえる"))
-	  (tr   (td "C-n")   (td "次の候補に切りかえる"))
-	  (tr   (td "C-p")   (td "前の候補に切りかえる")))))))
+	  (tr   (td "C-m")   (td "")      (td "候補選択確定"))
+	  (tr   (td "C-g")   (td "q")     (td "候補選択キャンセル"))
+	  (tr   (td "C-b")   (td "b")     (td "前方の文節に移動"))
+	  (tr   (td "C-f")   (td "f")     (td "後方の文節に移動"))
+	  (tr   (td "C-a")   (td "a")     (td "最初の文節に移動"))
+	  (tr   (td "C-e")   (td "e")     (td "最後の文節に移動"))
+	  (tr   (td "C-j")   (td "space") (td "次の候補に切りかえる"))
+	  (tr   (td "C-n")   (td "n")     (td "次の候補に切りかえる"))
+	  (tr   (td "C-p")   (td "p")     (td "前の候補に切りかえる"))
+	  (tr   (td "")      (td "j")     (td "漢字の第一候補に切りかえる"))
+	  )))))
 	 
 
      (*subsection
