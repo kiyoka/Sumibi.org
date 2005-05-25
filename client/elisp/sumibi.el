@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/05/25 13:50:47 $
+;;     $Date: 2005/05/25 14:38:30 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -428,7 +428,7 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 		 (if (eq cnt sumibi-cand)
 		     (progn
 		      (insert insert-word)
-		      (message (format "candidate (%d/%d)" (+ _n 1) _max)))
+		      (message (format "[%s] candidate (%d/%d)" insert-word (+ _n 1) _max)))
 		   (insert insert-word)))
 		(end         (point-marker))
 		(ov          (make-overlay start end)))
