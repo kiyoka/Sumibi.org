@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/05/25 14:38:30 $
+;;     $Date: 2005/05/28 04:59:44 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -255,7 +255,7 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
   (let* (
 	 (_command 
 	  (concat
-	   sumibi-curl " --continue-at - --silent --show-error "
+	   sumibi-curl " --silent --show-error "
 	   (format "--connect-timeout %d " sumibi-server-timeout)
 	   sumibi-server-url " "
 	   (format "--data 'string=%s&encode=%S' " yomi sumibi-server-encode)
