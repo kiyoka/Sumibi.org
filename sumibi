@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;     $Date: 2005/05/27 16:33:53 $
+;;     $Date: 2005/05/28 04:58:18 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -824,33 +824,38 @@
        (cgi-main
 	(lambda (params)
 	  `(
-	    ,(cond
-	      ((eq? 'euc-jp (string->symbol (cgi-get-parameter "encode" params)))
-	       (list
-		(cgi-output-character-encoding "euc-jp")
-		(cgi-header :content-type "text/plain"
-			    :charset      "EUC-JP")))
-	      ((eq? 'sjis   (string->symbol (cgi-get-parameter "encode" params)))
-	       (cgi-output-character-encoding "SJIS")
-	       (cgi-header :content-type "text/plain"
-			   :charset      "Shift-JIS"))
-	      ((eq? 'sjis   (string->symbol (cgi-get-parameter "encode" params)))
-	       (list
-		(cgi-output-character-encoding "utf-8")
-		(cgi-header :content-type "text/plain"
-			    :charset      "utf-8")))
-	      (else
-	       (list
-		(cgi-output-character-encoding "ISO2022JP")
-		(cgi-header :content-type "text/plain"
-			    :charset      "iso-2022-jp"))))
-	      
 	    ,(let* (
-		    (str    (write-to-string (sumibi-convert-sentence (cgi-get-parameter "string" params) query)))
-		    (bytes  (string-size str)))
-	       (list 
-		(cgi-header :Content-Length bytes)
-		(write-to-string (sumibi-convert-sentence (cgi-get-parameter "string" params) query))))))))
+		    (str (write-to-string (sumibi-convert-sentence (cgi-get-parameter "string" params) query)))
+		    (bytes (string-size str)))
+	       (list
+		(cond
+		 ((eq? 'euc-jp (string->symbol (cgi-get-parameter "encode" params)))
+		  (list
+		   (cgi-output-character-encoding "euc-jp")
+		   (cgi-header :content-type "text/plain"
+			       :charset      "EUC-JP"
+			       :content-length (string-size (ces-convert str "UTF8"  "euc-jp")))))
+		   
+		 ((eq? 'sjis   (string->symbol (cgi-get-parameter "encode" params)))
+		  (list
+		   (cgi-output-character-encoding "SJIS")
+		   (cgi-header :content-type "text/plain"
+			       :charset      "Shift-JIS"
+			       :content-length (string-size (ces-convert str "UTF8"  "euc-jp")))))
+		 ((eq? 'utf8   (string->symbol (cgi-get-parameter "encode" params)))
+		  (list
+		   (cgi-output-character-encoding "utf-8")
+		   (cgi-header :content-type "text/plain"
+			       :charset      "utf-8"
+			       :content-length bytes)))
+		 (else
+		  (list
+		   (cgi-output-character-encoding "ISO2022JP")
+		   (cgi-header :content-type   "text/plain"
+			       :charset        "iso-2022-jp"
+			       :content-length bytes))))
+		
+		str))))))
 
 
       ;; perlブリッジモード
