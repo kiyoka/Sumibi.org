@@ -90,9 +90,10 @@
     案1) ６文字以上の平仮名の並びは単語として登録しない等で逃げる。
 
 5. CGIインターフェース
-   HTTPのPOSTで 結果を取得する事を前提とする
+  - HTTPのPOSTで 結果を取得する事を前提とする
      wget --non-verbose 'http://xxxxx/cgi-bin/sumibi' --post-data='string=nishiyama%20to%20moushimasu%20.' --output-document=- > log
-   HTTPのGETで Sumibi Serverのステータスをhtmlデータを使って返す。
+
+  - HTTPのGETで Sumibi Serverのステータスをhtmlデータを使って返す。
 
 
 [EOF]
