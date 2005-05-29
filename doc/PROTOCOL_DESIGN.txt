@@ -1,0 +1,22 @@
+
+
+             プロトコル設計メモ
+
+            Protocol design memo
+          
+
+1. プロトコルの種類
+  - REST        ... Emacs + curlとの通信で使用する。
+  - SOAP        ... uim等のフレームワークからの通信で使用する。
+  - 標準入出力  ... uim,sumibi_soap.cgi,Emacsとの通信で使用する。
+
+2. RESTのプロトコル
+
+  - http POSTメソッドの場合、RESTとして動作する。
+
+  - http GET メソッドの場合、Sumibi Serverの状況を示したHTMLページを返す。
+
+  - 
+
+
+[EOF]
