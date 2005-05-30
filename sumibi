@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;     $Date: 2005/05/28 04:58:18 $
+;;     $Date: 2005/05/30 13:23:52 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -841,7 +841,7 @@
 		   (cgi-output-character-encoding "SJIS")
 		   (cgi-header :content-type "text/plain"
 			       :charset      "Shift-JIS"
-			       :content-length (string-size (ces-convert str "UTF8"  "euc-jp")))))
+			       :content-length (string-size (ces-convert str "UTF8"  "SJIS")))))
 		 ((eq? 'utf8   (string->symbol (cgi-get-parameter "encode" params)))
 		  (list
 		   (cgi-output-character-encoding "utf-8")
