@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/05/30 13:23:32 $
+;;     $Date: 2005/05/31 14:37:30 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -257,9 +257,9 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 	   ((string-match "euc-jp" p-encode)
 	    "euc-jp")
 	   ((string-match "shift" p-encode)
-	    "SJIS")
+	    "sjis")
 	   ((string-match "sjis" p-encode)
-	    "SJIS")
+	    "sjis")
 	   ((string-match "iso-2022-jp" p-encode)
 	    "ISO2022JP")
 	   ((string-match "utf-8" p-encode)
