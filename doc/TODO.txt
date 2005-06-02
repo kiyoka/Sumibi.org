@@ -36,12 +36,13 @@
 
        - WSDLファイルを作成する。
 
-       - バグ修正:『修正』という単語が変換できない問題を修正する。(sumi_current2の場合のみ)
+[done] - バグ修正:『修正』という単語が変換できない問題を修正する。(sumi_current2の場合のみ)
 
-       - バグ修正: SKKの辞書から以下の行が読めていないようだ。
+[done] - バグ修正: SKKの辞書から以下の行が読めていないようだ。
          しゅうせい /修正;(amend) 法案の-/集成/習性/修整;(retouch) 写真の-/終生/秋声/修成;修正し完成する/衆生/秋晴/終世;=終生/衆星/宗制/輯成/醜声/銹錆/
 
    --- sumibi
+
        - xxx.methodでメソッドを指定できる様にする。
 [done]   - xxx.h
 [done]   - xxx.k
@@ -49,6 +50,8 @@
          - xxx.l
          - xxx.L
          - xxx.num
+
+       - xxx.methodの存在しないメソッドには反応しないようにする。
 
 [done] - 結果を指定文字エンコードで返す
 
@@ -78,9 +81,10 @@
 
        - 変換候補をミニバッファに表示する。
 
-[done] - XEmacsに対応する。
+       - XEmacsに対応する。
 [done]   - //nihongo という書式でエラーが出る。
 [done]   - XEmacsは (overlay-put ov 'face 'normal) のノーマルのフェイスが存在しない。
+         - find-operation-coding-system 関数がXEmacsに存在しない。
 
 [done] - (load "sumibi") だけで即使える様にする。 (global-sumibi-mode 1) は書かなくても良いようにする。
 
@@ -94,7 +98,7 @@
 
        - Emacsの process-buffer の日本語エンコードを自動判別する。
 
-       - バグ修正:サーバーから完全なS式が届かず、sumibi.elでパースエラーになる事がある。(Content-Length: 指定で解決する？)
+[done] - バグ修正:サーバーから完全なS式が届かず、sumibi.elでパースエラーになる事がある。(Content-Length: 指定で解決する？)
 
     --- ドキュメント
 
