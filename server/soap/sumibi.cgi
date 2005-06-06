@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2005/05/18 14:55:00 $
+#     $Date: 2005/06/06 13:52:13 $
 #
 # This file is part of Sumibi
 #
@@ -34,14 +34,14 @@ my $server = SOAP::Transport::HTTP::CGI
 
 package SumibiConvert;
 
-# ¥µ¡¼¥Ð¡¼¤Î¾õÂÖ¤òÊÖ¤¹
+# ã‚µãƒ¼ãƒãƒ¼ã®çŠ¶æ…‹ã‚’è¿”ã™
 sub doGetStatus {
     return( 
 	{ version => $VERSION,  sumi => [ "sumi_current", "sumi_current2" ] }
 	);
 }
 
-# ÊÑ´¹:S¼°¤ÇÊÖ¤¹
+# å¤‰æ›:Så¼ã§è¿”ã™
 sub doSumibiConvertSexp {
     shift;
     my( $input_str );
@@ -49,25 +49,27 @@ sub doSumibiConvertSexp {
     return( 
 	"(" .
 	" (" .
-	"  ((  type . \"j\") (  word . \"ÊÑ´¹\"      )) " .
-	"  ((  type . \"j\") (  word . \"ÊÖ´Ô\"      )) " .
-	"  ((  type . \"j\") (  word . \"¥Ø¥ó¥«¥ó\"  )) " .
-	"  ((  type . \"h\") (  word . \"¤Ø¤ó¤«¤ó\"  )) " .
-	"  ((  type . \"k\") (  word . \"¥Ø¥ó¥«¥ó\"  )) " .
+	"  ((  j \"å¤‰æ›\"       0 )) " .
+	"  ((  j \"è¿”é‚„\"       0 )) " .
+	"  ((  j \"ãƒ˜ãƒ³ã‚«ãƒ³\"   0 )) " .
+	"  ((  h \"ã¸ã‚“ã‹ã‚“\"   3 )) " .
+	"  ((  k \"ãƒ˜ãƒ³ã‚«ãƒ³\"   4 )) " .
+	"  ((  l \"henkan\"     5 )) " .
 	" )" .
 	" (" .
-	"  ((  type . \"j\") (  word . \"¥¨¥ó¥¸¥ó\"  )) " .
-	"  ((  type . \"j\") (  word . \"±î¿Í\"      )) " .
-	"  ((  type . \"j\") (  word . \"±ß¿Ø\"      )) " .
-	"  ((  type . \"j\") (  word . \"±ó¿Í\"      )) " .
-	"  ((  type . \"h\") (  word . \"¤¨¤ó¤¸¤ó\"  )) " .
-	"  ((  type . \"k\") (  word . \"¥¨¥ó¥¸¥ó\"  )) " .
+	"  ((  j \"ã‚¨ãƒ³ã‚¸ãƒ³\"   0 )) " .
+	"  ((  j \"çŒ¿äºº\"       0 )) " .
+	"  ((  j \"å††é™£\"       0 )) " .
+	"  ((  j \"é äºº\"       0 )) " .
+	"  ((  h \"ãˆã‚“ã˜ã‚“\"   4 )) " .
+	"  ((  k \"ã‚¨ãƒ³ã‚¸ãƒ³\"   5 )) " .
+	"  ((  l \"enjin\"      6 )) " .
 	" )" .
 	")"
 	);
 }
 
-# ÊÑ´¹:¹½Â¤ÂÎ¤ÎÇÛÎó¤ÇÊÖ¤¹
+# å¤‰æ›:æ§‹é€ ä½“ã®é…åˆ—ã§è¿”ã™
 sub doSumibiConvert {
     shift;
     my( $input_str ) = @_;
@@ -76,17 +78,17 @@ sub doSumibiConvert {
 	{  convertTime => 5, 
 	   resultElements => 
 	       [
-		{  no => 0, candidate  => 0, type => "j", word => "ÊÑ´¹"      },
-		{  no => 0, candidate  => 1, type => "j", word => "ÊÖ´Ô"      },
-		{  no => 0, candidate  => 2, type => "j", word => "¥Ø¥ó¥«¥ó"  },
-		{  no => 0, candidate  => 3, type => "h", word => "¤Ø¤ó¤«¤ó"  },
-		{  no => 0, candidate  => 4, type => "k", word => "¥Ø¥ó¥«¥ó"  },
-		{  no => 1, candidate  => 0, type => "j", word => "¥¨¥ó¥¸¥ó"  },
-		{  no => 1, candidate  => 1, type => "j", word => "±î¿Í"      },
-		{  no => 1, candidate  => 2, type => "j", word => "±ß¿Ø"      },
-		{  no => 1, candidate  => 3, type => "j", word => "±ó¿Í"      },
-		{  no => 1, candidate  => 4, type => "h", word => "¤¨¤ó¤¸¤ó"  },
-		{  no => 1, candidate  => 5, type => "k", word => "¥¨¥ó¥¸¥ó"  }
+		{  no => 0, candidate  => 0, type => "j", word => "å¤‰æ›"      },
+		{  no => 0, candidate  => 1, type => "j", word => "è¿”é‚„"      },
+		{  no => 0, candidate  => 2, type => "j", word => "ãƒ˜ãƒ³ã‚«ãƒ³"  },
+		{  no => 0, candidate  => 3, type => "h", word => "ã¸ã‚“ã‹ã‚“"  },
+		{  no => 0, candidate  => 4, type => "k", word => "ãƒ˜ãƒ³ã‚«ãƒ³"  },
+		{  no => 1, candidate  => 0, type => "j", word => "ã‚¨ãƒ³ã‚¸ãƒ³"  },
+		{  no => 1, candidate  => 1, type => "j", word => "çŒ¿äºº"      },
+		{  no => 1, candidate  => 2, type => "j", word => "å††é™£"      },
+		{  no => 1, candidate  => 3, type => "j", word => "é äºº"      },
+		{  no => 1, candidate  => 4, type => "h", word => "ãˆã‚“ã˜ã‚“"  },
+		{  no => 1, candidate  => 5, type => "k", word => "ã‚¨ãƒ³ã‚¸ãƒ³"  }
 	       ]
 	}
 	);
