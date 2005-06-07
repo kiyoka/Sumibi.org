@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/05/31 14:37:30 $
+;;     $Date: 2005/06/07 16:25:56 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -243,10 +243,67 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 ;;
 ;; ローマ字で書かれた文章をSumibiサーバーを使って変換する
 ;;
+(defun sumibi-soap-request (func-name encode arg-list)
+  (let (
+	(command
+	 (concat
+	  sumibi-curl " --silent --show-error "
+	  (format "--connect-timeout %d " sumibi-server-timeout)
+	  (format " --header 'Content-Type: text/xml' " sumibi-server-timeout)
+	  (format " --header 'SOAPAction:urn:SumibiConvert#%s' " func-name)
+	  sumibi-server-url " "
+	  (format (concat "--data '"
+			  "<?xml version=\"1.0\" encoding=\"%s\"?>"
+			  "  <SOAP-ENV:Envelope xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\""
+			  "   SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\""
+			  "   xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\""
+			  "   xmlns:xsi=\"http://www.w3.org/1999/XMLSchema-instance\""
+			  "   xmlns:xsd=\"http://www.w3.org/1999/XMLSchema\">"
+			  "  <SOAP-ENV:Body>"
+			  "    <namesp1:%s xmlns:namesp1=\"urn:SumibiConvert\">"
+			  (mapconcat
+			   (lambda (x)
+			     (format "    <in xsi:type=\"xsd:string\">%s</in>" x))
+			   arg-list
+			   " ")
+			  "    </namesp1:%s>"
+			  "  </SOAP-ENV:Body>"
+			  "</SOAP-ENV:Envelope>"
+			  "' ")
+		  encode
+		  func-name
+		  func-name
+		  func-name
+		  func-name
+		  ))))
+		  
+    (when sumibi-server-use-cert
+      (if (not sumibi-server-cert-file)
+	  (error "Error : cert file create miss!")
+	(format "--cacert '%s' " sumibi-server-cert-file)))
+
+    (sumibi-debug-print (format "curl-command :%s\n" command))
+
+    (let* (
+	   (_xml
+	    (shell-command-to-string
+	     command))
+	   (_match
+	    (string-match "<s-gensym3[^>]+>\\(.+\\)</s-gensym3>" _xml)))
+	   
+      (if _match 
+	  (decode-coding-string
+	   (base64-decode-string 
+	    (match-string 1 _xml))
+	   'utf-8)
+	nil))))
+	   
+      
+;;
+;; ローマ字で書かれた文章をSumibiサーバーを使って変換する
+;;
 (defun sumibi-henkan-request (yomi)
   (sumibi-debug-print (format "henkan-input :[%s]\n"  yomi))
-  
-
 
   (message "Requesting to sumibi server...")
   (let* (
@@ -263,25 +320,12 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 	   ((string-match "iso-2022-jp" p-encode)
 	    "ISO2022JP")
 	   ((string-match "utf-8" p-encode)
-	    "utf8")
+	    "UTF-8")
 	   (t
 	    p-encode)))
-	 (command 
-	  (concat
-	   sumibi-curl " --silent --show-error "
-	   (format "--connect-timeout %d " sumibi-server-timeout)
-	   sumibi-server-url " "
-	   (format "--data 'string=%s&encode=%s' " yomi encode)
-	   (when sumibi-server-use-cert
-	     (if (not sumibi-server-cert-file)
-		 (error "Error : cert file create miss!")
-	       (format "--cacert '%s' " sumibi-server-cert-file)))))
-	 (result 
-	  (shell-command-to-string
-	   command)))
+	 (result (sumibi-soap-request "doSumibiConvertSexp" encode (list yomi))))
 
     (sumibi-debug-print (format "henkan-result:%S\n" result))
-    (sumibi-debug-print (format "curl-command :%s\n"  command))
     (if (eq (string-to-char result) ?\( )
 	(progn
 	 (message nil)
