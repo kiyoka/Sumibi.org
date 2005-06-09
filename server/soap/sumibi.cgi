@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2005/06/07 16:25:56 $
+#     $Date: 2005/06/09 15:35:27 $
 #
 # This file is part of Sumibi
 #
@@ -22,8 +22,11 @@
 #
 #
 
+use utf8;
 use strict;
 use SOAP::Transport::HTTP;
+use MIME::Base64;
+use File::Temp;
 
 my $VERSION = "0.3.0";
 
@@ -44,28 +47,22 @@ sub doGetStatus {
 # 変換:S式で返す
 sub doSumibiConvertSexp {
     shift;
-    my( $input_str );
+    my( $query, $sumi, $ie, $oe ) = @_;
 
-    return( 
-	"(" .
-	" (" .
-	"  (  j \"変換\"       0 ) " .
-	"  (  j \"返還\"       0 ) " .
-	"  (  j \"ヘンカン\"   0 ) " .
-	"  (  h \"へんかん\"   3 ) " .
-	"  (  k \"ヘンカン\"   4 ) " .
-	"  (  l \"henkan\"     5 ) " .
-	" )" .
-	" (" .
-	"  (  j \"エンジン\"   0 ) " .
-	"  (  j \"猿人\"       0 ) " .
-	"  (  j \"円陣\"       0 ) " .
-	"  (  j \"遠人\"       0 ) " .
-	"  (  h \"えんじん\"   4 ) " .
-	"  (  k \"エンジン\"   5 ) " .
-	"  (  l \"enjin\"      6 ) " .
-	" )" .
-	")"
+    open( FP, "|./sumibi -i > /tmp/log" );
+    printf( FP "convertsexp %s\n", $query );
+    close( FP );
+
+    open( FP, "/tmp/log" );
+    my( $line ) = "";
+    my( $result ) = "";
+    while( read( FP, $line, 1024 )) {
+	$result .= $line;
+    }
+    close( FP );
+
+    return(
+	MIME::Base64::encode( $result, '' )
 	);
 }
 
