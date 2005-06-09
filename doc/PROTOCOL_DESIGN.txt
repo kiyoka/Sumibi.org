@@ -7,10 +7,8 @@
 
 
 1. プロトコルの種類
-  - 標準入出力  ... uim,sumibi_soap.cgi,Emacsとの通信で使用する。
-  - REST        ... Emacs + curlとの通信で使用する。
-  - SOAP        ... uim等のフレームワークからの通信で使用する。
-
+  - 標準入出力  ... uim,sumibi_soap.cgi,Emacsから使用する。
+  - SOAP        ... Emacsとuim等のフレームワークからリモートで使用する。
 
 2. 標準入出力のプロトコル
   - 基本ルール
@@ -26,29 +24,21 @@
       *  プログラムの終了が出力の終わりとする。
 
 
-3. RESTのプロトコル
-
-  - http POSTメソッドの場合、RESTとして動作する。
+3. メソッド
+  doSumibiConvertSexp
     入力引数
-      string ... 変換ソース文字列
-      encode ... 返却結果の文字エンコード
+      query  ... 変換ソース文字列
+      sumi   ... 辞書の名前
+    結果
+      変換結果をS式で返す。(utf-8)
 
-    変換結果のS式をそのまま文字列で返す。
+  doSumibiConvert
+    入力引数
+      query  ... 変換ソース文字列
+      sumi   ... 辞書の名前
+    結果
+      変換結果を配列で返す。(utf-8)
 
-  - http GET メソッドの場合、Sumibi Serverの状況を
-    人間が読める形にしたHTMLページを返す。
-
-
-4. SOAPのプロトコル
-
-  - 
-  - 
-
-
-
-5. メソッド
-
-  - 
 
 
 [EOF]

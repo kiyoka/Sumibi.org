@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/06/07 16:25:56 $
+;;     $Date: 2005/06/09 15:35:27 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -27,7 +27,7 @@
 ;;;     配布条件: GPL
 ;;; 最新版配布元: http://sourceforge.jp/projects/sumibi/
 
-;;; 本バージョン 0.3.0 はテスト版です。
+;;; 本バージョンはテスト版です。
 ;;; バージョン系列 0.3.x ではどんどん機能追加を行なうため動作が安定していない可能性があります。
 ;;; 安定指向の方は 安定版 (0.2.x) をご使用ください。
 ;;; 不明な点や改善したい点があればSumibiのメーリングリストに参加してフィードバックをおねがいします。
@@ -291,13 +291,15 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 	   (_match
 	    (string-match "<s-gensym3[^>]+>\\(.+\\)</s-gensym3>" _xml)))
 	   
+      (sumibi-debug-print (format "curl-result-xml :%s\n" _xml))
+
       (if _match 
 	  (decode-coding-string
 	   (base64-decode-string 
 	    (match-string 1 _xml))
 	   'utf-8)
 	nil))))
-	   
+
       
 ;;
 ;; ローマ字で書かれた文章をSumibiサーバーを使って変換する
@@ -883,7 +885,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (set-language-info "Japanese" 'input-method "japanese-sumibi")
 (setq default-input-method "japanese-sumibi")
 
-(defconst sumibi-version "0.3.0")
+(defconst sumibi-version "0.3.1")
 (defun sumibi-version (&optional arg)
   "入力モード変更"
   (interactive "P")

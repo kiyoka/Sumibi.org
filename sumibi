@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;     $Date: 2005/05/30 13:23:52 $
+;;     $Date: 2005/06/09 15:35:27 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -787,6 +787,24 @@
     complete-henkan-kouho-list))
 
 
+;; 一行コマンドを実行する
+(define (sumibi-do-command str query)
+  (let* (
+	 (words (string-split str #/\s+/))
+	 (command (car words))
+	 (args (cdr words))
+	 (args-string (string-join
+		       args
+		       " ")))
+    (case (string->symbol command)
+      ('convertsexp
+       (let (
+	     (result
+	      (sumibi-convert-sentence args-string query)))
+	 (write result)
+	 (newline))))))
+
+
 ;; Main -------------------------------------------------------
 (define (main args)
 
@@ -814,16 +832,42 @@
 					  sumibi-sumibidb-password
 					  sumibi-sumibidb-name))
 	 (query (dbi-make-query connection))
-	 )
+
+	 (interactive-mode #f)
+
+	 ;; 第一引数を捨てる
+	 (_ (cdr args))
+	 
+	 ;; optionのチェック
+	 (_ (parse-options
+	     _
+	     (
+	      ("h" () (display-help))
+	      ("i" () (set! interactive-mode #t))))))
+
 
     ;; 外部とのI/Fの取りかたを選択する。
-    (case sumibi-interface
-      ;; CGI モード ( 要求されたコードで結果を返す )
-      ('cgi
-       ;; シンプルCGIプロトコル
-       (cgi-main
-	(lambda (params)
-	  `(
+    (if interactive-mode
+	  ;; 標準入出力モード
+	  (let (
+		(input-port
+		 (open-input-string 
+		  (port->string
+		   (open-input-conversion-port
+		    (current-input-port)
+		    "*JP"
+		    :buffer-size (* 10 1024))))))
+	    
+	    (for-each 
+	     (lambda (x)
+	       (sumibi-do-command x query))
+	     (port->string-list input-port)))
+
+	  (else
+	   ;; シンプルCGIプロトコル
+	   (cgi-main
+	    (lambda (params)
+	      `(
 	    ,(let* (
 		    (str (write-to-string (sumibi-convert-sentence (cgi-get-parameter "string" params) query)))
 		    (bytes (string-size str)))
@@ -835,7 +879,7 @@
 		   (cgi-header :content-type "text/plain"
 			       :charset      "EUC-JP"
 			       :content-length (string-size (ces-convert str "UTF8"  "euc-jp")))))
-		   
+		 
 		 ((eq? 'sjis   (string->symbol (cgi-get-parameter "encode" params)))
 		  (list
 		   (cgi-output-character-encoding "SJIS")
@@ -854,52 +898,8 @@
 		   (cgi-header :content-type   "text/plain"
 			       :charset        "iso-2022-jp"
 			       :content-length bytes))))
-		
-		str))))))
+
+		str))))))))
 
 
-      ;; perlブリッジモード
-      ('perl-bridge
-       ;; 標準入力でperlプログラムとやりとりする
-       ;; 入力はS式とし、schemeでそのまま評価できる形式にする。
-       ;; 出力はperlのevalで評価できる形式にする。
-       #f)
-
-      ;; 標準入出力モード
-      (else
-       (let* (
-	      ;; 第一引数を捨てる
-	      (_ (cdr args))
-	      
-	      ;; optionのチェック
-	      (_ (parse-options
-		  _
-		  (
-		   ("h" () (display-help)))))
-	      
-	      (input-port
-	       (open-input-string 
-		(port->string
-		 (open-input-conversion-port
-		  (current-input-port)
-		  "*JP"
-		  :buffer-size (* 10 1024))))))
-
-
-	 (for-each 
-	  (lambda (x)
-	    (let* ( 
-		   (result #?=(sumibi-convert-sentence x query))
-		   (r
-		    (string-join
-		     (map
-		      (lambda (b)
-			(cadar b))
-		      result)
-		     "/")))
-	      #?=x
-	      (display "#9#") (display x) (newline)
-	      (display "#9#") (display r)   (newline)))
-	  (port->string-list input-port))))))
-  
   (exit 0))
