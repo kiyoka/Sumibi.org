@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2005/06/09 15:35:27 $
+#     $Date: 2005/06/10 14:08:49 $
 #
 # This file is part of Sumibi
 #
@@ -26,7 +26,6 @@ use utf8;
 use strict;
 use SOAP::Transport::HTTP;
 use MIME::Base64;
-use File::Temp;
 
 my $VERSION = "0.3.0";
 
@@ -36,6 +35,8 @@ my $server = SOAP::Transport::HTTP::CGI
     ;
 
 package SumibiConvert;
+use FileHandle;
+use IPC::Open2;
 
 # サーバーの状態を返す
 sub doGetStatus {
@@ -49,17 +50,14 @@ sub doSumibiConvertSexp {
     shift;
     my( $query, $sumi, $ie, $oe ) = @_;
 
-    open( FP, "|./sumibi -i > /tmp/log" );
-    printf( FP "convertsexp %s\n", $query );
-    close( FP );
-
-    open( FP, "/tmp/log" );
-    my( $line ) = "";
-    my( $result ) = "";
-    while( read( FP, $line, 1024 )) {
-	$result .= $line;
-    }
-    close( FP );
+    local( *Reader, *Writer );
+    my $pid = open2( *Reader, *Writer, './sumibi -i' );
+    Writer->autoflush(); # default here, actually
+    printf( Writer "convertsexp %s\n", $query );
+    my $result = <Reader>;
+    close( Reader );
+    close( Writer );
+    waitpid($pid, 0);
 
     return(
 	MIME::Base64::encode( $result, '' )
