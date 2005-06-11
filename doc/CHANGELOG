@@ -1,7 +1,15 @@
 
 [0.3.1]
+  - sumibi.el
+    1. 通信プロトコルをSOAPに移行した。
+    2. curlコマンドに指定しているタイムアウトオプションを--max-timeに変更した。
   - sumibi
-    1. バグ修正: encode=SJISでeuc-jpの文字列を返していた。
+    1. CGIインターフェースを廃止した。標準入出力インターフェースのみをサポートした。
+  - sumibi.cgi
+    1. sumibiエンジンの標準入出力インターフェースを利用してSOAPブリッジをサポートした。
+       (メソッド doSumibiConvertSexpのみ実装済み。)
+  - Sumibi.wsdl
+    1. メソッドdoSumibiConvertSexpを定義した。
 
 [0.3.0]
   - sumibi
