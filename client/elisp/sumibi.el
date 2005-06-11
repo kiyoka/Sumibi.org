@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/06/11 13:56:12 $
+;;     $Date: 2005/06/11 14:13:18 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -62,7 +62,7 @@
   :group 'input-method
   :group 'Japanese)
 
-(defcustom sumibi-server-url "https://sumibi.org/cgi-bin/sumibi/testing/sumibi.cgi"
+(defcustom sumibi-server-url "https://sumibi.org/cgi-bin/sumibi/unstable/sumibi.cgi"
   "SumibiサーバーのURLを指定する。"
   :type  'string
   :group 'sumibi)
@@ -248,7 +248,7 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 	(command
 	 (concat
 	  sumibi-curl " --silent --show-error "
-	  (format "--connect-timeout %d " sumibi-server-timeout)
+	  (format " --max-time %d " sumibi-server-timeout)
 	  (format " --header 'Content-Type: text/xml' " sumibi-server-timeout)
 	  (format " --header 'SOAPAction:urn:SumibiConvert#%s' " func-name)
 	  sumibi-server-url " "
@@ -297,7 +297,7 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 	   (base64-decode-string 
 	    (match-string 1 _xml))
 	   'utf-8)
-	nil))))
+	_xml))))
 
       
 ;;
