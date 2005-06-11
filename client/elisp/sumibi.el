@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/06/09 15:35:27 $
+;;     $Date: 2005/06/11 13:56:12 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -243,7 +243,7 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 ;;
 ;; ローマ字で書かれた文章をSumibiサーバーを使って変換する
 ;;
-(defun sumibi-soap-request (func-name encode arg-list)
+(defun sumibi-soap-request (func-name arg-list)
   (let (
 	(command
 	 (concat
@@ -253,7 +253,7 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 	  (format " --header 'SOAPAction:urn:SumibiConvert#%s' " func-name)
 	  sumibi-server-url " "
 	  (format (concat "--data '"
-			  "<?xml version=\"1.0\" encoding=\"%s\"?>"
+			  "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
 			  "  <SOAP-ENV:Envelope xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\""
 			  "   SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\""
 			  "   xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\""
@@ -270,7 +270,6 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 			  "  </SOAP-ENV:Body>"
 			  "</SOAP-ENV:Envelope>"
 			  "' ")
-		  encode
 		  func-name
 		  func-name
 		  func-name
@@ -309,23 +308,7 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 
   (message "Requesting to sumibi server...")
   (let* (
-	 ;; プロセス用コーディングシステムの自動判別
-	 (p-encode (symbol-name (car (find-operation-coding-system 'start-process sumibi-curl "xxxx" sumibi-curl))))
-	 (encode 
-	  (cond 
-	   ((string-match "euc-jp" p-encode)
-	    "euc-jp")
-	   ((string-match "shift" p-encode)
-	    "sjis")
-	   ((string-match "sjis" p-encode)
-	    "sjis")
-	   ((string-match "iso-2022-jp" p-encode)
-	    "ISO2022JP")
-	   ((string-match "utf-8" p-encode)
-	    "UTF-8")
-	   (t
-	    p-encode)))
-	 (result (sumibi-soap-request "doSumibiConvertSexp" encode (list yomi))))
+	 (result (sumibi-soap-request "doSumibiConvertSexp" (list yomi))))
 
     (sumibi-debug-print (format "henkan-result:%S\n" result))
     (if (eq (string-to-char result) ?\( )
