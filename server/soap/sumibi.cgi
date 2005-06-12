@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2005/06/12 13:02:08 $
+#     $Date: 2005/06/12 13:10:57 $
 #
 # This file is part of Sumibi
 #
@@ -54,7 +54,7 @@ sub doSumibiConvertSexp {
     local( *Reader, *Writer );
     my $pid = open2( *Reader, *Writer, './sumibi' );
     Writer->autoflush(); # default here, actually
-    printf( Writer "convertsexp %s\n", $query );
+    printf( Writer "convertsexp\t%s\n", $query );
     my $ok     = <Reader>; # ok/error
     my $result = <Reader>; # sexp
     close( Reader );
