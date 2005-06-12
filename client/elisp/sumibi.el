@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived fr yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/06/11 14:13:18 $
+;;     $Date: 2005/06/12 01:31:55 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -249,6 +249,10 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 	 (concat
 	  sumibi-curl " --silent --show-error "
 	  (format " --max-time %d " sumibi-server-timeout)
+	  (when sumibi-server-use-cert
+	    (if (not sumibi-server-cert-file)
+		(error "Error : cert file create miss!")
+	      (format "--cacert '%s' " sumibi-server-cert-file)))
 	  (format " --header 'Content-Type: text/xml' " sumibi-server-timeout)
 	  (format " --header 'SOAPAction:urn:SumibiConvert#%s' " func-name)
 	  sumibi-server-url " "
@@ -275,11 +279,6 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 		  func-name
 		  func-name
 		  ))))
-		  
-    (when sumibi-server-use-cert
-      (if (not sumibi-server-cert-file)
-	  (error "Error : cert file create miss!")
-	(format "--cacert '%s' " sumibi-server-cert-file)))
 
     (sumibi-debug-print (format "curl-command :%s\n" command))
 
