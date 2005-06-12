@@ -3,13 +3,12 @@
   - sumibi.el
     1. 通信プロトコルをSOAPに移行した。
     2. curlコマンドに指定しているタイムアウトオプションを--max-timeに変更した。
+    3. バージョン 0.3.0が XEmacsで動かなかったのを直した。
   - sumibi
     1. CGIインターフェースを廃止した。標準入出力インターフェースのみをサポートした。
   - sumibi.cgi
     1. sumibiエンジンの標準入出力インターフェースを利用してSOAPブリッジをサポートした。
        (メソッド doSumibiConvertSexpのみ実装済み。)
-  - Sumibi.wsdl
-    1. メソッドdoSumibiConvertSexpを定義した。
 
 [0.3.0]
   - sumibi
