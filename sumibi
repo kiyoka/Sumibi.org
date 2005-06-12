@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;     $Date: 2005/06/12 13:02:08 $
+;;     $Date: 2005/06/12 13:10:57 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -790,19 +790,18 @@
 ;; 一行コマンドを実行する
 (define (sumibi-do-command str query)
   (let* (
-	 (words (string-split str #/\s+/))
-	 (command (car words))
-	 (args (cdr words))
-	 (args-string (string-join
-		       args
-		       " ")))
+	 (command-and-arg (string-split str #/\t/))
+	 (command         (car  command-and-arg))
+	 (args-string     (if (< 1 (length command-and-arg))
+			      (cadr command-and-arg)
+			      "")))
     (case (string->symbol command)
       ('convertsexp
        (let (
 	     (result
 	      (sumibi-convert-sentence args-string query)))
 	 (list
-	  "ok"
+	  'ok
 	  result)
 	 ))
       (else
@@ -855,7 +854,7 @@
 	       (exit 0))
 	 (for-each
 	  (lambda (line)
-	    (display line)
+	    (write line)
 	    (newline))
 	  result)
 	 (newline)
