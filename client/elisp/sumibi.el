@@ -3,9 +3,9 @@
 ;; "sumibi.el" is a client for Sumibi server.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;   This program was derived fr yc.el-4.0.13(auther: knak)
+;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/06/12 01:31:55 $
+;;     $Date: 2005/06/12 02:44:03 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -295,7 +295,7 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 	  (decode-coding-string
 	   (base64-decode-string 
 	    (match-string 1 _xml))
-	   'utf-8)
+	   'euc-jp)
 	_xml))))
 
       

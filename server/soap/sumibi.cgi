@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2005/06/10 14:08:49 $
+#     $Date: 2005/06/12 02:44:03 $
 #
 # This file is part of Sumibi
 #
@@ -35,6 +35,7 @@ my $server = SOAP::Transport::HTTP::CGI
     ;
 
 package SumibiConvert;
+use Jcode;
 use FileHandle;
 use IPC::Open2;
 
@@ -60,7 +61,9 @@ sub doSumibiConvertSexp {
     waitpid($pid, 0);
 
     return(
-	MIME::Base64::encode( $result, '' )
+	MIME::Base64::encode( 
+	    Jcode::convert( $result, "euc", "utf8" ),
+	    '' )
 	);
 }
 
