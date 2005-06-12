@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;     $Date: 2005/06/12 02:56:23 $
+;;     $Date: 2005/06/12 13:02:08 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -801,11 +801,12 @@
        (let (
 	     (result
 	      (sumibi-convert-sentence args-string query)))
-	 (write result)
-	 (newline)
-	 (flush (current-output-port))
+	 (list
+	  "ok"
+	  result)
 	 ))
       (else
+       ;; 未定義のコマンドが指定された場合
        nil))))
 
 
@@ -837,8 +838,6 @@
 					  sumibi-sumibidb-name))
 	 (query (dbi-make-query connection))
 
-	 (interactive-mode #f)
-
 	 ;; 第一引数を捨てる
 	 (_ (cdr args))
 	 
@@ -846,56 +845,21 @@
 	 (_ (parse-options
 	     _
 	     (
-	      ("h" () (display-help))
-	      ("i" () (set! interactive-mode #t))))))
+	      ("h" () (display-help))))))
 
-
-    ;; 外部とのI/Fの取りかたを選択する。
-    (if interactive-mode
-	;; 標準入出力モード
-	(port-for-each
-	 (lambda (x)
-	   (when (not (sumibi-do-command x query))
-		 (exit 0)))
-	 read-line)
-    
-	(else
-	 ;; シンプルCGIプロトコル(廃止予定)
-	 (cgi-main
-	  (lambda (params)
-	    `(
-	      ,(let* (
-		      (str (write-to-string (sumibi-convert-sentence (cgi-get-parameter "string" params) query)))
-		      (bytes (string-size str)))
-		 (list
-		  (cond
-		   ((eq? 'euc-jp (string->symbol (cgi-get-parameter "encode" params)))
-		    (list
-		     (cgi-output-character-encoding "euc-jp")
-		     (cgi-header :content-type "text/plain"
-				 :charset      "EUC-JP"
-				 :content-length (string-size (ces-convert str "UTF8"  "euc-jp")))))
-		 
-		   ((eq? 'sjis   (string->symbol (cgi-get-parameter "encode" params)))
-		    (list
-		     (cgi-output-character-encoding "SJIS")
-		     (cgi-header :content-type "text/plain"
-				 :charset      "Shift-JIS"
-				 :content-length (string-size (ces-convert str "UTF8"  "SJIS")))))
-		   ((eq? 'utf8   (string->symbol (cgi-get-parameter "encode" params)))
-		    (list
-		     (cgi-output-character-encoding "utf-8")
-		     (cgi-header :content-type "text/plain"
-				 :charset      "utf-8"
-				 :content-length bytes)))
-		   (else
-		    (list
-		     (cgi-output-character-encoding "ISO2022JP")
-		     (cgi-header :content-type   "text/plain"
-				 :charset        "iso-2022-jp"
-				 :content-length bytes))))
-
-		  str))))))))
-
+    ;; 標準入出力による対話式プロトコル
+    (port-for-each
+     (lambda (x)
+       (let ((result (sumibi-do-command x query)))
+	 (when (not result)
+	       (exit 0))
+	 (for-each
+	  (lambda (line)
+	    (display line)
+	    (newline))
+	  result)
+	 (newline)
+	 (flush (current-output-port))))
+     read-line))
 
   (exit 0))
