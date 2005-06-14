@@ -14,7 +14,7 @@
      (*en
       (p "No documents in English, sorry..." ))
      (*ja
-      (p "このドキュメントは、sumibi.el 0.3.0についての解説です。")))
+      (p "このドキュメントは、sumibi.el 0.3.1についての解説です。")))
 
     (*section
      "sumibi.elの特徴"
@@ -48,7 +48,7 @@
        (p "以下のディストリビューションでは curlが標準でサポートされていることを確認しました。")
        (ul
 	(li "Debian GNU/Linux 3.0 及び 3.1")
-	(li "Red Hat Enterprise 3.0シリーズ")
+	(li "Red Hat Enterprise 3.0 及び 4.0")
 	(li "Cygwin ( 最新版 )"))
        (p "httpsプロキシーサーバーを使用するには以下の例のように環境変数を設定する必要があります。")
        (program
@@ -162,7 +162,7 @@
 	(li "SKKの辞書に含まれていそうな単語を指定する。")
 	(p
 	 "SKKに慣れている人でないと感覚がつかめないかもしれませんが、\"変換精度\"のような多くの複合語\n"
-	 "は最初から辞書に登録されているので、\"henkanseido\"と言う風に指定すると、確実に変換できます。\n")))))
+	 "は最初から辞書に登録されているので、\"henkanseido\"という風に指定すると、確実に変換できます。\n")))))
 
     (*section
      "対応環境"
@@ -182,8 +182,8 @@
 	(li "curl 7.9.5以上"))
        (li "ディストリビューション")
        (ul
-	(li "Debian GNU/Linux 3.0,3.1(woody)")
-	(li "RedHat Enterprise 3.0")
+	(li "Debian GNU/Linux 3.0/3.1")
+	(li "RedHat Enterprise 3.0/4.0")
 	(li "Cygwin最新版")))))
 
     (*section
