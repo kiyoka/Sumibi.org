@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/06/14 13:58:29 $
+;;     $Date: 2005/06/15 13:42:12 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -40,7 +40,6 @@
 ;;;      1) sumibi.orgで動作しているSumibi Serverに接続して利用します。 
 ;;;      2) SSL証明書を使用し、最低限のセキュリティーは確保しています。 
 ;;;         SSL証明書は CAcert( http://www.cacert.org/ )のものを使っています。
-;;;      3) 将来Sumibi Serverのプロトコルは変更になります。
 ;;;
 ;;;   2. バグがまだまだあります。^_^;
 ;;;
