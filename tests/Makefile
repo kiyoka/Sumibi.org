@@ -1,7 +1,6 @@
 
-SUMIBI=../sumibi
-SUMIYAKI=../sumiyaki
-
+SUMIBI=nice -19 ../sumibi
+SUMIYAKI=nice -19 ../sumiyaki
 
 
 h: 
@@ -13,10 +12,6 @@ h1:
 h2:
 	cat /home/park/$(SUMIBI)_corpus/unixuser/200405/part1.txt | kakasi -Ja -Ka -Ha -Ea -s > henkan2.txt
 	$(SUMIBI) < henkan2.txt | grep "#9#" > result.log
-
-h3:
-	cat /home/park/sumibi_corpus/unixuser/index.txt | kakasi -Ja -Ka -Ha -Ea -s > henkan3.txt
-	sumibi < henkan3.txt | grep "#9#" > result.log
 
 loadS:
 	$(SUMIYAKI) -i /home/park/sumibi_corpus/SKK-JISYO.S > ~/park/log
