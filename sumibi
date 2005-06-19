@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;     $Date: 2005/06/12 13:10:57 $
+;;     $Date: 2005/06/19 13:58:26 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -638,7 +638,7 @@
 ;;
 ;; 完成した文節を返す。
 ;;
-(define (sumibi-output-henkan-kouho tango-info kouho-info)
+(define (sumibi-output-henkan-kouho word-no tango-info kouho-info)
 
   (define (is-kigou str)
     (not
@@ -656,18 +656,21 @@
     
        `(j
 	 ,(if (or hiragana (is-kigou orig))
-	       (if (< 0 (string-length okuri))
-		   (let ((okuri-string
-			  (substring hiragana
-				     (string-length yomi)
-				     (+ (string-length yomi)
-					(- (string-length hiragana) (string-length yomi))))))
-		     (string-append
-		      tango
-		      okuri-string))
-		   tango)
-	       orig)
-	 0)))
+	      (if (< 0 (string-length okuri))
+		  (let ((okuri-string
+			 (substring hiragana
+				    (string-length yomi)
+				    (+ (string-length yomi)
+				       (- (string-length hiragana) (string-length yomi))))))
+		    (string-append
+		     tango
+		     okuri-string))
+		  tango)
+	      orig)
+	 ,word-no    ;; 文節番号
+	 )))
+
+   
    kouho-info))
 
 
@@ -677,69 +680,75 @@
 ;;
 (define (sumibi-output-henkan-kouho-list henkan-kouho-list)
 
-  (map
-   (lambda (bunsetu)
-     (let (
-	   ;; 単語情報
-	   (tango-info (car  bunsetu))
-	   (kouho-info (cadr bunsetu)))
+  (let (
+	(word-no 0))
+    (map
+     (lambda (bunsetu)
+       (let (
+	     ;; 単語情報
+	     (tango-info (car  bunsetu))
+	     (kouho-info (cadr bunsetu)))
+
+	 (when sumibi-debug
+	       (begin
+		 (display "#5#")
+		 (write tango-info)
+		 (newline)
+		 (display "#6#")
+		 (write kouho-info)
+		 (newline)))
        
-       (when sumibi-debug
-	     (begin
-	       (display "#5#")
-	       (write tango-info)
-	       (newline)
-	       (display "#6#")
-	       (write kouho-info)
-	       (newline)))
-       
-       (let* (
-	      (method   (cdr (assq 'method tango-info)))
-	      (orig     (cdr (assq 'orig tango-info)))
-	      (hiragana (cdr (assq 'hiragana tango-info)))
-	      (katakana (cdr (assq 'katakana tango-info)))
-	      (alpha    (cdr (assq 'alpha    tango-info)))
+	 (let* (
+		(method   (cdr (assq 'method tango-info)))
+		(orig     (cdr (assq 'orig tango-info)))
+		(hiragana (cdr (assq 'hiragana tango-info)))
+		(katakana (cdr (assq 'katakana tango-info)))
+		(alpha    (cdr (assq 'alpha    tango-info)))
 	 
-	      ;; 候補値の高い順に完成した文節を返す。
-	      (j-kouho  (sumibi-output-henkan-kouho tango-info kouho-info))
-	      (_index   0)
-
-	      ;; 
-	      (j-etc-kouho
-	       (append
 		;; 候補値の高い順に完成した文節を返す。
-		j-kouho
+		(j-kouho  (sumibi-output-henkan-kouho word-no tango-info kouho-info))
+		(_index   0)
 
-		;; 必須項目 ひらがな、カタカナ、アルファベットをリストの最後に追加する。
-		(filter-map
-		 (lambda (x)
-		   x)
-		 (case method
-		   ('h
-		    (list
-		     (if hiragana        `(h ,hiragana) #f)
-		     (if katakana        `(k ,katakana) #f)
-		     (if alpha           `(l ,alpha   ) #f)))
-		   ('k
-		    (list
-		     (if katakana        `(k ,katakana) #f)
-		     (if hiragana        `(h ,hiragana) #f)
-		     (if alpha           `(l ,alpha   ) #f)))
-		   (else
-		    (list
-		     (if hiragana        `(h ,hiragana) #f)
-		     (if katakana        `(k ,katakana) #f)
-		     (if alpha           `(l ,alpha   ) #f))))))))
+		;; 
+		(j-etc-kouho
+		 (append
+		  ;; 候補値の高い順に完成した文節を返す。
+		  j-kouho
 
-	 ;; 候補の最後に、index番号を付ける
-	 (map
-	  (lambda (x)
-	    (begin0
-	     (append x (list _index))
-	     (set! _index (+ 1 _index))))
-	  j-etc-kouho))))
+		  ;; 必須項目 ひらがな、カタカナ、アルファベットをリストの最後に追加する。
+		  (filter-map
+		   (lambda (x)
+		     x)
+		   (case method
+		     ('h
+		      (list
+		       (if hiragana        `(h ,hiragana ,word-no) #f)
+		       (if katakana        `(k ,katakana ,word-no) #f)
+		       (if alpha           `(l ,alpha    ,word-no) #f)))
+		     ('k
+		      (list
+		       (if katakana        `(k ,katakana ,word-no) #f)
+		       (if hiragana        `(h ,hiragana ,word-no) #f)
+		       (if alpha           `(l ,alpha    ,word-no) #f)))
+		     (else
+		      (list
+		       (if hiragana        `(h ,hiragana ,word-no) #f)
+		       (if katakana        `(k ,katakana ,word-no) #f)
+		       (if alpha           `(l ,alpha    ,word-no) #f))))))))
 
-   henkan-kouho-list))
+	   (begin0
+	     ;; 候補の最後に、index番号を付ける
+	     (map
+	      (lambda (x)
+		(begin0
+		 (append x (list _index))
+		 (set! _index (+ 1 _index))))
+	      j-etc-kouho)
+
+	     ;; word-no のインクリメント
+	     (set! word-no (+ 1 word-no))))))
+
+     henkan-kouho-list)))
 
 	
 ;;
@@ -801,9 +810,28 @@
 	     (result
 	      (sumibi-convert-sentence args-string query)))
 	 (list
-	  'ok
-	  result)
-	 ))
+	  "ok"
+	  (write-to-string result))))
+
+      ('convert
+       (let (
+	     (result
+	      (sumibi-convert-sentence args-string query)))
+	 (append
+	  '("ok")
+	  (car
+	   (map
+	    (lambda (word)
+	      (map
+	       (lambda (kouho)
+		 (format "~a ~a ~a ~a"
+			 (car kouho)
+			 (cadr kouho)
+			 (caddr kouho)
+			 (cadddr kouho)))
+	       word))
+	    result)))))
+
       (else
        ;; 未定義のコマンドが指定された場合
        nil))))
@@ -854,8 +882,7 @@
 	       (exit 0))
 	 (for-each
 	  (lambda (line)
-	    (write line)
-	    (newline))
+	    (print line))
 	  result)
 	 (newline)
 	 (flush (current-output-port))))
