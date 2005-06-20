@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2005/06/12 13:10:57 $
+#     $Date: 2005/06/20 14:47:14 $
 #
 # This file is part of Sumibi
 #
@@ -39,6 +39,41 @@ use Jcode;
 use FileHandle;
 use IPC::Open2;
 
+
+# Sumiibエンジンを呼出す
+sub _sumibiEngine {
+    my( $arg ) = @_;
+    my( @result );
+    my( $ok ) = "";
+
+    local( *Reader, *Writer );
+    my $pid = open2( *Reader, *Writer, './sumibi' );
+    Writer->autoflush(); # default here, actually
+    print Writer $arg;
+    my $ok     = <Reader>; # ok/error
+
+    # 空行が来るまで入力を読みこむ
+    while( 1 ) {
+	$_ = <Reader>;
+	# 改行を落とす
+	chomp;
+	if ( 0 >= length( $_ )  ) {
+	    last;
+	}
+	else {
+	    push( @result, $_ );
+	}
+	last;
+    }
+
+    close( Reader );
+    close( Writer );
+    waitpid($pid, 0);
+
+    return ( $ok, @result );
+}
+
+
 # サーバーの状態を返す
 sub doGetStatus {
     return( 
@@ -46,24 +81,19 @@ sub doGetStatus {
 	);
 }
 
+
+
 # 変換:S式で返す
 sub doSumibiConvertSexp {
     shift;
     my( $query, $sumi, $ie, $oe ) = @_;
 
-    local( *Reader, *Writer );
-    my $pid = open2( *Reader, *Writer, './sumibi' );
-    Writer->autoflush(); # default here, actually
-    printf( Writer "convertsexp\t%s\n", $query );
-    my $ok     = <Reader>; # ok/error
-    my $result = <Reader>; # sexp
-    close( Reader );
-    close( Writer );
-    waitpid($pid, 0);
+    # sumibiエンジンを呼びだす
+    my( $ok, @result ) = _sumibiEngine( sprintf( "convertsexp\t%s\n", $query ));
 
     return(
 	MIME::Base64::encode( 
-	    Jcode::convert( $result, "euc", "utf8" ),
+	    Jcode::convert( $result[0], "euc", "utf8" ),
 	    '' )
 	);
 }
