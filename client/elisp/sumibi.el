@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/06/15 13:42:12 $
+;;     $Date: 2005/06/20 13:30:30 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -248,10 +248,11 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 	 (concat
 	  sumibi-curl " --silent --show-error "
 	  (format " --max-time %d " sumibi-server-timeout)
-	  (when sumibi-server-use-cert
+	  (if sumibi-server-use-cert
 	    (if (not sumibi-server-cert-file)
 		(error "Error : cert file create miss!")
-	      (format "--cacert '%s' " sumibi-server-cert-file)))
+	      (format "--cacert '%s' " sumibi-server-cert-file))
+	    " --insecure ")
 	  (format " --header 'Content-Type: text/xml' " sumibi-server-timeout)
 	  (format " --header 'SOAPAction:urn:SumibiConvert#%s' " func-name)
 	  sumibi-server-url " "
@@ -634,7 +635,7 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 
     ;; 連想リストから _type で引いた index 番号を設定するだけで良い。
     (when _element
-      (setcar (nthcdr n sumibi-cand-n) (nth 2 _element))
+      (setcar (nthcdr n sumibi-cand-n) (nth 3 _element))
       (sumibi-select-update-display))))
 
 (defun sumibi-select-kanji ()

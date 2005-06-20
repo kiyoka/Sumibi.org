@@ -1,4 +1,10 @@
 
+[0.3.2]
+  - sumibi.el
+    1. SSLを使わない時は、curlコマンドに --insecureを指定する様にした。
+  - sumibi
+    1. 返すS式の形式を変更した。
+
 [0.3.1]
   - sumibi.el
     1. 通信プロトコルをSOAPに移行した。
