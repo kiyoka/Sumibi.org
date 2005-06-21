@@ -12,4 +12,6 @@ done
 
 if [ $GO = 1 ] ; then
   ../sumiyaki $*
+else
+  echo "skip" $*
 fi

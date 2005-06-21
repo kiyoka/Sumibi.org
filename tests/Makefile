@@ -1,6 +1,6 @@
 
 SUMIBI=nice -19 ../sumibi
-SUMIYAKI=nice -19 ../sumiyaki
+SUMIYAKI=nice -19 ./sumiyaki.sh
 
 
 h: 
