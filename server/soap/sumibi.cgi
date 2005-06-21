@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2005/06/20 14:47:14 $
+#     $Date: 2005/06/21 14:15:06 $
 #
 # This file is part of Sumibi
 #
@@ -63,7 +63,6 @@ sub _sumibiEngine {
 	else {
 	    push( @result, $_ );
 	}
-	last;
     }
 
     close( Reader );
@@ -76,8 +75,11 @@ sub _sumibiEngine {
 
 # サーバーの状態を返す
 sub doGetStatus {
+    # sumibiエンジンを呼びだす
+    my( $ok, @result ) = _sumibiEngine( "version\n" );
+
     return( 
-	{ version => $VERSION,  sumi => [ "sumi_current", "sumi_current2" ] }
+	{ version => $result[0],  sumi => [ "sumi_current", "sumi_current2" ] }
 	);
 }
 
@@ -101,24 +103,28 @@ sub doSumibiConvertSexp {
 # 変換:構造体の配列で返す
 sub doSumibiConvert {
     shift;
-    my( $input_str ) = @_;
+    my( $query, $sumi, $ie, $oe ) = @_;
+
+    # sumibiエンジンを呼びだす
+    my( $ok, @result ) = _sumibiEngine( sprintf( "convert\t%s\n", $query ));
+    my( @ar );
+
+    # レスポンス形式を変換する
+    foreach ( @result ) {
+	my( @member ) = split;
+	push( @ar
+	      ,{
+		  type      => $member[0],
+		  word      => $member[1],
+		  no        => $member[2],
+		  candidate => $member[3]
+	      }
+	    );
+    }
 
     return ( 
-	{  convertTime => 5, 
-	   resultElements => 
-	       [
-		{  no => 0, candidate  => 0, type => "j", word => "変換"      },
-		{  no => 0, candidate  => 1, type => "j", word => "返還"      },
-		{  no => 0, candidate  => 2, type => "j", word => "ヘンカン"  },
-		{  no => 0, candidate  => 3, type => "h", word => "へんかん"  },
-		{  no => 0, candidate  => 4, type => "k", word => "ヘンカン"  },
-		{  no => 1, candidate  => 0, type => "j", word => "エンジン"  },
-		{  no => 1, candidate  => 1, type => "j", word => "猿人"      },
-		{  no => 1, candidate  => 2, type => "j", word => "円陣"      },
-		{  no => 1, candidate  => 3, type => "j", word => "遠人"      },
-		{  no => 1, candidate  => 4, type => "h", word => "えんじん"  },
-		{  no => 1, candidate  => 5, type => "k", word => "エンジン"  }
-	       ]
+	{  convertTime => 1.0, 
+	   resultElements => [ @ar ]
 	}
 	);
 }
