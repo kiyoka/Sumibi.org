@@ -15,7 +15,7 @@
       (ul 
        (li "Sumibiはオープンソースの日本語入力メソッドです。")
        (li "Internet上のドキュメントを読み込んでひとりでに賢くなる新感覚の漢字変換エンジンを持っています。")
-       (li (*link "sourceforge.jp" "http://sourceforge.jp/projects/sumibi/") "にて、開発しています。")
+       (li (*link "sourceforge.jp" "http://sourceforge.jp/projects/sumibi/") "からダウンロードできます。")
        (li ,W:GPL "のもとで配布されています。")))
      (*en
       (ul 
