@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;     $Date: 2005/06/21 14:15:06 $
+;;     $Date: 2005/06/22 14:53:08 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -285,7 +285,7 @@
 	(string-join
 	 (map
 	  (lambda (x)
-	    (format " (id_base = ~d  AND  id_m1 = ~d) " (car x) (cadr x)))
+	    (string-join `(" (id_base = " ,(write-to-string (car x)) "  AND  id_m1 = " ,(write-to-string (cadr x)) ") " ) " "))
 	  (cartesian-product-right
 	   (list
 	    id-list1
@@ -413,13 +413,12 @@
 	     (car x))
 	   (cadr (list-ref rensa-bunsetu 4))))
 
-
 	 ;; 単語の候補IDを全て総あたり検索するWHERE句
 	 (where-exp
 	  (string-join
 	   (map
 	    (lambda (x)
-	      (format " id = ~d " x))
+	      (string-join `(" id = " ,(write-to-string x) " ") " "))
 	    id-list)
 	   " OR "))
 	 (where-exp-pre1

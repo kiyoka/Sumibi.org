@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2005/06/22 13:40:37 $
+#     $Date: 2005/06/22 14:53:08 $
 #
 # This file is part of Sumibi
 #
@@ -42,7 +42,6 @@ use IPC::Open2;
 sub _sumibiEngine {
     my( $arg ) = @_;
     my( @result );
-    my( $ok ) = "";
 
     local( *Reader, *Writer );
     my $pid = open2( *Reader, *Writer, './sumibi' );
