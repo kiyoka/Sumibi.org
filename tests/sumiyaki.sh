@@ -3,7 +3,7 @@
 HOUR=`date +'%H'`
 GO=0
 
-for i in 1 2 3 4 5 6 7 8 9
+for i in 23 00 01 02 03 04 05 06 07 08 09
 do
   if [ $i = $HOUR ] ; then
     GO=1
