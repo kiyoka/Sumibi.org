@@ -1,15 +1,19 @@
 #!/usr/bin/perl
 
+#
+# This program is sample client for Sumibi Web API
+#
+
 use SOAP::Lite;
 use Data::Dumper;
 
 
-if( 0 => $#ARGV ) {
+if( 1 > length(@ARGV)) {
     print "usage : SumibiWebApiSample.pl string";
     exit( 0 );
 }
 
-my $sumibi = SOAP::Lite -> service("http://genkan.localnet/test/Sumibi.wsdl");
+my $sumibi = SOAP::Lite -> service("http://sumibi.org/sumibi/Sumibi_testing.wsdl");
 
 #
 # doGetStatus();
