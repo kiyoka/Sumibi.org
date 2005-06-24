@@ -1,8 +1,22 @@
 #!/usr/bin/perl
+#
+# "SumibiWebApiSample.pl" is a sample program.
+#
+#   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
+#     $Date: 2005/06/24 15:48:14 $
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+#
 
-#
-# This program is sample client for Sumibi Web API
-#
 
 use SOAP::Lite;
 use Data::Dumper;
