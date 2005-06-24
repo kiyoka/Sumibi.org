@@ -7,8 +7,7 @@
 use SOAP::Lite;
 use Data::Dumper;
 
-
-if( 1 > length(@ARGV)) {
+if( 1 > scalar(@ARGV)) {
     print "usage : SumibiWebApiSample.pl string";
     exit( 0 );
 }
