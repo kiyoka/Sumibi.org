@@ -2,8 +2,8 @@
 #
 # "SumibiWebApiSample.pl" is a sample program.
 #
-#   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-#     $Date: 2005/06/24 15:56:34 $
+#   Copyright (C) 2005 Kiyoka Nishyama
+#     $Date: 2005/06/24 16:09:36 $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
