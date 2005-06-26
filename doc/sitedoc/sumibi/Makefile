@@ -8,8 +8,8 @@
 
 
 all :
-	/bin/mkdir -p ../../../web
-	./convert_doc ../../../web sumibi
-	./convert_doc ../../../web sumibi_el_stable
-	./convert_doc ../../../web sumibi_el_testing
-	./convert_doc ../../../web faq                t
+	cat ../../../server/soap/Sumibi.wsdl | sed -e 's/%URL%/https:\/\/sumibi.org\/cgi-bin\/sumibi\/testing\/sumibi.cgi\//' > Sumibi_testing.wsdl
+	./convert_doc  sumibi
+	./convert_doc  sumibi_el_stable
+	./convert_doc  sumibi_el_testing
+	./convert_doc  faq                t
