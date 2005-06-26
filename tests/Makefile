@@ -30,8 +30,6 @@ jf:
 	find /home/park/sumibi_corpus/JFdocs -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 yamagata:
 	find /home/park/sumibi_corpus/Yamagata -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
-uu:
-	find /home/park/sumibi_corpus/unixuser -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 thinkgnu:
 	find /home/park/sumibi_corpus/thinkgnu -name '*.TXT' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 postgres:
