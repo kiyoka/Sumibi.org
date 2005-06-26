@@ -16,7 +16,7 @@
        (li "Sumibiはオープンソースの日本語入力メソッドです。")
        (li "Internet上のドキュメントを読み込んでひとりでに賢くなる新感覚の漢字変換エンジンを持っています。")
        (li (*link "sourceforge.jp" "http://sourceforge.jp/projects/sumibi/") "からダウンロードできます。")
-       (li ,W:GPL "のもとで配布されています。")))
+       (li ,W:GPL "のもとで配布されています。(サンプル等はLGPLになっています。)")))
      (*en
       (ul 
        (li "Sumibi is an opensource software. ( roman to kanji input method. )")
@@ -47,16 +47,18 @@
       (p
        ("sorry , Japanese only ..."))))
        
-;;    (*section 
-;;     "もっと使いこなす"
-;;     "More and more..."
-;;     (*ja
-;;      (ul
+    (*section 
+     "もっと使いこなす"
+     "More and more..."
+     (*ja
+      (ul
+       (li (*link "SumibiWebAPIを使う(テスト版)"        "sumibi_api_testing.html"))
 ;;       (li (*link "Sumibi Serverを自分で用意する" "http://www.sumibi.org/sumibi-ajax/"))
 ;;       (li (*link "辞書を育てる" "sumibi_el_ja.html"))))
-;;     (*en
-;;      (p
-;;       ("sorry , Japanese only ..."))))
+       ))
+     (*en
+      (p
+       ("sorry , Japanese only ..."))))
 
     ,W:sf-logo
     ))
