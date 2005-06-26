@@ -2,10 +2,9 @@
 
 CSS="-html4.css.url:../sumibi.css -html4.encoding:UTF-8 -html4.css.include:link -masterLocale:ja -locale:en,ja"
 
-target_dir=$1
-base=$2
+base=$1
 CSS_OP=""
-if [[ "$3" != "" ]] ; then
+if [[ "$2" != "" ]] ; then
     CSS_OP="-toc:true"
 fi
 
