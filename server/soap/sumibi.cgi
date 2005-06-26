@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2005/06/22 14:53:08 $
+#     $Date: 2005/06/26 10:57:23 $
 #
 # This file is part of Sumibi
 #
@@ -71,7 +71,7 @@ sub _sumibiEngine {
 
 
 # サーバーの状態を返す
-sub doGetStatus {
+sub getStatus {
     shift;
     # sumibiエンジンを呼びだす
     my( $ok, @result ) = _sumibiEngine( "version\n" );
