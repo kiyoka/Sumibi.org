@@ -6,7 +6,7 @@
   change as we refine and extend our APIs.
   
      Copyright (C) 2005 Kiyoka Nishyama
-       $Date: 2005/06/23 13:23:00 $
+       $Date: 2005/06/26 10:41:56 $
   
    This file is part of Sumibi
   
@@ -25,7 +25,7 @@
   
 -->
 
-<!-- Revision $Date: 2005/06/23 13:23:00 $ -->
+<!-- Revision $Date: 2005/06/26 10:41:56 $ -->
 
 <definitions name="SumibiConvert"
              targetNamespace="urn:SumibiConvert"
@@ -77,11 +77,11 @@
 
   <!-- note, ie and oe are ignored by server; all traffic is UTF-8. -->
 
-  <message name="doGetStatus">
+  <message name="getStatus">
     <part name="in"             type="xsd:string"/>
   </message>
 
-  <message name="doGetStatusResponse">
+  <message name="getStatusResponse">
     <part name="return"         type="typens:SumibiStatus"/>
   </message>
 
@@ -104,9 +104,9 @@
 
   <portType name="SumibiConvertPort">
 
-    <operation name="doGetStatus">
-      <input message="xsd:doGetStatus"/>
-      <output message="xsd:doGetStatusResponse"/>
+    <operation name="getStatus">
+      <input message="xsd:getStatus"/>
+      <output message="xsd:getStatusResponse"/>
     </operation>
 
     <operation name="doSumibiConvertSexp">
@@ -128,8 +128,8 @@
     <soap:binding style="rpc"
                   transport="http://schemas.xmlsoap.org/soap/http"/>
 
-    <operation name="doGetStatus">
-      <soap:operation soapAction="urn:SumibiConvert#doGetStatus"/>
+    <operation name="getStatus">
+      <soap:operation soapAction="urn:SumibiConvert#getStatus"/>
       <input>
         <soap:body use="encoded"
                    namespace="urn:SumibiConvert"
@@ -174,7 +174,7 @@
   <!-- Endpoint for Sumibi Web APIs -->
   <service name="SumibiConvertService">
     <port name="SumibiConvertPort" binding="typens:SumibiConvertBinding">
-      <soap:address location="https://sumibi.org/cgi-bin/sumibi/unstable/sumibi.cgi"/>
+      <soap:address location="%URL%"/>
     </port>
   </service>
 
