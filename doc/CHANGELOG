@@ -3,8 +3,10 @@
   - sumibi.el
     1. SSLを使わない時は、curlコマンドに --insecureを指定する様にした。
   - sumibi
-    1. 返すS式の形式を変更した。
+    1. Emacsクライアントに返すS式の内容を変更した。
     2. Debian sargeの標準パッケージのGaucheで動くようにした。
+  - サンプル
+    1. perl SOAP::Liteモジュールからアクセスするサンプル(SumibiWebApiSample.pl)を追加した。
 
 [0.3.1]
   - sumibi.el
