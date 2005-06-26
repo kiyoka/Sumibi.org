@@ -1,0 +1,172 @@
+#!/usr/local/bin/gosh /usr/local/bin/sxmlcnv
+
+
+(load "./common.scm")
+
+
+(define (L:body)
+  '(body
+    ,L:tab
+
+    (*section
+     "このドキュメントについて"
+     "About this document"
+     (*en
+      (p "No documents in English, sorry..." ))
+     (*ja
+      (p "このドキュメントはperl等の様々な言語からsumibi.org上の漢字変換サービスを利用する方法を解説しています。")))
+
+    (*section
+     "Sumibi Web APIとは"
+     "About Sumibi Web API"
+     (*en
+      (p "No documents in English, sorry..." ))
+     (*ja
+      (ul
+       (li "Sumibi Web APIは、sumibi.orgで公開しているSOAP 1.1準拠の漢字変換Webサービスです。")
+       (li "SOAPライブラリを持つ言語ならどの言語からでも利用できます。")
+       (li " WSDLを公開していますので、SOAPの詳細な知識なしにSumibi Web APIを利用することができます。")
+       (li "WSDLファイル(テスト版)は" (*link "こちら" "Sumibi_testing.wsdl") "からダウンロードできます。"))))
+
+    (*section
+     "Sumibi Web API仕様"
+     "Sumibi Web API Specification"
+     (*en
+      (p "No documents in English, sorry..." ))
+     (*subsection
+      "メソッド"
+      "methods"
+      (*ja
+       (ol
+	(li "getStatusメソッド")
+	(ul
+	 (li "パラメータ")
+	 (p "なし")
+	 (li "戻り値")
+	 (p "SumibiStatus型")
+	 (table 
+	  (thead
+	   (tr  (td "名前") (td "値")))
+	  (tbody
+	   (tr   (td "version")   (td "APIのバージョン番号(例:0.3.2)")))))
+
+	(li "doSumibiConvertメソッド")
+	(ul
+	 (li "パラメータ")
+	 (table 
+	  (thead
+	   (tr  (td "名前") (td "値")))
+	  (tbody
+	   (tr   (td "query")   (td "変換したいローマ字文字列"))
+	   (tr   (td "sumi")    (td "変換に使用する辞書名(未使用)"))
+	   (tr   (td "ie")      (td "入力文字エンコード(utf-8固定)"))
+	   (tr   (td "oe")      (td "出力文字エンコード(utf-8固定)"))))
+	 (li "戻り値")
+	 (p "SumibiResult型")
+	 (table 
+	  (thead
+	   (tr  (td "名前") (td "値")))
+	  (tbody
+	   (tr   (td "convertTime")     (td "変換処理に要した秒数(未実装)"))
+	   (tr   (td "resultElements")  (td "変換候補の配列(下記 ResultElementArray型参照)"))))
+	 (p "ResultElementArray型(以下の構造体の配列となります)")
+	 (table 
+	  (thead
+	   (tr  (td "名前") (td "値")))
+	  (tbody
+	   (tr   (td "no")         (td "文節番号"))
+	   (tr   (td "candidate")  (td "変換候補番号(ゼロが一番適合率が高い)"))
+	   (tr   (td "type")       (td "変換候補タイプ( j:漢字、h:平仮名、k:カタカナ、l:アルファベット)"))
+	   (tr   (td "word")       (td "変換候補文字列")))))
+      
+	(li "doSumibiConvertSexpメソッド(Emacs専用)")
+	(ul
+	 (li "パラメータ")
+	 (table 
+	  (thead
+	   (tr  (td "名前") (td "値")))
+	  (tbody
+	   (tr   (td "query")   (td "変換したいローマ字文字列"))
+	   (tr   (td "sumi")    (td "変換に使用する辞書名(未使用)"))
+	   (tr   (td "ie")      (td "入力文字エンコード(utf-8固定)"))
+	   (tr   (td "oe")      (td "出力文字エンコード(utf-8固定)"))))
+	 (li "戻り値")
+	 (p "base64エンコードされたEmacs用S式")
+	 (p "(注意:S式の日本語エンコードは常にEUC-JPです)"))))))
+
+
+    (*section
+     "サンプルプログラムを動かす"
+     "Try some sample programs."
+     (*en
+      (p "No documents in English, sorry..." ))
+     (*subsection
+      "perlからsumibi.orgのサービスを呼びだす"
+      "Using sumibi.org with perl"
+      (*en
+       (p "No documents in English, sorry..." ))
+      (*ja
+       (p
+	(p "サンプルプログラムの中にはGPLではなくLGPLのものもあります。")
+	(p "ライセンスはサンプルプログラムに明記していますので、"
+	   "再配布する場合は、ファイルの中身を良く確認してください。")
+	(p "以下の手順で perl のサンプルプログラムを動かすことができます。")
+	(ul
+	 (li "SOAP::Liteをインストールする。")
+	 (p "CPAN等からSOAP::Liteモジュールを取得してインストールしてください。")
+	 (li "SumibiWebApiSample.plを起動する")
+	 (p "./SumibiWebApiSample.pl sumibi")
+	 (p "[結果]")
+	 (program "
+version: 0.3.2
+sexp   : KCgoaiAiw7qy0CIgMCAwKSAoaCAipLmk36TTIiAwIDEpIChrICKluaXfpdMiIDAgMikgKGwgInN1bWliaSIgMCAzKSkp
+time   : 1
+dump   : $VAR1 = [
+          {
+            'no' => '0',
+            'type' => 'j',
+            'word' => '炭火',
+            'candidate' => '0'
+          },
+          {
+            'no' => '0',
+            'type' => 'h',
+            'word' => 'すみび',
+            'candidate' => '1'
+          },
+          {
+            'no' => '0',
+            'type' => 'k',
+            'word' => 'スミビ',
+            'candidate' => '2'
+          },
+          {
+            'no' => '0',
+            'type' => 'l',
+            'word' => 'sumibi',
+            'candidate' => '3'
+          }
+        ];
+"
+		 ))))))
+
+    (*section
+     "サンプルプログラム提供のおねがい"
+     "Please send me your sample program."
+     (*en
+      (p "No documents in English, sorry..." ))
+     (*ja
+      (p
+       (p "Sumibiプロジェクトでは、SumibiWebAPIを様々な言語から試せるように、"
+	  "様々な言語で書いたサンプルプログラムを集めています。")
+       (p "貴方の得意な言語で書いた、分かりやすいサンプルプログラムを送って下さい。"
+	  "次のリリースに含めさせて頂きます。")
+       (p "送って頂く場合は、ライセンスを明記してください。"
+	  "ライセンスは自由ですが、サンプルプログラムを元にクライアントソフトを作りたい人のためになるべくLGPLが良いと考えています。"))))
+
+    ,W:sf-logo
+    ))
+
+
+;; ページの出力
+(output 'api-testing (L:body))

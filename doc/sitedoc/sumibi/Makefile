@@ -12,4 +12,5 @@ all :
 	./convert_doc  sumibi
 	./convert_doc  sumibi_el_stable
 	./convert_doc  sumibi_el_testing
+	./convert_doc  sumibi_api_testing
 	./convert_doc  faq                t

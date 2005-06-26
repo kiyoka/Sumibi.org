@@ -13,6 +13,9 @@
     ( el-testing
       "sumibi.el (testing)"
       "sumibi_el_testing.html")
+    ( api-testing
+      "Sumibi Web API (testing)"
+      "sumibi_api_testing.html")
     ( faq
       "FAQ"
       "faq.html")))
@@ -70,7 +73,7 @@ hosted by
 		 ,(cadr (assoc key page-alist)))
 		(author " Kiyoka Nishiyama ")
 		(hp " http://www.sumibi.org/ ")
-		(date " $Date: 2005/04/29 09:58:32 $ "))
+		(date " $Date: 2005/06/26 14:07:38 $ "))
 	  ,tree
 	  ))))
 
