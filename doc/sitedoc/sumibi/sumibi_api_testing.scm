@@ -111,9 +111,15 @@
 	(p "ライセンスはサンプルプログラムに明記していますので、"
 	   "再配布する場合は、ファイルの中身を良く確認してください。")
 	(p "以下の手順で perl のサンプルプログラムを動かすことができます。")
+	(p "尚、http proxyサーバーを経由した通信には対応していません。")
 	(ul
-	 (li "SOAP::Liteをインストールする。")
+	 (li "SOAP::Liteモジュールをインストールする")
 	 (p "CPAN等からSOAP::Liteモジュールを取得してインストールしてください。")
+	 (p "* Debianの場合は、libsoap-lite-perlパッケージをインストールしてください。")
+	 (p "* ActivePerlの場合は ppm で SOAP::Liteモジュールをインストールしてください。")
+	 (li "Crypt-SSLeayモジュールをインストールする")
+	 (p "* Debianの場合は、libcrypt-ssleay-perlパッケージをインストールしてください。")
+	 (p "* ActivePerlの場合は ppm で install http://theoryx5.uwinnipeg.ca/ppms/Crypt-SSLeay.ppdをインストールしてください。")
 	 (li "SumibiWebApiSample.plを起動する")
 	 (p "./SumibiWebApiSample.pl sumibi")
 	 (p "[結果]")
