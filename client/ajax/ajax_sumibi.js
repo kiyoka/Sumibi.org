@@ -29,15 +29,25 @@ function createXmlHttp() {
 }
 
 function xmlstring(q) {
-    var method = method_define();
     return (
-	    '<methodCall>' +
-	    '<methodName>sumibiXMLRPC.convert' + method  + '</methodName>' +
-	    '<params>' +
-	    '<param><value><string>' + q + '</string></value></param>' +
-	    '</params>' +
-	    '</methodCall>'
-	    );
+	'<?xml version="1.0" encoding="UTF-8" standalone="no"?>' +
+   	'<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"' +
+	' xmlns:typens="urn:SumibiConvert" xmlns:xsd="http://www.w3.org/2001/XMLSchema"' +
+	' xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"' +
+	' xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"' +
+	' xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"'+
+	' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >' +
+	'<SOAP-ENV:Body>'+
+	'<mns:doSumibiConvert xmlns:mns="urn:SumibiConvert"'+
+	' SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+	'<query xsi:type="xsd:string">' + q + '</query>' +
+	'<sumi xsi:type="xsd:string">sumi_current</sumi>'+
+	'<ie xsi:type="xsd:string">utf-8</ie>'+
+	'<oe xsi:type="xsd:string">utf-8</oe>'+
+	'</mns:doSumibiConvert>'+
+	'</SOAP-ENV:Body>'+
+	'</SOAP-ENV:Envelope>'
+	);
 }
 
 function xmlHttpDo(method) {
@@ -47,11 +57,17 @@ function xmlHttpDo(method) {
     var query     = document.getElementById('q');
     resultbox.innerHTML = '';
     try {
-	xmlhttp.open("POST", './sumibi.cgi', true);
+	//	xmlhttp.open("POST", "./nph-proxy.cgi/010110A/https/sumibi.org/cgi-bin/sumibi/testing/sumibi.cgi",true);
+	//	xmlhttp.open("POST", "https://genkan.localhost/cgi-bin/sumibi/testing/sumibi.cgi",true);
+	xmlhttp.open("POST", "http://genkan.localnet/test/sumibi.cgi",true);
+
+	xmlhttp.setRequestHeader("MessageType", "CALL");
+	xmlhttp.setRequestHeader("Content-Type", "text/xml");
 	xmlhttp.onreadystatechange = function () {
 	    progress.innerHTML = '&nbsp;&nbsp;&nbsp;<blink>waiting server response ...</blink>';
 	    progress.style.display = 'block';
 	    if (xmlhttp.readyState == XMLHTTP_LOAD_COMPLETE) {
+		// alert(xmlhttp.responseText);
 		var output = parseXML(xmlhttp.responseXML);
 		if (output) {
 		    resultbox.innerHTML = output;
@@ -74,26 +90,23 @@ function xmlHttpDo(method) {
     }
 }
 
+
 function parseXML(xml) {
     var output = '';
     xml = xml.documentElement;
-    var member = xml.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0];
-    if(member.childNodes[0].childNodes[0].nodeValue == 'candidate'){
-	var candidate_array = new Array();
-	var candidate_array_node = member.childNodes[1].childNodes[0].childNodes[0];
-	for(i=0; i < candidate_array_node.childNodes.length; i += 1){
-	    var array = new Array();
-	    array_node = candidate_array_node.childNodes[i].childNodes[0].childNodes[0];
-	    for(ii = 0; array_node.childNodes.length > ii; ii++){
-		var candidate = array_node.childNodes[ii].childNodes[0].childNodes[0].nodeValue;
-		array[array.length] = candidate;
-	    }
-	    candidate_array[candidate_array.length] = array;
+    var candidate_array = new Array();
+    var item = xml.getElementsByTagName('item');
+    for(i=0; i < item.length; i += 1){
+	var no        = item[i].childNodes[0].childNodes[0].nodeValue; // no
+	var candidate = item[i].childNodes[1].childNodes[0].nodeValue; // candidate
+	var word      = item[i].childNodes[2].childNodes[0].nodeValue; // word
+	if(! candidate_array[no]){
+	    candidate_array[no] = new Array();
 	}
-	output = format(candidate_array);
-    }else{
-	// no candidate
+	// need to decode word
+	candidate_array[no][candidate] = word;
     }
+    output = format(candidate_array);
     return output;
 }
 
@@ -132,15 +145,6 @@ function displayResult(){
     converted.value = output;
 }
 
-function method_define(){
-    var method = document.getElementById('method');
-    if(method.value == 'stable' && method.checked){
-	return '';
-    }else{
-	return '_dev';
-    }
-}
-
 function define_candidate(){
     var query = document.getElementById('q');
     var converted = document.getElementById('r');
@@ -150,4 +154,13 @@ function define_candidate(){
     converted.value = '';
     resultbox.innerHTML = '';
     query.value = '';
+}
+
+function method_define(){
+    var method = document.getElementById('method');
+    if(method.value == 'stable' && method.checked){
+	return '';
+    }else{
+	return '_dev';
+    }
 }
