@@ -1,4 +1,8 @@
 
+[0.3.3]
+  - sumibi.cgi
+    1. doSumibiConvertメソッドの変換候補文字列をbase64にせずUTF-8文字列で返すようにした。
+
 [0.3.2]
   - sumibi.el
     1. SSLを使わない時は、curlコマンドに --insecureを指定する様にした。
