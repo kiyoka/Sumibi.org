@@ -1,8 +1,28 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
-// Sumibi Ajax クライアント
-//   by ktat atusi@pure.ne.jp
+//
+// Sumibi Ajax is a client for Sumibi server.
+//
+//   Copyright (C) 2002,2003,2004,2005 ktat atusi@pure.ne.jp
+//     $Date: 2005/07/05 13:00:52 $
+//
+// This file is part of Sumibi
+//
+// Sumibi is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2, or (at your option)
+// any later version.
+// 
+// Sumibi is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Sumibi; see the file COPYING.
+//
 //
 //  http://naoya.dyndns.org/~naoya/mt/archives/001610.html のエントリをかなり参考にしてます。
+//
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 var XMLHTTP_LOAD_COMPLETE = 4;
@@ -103,7 +123,6 @@ function parseXML(xml) {
 	if(! candidate_array[no]){
 	    candidate_array[no] = new Array();
 	}
-	// need to decode word
 	candidate_array[no][candidate] = word;
     }
     output = format(candidate_array);
