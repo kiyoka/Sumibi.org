@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;     $Date: 2005/06/22 14:53:08 $
+;;     $Date: 2005/07/05 13:01:07 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -883,10 +883,6 @@
        (let ((result (sumibi-do-command x query)))
 	 (when (not result)
 	       (exit 0))
-;	 (for-each
-;	  (lambda (line)
-;	    (print line))
-;	  result)
 	 (write-tree result)
 	 (newline)
 	 (flush (current-output-port))))

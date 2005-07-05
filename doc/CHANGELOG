@@ -2,6 +2,8 @@
 [0.3.3]
   - sumibi.cgi
     1. doSumibiConvertメソッドの変換候補文字列をbase64にせずUTF-8文字列で返すようにした。
+  - ajax_sumibi.js
+    1. SOAP対応 ( Thanks to ktat atusi@pure.ne.jp )
 
 [0.3.2]
   - sumibi.el
