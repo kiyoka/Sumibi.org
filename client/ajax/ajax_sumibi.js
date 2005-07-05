@@ -2,8 +2,8 @@
 //
 // Sumibi Ajax is a client for Sumibi server.
 //
-//   Copyright (C) 2002,2003,2004,2005 ktat atusi@pure.ne.jp
-//     $Date: 2005/07/05 13:00:52 $
+//   Copyright (C) 2005 ktat atusi@pure.ne.jp
+//     $Date: 2005/07/05 13:11:04 $
 //
 // This file is part of Sumibi
 //
@@ -78,7 +78,6 @@ function xmlHttpDo(method) {
     resultbox.innerHTML = '';
     try {
 	//	xmlhttp.open("POST", "./nph-proxy.cgi/010110A/https/sumibi.org/cgi-bin/sumibi/testing/sumibi.cgi",true);
-	//	xmlhttp.open("POST", "https://genkan.localhost/cgi-bin/sumibi/testing/sumibi.cgi",true);
 	xmlhttp.open("POST", "http://genkan.localnet/test/sumibi.cgi",true);
 
 	xmlhttp.setRequestHeader("MessageType", "CALL");
