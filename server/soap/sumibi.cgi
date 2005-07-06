@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2005/07/04 14:51:14 $
+#     $Date: 2005/07/06 15:05:11 $
 #
 # This file is part of Sumibi
 #
@@ -124,5 +124,19 @@ sub doSumibiConvert {
 	{  convertTime => 1.0, 
 	   resultElements => [ @ar ]
 	}
+	);
+}
+
+
+# ひらがなへ変換:UTF8文字列で返す
+sub doSumibiConvertHira {
+    shift;
+    my( $query, $sumi, $ie, $oe ) = @_;
+
+    # sumibiエンジンを呼びだす
+    my( $ok, @result ) = _sumibiEngine( sprintf( "converthira\t%s\n", $query ));
+
+    return(
+	SOAP::Data->type('string')->value( $result[0] )
 	);
 }

@@ -6,7 +6,7 @@
   change as we refine and extend our APIs.
   
      Copyright (C) 2005 Kiyoka Nishyama
-       $Date: 2005/06/26 10:41:56 $
+       $Date: 2005/07/06 15:05:11 $
   
    This file is part of Sumibi
   
@@ -25,7 +25,7 @@
   
 -->
 
-<!-- Revision $Date: 2005/06/26 10:41:56 $ -->
+<!-- Revision $Date: 2005/07/06 15:05:11 $ -->
 
 <definitions name="SumibiConvert"
              targetNamespace="urn:SumibiConvert"
@@ -100,6 +100,10 @@
     <part name="return"         type="xsd:string"/>
   </message>
 
+  <message name="doSumibiConvertHiraResponse">
+    <part name="return"         type="xsd:string"/>
+  </message>
+
   <!-- Port for Sumibi Web APIs, "SumibiConvert" -->
 
   <portType name="SumibiConvertPort">
@@ -117,6 +121,11 @@
     <operation name="doSumibiConvert">
       <input message="typens:doSumibiConvert"/>
       <output message="typens:doSumibiConvertResponse"/>
+    </operation>
+
+    <operation name="doSumibiConvertHira">
+      <input message="typens:doSumibiConvert"/>
+      <output message="typens:doSumibiConvertHiraResponse"/>
     </operation>
 
   </portType>
@@ -169,6 +178,21 @@
                    encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
       </output>
     </operation>
+
+    <operation name="doSumibiConvertHira">
+      <soap:operation soapAction="urn:SumibiConvert#doSumibiConvertHira"/>
+      <input>
+        <soap:body use="encoded"
+                   namespace="urn:SumibiConvert"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded"
+                   namespace="urn:SumibiConvert"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
   </binding>
 
   <!-- Endpoint for Sumibi Web APIs -->
