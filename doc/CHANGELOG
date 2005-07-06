@@ -4,6 +4,8 @@
     1. doSumibiConvertメソッドの変換候補文字列をbase64にせずUTF-8文字列で返すようにした。
   - ajax_sumibi.js
     1. SOAP対応 ( Thanks to ktat atusi@pure.ne.jp )
+  - sumibi.cgi,Sumibi.wsdl
+    1. ローマ字ひらがな変換メソッド doSumibiConvertHira を追加した
 
 [0.3.2]
   - sumibi.el

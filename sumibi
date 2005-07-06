@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;     $Date: 2005/07/05 13:01:07 $
+;;     $Date: 2005/07/06 15:05:11 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -797,6 +797,14 @@
 
 ;; 一行コマンドを実行する
 (define (sumibi-do-command str query)
+
+
+  ;;
+  ;; roman 文字列をかな文字列に変換する
+  ;;
+  (define (sumibi-local-roman->kana str)
+    (romkan-roman->kana str))
+
   (let* (
 	 (command-and-arg (string-split str #/\t/))
 	 (command         (car  command-and-arg))
@@ -834,6 +842,11 @@
 			(cadddr kouho)))
 	      word))
 	   result))))
+
+      ('converthira
+       (list
+	"ok\n"
+	(string-append (sumibi-local-roman->kana args-string) "\n")))
 
       (else
        ;; 未定義のコマンドが指定された場合
