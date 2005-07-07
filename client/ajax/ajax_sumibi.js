@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2005/07/05 13:11:04 $
+//     $Date: 2005/07/07 13:13:47 $
 //
 // This file is part of Sumibi
 //
@@ -77,8 +77,12 @@ function xmlHttpDo(method) {
     var query     = document.getElementById('q');
     resultbox.innerHTML = '';
     try {
-	//	xmlhttp.open("POST", "./nph-proxy.cgi/010110A/https/sumibi.org/cgi-bin/sumibi/testing/sumibi.cgi",true);
-	xmlhttp.open("POST", "http://genkan.localnet/test/sumibi.cgi",true);
+	// for debug ( via proxy cgi )
+	//   xmlhttp.open("POST", "./nph-proxy.cgi/010110A/https/sumibi.org/cgi-bin/sumibi/testing/sumibi.cgi",true);
+	// for debug
+	//   xmlhttp.open("POST", "http://genkan.localnet/test/sumibi.cgi",true);
+
+	xmlhttp.open("POST", "https://sumibi.org/cgi-bin/sumibi/work/sumibi.cgi",true);
 
 	xmlhttp.setRequestHeader("MessageType", "CALL");
 	xmlhttp.setRequestHeader("Content-Type", "text/xml");
