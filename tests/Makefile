@@ -38,6 +38,8 @@ gauche-refj:
 	find /home/park/sumibi_corpus/gauche-refj -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 hatena:
 	find /home/park/sumibi_corpus/hatena -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
+kotowaza:
+	find /home/park/sumibi_corpus/kotowaza -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 
 sum:
 	$(SUMIYAKI) -s > ~/park/summary.txt
