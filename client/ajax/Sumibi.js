@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2005/07/09 18:47:54 $
+//     $Date: 2005/07/09 19:05:54 $
 //
 // This file is part of Sumibi
 //
@@ -58,11 +58,10 @@ var SUMIBI_CONVERT_COUNT = 0; // 変換回数を記録する
 //
 //********************************************************************
 function Sumibi( progress, ime, type){
-    this.progress = progress;  // メッセージ用ブロックオブジrnェクト
-    this.type = type;          // タイプ(というかサーバ？) -- 未実装
+    this.progress = progress;  // 進捗メッセージ用ブロックオブジェクト
+    this.type = type;          // タイプ(stable, testing, unstable)
     this.ime = ime;            // 変換選択用フォームを格納するブロックオブジェクト
-    this.query = new Array();  // 変換する文字
-    this.has_error = 0;        // エラーが起きたかどうか
+    this.query = new Array();  // 変換する文字を格納する配列
     return this;
 }
 
@@ -98,7 +97,7 @@ Sumibi.prototype.createXmlHttp = function() {
 //********************************************************************
 Sumibi.prototype.setQueryFrom = function(q){
     var m = q.replace(/\s+$/, ' ');
-    m = m.match(/[\?0-9a-z\.\s\/\-\+\*]+[\s\.,]\s*$/i); 
+    m = m.match(/[\!\?0-9a-z\.\s\/\-\+\*]+[\s\.,\!\?]\s*$/i); 
     var r = '';
     if(m){
 	var i;
@@ -238,7 +237,6 @@ Sumibi.prototype.doSoapRequest = function(xml_message, num){
 		    if((sumibi.query.length - 1) == num && sumibi.progress){
 			sumibi.progress.style.color = PROGRESS_MESSAGE_COLOR;
 			sumibi.progress.style.display = 'none';
-			sumibi.has_error = 0;
 		    }
 		}else if(progress){
 		    sumibi.progress.innerHTML = PROGRESS_MESSAGE_ERROR;
@@ -247,7 +245,6 @@ Sumibi.prototype.doSoapRequest = function(xml_message, num){
 	    } else {
 		if(xmlhttp.statusText != 'OK'){
 		    sumibi.progress.innerHTML = xmlhttp.statusText;
-		    sumibi.has_error = 1;
 		}
 	    }
 	}
