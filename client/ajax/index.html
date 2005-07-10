@@ -1,8 +1,9 @@
-<html>
+<html lang="ja">
 <head>
 <title>Sumibi Ajax Client</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<script type="text/javascript" src="ajax_sumibi.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
 <link rel=stylesheet href="sumibi.css" type="text/css">
 </head>
 <body>
@@ -26,8 +27,8 @@ Sumibi は、kiyokaさんが作られたかな漢字変換エンジンです。<
 <p>
 1.下記のように、ローマ字で分かち書きで入力します。<br>
 <span style="background-color:#ffffff">ro-maji de wakachi gaki de nyuuryoku shimasu .</span><br>
-2.変換候補がある場合、テキストボックスの下に候補が出ますので選択します。<br>
-3.「確定」を押すと、確定文字列のテキストボックスに移ります。<br>
+2.変換候補が下にでますので、正しいものを選択します。
+3.「確定」を押すと、テキストボックスも文字列が入れ替わります。<br>
 </p>
 <h3>応用</h3>
 <p>
@@ -41,33 +42,28 @@ Copyright&copy 2005, Ktat
 </div>
 
 </div>
+
+<!-- end of sidebar -->
+
 <form name="sumibi" onsubmit="xmlHttpDo(method_define()); return false;">
 変換サーバ
- <input type="radio" id="method" name="method" value="stable" checked>安定版
- <input type="radio" id="method" name="method" value="dev">開発版
-<table>
-<tr><th>ローマ字入力</th><td></td><th>変換後</th>
+ <input type="radio" id="server" name="server" value="testing" onClick="select_server(this.value)">testing
+ <input type="radio" id="server" name="server" value="unstable" onClick="select_server(this.value)" checked>unstable
+<table width=460>
+<tr><th>入力</th>
 <tr>
 <td><textarea id=q name=q rows=5></textarea></td>
-<td><input type="submit" value="変換"></td>
-<td><textarea id=r name=r rows=5></textarea></td>
-</from>
 </tr>
-</table>
-<form name="candidate">
-<div class=vary>
-<div class=convert id="convert"></div>
 </form>
+<tr><td>
 <div id="progress"></div>
 </div>
+<div id="ime"></div>
 </div>
-<div class=main>
-
-<h2>確定文字列</h2>
-<textarea id="defined">
-</textarea>
-<p>
-</p>	
-</div>
+</td></tr>
+</table>
 </body>
 </html>
+<script type="text/javascript" src="Sumibi.js"></script>
+<script type="text/javascript" src="SumibiSOAP.js"></script>
+<script type="text/javascript" src="ajax_sumibi.js"></script>
