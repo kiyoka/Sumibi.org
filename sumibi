@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;     $Date: 2005/07/06 15:05:11 $
+;;     $Date: 2005/07/11 13:38:41 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -808,8 +808,8 @@
   (let* (
 	 (command-and-arg (string-split str #/\t/))
 	 (command         (car  command-and-arg))
-	 (args-string     (if (< 1 (length command-and-arg))
-			      (cadr command-and-arg)
+	 (args-string	  (if (< 1 (length command-and-arg))
+			      (string-trim-both (cadr command-and-arg))
 			      "")))
     (case (string->symbol command)
       ('version
