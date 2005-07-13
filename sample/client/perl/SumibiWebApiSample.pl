@@ -3,7 +3,7 @@
 # "SumibiWebApiSample.pl" is a sample program.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2005/06/26 10:41:56 $
+#     $Date: 2005/07/13 13:39:23 $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -33,20 +33,21 @@ my $ie    = "utf-8";
 my $oe    = "utf-8";
 
 
-my $sumibi = SOAP::Lite -> service("http://sumibi.org/sumibi/Sumibi_testing.wsdl");
+#my $sumibi = SOAP::Lite -> service("http://sumibi.org/sumibi/Sumibi_testing.wsdl");
+my $sumibi = SOAP::Lite -> service("http://sumibi.org/test/Sumibi.wsdl");
 
 #
 # getStatus();
 #
 my $som = $sumibi -> getStatus( );
-print "version: ", $som->{version}, "\n";
+print "version : ", $som->{version}, "\n";
 
 
 #
 # doSumibiConvertSexp()
 #
 my $som = $sumibi -> doSumibiConvertSexp( $query, $sumi, $ie, $oe );
-print "sexp   : ", $som, "\n";
+print "sexp    : ", $som, "\n";
 
 
 #
@@ -54,9 +55,16 @@ print "sexp   : ", $som, "\n";
 #
 my $som = $sumibi -> doSumibiConvert( $query, $sumi, $ie, $oe );
 
-print "time   : ", $som->{convertTime}, "\n";
+print "time    : ", $som->{convertTime}, "\n";
 my $ar = $som->{resultElements};
-print "dump   : ", Dumper($ar);
+print "dump    : ", Dumper($ar);
+
+
+#
+# doSumibiConvertHira()
+#
+my $som = $sumibi -> doSumibiConvertHira( $query, $sumi, $ie, $oe );
+print "hiragana: ", $som, "\n";
 
 
 exit 0;

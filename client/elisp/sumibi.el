@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/06/26 05:10:38 $
+;;     $Date: 2005/07/13 13:42:06 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -198,6 +198,7 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 (defvar sumibi-henkan-list nil)		; 文節リスト
 (defvar sumibi-repeat 0)		; 繰り返し回数
 (defvar sumibi-marker-list '())		; 文節開始、終了位置リスト: 次のような形式 ( ( 1 . 2 ) ( 5 . 7 ) ... ) 
+(defvar sumibi-timer    nil)            ; インターバルタイマー型変数
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 表示系関数群
@@ -234,6 +235,13 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
     (add-hook 'kill-emacs-hook
 	      (lambda ()
 		(delete-file sumibi-server-cert-file)))
+
+    ;; タイマーイベント関数の登録
+    ;;    (setq sumibi-timer
+    ;;	  (run-at-time 1 1
+    ;;		       '(lambda ()
+    ;;			  (message "sumibi-time-handler"))))
+
 
     ;; 初期化完了
     (setq sumibi-init t)))
@@ -790,6 +798,7 @@ omTxJBzcoTWcFbLUvFUufQb1nA5V9FrWk9p2rSVzTMVD
 		  minor-mode-map-alist)))
 
 
+
 ;; sumibi-mode の状態変更関数
 ;;  正の引数の場合、常に sumibi-mode を開始する
 ;;  {負,0}の引数の場合、常に sumibi-mode を終了する
@@ -867,7 +876,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (set-language-info "Japanese" 'input-method "japanese-sumibi")
 (setq default-input-method "japanese-sumibi")
 
-(defconst sumibi-version "0.3.2")
+(defconst sumibi-version "0.3.3")
 (defun sumibi-version (&optional arg)
   "入力モード変更"
   (interactive "P")
