@@ -3,12 +3,7 @@
 HOUR=`date +'%H'`
 GO=0
 
-
-### all day execute ( debug )
-GO=1
-###
-
-for i in 23 00 01 02 03 04 05 06 07 08 09
+for i in 01 02 03 04 05 06 07 08 09
 do
   if [ $i = $HOUR ] ; then
     GO=1
