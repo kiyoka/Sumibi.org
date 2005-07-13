@@ -79,6 +79,20 @@
 	   (tr   (td "type")       (td "変換候補タイプ( j:漢字、h:平仮名、k:カタカナ、l:アルファベット)"))
 	   (tr   (td "word")       (td "変換候補文字列")))))
       
+	(li "doSumibiConvertHiraメソッド")
+	(ul
+	 (li "パラメータ")
+	 (table 
+	  (thead
+	   (tr  (td "名前") (td "値")))
+	  (tbody
+	   (tr   (td "query")   (td "変換したいローマ字文字列"))
+	   (tr   (td "sumi")    (td "変換に使用する辞書名(未使用)"))
+	   (tr   (td "ie")      (td "入力文字エンコード(utf-8固定)"))
+	   (tr   (td "oe")      (td "出力文字エンコード(utf-8固定)"))))
+	 (li "戻り値")
+	 (p "ローマ字を平仮名に変換した文字列(UTF-8固定)"))
+
 	(li "doSumibiConvertSexpメソッド(Emacs専用)")
 	(ul
 	 (li "パラメータ")
@@ -124,10 +138,10 @@
 	 (p "./SumibiWebApiSample.pl sumibi")
 	 (p "[結果]")
 	 (program "
-version: 0.3.2
-sexp   : KCgoaiAiw7qy0CIgMCAwKSAoaCAipLmk36TTIiAwIDEpIChrICKluaXfpdMiIDAgMikgKGwgInN1bWliaSIgMCAzKSkp
-time   : 1
-dump   : $VAR1 = [
+version : 0.3.3
+sexp    : KCgoaiAiw7qy0CIgMCAwKSAoaCAipLmk36TTIiAwIDEpIChrICKluaXfpdMiIDAgMikgKGwgInN1bWliaSIgMCAzKSkp
+time    : 1
+dump    : $VAR1 = [
           {
             'no' => '0',
             'type' => 'j',
@@ -153,6 +167,7 @@ dump   : $VAR1 = [
             'candidate' => '3'
           }
         ];
+hiragana: すみび
 "
 		 ))))))
 
