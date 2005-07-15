@@ -48,7 +48,7 @@
 	  (thead
 	   (tr  (td "名前") (td "値")))
 	  (tbody
-	   (tr   (td "version")   (td "APIのバージョン番号(例:0.3.2)")))))
+	   (tr   (td "version")   (td "APIのバージョン番号(例:0.3.3)")))))
 
 	(li "doSumibiConvertメソッド")
 	(ul
