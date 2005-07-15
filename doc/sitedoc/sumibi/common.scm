@@ -69,11 +69,15 @@ hosted by
    `(*TOP* 
      (*PI* xml "version='1.0' ")
      (doc (@ (xml:lang "ja"))
-	  (head (title 
-		 ,(cadr (assoc key page-alist)))
-		(author " Kiyoka Nishiyama ")
-		(hp " http://www.sumibi.org/ ")
-		(date " $Date: 2005/06/26 14:07:38 $ "))
+	  (head
+	   (native
+	    (@ (format "html"))
+	    "<link rel=\"shortcut icon\" href=\"/favicon.ico\">  <link rel=\"icon\" href=\"/favicon.png\" type=\"image/png\">")
+	   (title 
+	    ,(cadr (assoc key page-alist)))
+	   (author " Kiyoka Nishiyama ")
+	   (hp " http://www.sumibi.org/ ")
+	   (date " $Date: 2005/07/15 14:15:16 $ "))
 	  ,tree
 	  ))))
 
