@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2005/07/16 11:26:16 $
+//     $Date: 2005/07/16 17:10:07 $
 //
 // This file is part of Sumibi
 //
@@ -99,7 +99,7 @@ Sumibi.prototype.createXmlHttp = function() {
 //********************************************************************
 Sumibi.prototype.setQueryFrom = function(q){
     var m = q.replace(/\s+$/, ' ');
-    m = m.match(/[\x00-\x7f]+[\s\.,\!\?]\s*$/i); 
+    m = m.match(/[\x20\x33-\x7f]+[\x20\.,\!\?]\x20*$/i);
     var r = '';
     if(m){
 	var i;
@@ -248,7 +248,9 @@ Sumibi.prototype.replaceQueryByResult = function(q){
     sumibi.hist[SUMIBI_CONVERT_COUNT] = q;
     var query = this.query[this.query.length - 1];
     var defined = sumibi.defineCandidate(q);
-    var reg = new RegExp(query.replace(/(\W)/g, "\\$1"));
+    var regexp  = query.replace(/(\W)/g, "\\$1");
+    regexp  = regexp.replace(/\\\s+$/, "");
+    var reg = new RegExp(regexp);
     q = q.replace(reg, defined);
     // definedCndidate で SUMIBI_CONVERT_COUNT は 1 増加してる
     sumibi.hist[SUMIBI_CONVERT_COUNT] = q;
