@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2005/07/10 07:45:00 $
+//     $Date: 2005/07/16 10:54:59 $
 //
 // This file is part of Sumibi
 //
@@ -35,8 +35,8 @@
 var XMLHTTP_LOAD_COMPLETE = 4;
 var XMLHTTP_HTTP_STATUS = 200;
 var MSXMLHTTP = false;
-// var URL_PREFIX = "./nph-proxy.cgi/010110A/https/sumibi.org/cgi-bin/sumibi/";
-var URL_PREFIX = "https://sumibi.org/cgi-bin/sumibi/";
+var URL_PREFIX = "./nph-proxy.cgi/010110A/https/sumibi.org/cgi-bin/sumibi/";
+// var URL_PREFIX = "https://sumibi.org/cgi-bin/sumibi/";
 var PROGRESS_MESSAGE = '&nbsp;&nbsp;&nbsp;<blink>waiting server response ...</blink>';
 var PROGRESS_MESSAGE_COLOR = '#000000';
 var PROGRESS_MESSAGE_ERROR = 'cannnot convert';
@@ -63,6 +63,7 @@ function Sumibi( progress, ime, type){
     this.type = type;          // タイプ(stable, testing, unstable)
     this.ime = ime;            // 変換選択用フォームを格納するブロックオブジェクト
     this.query = new Array();  // 変換する文字を格納する配列
+    this.hist = new Array();
     return this;
 }
 
@@ -98,7 +99,7 @@ Sumibi.prototype.createXmlHttp = function() {
 //********************************************************************
 Sumibi.prototype.setQueryFrom = function(q){
     var m = q.replace(/\s+$/, ' ');
-    m = m.match(/[\!\?0-9a-z\.\s\/\-\+\*]+[\s\.,\!\?]\s*$/i); 
+    m = m.match(/[\x00-\x7f]+[\s\.,\!\?]\s*$/i); 
     var r = '';
     if(m){
 	var i;
@@ -142,14 +143,14 @@ Sumibi.prototype.server = function(server){
 //********************************************************************
 // 候補選択用HTMLを返す
 //
-// 内部で sumibi_define_candidate が呼ばれるので、これは別のところで
-// 実装する必要があります。
+// 内部で sumibi_define_candidate, sumibi_display_result
+// が呼ばれるので、これは別のところで実装する必要があります。
 //********************************************************************
 Sumibi.prototype.format = function(array){
     var output = '[変換候補] ';
     for(i=0; i < array.length; i++){
         if(array[i].length > 1){
-	    output += ' <select name="sumibi_candiate" id="sumibi_candidate' + i + '" onChange="displayResult()">';
+	    output += ' <select name="sumibi_candiate" id="sumibi_candidate' + i + '" onChange="sumibi_display_result()">';
 	    for(ii=0; ii < array[i].length; ii++){
 		output += '<option value="' + array[i][ii] + '">' + array[i][ii];
 	    }
@@ -160,6 +161,51 @@ Sumibi.prototype.format = function(array){
     }
     output += '<input type="button" id="define" name="define" value="確定" onClick="sumibi_define_candidate()">';
     return output;
+}
+
+//********************************************************************
+// Undo Redo 用HTMLを返す
+//
+// 内部で sumibi_forward, sumibi_backward
+// が呼ばれるので、これは別のところで実装する必要があります。
+//********************************************************************
+Sumibi.prototype.historyHTML = function(block){
+    var output;
+    output  = '<span id="sumibi_backward" style="display:none">&lt;&lt;<a href="" onClick="sumibi_backward();return false">戻る</a></span>&nbsp;';
+    output += '<span id="sumibi_forward" style="display:none"><a href="" onClick="sumibi_forward();return false">進む</a>&gt;&gt;</span>';
+    block.innerHTML = output;
+    sumibi.hb = document.getElementById('sumibi_backward'); // backward
+    sumibi.hf = document.getElementById('sumibi_forward');  // forward
+}
+
+Sumibi.prototype.forward = function(h){
+    if(sumibi.hist[h + 1]){
+	h += 1;
+	query.value = sumibi.hist[h];
+	sumibi.setQueryFrom(query.value);
+	sumibi.hb.style.display = 'inline';
+	if(sumibi.hist[h + 1]){
+	    sumibi.hf.style.display = 'inline';
+	}else{
+	    sumibi.hf.style.display = 'none';
+	}
+    }
+    return h;
+}
+
+Sumibi.prototype.backward = function(h){
+    if(sumibi.hist[h - 1]){
+	h -= 1;
+	query.value = sumibi.hist[h];
+	sumibi.setQueryFrom(query.value);
+	sumibi.hf.style.display = 'inline';
+	if(sumibi.hist[h - 1]){
+	    sumibi.hb.style.display = 'inline';
+	}else{
+	    sumibi.hb.style.display = 'none';
+	}
+    }
+    return h;
 }
 
 //********************************************************************
@@ -199,10 +245,13 @@ Sumibi.prototype.defineCandidate = function(){
 // 候補を決定し、渡された文字列中から query と 候補選択結果を置換する
 //********************************************************************
 Sumibi.prototype.replaceQueryByResult = function(q){
+    sumibi.hist[SUMIBI_CONVERT_COUNT] = q;
     var query = this.query[this.query.length - 1];
-    var defined = sumibi.defineCandidate();
+    var defined = sumibi.defineCandidate(q);
     var reg = new RegExp(query.replace(/(\W)/g, "\\$1"));
     q = q.replace(reg, defined);
+    // definedCndidate で SUMIBI_CONVERT_COUNT は 1 増加してる
+    sumibi.hist[SUMIBI_CONVERT_COUNT] = q;
     return q;
 }
 
