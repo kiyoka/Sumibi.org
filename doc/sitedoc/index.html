@@ -2,18 +2,22 @@
 	"http://www.w3.org/TR/REC-html401/loose.dtd">
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link rel=stylesheet href="sumibi.css" type="text/css">
+
 <title>Sumibi.org</title>
 <link rel="shortcut icon" href="/favicon.ico">
 <link rel="icon" href="/favicon.png" type="image/png">
 </head>
 <body>
-<div style="text-align: center; ">
+<div style="text-align: center; " >
 
   <br>
   <span style="color:#6d5550;">
-    世界の果てから漢字変換
+    世界の果てから漢字変換 ( &amp; Web検索 )
   </span>
-  <br>
   <br>
 
   <img src="sumibi_org_logo.png" alt="Sumibi.org LOGO">
@@ -24,12 +28,43 @@
   </span>
   <br>
 
-  <a href="sumibi-ajax/">Ajax Client</a>
+  <a href="sumibi-ajax/">長い文章を作る</a>
   /
   <a href="sumibi/sumibi.html">Documents</a>
   /
   <a href="sumibi/faq.html">FAQ</a>
   
 </div>
+
+<br>
+
+<div style="text-align: center; ">
+  <form name="sumibi" action="http://www.google.co.jp/search" >
+  <!-- 変換サーバーは常に固定 -->
+  <input type="hidden" id="server" name="server" value="testing"  onClick="select_server(this.value)"
+  <p>
+    Google検索文字列をローマ字で入力
+  </p>
+  <input type="text" name=q id=q size=60 maxlength="256">
+  <input type=submit name=add value="Google検索">
+  <input type=hidden name="btnG" value="Google+%8C%9F%8D%F5">
+  <input type=hidden name="lr" value="">
+  <input type=hidden name="hl" value="ja">
+  </form>
+  <div id="progress"></div>
+  <div id="ime"></div>
+  <div id="hist"></div>
+</div>
+
+<ul>
+  <li>単語と単語をスペースで区切って入力します。(例: bari tou no hoteru ) </li>
+</ul>
+<div class=copyright>
+Sumibi Engine:Copyright&copy 2005, Kiyoka / Sumibi Ajax:Copyright&copy 2005, Ktat
+</div>
+
 </body>
 </html>
+<script type="text/javascript" src="ajax/Sumibi.js"></script>
+<script type="text/javascript" src="ajax/SumibiSOAP.js"></script>
+<script type="text/javascript" src="ajax/ajax_sumibi.js"></script>
