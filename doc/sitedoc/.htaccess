@@ -1,0 +1,10 @@
+AddType  "text/html;               charset=utf-8" .html
+AddType  "text/html;               charset=utf-8" .htm
+AddType  "text/xml" .wsdl
+
+<Limit GET POST>
+</Limit>
+order deny,allow
+deny from all
+
+allow from all
