@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2005/07/23 16:49:42 $
+//     $Date: 2005/07/23 17:01:22 $
 //
 // This file is part of Sumibi
 //
@@ -77,7 +77,7 @@ SumibiSOAP.prototype.parseXML = function(xml) {
     for(i=0; i < item.length; i += 1){
 	var nodeValue = new Array;
 	try{
-	    for(i2 =0; i2 < 4; i2+= 1){
+	    for(i2 =0; i2 < item[i].childNodes.length; i2+= 1){
 		nodeValue[item[i].childNodes[i2].nodeName] = item[i].childNodes[i2].childNodes[0].nodeValue;
 	    }
 	} catch (e){
