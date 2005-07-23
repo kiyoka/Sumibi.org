@@ -3,7 +3,7 @@
 
 (define sumibi-debug #f)
 
-(define sumibi-version "0.3.3")
+(define sumibi-version "0.3.4")
 (define driver (dbi-make-driver "mysql"))
 
 ;; 評価バランス ( skip-2重マルコフ 2重マルコフ 1重マルコフ 2重マルコフ skip-2重マルコフ)
