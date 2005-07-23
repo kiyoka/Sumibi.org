@@ -1,4 +1,9 @@
 
+[0.3.4]
+  - sumibi.el
+    1. SSL証明書をTurbo SSLに切り替えた ( GoDaddy様より無償提供頂きました。 )
+        https://www.godaddy.com/gdshop/ssl/ssl_opensource.asp?se=%2B
+
 [0.3.3]
   - ajax_sumibi.js
     1. SOAP対応              ( Thanks to ktat atusi@pure.ne.jp )
