@@ -14,7 +14,7 @@
      (*en
       (p "No documents in English, sorry..." ))
      (*ja
-      (p "このドキュメントは、sumibi.el 0.3.3についての解説です。")))
+      (p "このドキュメントは、sumibi.el 0.3.4についての解説です。")))
 
     (*section
      "sumibi.elの特徴"
@@ -63,9 +63,17 @@
 	"sumibi.orgで提供しているSumibi Serverを利用する場合は、SSL証明書を利用する事をお勧めします。")
        (li "Emacsを再起動し、Emacsのモードラインに \"Sumibi\"の文字が表示されれば成功です。")
        (p
-	(img (@ (src "modeline.png")))))))
+	(img (@ (src "modeline.png"))))
 
-
+       (li "Meadowをお使いの場合は、次の環境変数を設定が必要です。")
+       (p "パス名はそれぞれの環境に合わせて読みかえて下さい。")
+       (p "cygwinではなく Windowsの環境変数に設定してください。そうしないとMeadowに環境変数がわたりません。")
+       (table 
+	(thead
+	 (tr  (td "環境変数") (td "設定値")))
+	(tbody
+	 (tr   (td "SHELL")   (td "c:\\cygwin\\bin\\bash")))))))
+       
     (*section 
      "キー操作"
      "Key bindings"
