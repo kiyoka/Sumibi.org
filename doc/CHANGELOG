@@ -3,6 +3,9 @@
   - sumibi.el
     1. SSL証明書をTurbo SSLに切り替えた ( GoDaddy様より無償提供頂きました。 )
         https://www.godaddy.com/gdshop/ssl/ssl_opensource.asp?se=%2B
+  - SumibiSOAP.js
+    1. SOAPのタグの出現順に依存するバグを修正した ( atusi@pure.ne.jp )
+    2. Undo機能の実装                             ( atusi@pure.ne.jp )
 
 [0.3.3]
   - ajax_sumibi.js
