@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2005/07/18 07:56:11 $
+//     $Date: 2005/07/26 13:46:45 $
 //
 // This file is part of Sumibi
 //
@@ -63,6 +63,9 @@ SumibiSOAP.prototype.doConvertXML = function(q) {
 
 SumibiSOAP.prototype.parseXML = function(xml) {
     var output = '';
+
+    //alert( 'parseXML()' );
+
     try{
 	xml = xml.documentElement;
     }catch(e){
@@ -75,17 +78,18 @@ SumibiSOAP.prototype.parseXML = function(xml) {
     // 最後に閉じタグなしのもの(空白?)を返している時があるよう
     // ********************************************************
     for(i=0; i < item.length; i += 1){
+	var nodeValue = new Array;
 	try{
-	    var no        = item[i].childNodes[0].childNodes[0].nodeValue;
-	    var candidate = item[i].childNodes[1].childNodes[0].nodeValue;
-	    var word      = item[i].childNodes[2].childNodes[0].nodeValue;
+	    for(i2 =0; i2 < item[i].childNodes.length; i2+= 1){
+		nodeValue[item[i].childNodes[i2].nodeName] = item[i].childNodes[i2].childNodes[0].nodeValue;
+	    }
 	} catch (e){
 	    sumibi.progress.innerHTML = e + '; i = ' + i;
 	}
-	if(! candidate_array[no]){
-	    candidate_array[no] = new Array();
+	if(! candidate_array[nodeValue["no"]]){
+	    candidate_array[nodeValue["no"]] = new Array();
 	}
-	candidate_array[no][candidate] = word;
+	candidate_array[nodeValue["no"]][nodeValue["candidate"]] = nodeValue["word"];
     }
     return candidate_array;
 }
