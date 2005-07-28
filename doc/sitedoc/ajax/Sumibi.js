@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2005/07/28 13:19:16 $
+//     $Date: 2005/07/28 13:21:48 $
 //
 // This file is part of Sumibi
 //
@@ -275,12 +275,11 @@ Sumibi.prototype.doSoapRequest = function(xml_message, num){
 	xmlhttp.onreadystatechange = function () {
 	    sumibi.progress.innerHTML = PROGRESS_MESSAGE;
 	    sumibi.progress.style.display = 'block';
-	    alert( xmlhttp.readyState );
+	    //alert( xmlhttp.readyState );
 	    if (xmlhttp.readyState == XMLHTTP_LOAD_COMPLETE ) {
-		if ( xmlhttp.responseText ) {
-
-		    alert(xmlhttp.responseText);
-		    if(sumibi.query.length - 1 != num || count != SUMIBI_CONVERT_COUNT){
+		if(xmlhttp.responseText) {
+		    //alert(xmlhttp.responseText);
+		    if((sumibi.query.length - 1) != num || count != SUMIBI_CONVERT_COUNT){
 			// 返された処理が最新のものかどうかチェック
 			// alert('old response 3 :' + num + ':' + sumibi.query.length + ':' + SUMIBI_CONVERT_COUNT);
 			return;
@@ -297,10 +296,6 @@ Sumibi.prototype.doSoapRequest = function(xml_message, num){
 			sumibi.progress.innerHTML = PROGRESS_MESSAGE_ERROR;
 			sumibi.progress.style.color = PROGRESS_MESSAGE_ERROR_COLOR;
 		    }
-
-		}
-		else {
-		    sumibi.progress.innerHTML = 'Error';
 		}
 	    }
 	}

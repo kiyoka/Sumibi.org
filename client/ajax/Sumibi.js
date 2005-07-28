@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2005/07/26 12:46:05 $
+//     $Date: 2005/07/28 13:19:39 $
 //
 // This file is part of Sumibi
 //
@@ -275,28 +275,27 @@ Sumibi.prototype.doSoapRequest = function(xml_message, num){
 	xmlhttp.onreadystatechange = function () {
 	    sumibi.progress.innerHTML = PROGRESS_MESSAGE;
 	    sumibi.progress.style.display = 'block';
-	    if (xmlhttp.readyState == XMLHTTP_LOAD_COMPLETE) {
-		// alert(xmlhttp.responseText);
-		if(sumibi.query.length - 1 != num || count != SUMIBI_CONVERT_COUNT){
-		    // 返された処理が最新のものかどうかチェック
-		    // alert('old response 3 :' + num + ':' + sumibi.query.length + ':' + SUMIBI_CONVERT_COUNT);
-		    return;
-		}
-		var candidate_array = sumibi.parseXML(xmlhttp.responseXML);
-		if (candidate_array) {
-		    sumibi.ime.innerHTML = sumibi.format(candidate_array);
-		    sumibi.ime.style.display = 'block';
-		    if((sumibi.query.length - 1) == num && sumibi.progress){
-			sumibi.progress.style.color = PROGRESS_MESSAGE_COLOR;
-			sumibi.progress.style.display = 'none';
+	    //alert( xmlhttp.readyState );
+	    if (xmlhttp.readyState == XMLHTTP_LOAD_COMPLETE ) {
+		if(xmlhttp.responseText) {
+		    //alert(xmlhttp.responseText);
+		    if((sumibi.query.length - 1) != num || count != SUMIBI_CONVERT_COUNT){
+			// 返された処理が最新のものかどうかチェック
+			// alert('old response 3 :' + num + ':' + sumibi.query.length + ':' + SUMIBI_CONVERT_COUNT);
+			return;
 		    }
-		}else if(progress){
-		    sumibi.progress.innerHTML = PROGRESS_MESSAGE_ERROR;
-		    sumibi.progress.style.color = PROGRESS_MESSAGE_ERROR_COLOR;
-		}
-	    } else {
-		if(xmlhttp.statusText != 'OK'){
-		    sumibi.progress.innerHTML = xmlhttp.statusText;
+		    var candidate_array = sumibi.parseXML(xmlhttp.responseXML);
+		    if (candidate_array) {
+			sumibi.ime.innerHTML = sumibi.format(candidate_array);
+			sumibi.ime.style.display = 'block';
+			if((sumibi.query.length - 1) == num && sumibi.progress){
+			    sumibi.progress.style.color = PROGRESS_MESSAGE_COLOR;
+			    sumibi.progress.style.display = 'none';
+			}
+		    }else if(progress){
+			sumibi.progress.innerHTML = PROGRESS_MESSAGE_ERROR;
+			sumibi.progress.style.color = PROGRESS_MESSAGE_ERROR_COLOR;
+		    }
 		}
 	    }
 	}
