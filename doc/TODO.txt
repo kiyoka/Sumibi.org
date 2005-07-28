@@ -83,10 +83,10 @@
 
        - 変換候補をミニバッファに表示する。
 
-       - XEmacsに対応する。
+[done] - XEmacsに対応する。
 [done]   - //nihongo という書式でエラーが出る。
 [done]   - XEmacsは (overlay-put ov 'face 'normal) のノーマルのフェイスが存在しない。
-         - find-operation-coding-system 関数がXEmacsに存在しない。
+[done]   - find-operation-coding-system 関数がXEmacsに存在しない。
 
 [done] - (load "sumibi") だけで即使える様にする。 (global-sumibi-mode 1) は書かなくても良いようにする。
 
@@ -102,7 +102,7 @@
 
 [done] - バグ修正:サーバーから完全なS式が届かず、sumibi.elでパースエラーになる事がある。(Content-Length: 指定で解決する？)
 
-       - curlのバージョンを起動時にチェックする。
+       - curlが存在するか、とバージョンを起動時にチェックする。
 
 [done] - 証明書なしのとき、curl に--insecure オプションを指定する。
 
@@ -125,7 +125,7 @@
 
     --- sumi
 
-[done] - SKK辞書から予め、まびいておく単語
+       - SKK辞書から予め、まびいておく単語
 [done]   - ga /ガリウム/ ...
 [done]   - g /γ;gamma/
 [done]   - no /ノー/Ｎｏ．/ ...
@@ -134,6 +134,7 @@
 [done]   - de /デ/ド/Delaware/デラウェア/
 [done]   - ni /∋/ニッケル/Nickel/
 [done]   - あたr /辺;この辺り/当;大当り/中;食中り/新;非正則(あたらs)/邊;「辺」の旧字1/邉;「辺」の旧字2/     の『中』の部分
+         - その他全ての元素を間引く
 
 
 [EOF]
