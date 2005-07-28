@@ -6,6 +6,7 @@
   - SumibiSOAP.js
     1. SOAPのタグの出現順に依存するバグを修正した ( atusi@pure.ne.jp )
     2. Undo機能の実装                             ( atusi@pure.ne.jp )
+    3. Firefoxのバグ回避対応を実装した。
 
 [0.3.3]
   - ajax_sumibi.js
