@@ -27,3 +27,11 @@
 	(use slib)
 	(require 'pretty-print)
 	(require 'collect)))
+
+;; 単語修飾用メソッド記号リスト
+(define sumibi-method-list '( 
+			     (k . k)
+			     (h . h)
+			     (e . l)
+			     (l . l)
+			     (j . j)))

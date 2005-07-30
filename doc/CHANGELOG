@@ -1,4 +1,8 @@
 
+[0.3.5]
+  - sumibiエンジン
+    1. xxx.l と xxx.e メソッド(アルファベット固定)をサポートした。
+
 [0.3.4]
   - sumibi.el
     1. SSL証明書をTurbo SSLに切り替えた ( GoDaddy様より無償提供頂きました。 )
