@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;     $Date: 2005/07/11 13:38:41 $
+;;     $Date: 2005/07/30 13:31:15 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -120,10 +120,12 @@
 	  (if hiragana
 	      (format "SELECT id, tango, yomi, okuri, freq_base FROM word WHERE (tango = ~s AND okuri = '') "  hiragana)
 	      #f))
-	 (katakana-query
-	  (if katakana
-	      (format "SELECT id, tango, yomi, okuri, freq_base FROM word WHERE (tango = ~s AND okuri = '') "  katakana)
-	      #f))
+ 	 (katakana-query
+ 	  (if katakana
+ 	      (format "SELECT id, tango, yomi, okuri, freq_base FROM word WHERE (tango = ~s AND okuri = '') "  katakana)
+ 	      #f))
+	 (alphabet-query
+	  (format "SELECT id, tango, yomi, okuri, freq_base FROM word WHERE (tango = ~s AND okuri = '') "  str))
 
 	 ;; かなに直した読みでマッチングする。
 	 ;; または 元の英語綴のままで直接マッチングする
@@ -148,6 +150,10 @@
 	   ;; カタカナ固定
 	   ((and (eq? method 'k) katakana-query)
 	    katakana-query
+	    )
+	   ;; アルファベット固定
+	   ((eq? method 'l)
+	    alphabet-query
 	    )
 	   (else
 	    (string-append
@@ -710,42 +716,48 @@
 
 		;; 
 		(j-etc-kouho
-		 (append
-		  ;; 候補値の高い順に完成した文節を返す。
-		  j-kouho
+		 (if (eq? method 'l)
+		     ;; ---アルファベットへの絞りこみの場合
+		     (list
+		      `(l ,orig     ,word-no))
 
-		  ;; 必須項目 ひらがな、カタカナ、アルファベットをリストの最後に追加する。
-		  (filter-map
-		   (lambda (x)
-		     x)
-		   (case method
-		     ('h
-		      (list
-		       (if hiragana        `(h ,hiragana ,word-no) #f)
-		       (if katakana        `(k ,katakana ,word-no) #f)
-		       (if alpha           `(l ,alpha    ,word-no) #f)))
-		     ('k
-		      (list
-		       (if katakana        `(k ,katakana ,word-no) #f)
-		       (if hiragana        `(h ,hiragana ,word-no) #f)
-		       (if alpha           `(l ,alpha    ,word-no) #f)))
-		     (else
-		      (list
-		       (if hiragana        `(h ,hiragana ,word-no) #f)
-		       (if katakana        `(k ,katakana ,word-no) #f)
-		       (if alpha           `(l ,alpha    ,word-no) #f))))))))
+		     ;; ---それ以外の場合
+		     (append
+		      ;; 候補値の高い順に完成した文節を返す。
+		      j-kouho
+
+		      ;; 必須項目 ひらがな、カタカナ、アルファベットをリストの最後に追加する。
+		      (filter-map
+		       (lambda (x)
+			 x)
+		       (case method
+			 ('h
+			  (list
+			   (if hiragana        `(h ,hiragana ,word-no) #f)
+			   (if katakana        `(k ,katakana ,word-no) #f)
+			   (if alpha           `(l ,alpha    ,word-no) #f)))
+			 ('k
+			  (list
+			   (if katakana        `(k ,katakana ,word-no) #f)
+			   (if hiragana        `(h ,hiragana ,word-no) #f)
+			   (if alpha           `(l ,alpha    ,word-no) #f)))
+			 (else
+			  (list
+			   (if hiragana        `(h ,hiragana ,word-no) #f)
+			   (if katakana        `(k ,katakana ,word-no) #f)
+			   (if alpha           `(l ,alpha    ,word-no) #f)))))))))
 
 	   (begin0
-	     ;; 候補の最後に、index番号を付ける
-	     (map
-	      (lambda (x)
-		(begin0
-		 (append x (list _index))
-		 (set! _index (+ 1 _index))))
-	      j-etc-kouho)
+	    ;; 候補の最後に、index番号を付ける
+	    (map
+	     (lambda (x)
+	       (begin0
+		(append x (list _index))
+		(set! _index (+ 1 _index))))
+	     #?=j-etc-kouho)
 
-	     ;; word-no のインクリメント
-	     (set! word-no (+ 1 word-no))))))
+	    ;; word-no のインクリメント
+	    (set! word-no (+ 1 word-no))))))
 
      henkan-kouho-list)))
 
@@ -770,12 +782,17 @@
 	   (lambda (x)
 	     (let* (
 		    (tango x)
+		    ;; メソッド指定のピクアップ
 		    (match (rxmatch #/\.([a-zA-Z0-9]+)$/ x))
-		    (method (if match
-				(begin
-				  (set! tango (rxmatch-before match))
-				  (string->symbol (match 1)))
+		    (_ (if match
+			   (begin
+			     (set! tango (rxmatch-before match))
+			     (string->symbol (match 1)))
+			   #f))
+		    (method (if (assoc _ sumibi-method-list)
+				(cdr (assoc _ sumibi-method-list))
 				#f)))
+
 	       (sumibi-lookup-candidate-bunsetu tango method query)))
 	   bunsetu-list))
 	 (_

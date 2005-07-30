@@ -1,52 +1,52 @@
-watashi no.h namae ha.h nakano desu .
-kyouha ii tenki nanode , sukoshi ashi wo nobashite kaimono ni ikimashita .
-kyoudai no.h mawari niha igokochi no ii.h kissaten ga takusan arimasu .
-hakushi ga hyakunin iru mura
-tango henkan ha [ watashi.h ] wo [ watashi ] ni henkan suru toiuyouna , hitotu no tango nomi wo henkan suru houshiki dearu . 
-emacs no version ha ika no toori desu .
-kisya no kisya ga kisya de kisya suru .
-Sumibi ha toukeiteki apuro-chi wo tukatta ro-maji kanjihenkann enjinn desu .
-Sumibi ha kantan na bunsyou wo surasura to kakeru koto wo mokuhyou to shiteimasu .
-Linux kernel no konpairu ha dare demo kantann ni dekiru wake deha arimasenn .
-kousei mae no gennkou wo motoni shiteori , katu kaki naoshita tokoro ga aru node , jissai ni keisai sareta mono toha kotonaru kasyo ga aru koto wo goryousyou kudasai .
-yuusei minneika , toshiake kara jimin to kyougi ten takenaka tantousyou .
-jisyo wo tukuru niha kanarino jikan wo youshimasu . 
-nihongo nyuuryoku henkan enjinn wo kaihatutyuu desu .
-murakamiryuu , kinnyuu keizai no senmonka tachi ni kiku [ me-ru hen ] kaitousya ( keisaijyun ) . hensyuutyou kara . saikin , nikkei heikin kabuka ga ookiku ugoku kotoga arimasen . jiwajiwa to sukoshizutu sagatteiru you desuga , ookiku sagaru koto mo , medatte agaru kotomoarimasen . nazedesyouka .
-kyouto giteisyo go no mokuhyou kyougi , 5 gatu ni jyunbi kaigou ten ondanka boushi kaigi .
-Internet jyou ni sonzaisuru musuu no dokyumento wo ko-pasu toshite riyoushi , jisyo wo sodatete tanoshimu shin kankaku no kanjihenkann enjinn no kaihatu wo mezashimasu .
-Opera shin ba-jyon no be-ta ban , koukai .
-sonoyouna gengo wo nyuuryoku suru tameno software wo input method to yobu .
-kana wo nyuuryoku shita ato ha , hituyou ni oujite kanji ni henkan shinakerebanaranai . 
-nennkin jimuhi 1000 okuen , rainendo mo hokenryou kara ryuuyou .
-cmmi ha tugi no youna kinou de install process wo kanri shimasu . konnna hito ni tukatte hoshii .
-mitui sumitomo nakaguro mizuho , furyousaiken hangen wo hantoshi maedaoshi tassei .
-o-punso-su purogurama ga ganbatte sakusei shita sofutouxea gaaru .
-free na renbunsetu henkan enjin de henkan arugorizumu no kairyou ga genzai demo keizokuteki ni tudukerareteiru noha anthy dake dearu . 
-source kara build sezu binary ban wo install seyo .
-shin riri-su deha eigo document wo fukumemashita .
-senmonka tachini kiku zadankai deno en'yasu to kinnyuu fuan . 
-kana wo kanji ni henkan surutameno houhou toshiteha , tango henkanhoushiki ya tannbunsetu henkanhoushiki , rennbunnsetu hennkannhoushiki nadono bunnrui gaaru . 
-kono dokyumento ha , UNIX USER 2004 5 gatugou ni keisai sareta tokusyuu [ saiteki na nihongo nyuuryoku kankyou wo hakkutu seyo ] wo  hensyuubu no kyoka wo ete HTML ka shitamonodesu .
-saiteki na nihongo nyuuryoku wo hakkutu seyo .
-murakamiryuu ga hakkou shiteiru japan mail media wo JMM to iu .
-Gauche reference manyuaru syujyu no risuto shori ru-chin . iretate no o cha . 
-anthy no genkou shippitu jiten ni okeru saishinban no anteiban ha , 2004 nen 3 gatu ni riri-su sareta anthy-5100b dearu .
-watashi no namae ha nakano desu .
-kana wo kanji ni henkan suru .
-ookina senkyo ga owarimashita . soshite meikaku na kekka ga demashita . tugi no jidai heto akiraka ni rekishi no haguruma ha mawatta to itte yoinodehanaidesyouka .
-futatu hanareta tango mo bigram te-buru ni hindo touroku suru .
-henkan arugorizumu wo sakusei suru noha taihenn muzukashii desu . kokodeha kimono wo kiru . kokode hakimono wo kiru . nodo ga kawaku . jimen ga kawaku . saisoku sarenakereba kakou to shinai .
-ima demo kokkai niha seiji to kane no mondai ga takusan arimasu .
-MySQL no source code wo kaihen shite saihaifu suru baai de , henkou kasyo wo koukai shitemo kamawanainara GPL ban wo tukaeba yoi desu . 
-sansyou kei no performance ga jyuuyou nara houfu na kinou ha hituyou de naikamo shiremasen .
-toukyou syouken torihikijyo oohike ten oohaba hanraku - endaka to bei kabuyasu wo iyake .
-gyoumu application de RDBMS ni youkyuu sareru youken ha samazama desu .
-tatoeba transaction ga jyuuryou na youken nara , houfu na transaction kinou wo motu RDBMS ga saiteki kamo shiremasen . 
-RDBMS sentei ni kansuru porishi- . mokuteki wo tassei dekiruka no mikiwame ga jyuuyou .
-anthy no tokutyou ha security ni taishite hairyo shiteiru koto , keizokuteki ni mentenansu sareteiru koto dearu . anthy ha yu-za- kengen de dousa shi , taninn ni kojinjisyo ya gakusyuurireki wo katte ni nusumi mirareru koto ha nai . 
-sekai niha , mojisuu ga oosugite ki-bo-do kara tyokusetu nyuuryoku dekinai gengo ga ikutuka aru . mochiron , nihongo mo sono naka no hitotu da . 
-inagaki gorou to katori shingo ha SMAP no member desu .
-niwa niha 2 wa niwatori ga iru . boku no namae ha nishiyama desu .
-eiyou seibun ha kettouchi no kontoro-ru ya ketuatu antei ni kouka ga arimasu .
-hatuga genmai niha kono gyaba wo hajime syokumotusenni ya bitamin' ten mineraru rui ga hakumai ni kurabe kakudan ni ooku fukumareteimasu maru
+convert	watashi no.h namae ha.h nakano desu .
+convert	kyouha ii tenki nanode , sukoshi ashi wo nobashite kaimono ni ikimashita .
+convert	kyoudai no.h mawari niha igokochi no ii.h kissaten ga takusan arimasu .
+convert	hakushi ga hyakunin iru mura
+convert	tango henkan ha [ watashi.h ] wo [ watashi ] ni henkan suru toiuyouna , hitotu no tango nomi wo henkan suru houshiki dearu . 
+convert	emacs no version ha ika no toori desu .
+convert	kisya no kisya ga kisya de kisya suru .
+convert	Sumibi ha toukeiteki apuro-chi wo tukatta ro-maji kanjihenkann enjinn desu .
+convert	Sumibi ha kantan na bunsyou wo surasura to kakeru koto wo mokuhyou to shiteimasu .
+convert	Linux kernel no konpairu ha dare demo kantann ni dekiru wake deha arimasenn .
+convert	kousei mae no gennkou wo motoni shiteori , katu kaki naoshita tokoro ga aru node , jissai ni keisai sareta mono toha kotonaru kasyo ga aru koto wo goryousyou kudasai .
+convert	yuusei minneika , toshiake kara jimin to kyougi ten takenaka tantousyou .
+convert	jisyo wo tukuru niha kanarino jikan wo youshimasu . 
+convert	nihongo nyuuryoku henkan enjinn wo kaihatutyuu desu .
+convert	murakamiryuu , kinnyuu keizai no senmonka tachi ni kiku [ me-ru hen ] kaitousya ( keisaijyun ) . hensyuutyou kara . saikin , nikkei heikin kabuka ga ookiku ugoku kotoga arimasen . jiwajiwa to sukoshizutu sagatteiru you desuga , ookiku sagaru koto mo , medatte agaru kotomoarimasen . nazedesyouka .
+convert	kyouto giteisyo go no mokuhyou kyougi , 5 gatu ni jyunbi kaigou ten ondanka boushi kaigi .
+convert	Internet jyou ni sonzaisuru musuu no dokyumento wo ko-pasu toshite riyoushi , jisyo wo sodatete tanoshimu shin kankaku no kanjihenkann enjinn no kaihatu wo mezashimasu .
+convert	Opera shin ba-jyon no be-ta ban , koukai .
+convert	sonoyouna gengo wo nyuuryoku suru tameno software wo input method to yobu .
+convert	kana wo nyuuryoku shita ato ha , hituyou ni oujite kanji ni henkan shinakerebanaranai . 
+convert	nennkin jimuhi 1000 okuen , rainendo mo hokenryou kara ryuuyou .
+convert	cmmi ha tugi no youna kinou de install process wo kanri shimasu . konnna hito ni tukatte hoshii .
+convert	mitui sumitomo nakaguro mizuho , furyousaiken hangen wo hantoshi maedaoshi tassei .
+convert	o-punso-su purogurama ga ganbatte sakusei shita sofutouxea gaaru .
+convert	free na renbunsetu henkan enjin de henkan arugorizumu no kairyou ga genzai demo keizokuteki ni tudukerareteiru noha anthy dake dearu . 
+convert	source kara build sezu binary ban wo install seyo .
+convert	shin riri-su deha eigo document wo fukumemashita .
+convert	senmonka tachini kiku zadankai deno en'yasu to kinnyuu fuan . 
+convert	kana wo kanji ni henkan surutameno houhou toshiteha , tango henkanhoushiki ya tannbunsetu henkanhoushiki , rennbunnsetu hennkannhoushiki nadono bunnrui gaaru . 
+convert	kono dokyumento ha , UNIX USER 2004 5 gatugou ni keisai sareta tokusyuu [ saiteki na nihongo nyuuryoku kankyou wo hakkutu seyo ] wo  hensyuubu no kyoka wo ete HTML ka shitamonodesu .
+convert	saiteki na nihongo nyuuryoku wo hakkutu seyo .
+convert	murakamiryuu ga hakkou shiteiru japan mail media wo JMM to iu .
+convert	Gauche reference manyuaru syujyu no risuto shori ru-chin . iretate no o cha . 
+convert	anthy no genkou shippitu jiten ni okeru saishinban no anteiban ha , 2004 nen 3 gatu ni riri-su sareta anthy-5100b dearu .
+convert	watashi no namae ha nakano desu .
+convert	kana wo kanji ni henkan suru .
+convert	ookina senkyo ga owarimashita . soshite meikaku na kekka ga demashita . tugi no jidai heto akiraka ni rekishi no haguruma ha mawatta to itte yoinodehanaidesyouka .
+convert	futatu hanareta tango mo bigram te-buru ni hindo touroku suru .
+convert	henkan arugorizumu wo sakusei suru noha taihenn muzukashii desu . kokodeha kimono wo kiru . kokode hakimono wo kiru . nodo ga kawaku . jimen ga kawaku . saisoku sarenakereba kakou to shinai .
+convert	ima demo kokkai niha seiji to kane no mondai ga takusan arimasu .
+convert	MySQL no source code wo kaihen shite saihaifu suru baai de , henkou kasyo wo koukai shitemo kamawanainara GPL ban wo tukaeba yoi desu . 
+convert	sansyou kei no performance ga jyuuyou nara houfu na kinou ha hituyou de naikamo shiremasen .
+convert	toukyou syouken torihikijyo oohike ten oohaba hanraku - endaka to bei kabuyasu wo iyake .
+convert	gyoumu application de RDBMS ni youkyuu sareru youken ha samazama desu .
+convert	tatoeba transaction ga jyuuryou na youken nara , houfu na transaction kinou wo motu RDBMS ga saiteki kamo shiremasen . 
+convert	RDBMS sentei ni kansuru porishi- . mokuteki wo tassei dekiruka no mikiwame ga jyuuyou .
+convert	anthy no tokutyou ha security ni taishite hairyo shiteiru koto , keizokuteki ni mentenansu sareteiru koto dearu . anthy ha yu-za- kengen de dousa shi , taninn ni kojinjisyo ya gakusyuurireki wo katte ni nusumi mirareru koto ha nai . 
+convert	sekai niha , mojisuu ga oosugite ki-bo-do kara tyokusetu nyuuryoku dekinai gengo ga ikutuka aru . mochiron , nihongo mo sono naka no hitotu da . 
+convert	inagaki gorou to katori shingo ha SMAP no member desu .
+convert	niwa niha 2 wa niwatori ga iru . boku no namae ha nishiyama desu .
+convert	eiyou seibun ha kettouchi no kontoro-ru ya ketuatu antei ni kouka ga arimasu .
+convert	hatuga genmai niha kono gyaba wo hajime syokumotusenni ya bitamin' ten mineraru rui ga hakumai ni kurabe kakudan ni ooku fukumareteimasu maru

@@ -47,7 +47,7 @@
 [done]   - xxx.h
 [done]   - xxx.k
          - xxx.j
-         - xxx.l
+[done]   - xxx.l ( xxx.eも同じ意味に設定する )
          - xxx.L
          - xxx.num
 
