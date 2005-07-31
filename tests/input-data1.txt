@@ -1,3 +1,4 @@
+convert	sumibi.e  de
 convert	watashi no.h namae ha.h nakano desu .
 convert	kyouha ii tenki nanode , sukoshi ashi wo nobashite kaimono ni ikimashita .
 convert	kyoudai no.h mawari niha igokochi no ii.h kissaten ga takusan arimasu .

@@ -1,7 +1,8 @@
 
 [0.3.5]
-  - sumibiエンジン
+  - sumibiエンジン(sumibi.cgi含む)
     1. xxx.l と xxx.e メソッド(アルファベット固定)をサポートした。
+    2. SumibiWebAPIを変更。(単語と単語の間のスペースの数も返すようにした。<spaces>タグ)
 
 [0.3.4]
   - sumibi.el
