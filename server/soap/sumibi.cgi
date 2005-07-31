@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2005/07/06 15:05:11 $
+#     $Date: 2005/07/31 13:40:50 $
 #
 # This file is part of Sumibi
 #
@@ -115,7 +115,8 @@ sub doSumibiConvert {
 		  type      => $member[0],
 		  word      => SOAP::Data->type('string')->value($member[1]),
 		  no        => $member[2],
-		  candidate => $member[3]
+		  candidate => $member[3],
+		  spaces    => $member[4]
 	      }
 	    );
     }
