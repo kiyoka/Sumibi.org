@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2005/08/01 15:51:12 $
+//     $Date: 2005/08/01 17:51:58 $
 //
 // This file is part of Sumibi
 //
@@ -179,10 +179,12 @@ Sumibi.prototype.format = function(array){
 Sumibi.prototype.historyHTML = function(block){
     var output;
     output  = '<span id="sumibi_backward" style="display:none">&lt;&lt;<a href="" onClick="sumibi_backward();return false">戻る</a></span>&nbsp;';
+    output += '<span id="sumibi_spacer">&nbsp;&nbsp;&nbsp;&nbsp;</span>';
     output += '<span id="sumibi_forward" style="display:none"><a href="" onClick="sumibi_forward();return false">進む</a>&gt;&gt;</span>';
     block.innerHTML = output;
     sumibi.hb = document.getElementById('sumibi_backward'); // backward
     sumibi.hf = document.getElementById('sumibi_forward');  // forward
+    sumibi.hs = document.getElementById('sumibi_spacer');   // spacer
 }
 
 Sumibi.prototype.forward = function(h){
@@ -245,6 +247,9 @@ Sumibi.prototype.defineCandidate = function(){
     this.progress.innerHTML = '';
     this.convert_count = 0;
     ++SUMIBI_CONVERT_COUNT;
+    if(sumibi.hf){
+	sumibi.hf.style.display = 'none';
+    }
     return result;
 }
 
@@ -261,12 +266,6 @@ Sumibi.prototype.replaceQueryByResult = function(q){
     q = q.replace(reg, defined);
     // definedCndidate で SUMIBI_CONVERT_COUNT は 1 増加してる
     sumibi.hist[SUMIBI_CONVERT_COUNT] = q;
-    if(sumibi.hist.length > SUMIBI_CONVERT_COUNT){
-	var i;
-	for(i = SUMIBI_CONVERT_COUNT + 1; i < sumibi.hist.length; i++){
-	    sumibi.hist[i] = '';
-	}
-    }
     return q;
 }
 
@@ -277,7 +276,6 @@ Sumibi.prototype.replaceQueryByResult = function(q){
 //  のエントリを参考にしてます。
 //********************************************************************
 Sumibi.prototype.doSoapRequest = function(xml_message, num){
-    var count   = SUMIBI_CONVERT_COUNT;
     var sumibi  = this;
     var xmlhttp = this.createXmlHttp();
     // alert(sumibi.query.length);  alert(num);
@@ -292,11 +290,6 @@ Sumibi.prototype.doSoapRequest = function(xml_message, num){
 	    if (xmlhttp.readyState == XMLHTTP_LOAD_COMPLETE ) {
 		if(xmlhttp.responseText) {
 		    //alert(xmlhttp.responseText);
-		    if((sumibi.query.length - 1) != num || count != SUMIBI_CONVERT_COUNT){
-			// 返された処理が最新のものかどうかチェック
-			// alert('old response 3 :' + num + ':' + sumibi.query.length + ':' + SUMIBI_CONVERT_COUNT);
-			return;
-		    }
 		    var candidate_array = sumibi.parseXML(xmlhttp.responseXML);
 		    if (candidate_array) {
 			sumibi.ime.innerHTML = sumibi.format(candidate_array);
