@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2005/07/28 13:19:39 $
+//     $Date: 2005/08/01 15:51:12 $
 //
 // This file is part of Sumibi
 //
@@ -39,7 +39,7 @@ var MSXMLHTTP = false;
 var URL_PREFIX = "https://sumibi.org/cgi-bin/sumibi/";
 var PROGRESS_MESSAGE = '&nbsp;&nbsp;&nbsp;<blink>waiting server response ...</blink>';
 var PROGRESS_MESSAGE_COLOR = '#000000';
-var PROGRESS_MESSAGE_ERROR = 'cannnot convert';
+var PROGRESS_MESSAGE_ERROR = 'cannot convert';
 var PROGRESS_MESSAGE_ERROR_COLOR = '#FF00000';
 
 //********************************************************************
@@ -64,6 +64,7 @@ function Sumibi( progress, ime, type){
     this.ime = ime;            // 変換選択用フォームを格納するブロックオブジェクト
     this.query = new Array();  // 変換する文字を格納する配列
     this.hist = new Array();
+    this.old_xmlhttp = null;
     return this;
 }
 
@@ -72,6 +73,11 @@ function Sumibi( progress, ime, type){
 //********************************************************************
 Sumibi.prototype.createXmlHttp = function() {
     xmlhttp = false;
+    if(this.old_xmlhttp && this.old_xmlhttp.readyState != 0){
+	// 古いリクエストをabort()する
+	this.old_xmlhttp.abort();
+	this.old_xmlhttp = null;
+    }
     try {
 	xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
 	MSXMLHTTP = true;
@@ -86,6 +92,7 @@ Sumibi.prototype.createXmlHttp = function() {
     if (!xmlhttp && typeof XMLHttpRequest != 'undefined') {
 	xmlhttp = new XMLHttpRequest();
     }
+    this.old_xmlhttp = xmlhttp;
     return xmlhttp;
 }
 
@@ -254,6 +261,12 @@ Sumibi.prototype.replaceQueryByResult = function(q){
     q = q.replace(reg, defined);
     // definedCndidate で SUMIBI_CONVERT_COUNT は 1 増加してる
     sumibi.hist[SUMIBI_CONVERT_COUNT] = q;
+    if(sumibi.hist.length > SUMIBI_CONVERT_COUNT){
+	var i;
+	for(i = SUMIBI_CONVERT_COUNT + 1; i < sumibi.hist.length; i++){
+	    sumibi.hist[i] = '';
+	}
+    }
     return q;
 }
 
