@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2005/07/18 07:56:11 $
+//     $Date: 2005/08/05 14:17:57 $
 //
 // This file is part of Sumibi
 //
@@ -28,7 +28,7 @@ var query     = document.getElementById('q');        // query
 var hist      = document.getElementById('hist');     // 
 // var resultbox = document.getElementById('r');        // 結果テキストボックス
 // var defined   = document.getElementById('defined');  // 決定テキストボックス
-var server_type = 'testing';
+var server_type = 'unstable';
 
 var sumibi = new SumibiSOAP(progress, ime, server_type);
 
@@ -62,19 +62,32 @@ function sumibi_define_candidate(){
     query.value = sumibi.replaceQueryByResult(query.value);
     sumibi.ime.innerHTML = '';
     location.hash = sumibi.hist.length - 1;
-    sumibi.hb.style.display = 'inline';
+    if(sumibi.hb){
+	sumibi.hb.style.display = 'inline';
+    }
 }
 
 function sumibi_forward(){
     var h = location.hash;
     h = h.replace(/^#/,'') - 0;
     location.hash = sumibi.forward(h);
+    sumibi_spacer();
 }
 
 function sumibi_backward(){
     var h = location.hash;
     h = h.replace(/^#/,'') - 0;
     location.hash = sumibi.backward(h);
+    sumibi_spacer();
+}
+
+function sumibi_spacer(){
+    //    alert(sumibi.hf.style.display == 'none');
+    if(sumibi.hb.style.display == 'none' || sumibi.hf.style.display == 'none'){
+	sumibi.hs.style.display = 'inline';
+    }else{
+	sumibi.hs.style.display = 'none';
+    }
 }
 
 //**************************************************************
