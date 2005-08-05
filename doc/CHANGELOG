@@ -1,8 +1,10 @@
 
 [0.3.5]
-  - sumibiエンジン(sumibi.cgi含む)
+  - sumibi Server(sumibi.cgi含む)
     1. xxx.l と xxx.e メソッド(アルファベット固定)をサポートした。
     2. SumibiWebAPIを変更。(単語と単語の間のスペースの数も返すようにした。<spaces>タグ)
+  - Ajaxクライアント
+    1. SumibiWebAPIの単語間スペース指定に対応した。
 
 [0.3.4]
   - sumibi.el

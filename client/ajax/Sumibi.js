@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2005/08/01 17:51:58 $
+//     $Date: 2005/08/05 14:08:09 $
 //
 // This file is part of Sumibi
 //
@@ -160,11 +160,17 @@ Sumibi.prototype.format = function(array){
         if(array[i].length > 1){
 	    output += ' <select name="sumibi_candiate" id="sumibi_candidate' + i + '" onChange="sumibi_display_result()">';
 	    for(ii=0; ii < array[i].length; ii++){
-		output += '<option value="' + array[i][ii] + '">' + array[i][ii];
+		output += '<option value="'
+		    + array[i][ii]["space"] + array[i][ii]["word"]
+		    + '">'
+		    + array[i][ii]["space_mark"] + array[i][ii]["word"];
 	    }
 	    output += '</select>';
 	}else{
-	    output += '<input type="hidden" name="sumibi_candidate" id="sumibi_candidate' + i + '" value="' + array[i][0] +'">' + array[i][0];
+	    output += '<input type="hidden" name="sumibi_candidate" id="sumibi_candidate' + i + '" value="' 
+		+ array[i][0]["space"] + array[i][0]["word"]
+		+'">' 
+		+ array[i][0]["space_mark"] + array[i][0]["word"];
 	}
     }
     return output;
