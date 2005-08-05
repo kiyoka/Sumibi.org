@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2005/07/28 13:21:48 $
+//     $Date: 2005/08/05 14:17:57 $
 //
 // This file is part of Sumibi
 //
@@ -39,7 +39,7 @@ var MSXMLHTTP = false;
 var URL_PREFIX = "/";
 var PROGRESS_MESSAGE = '&nbsp;&nbsp;&nbsp;<blink>waiting server response ...</blink>';
 var PROGRESS_MESSAGE_COLOR = '#000000';
-var PROGRESS_MESSAGE_ERROR = 'cannnot convert';
+var PROGRESS_MESSAGE_ERROR = 'cannot convert';
 var PROGRESS_MESSAGE_ERROR_COLOR = '#FF00000';
 
 //********************************************************************
@@ -64,6 +64,7 @@ function Sumibi( progress, ime, type){
     this.ime = ime;            // 変換選択用フォームを格納するブロックオブジェクト
     this.query = new Array();  // 変換する文字を格納する配列
     this.hist = new Array();
+    this.old_xmlhttp = null;
     return this;
 }
 
@@ -72,6 +73,11 @@ function Sumibi( progress, ime, type){
 //********************************************************************
 Sumibi.prototype.createXmlHttp = function() {
     xmlhttp = false;
+    if(this.old_xmlhttp && this.old_xmlhttp.readyState != 0){
+	// 古いリクエストをabort()する
+	this.old_xmlhttp.abort();
+	this.old_xmlhttp = null;
+    }
     try {
 	xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
 	MSXMLHTTP = true;
@@ -86,6 +92,7 @@ Sumibi.prototype.createXmlHttp = function() {
     if (!xmlhttp && typeof XMLHttpRequest != 'undefined') {
 	xmlhttp = new XMLHttpRequest();
     }
+    this.old_xmlhttp = xmlhttp;
     return xmlhttp;
 }
 
@@ -131,9 +138,9 @@ Sumibi.prototype.server = function(server){
 	this.type = server;
     }
     if(this.type == 'unstable'){
-	type = 'unstable';
-    }else if(this.type == 'testing'){
 	type = 'for_toppage';
+    }else if(this.type == 'testing'){
+	type = 'testing';
     }else{
 	type = 'stable';
     }
@@ -153,11 +160,17 @@ Sumibi.prototype.format = function(array){
         if(array[i].length > 1){
 	    output += ' <select name="sumibi_candiate" id="sumibi_candidate' + i + '" onChange="sumibi_display_result()">';
 	    for(ii=0; ii < array[i].length; ii++){
-		output += '<option value="' + array[i][ii] + '">' + array[i][ii];
+		output += '<option value="'
+		    + array[i][ii]["space"] + array[i][ii]["word"]
+		    + '">'
+		    + array[i][ii]["space_mark"] + array[i][ii]["word"];
 	    }
 	    output += '</select>';
 	}else{
-	    output += '<input type="hidden" name="sumibi_candidate" id="sumibi_candidate' + i + '" value="' + array[i][0] +'">' + array[i][0];
+	    output += '<input type="hidden" name="sumibi_candidate" id="sumibi_candidate' + i + '" value="' 
+		+ array[i][0]["space"] + array[i][0]["word"]
+		+'">' 
+		+ array[i][0]["space_mark"] + array[i][0]["word"];
 	}
     }
     return output;
@@ -172,10 +185,12 @@ Sumibi.prototype.format = function(array){
 Sumibi.prototype.historyHTML = function(block){
     var output;
     output  = '<span id="sumibi_backward" style="display:none">&lt;&lt;<a href="" onClick="sumibi_backward();return false">戻る</a></span>&nbsp;';
+    output += '<span id="sumibi_spacer">&nbsp;&nbsp;&nbsp;&nbsp;</span>';
     output += '<span id="sumibi_forward" style="display:none"><a href="" onClick="sumibi_forward();return false">進む</a>&gt;&gt;</span>';
     block.innerHTML = output;
     sumibi.hb = document.getElementById('sumibi_backward'); // backward
     sumibi.hf = document.getElementById('sumibi_forward');  // forward
+    sumibi.hs = document.getElementById('sumibi_spacer');   // spacer
 }
 
 Sumibi.prototype.forward = function(h){
@@ -238,6 +253,9 @@ Sumibi.prototype.defineCandidate = function(){
     this.progress.innerHTML = '';
     this.convert_count = 0;
     ++SUMIBI_CONVERT_COUNT;
+    if(sumibi.hf){
+	sumibi.hf.style.display = 'none';
+    }
     return result;
 }
 
@@ -264,7 +282,6 @@ Sumibi.prototype.replaceQueryByResult = function(q){
 //  のエントリを参考にしてます。
 //********************************************************************
 Sumibi.prototype.doSoapRequest = function(xml_message, num){
-    var count   = SUMIBI_CONVERT_COUNT;
     var sumibi  = this;
     var xmlhttp = this.createXmlHttp();
     // alert(sumibi.query.length);  alert(num);
@@ -279,11 +296,6 @@ Sumibi.prototype.doSoapRequest = function(xml_message, num){
 	    if (xmlhttp.readyState == XMLHTTP_LOAD_COMPLETE ) {
 		if(xmlhttp.responseText) {
 		    //alert(xmlhttp.responseText);
-		    if((sumibi.query.length - 1) != num || count != SUMIBI_CONVERT_COUNT){
-			// 返された処理が最新のものかどうかチェック
-			// alert('old response 3 :' + num + ':' + sumibi.query.length + ':' + SUMIBI_CONVERT_COUNT);
-			return;
-		    }
 		    var candidate_array = sumibi.parseXML(xmlhttp.responseXML);
 		    if (candidate_array) {
 			sumibi.ime.innerHTML = sumibi.format(candidate_array);
