@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;     $Date: 2005/07/31 13:40:50 $
+;;     $Date: 2005/08/15 14:06:56 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -187,7 +187,7 @@
     (when sumibi-debug
 	  (begin
 	    (display (format "bunsetu = ~s" hiragana)) (newline)
-	    (display (format "method  = ~S" method)) (newline)
+	    (display (format "method  = ~s" method)) (newline)
 	    (display (format "#search1# = ~s" query-string)) (newline)
 	    (display "result1:")
 	    (display result)
