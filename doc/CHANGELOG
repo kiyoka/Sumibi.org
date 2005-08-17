@@ -1,8 +1,9 @@
 
 [0.3.5]
-  - sumibi Server(sumibi.cgi含む)
+  - sumibi(sumibi.cgi含む)
     1. xxx.l と xxx.e メソッド(アルファベット固定)をサポートした。
-    2. SumibiWebAPIを変更。(単語と単語の間のスペースの数も返すようにした。<spaces>タグ)
+    2. MySQLサーバーへの接続時、エラーを表示するようにした。
+    3. SumibiWebAPIを変更。(単語と単語の間のスペースの数も返すようにした。<spaces>タグ)
   - Ajaxクライアント
     1. SumibiWebAPIの単語間スペース指定に対応した。
 
