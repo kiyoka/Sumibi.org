@@ -13,14 +13,9 @@ h2:
 	cat /home/park/$(SUMIBI)_corpus/unixuser/200405/part1.txt | kakasi -Ja -Ka -Ha -Ea -s > henkan2.txt
 	$(SUMIBI) < henkan2.txt | grep "#9#" > result.log
 
-loadS:
-	$(SUMIYAKI) -i /home/park/sumibi_corpus/SKK-JISYO.S > ~/park/log
+loadSKK:
+	$(SUMIYAKI) -i ../dict/SKK-JISYO.sumbi_starter > ~/park/log
 
-loadM:
-	$(SUMIYAKI) -i /home/park/sumibi_corpus/SKK-JISYO.M > ~/park/log
-
-loadL:
-	$(SUMIYAKI) -i /home/park/sumibi_corpus/SKK-JISYO.L > ~/park/log
 
 ossbook:
 	find /home/park/sumibi_corpus/OSSBOOK -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
