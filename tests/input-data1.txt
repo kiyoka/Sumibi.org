@@ -1,3 +1,5 @@
+convert	kakari
+convert	tokkyo ha shinsa ni jikan ga kakari masu
 convert	sumibi.e  de
 convert	watashi no.h namae ha.h nakano desu .
 convert	kyouha ii tenki nanode , sukoshi ashi wo nobashite kaimono ni ikimashita .
