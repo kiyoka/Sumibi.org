@@ -38,3 +38,7 @@ kotowaza:
 
 sum:
 	$(SUMIYAKI) -s > ~/park/summary.txt
+
+word:
+	echo "set character set utf8; select * from word;" | mysql sumi_test > ~/park/summary.txt
+
