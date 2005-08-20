@@ -21,7 +21,8 @@ SKK-JISYO.download :
 		echo $$i ; \
 		wget -nc ${URL}/zipcode/$$i ; \
 	done
-	skkdic-expr2 -o SKK-JISYO.download ${JISYO-DL} ${JISYO-ZIP-DL}
+	skkdic-expr2 -o SKK-JISYO.download ${JISYO-DL}
+### for future version -> ${JISYO-ZIP-DL}
 
 clean:
-	/bin/rm ${JISYO-DL} SKK-JISYO.download SKK-JISYO.sumbi_starter
+	/bin/rm ${JISYO-DL} ${JISYO-ZIP-DL} SKK-JISYO.download SKK-JISYO.sumbi_starter

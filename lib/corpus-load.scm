@@ -5,7 +5,6 @@
 
 (use gauche.regexp)
 (use srfi-1)
-(use slib)
 (use dbi)
 (use gauche.collection)
 (use util.combinations)

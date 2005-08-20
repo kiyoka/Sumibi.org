@@ -1,4 +1,5 @@
 
+DICT=sumi_bincho_1
 SUMIBI=nice -19 ../sumibi
 SUMIYAKI=nice -19 ./sumiyaki.sh
 
@@ -15,7 +16,7 @@ h2:
 
 
 create:
-	echo "create database sumi_test DEFAULT CHARACTER SET utf8;" | mysql
+	echo "create database " $(DICT) " DEFAULT CHARACTER SET utf8;" | mysql
 	$(SUMIYAKI) -c
 
 load:
@@ -40,9 +41,11 @@ hatena:
 	find /home/park/sumibi_corpus/hatena -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 kotowaza:
 	find /home/park/sumibi_corpus/kotowaza -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
+fortest:
+	find /home/park/sumibi_corpus/fortest -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 
 sum:
 	$(SUMIYAKI) -s > ~/park/summary.txt
 
 sumword:
-	echo "set character set utf8; select * from word;" | mysql sumi_test > ~/park/summary.txt
+	echo "set character set utf8; select * from word;" | mysql $(DICT) > ~/park/summary.txt

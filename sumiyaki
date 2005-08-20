@@ -3,7 +3,7 @@
 ;; "Sumiyaki" is a maintenance tool for Sumibi.
 ;;
 ;;   Copyright (C) 2002,2003,2004 Kiyoka Nishyama
-;;     $Date: 2005/08/20 06:10:54 $
+;;     $Date: 2005/08/20 14:25:50 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -24,12 +24,10 @@
 (use text.parse)
 (use gauche.parseopt)
 (use gauche.charconv)
-(use slib)
 (use srfi-11)
 (use srfi-13)
 (use dbi)
 (use gauche.collection)
-(require 'collect)
 (load "sumibi/sumibi-define.scm")
 (load "sumibi/dbiutil.scm")
 (load "sumibi/skkdict-load.scm")
@@ -192,7 +190,7 @@
 	 (newline)
 	 
 	 ;; word テーブルの全内容表示
-	 (when #f
+	 (when #t
 	       (for-each
 		(lambda (x)
 		  (display x) (newline))
@@ -206,7 +204,7 @@
 	 (newline)
 
 	 ;; bigram テーブルの全内容表示
-	 (when #f
+	 (when #t
 	       (for-each
 		(lambda (x)
 		  (display x) (newline))
@@ -220,7 +218,7 @@
 	 (newline)
 
 	 ;; skip_bigram テーブルの全内容表示
-	 (when #f
+	 (when #t
 	       (for-each
 		(lambda (x)
 		  (display x) (newline))
