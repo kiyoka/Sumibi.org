@@ -3,7 +3,7 @@
 ;; "Sumiyaki" is a maintenance tool for Sumibi.
 ;;
 ;;   Copyright (C) 2002,2003,2004 Kiyoka Nishyama
-;;     $Date: 2005/01/07 16:47:42 $
+;;     $Date: 2005/08/20 06:10:54 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -103,11 +103,19 @@
 	    (exit 0)))
 
     (let* (
-	   (connection (dbi-make-connection driver 
-					    sumibi-sumiyakidb-user
-					    sumibi-sumiyakidb-password
-					    sumibi-sumiyakidb-name))
-	   (query (dbi-make-query connection)))
+	   (connection 
+	    (guard (exc
+		    ((is-a? exc <dbi-exception>)
+		     ((display "error  : ")(display (ref exc 'message))(newline)
+		      (display "user   : ")(display sumibi-sumibidb-user)(newline)
+		      (display "db-name: ")(display sumibi-sumibidb-name)(newline)
+		      (exit 1))))
+		   (dbi-make-connection driver 
+					sumibi-sumiyakidb-user
+					sumibi-sumiyakidb-password
+					sumibi-sumiyakidb-name)))
+	   (query (dbi-make-query connection))
+	   (_ (sumibi-query query "SET CHARACTER SET utf8;")))
 
       (case command
 	((drop)

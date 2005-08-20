@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;     $Date: 2005/08/17 13:30:34 $
+;;     $Date: 2005/08/20 06:10:54 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -922,6 +922,7 @@
 				      sumibi-sumibidb-password
 				      sumibi-sumibidb-name)))
 	 (query (dbi-make-query connection))
+	 (_ (sumibi-query query "SET CHARACTER SET utf8;"))
 
 	 ;; 第一引数を捨てる
 	 (_ (cdr args))
