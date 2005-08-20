@@ -6,7 +6,6 @@
 
 (use gauche.regexp)
 (use srfi-1)
-(use slib)
 (use dbi)
 (load "sumibi/romkan.scm")
 (load "sumibi/dbiutil.scm")

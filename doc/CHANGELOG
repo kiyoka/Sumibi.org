@@ -1,11 +1,10 @@
 
 [0.3.5]
-  - sumibi(sumibi.cgi含む)
+  - sumibi,sumiyaki,sumibi.cgi
     1. MySQLサーバーへの接続時、エラーを表示するようにした。
     2. xxx.l と xxx.e メソッド(アルファベット固定)をサポートした。
     3. SumibiWebAPIを変更。(単語と単語の間のスペースの数も返すようにした。<spaces>タグ)
-  - sumiyaki
-    1. MySQLサーバーへの接続時、エラーを表示するようにした。
+    4. slibを使わないようにした。
   - Ajaxクライアント
     1. SumibiWebAPIの単語間スペース指定に対応した。
 
