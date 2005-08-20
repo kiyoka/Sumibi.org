@@ -13,6 +13,10 @@ h2:
 	cat /home/park/$(SUMIBI)_corpus/unixuser/200405/part1.txt | kakasi -Ja -Ka -Ha -Ea -s > henkan2.txt
 	$(SUMIBI) < henkan2.txt | grep "#9#" > result.log
 
+
+create:
+	echo "create database sumi_test DEFAULT CHARACTER SET utf8;" | mysql
+
 loadSKK:
 	$(SUMIYAKI) -i ../dict/SKK-JISYO.sumbi_starter > ~/park/log
 
@@ -41,4 +45,3 @@ sum:
 
 word:
 	echo "set character set utf8; select * from word;" | mysql sumi_test > ~/park/summary.txt
-
