@@ -14,11 +14,12 @@ h2:
 	$(SUMIBI) < henkan2.txt | grep "#9#" > result.log
 
 
-create:
+crete:
 	echo "create database sumi_test DEFAULT CHARACTER SET utf8;" | mysql
+	$(SUMIYAKI) -c
 
 loadSKK:
-	$(SUMIYAKI) -i ../dict/SKK-JISYO.sumbi_starter > ~/park/log
+	$(SUMIYAKI) -i ../dict/SKK-JISYO.zipcode > ~/park/log
 
 
 ossbook:
