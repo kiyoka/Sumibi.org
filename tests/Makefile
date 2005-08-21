@@ -49,3 +49,6 @@ sum:
 
 sumword:
 	echo "set character set utf8; select * from word;" | mysql $(DICT) > ~/park/summary.txt
+
+debug:
+	echo "set character set utf8; select * from word where yomiank = 'ka' and okuri = 'k';" | mysql $(DICT) > log
