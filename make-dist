@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION=0.3.4
+VERSION=0.4.0
 
 #### make-dist: create an Sumibi distribution tar file from the current
 #### source tree.  This basically creates a duplicate directory
@@ -54,7 +54,7 @@ TARGET=../sumibi-${VERSION}
 /bin/cp     ./doc/COPYING                                  $TARGET
 /bin/cp     ./doc/CHANGELOG                                $TARGET
 /bin/cp     ./doc/CREDITS                                  $TARGET
-/bin/cp -r  ./client/elisp                                 $TARGET/client
+awk -v VERSION=$VERSION  '{ if ( /;;VERSION;;/ ) { printf( "\"%s\"\n", VERSION ); } else { print; } }' < ./client/elisp/sumibi.el  >  $TARGET/client/sumibi.el
 /bin/cp -r  ./client/ajax                                  $TARGET/client
 /bin/cp -r  ./sample/client/perl                           $TARGET/sample/client
 find        $TARGET -name CVS -type d -exec /bin/rm -rf {} \;

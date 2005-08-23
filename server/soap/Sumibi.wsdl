@@ -6,7 +6,7 @@
   change as we refine and extend our APIs.
   
      Copyright (C) 2005 Kiyoka Nishyama
-       $Date: 2005/07/06 15:05:11 $
+       $Date: 2005/08/23 14:57:38 $
   
    This file is part of Sumibi
   
@@ -25,7 +25,7 @@
   
 -->
 
-<!-- Revision $Date: 2005/07/06 15:05:11 $ -->
+<!-- Revision $Date: 2005/08/23 14:57:38 $ -->
 
 <definitions name="SumibiConvert"
              targetNamespace="urn:SumibiConvert"
@@ -59,6 +59,7 @@
         <xsd:all>
           <xsd:element name="no"                type="xsd:int"/>
           <xsd:element name="candidate"         type="xsd:int"/>
+          <xsd:element name="spaces"            type="xsd:int"/>
           <xsd:element name="type"              type="xsd:string"/>
           <xsd:element name="word"              type="xsd:string"/>
         </xsd:all>
