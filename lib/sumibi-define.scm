@@ -3,7 +3,9 @@
 
 (define sumibi-debug #f)
 
-(define sumibi-version "0.3.4")
+(define sumibi-version 
+  " $Date: 2005/08/23 14:57:38 $ on CVS " ;;VERSION;;
+  )
 (define driver (dbi-make-driver "mysql"))
 
 ;; 評価バランス ( skip-2重マルコフ 2重マルコフ 1重マルコフ 2重マルコフ skip-2重マルコフ)
