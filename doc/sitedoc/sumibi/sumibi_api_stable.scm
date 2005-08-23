@@ -26,7 +26,7 @@
        (li "Sumibi Web APIは、sumibi.orgで公開しているSOAP 1.1準拠の漢字変換Webサービスです。")
        (li "SOAPライブラリを持つ言語ならどの言語からでも利用できます。")
        (li " WSDLを公開していますので、SOAPの詳細な知識なしにSumibi Web APIを利用することができます。")
-       (li (*link "WSDLファイル(テスト版)" "Sumibi_testing.wsdl")))))
+       (li (*link "WSDLファイル(テスト版)" "Sumibi_stable.wsdl")))))
 
     (*section
      "Sumibi Web API仕様"
