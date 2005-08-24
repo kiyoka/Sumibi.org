@@ -54,6 +54,7 @@ TARGET=../sumibi-${VERSION}
 /bin/cp     ./doc/COPYING                                  $TARGET
 /bin/cp     ./doc/CHANGELOG                                $TARGET
 /bin/cp     ./doc/CREDITS                                  $TARGET
+/bin/cp     ./doc/README                                   $TARGET
 awk -v VERSION=$VERSION  '{ if ( /;;VERSION;;/ ) { printf( "\"%s\"\n", VERSION ); } else { print; } }' < ./client/elisp/sumibi.el  >  $TARGET/client/sumibi.el
 /bin/cp -r  ./client/ajax                                  $TARGET/client
 /bin/cp -r  ./sample/client/perl                           $TARGET/sample/client
