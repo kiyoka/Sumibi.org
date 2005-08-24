@@ -8,8 +8,11 @@
       "Sumibi"
       "sumibi.html")
     ( el-stable
-      "sumibi.el (stable)"
+      "sumibi.el (STABLE)"
       "sumibi_el_stable.html")
+    ( api-stable
+      "Sumibi Web API (STABLE)"
+      "sumibi_api_stable.html")
     ( el-testing
       "sumibi.el (testing)"
       "sumibi_el_testing.html")
@@ -77,7 +80,7 @@ hosted by
 	    ,(cadr (assoc key page-alist)))
 	   (author " Kiyoka Nishiyama ")
 	   (hp " http://www.sumibi.org/ ")
-	   (date " $Date: 2005/07/15 14:15:16 $ "))
+	   (date " $Date: 2005/08/24 14:21:30 $ "))
 	  ,tree
 	  ))))
 

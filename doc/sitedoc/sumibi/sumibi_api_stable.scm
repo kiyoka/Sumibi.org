@@ -26,7 +26,7 @@
        (li "Sumibi Web APIは、sumibi.orgで公開しているSOAP 1.1準拠の漢字変換Webサービスです。")
        (li "SOAPライブラリを持つ言語ならどの言語からでも利用できます。")
        (li " WSDLを公開していますので、SOAPの詳細な知識なしにSumibi Web APIを利用することができます。")
-       (li (*link "WSDLファイル(テスト版)" "Sumibi_stable.wsdl")))))
+       (li (*link "WSDLファイル(安定版)" "Sumibi_stable.wsdl")))))
 
     (*section
      "Sumibi Web API仕様"
@@ -139,7 +139,7 @@
 	 (p "./SumibiWebApiSample.pl sumibi")
 	 (p "[結果]")
 	 (program "
-version : 0.3.3
+version : 0.4.0
 sexp    : KCgoaiAiw7qy0CIgMCAwKSAoaCAipLmk36TTIiAwIDEpIChrICKluaXfpdMiIDAgMikgKGwgInN1bWliaSIgMCAzKSkp
 time    : 1
 dump    : $VAR1 = [
@@ -191,4 +191,4 @@ hiragana: すみび
 
 
 ;; ページの出力
-(output 'api-testing (L:body))
+(output 'api-stable (L:body))
