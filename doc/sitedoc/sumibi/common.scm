@@ -8,17 +8,20 @@
       "Sumibi"
       "sumibi.html")
     ( el-stable
-      "sumibi.el (STABLE)"
+      "sumibi.el(STABLE)"
       "sumibi_el_stable.html")
     ( api-stable
-      "Sumibi Web API (STABLE)"
+      "SumibiWebAPI(STABLE)"
       "sumibi_api_stable.html")
     ( el-testing
-      "sumibi.el (testing)"
+      "sumibi.el(testing)"
       "sumibi_el_testing.html")
     ( api-testing
-      "Sumibi Web API (testing)"
+      "SumibiWebAPI(testing)"
       "sumibi_api_testing.html")
+    ( server-setup
+      "SumibiServerSetup"
+      "sumibi_server_setup.html")
     ( faq
       "FAQ"
       "faq.html")))
@@ -41,6 +44,8 @@
      (*link "GNU General Public License (GPL2)" "http://www.gnu.org/licenses/gpl.html"))
     (W:CAcert
      (*link "CAcert.org" "http://www.cacert.org/"))
+    (W:Sumibi.org
+     (*link "Sumibi.org" "http://www.sumibi.org/"))
     ;; sourceforge link logo
     (W:sf-logo
      (native
@@ -80,7 +85,7 @@ hosted by
 	    ,(cadr (assoc key page-alist)))
 	   (author " Kiyoka Nishiyama ")
 	   (hp " http://www.sumibi.org/ ")
-	   (date " $Date: 2005/08/24 14:21:30 $ "))
+	   (date " $Date: 2005/08/27 13:39:41 $ "))
 	  ,tree
 	  ))))
 
