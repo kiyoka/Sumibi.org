@@ -32,7 +32,7 @@
   </span>
   <br>
 
-  <a href="sumibi-ajax/">長い文章を作る</a>
+  <a href="https://sumibi.org/">暗号化通信スタート</a>
   /
   <a href="sumibi/sumibi.html">Documents</a>
   /
@@ -48,9 +48,9 @@
   <input type="hidden" id="server" name="server" value="testing"  onClick="select_server(this.value)"
   <p>
     Google検索文字列をローマ字で入力
+    <input type=submit name=add value="Google検索">
   </p>
-  <input type="text" name=q id=q size=60 maxlength="256">
-  <input type=submit name=add value="Google検索">
+  <textarea id=q name=q cols=60 rows=5></textarea>
   <input type=hidden name="btnG" value="Google+%8C%9F%8D%F5">
   <input type=hidden name="lr" value="">
   <input type=hidden name="hl" value="ja">
@@ -61,9 +61,8 @@
 </div>
 
 <ul>
-  <li>単語と単語をスペースで区切って入力します。 (例: baritou no hoteru ) </li>
-  <li>スペースが入力される度に変換候補が更新されます。 </li>
-  <li>2個以上のスペースは1個のスペースになります。 (例: baritou&nbsp;&nbsp;&nbsp;hoteru → バリ島&nbsp;ホテル)</li>
+  <li>単語をスペースで区切って入力します。 (例: ryokou ni kiteimasu . → 旅行に来ています。) </li>
+  <li>スペースを入力したい場合は、スペースを二回続けて入れて下さい。 (例: ryokou&nbsp;&nbsp;&nbsp;baritou → 旅行&nbsp;バリ島)</li>
 </ul>
 
 <div style="text-align: right; ">
