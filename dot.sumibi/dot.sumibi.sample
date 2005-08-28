@@ -9,4 +9,4 @@
 (define sumibi-sumibidb-password     "password")
 
 ;; debug flag on
-(set! sumibi-debug #t)
+(set! sumibi-debug #f)
