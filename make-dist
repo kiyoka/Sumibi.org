@@ -49,13 +49,13 @@ umask 0
 TARGET=../sumibi-${VERSION}
 
 /bin/rm -rf    $TARGET
-/bin/mkdir -p  $TARGET/client
+/bin/mkdir -p  $TARGET/client/elisp
 /bin/mkdir -p  $TARGET/sample/client
 /bin/cp     ./doc/COPYING                                  $TARGET
 /bin/cp     ./doc/CHANGELOG                                $TARGET
 /bin/cp     ./doc/CREDITS                                  $TARGET
 /bin/cp     ./doc/README                                   $TARGET
-awk -v VERSION=$VERSION  '{ if ( /;;VERSION;;/ ) { printf( "\"%s\"\n", VERSION ); } else { print; } }' < ./client/elisp/sumibi.el  >  $TARGET/client/sumibi.el
+awk -v VERSION=$VERSION  '{ if ( /;;VERSION;;/ ) { printf( "\"%s\"\n", VERSION ); } else { print; } }' < ./client/elisp/sumibi.el  >  $TARGET/client/elisp/sumibi.el
 /bin/cp -r  ./client/ajax                                  $TARGET/client
 /bin/cp -r  ./sample/client/perl                           $TARGET/sample/client
 find        $TARGET -name CVS -type d -exec /bin/rm -rf {} \;
