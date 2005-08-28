@@ -147,25 +147,29 @@ dump    : $VAR1 = [
             'no' => '0',
             'type' => 'j',
             'word' => '炭火',
-            'candidate' => '0'
+            'candidate' => '0',
+            'spaces' => '0'
           },
           {
             'no' => '0',
             'type' => 'h',
             'word' => 'すみび',
-            'candidate' => '1'
+            'candidate' => '1',
+            'spaces' => '0'
           },
           {
             'no' => '0',
             'type' => 'k',
             'word' => 'スミビ',
-            'candidate' => '2'
+            'candidate' => '2',
+            'spaces' => '0'
           },
           {
             'no' => '0',
             'type' => 'l',
             'word' => 'sumibi',
-            'candidate' => '3'
+            'candidate' => '3',
+            'spaces' => '0'
           }
         ];
 hiragana: すみび
