@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/08/23 14:57:39 $
+;;     $Date: 2005/08/28 09:59:18 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -26,25 +26,11 @@
 
 ;;;     配布条件: GPL
 ;;; 最新版配布元: http://sourceforge.jp/projects/sumibi/
-
-;;; 本バージョンはテスト版です。
-;;; バージョン系列 0.3.x ではどんどん機能追加を行なうため動作が安定していない可能性があります。
-;;; 安定指向の方は 安定版 (0.2.x) をご使用ください。
+;;; 
 ;;; 不明な点や改善したい点があればSumibiのメーリングリストに参加してフィードバックをおねがいします。
 ;;;
 ;;; また、Sumibiに興味を持っていただいた方はどなたでも
 ;;; 気軽にプロジェクトにご参加ください。
-;;;
-;;; 本バージョンには次のような制限があります。
-;;;   1. 本パッケージにはEmacs用のクライアントのみ含まれています。
-;;;      1) sumibi.orgで動作しているSumibi Serverに接続して利用します。 
-;;;      2) SSL証明書を使用しSumibi Serverとの通信を暗号化しています。
-;;;
-;;;         SSL証明書は GoDaddy様より本来有償である Turbo SSL を無償提供していただきました。
-;;;         https://www.godaddy.com/gdshop/ssl/ssl_opensource.asp?se=%2B
-;;;
-;;;   2. バグがまだまだあります。^_^;
-;;;
 ;;;
 ;;; インストール方法、使いかたは以下のWebサイトにありますのであわせて参照してください。
 ;;;   http://www.sumibi.org/
@@ -63,7 +49,7 @@
   :group 'input-method
   :group 'Japanese)
 
-(defcustom sumibi-server-url "https://sumibi.org/cgi-bin/sumibi/testing/sumibi.cgi"
+(defcustom sumibi-server-url "https://sumibi.org/cgi-bin/sumibi/stable/sumibi.cgi"
   "SumibiサーバーのURLを指定する。"
   :type  'string
   :group 'sumibi)
@@ -856,7 +842,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/08/23 14:57:39 $ on CVS " ;;VERSION;;
+  " $Date: 2005/08/28 09:59:18 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
