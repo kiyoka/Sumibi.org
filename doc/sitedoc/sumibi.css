@@ -1,4 +1,4 @@
-/* $Id: sumibi.css,v 1.3 2005/07/19 13:58:52 kiyoka Exp $ */
+/* $Id: sumibi.css,v 1.4 2005/09/04 14:54:03 kiyoka Exp $ */
 
 body {
 	background-color: #ffffff;
@@ -116,5 +116,25 @@ code {
 	border-style: 	solid;
 	border-width: 1px;
 }
+
+
+/* for SmartDoc docuemnts */
+div.author {
+	text-align: right;
+	font-size: smaller;
+}
+div.date {
+	text-align: right;
+	font-size: smaller;
+}
+div.hp {
+	text-align: right;
+	font-size: smaller;
+}
+div.sumibi_menu {
+	text-align: left;
+	font-size: smaller;
+}
+
 
 /* EOF */

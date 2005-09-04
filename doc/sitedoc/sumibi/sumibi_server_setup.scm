@@ -44,7 +44,7 @@
 	(p "Sumibiシステムは沢山のソフトウェアコンポーネントから構成されています。")
 	(figure (@ (title "sumibi system diagram")
 		   (src "sumibi_system_diagram")
-		   (style "width:40%"))))))
+		   (style "width:50%"))))))
      (*subsection
       "Sumibi Serverのセットアップに必要なソフトウェア"
       "Sumibi Server depends on these software"

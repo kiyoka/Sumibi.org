@@ -60,14 +60,15 @@ hosted by
     (L:tab
      (native
       (@ (format "html"))
-      ,(map
-	(lambda (x)
-	  (format "[<a href=\"~a\">~a</a>]"
-		  (caddr x)
-		  (cadr x)))
-	page-alist)))
-     
-    ))
+      ,(list
+	"<div class=\"sumibi_menu\">"
+	(map
+	 (lambda (x)
+	   (format "[<a href=\"~a\">~a</a>]"
+		   (caddr x)
+		   (cadr x)))
+	 page-alist)
+	"</div>")))))
 
 
 (define (output key tree)
@@ -85,7 +86,7 @@ hosted by
 	    ,(cadr (assoc key page-alist)))
 	   (author " Kiyoka Nishiyama ")
 	   (hp " http://www.sumibi.org/ ")
-	   (date " $Date: 2005/08/27 13:39:41 $ "))
+	   (date " $Date: 2005/09/04 14:54:03 $ "))
 	  ,tree
 	  ))))
 
