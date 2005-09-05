@@ -54,7 +54,39 @@
 <hr>
 hosted by 
 <a href=\"http://sourceforge.jp/\"><img src=\"http://sourceforge.jp/sflogo.php?group_id=1476\" width=\"96\" height=\"31\" border=\"0\" alt=\"SourceForge.jp\"></a>
+
+
+  <!-- Creative Commons License -->
+  <a href=\"http://creativecommons.org/licenses/GPL/2.0/\"><img alt=\"CC-GNU GPL\" border=\"0\" src=\"http://creativecommons.org/images/public/cc-GPL-a.png\" /></a>  
+  This software is licensed under the <a href=\"http://creativecommons.org/licenses/GPL/2.0/\">CC-GNU GPL</a>.
+  <!-- /Creative Commons License -->
+  
+
+  <!--
+
+  <rdf:RDF xmlns=\"http://web.resource.org/cc/\"
+     xmlns:dc=\"http://purl.org/dc/elements/1.1/\"
+     xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">
+  <Work rdf:about=\"\">
+     <license rdf:resource=\"http://creativecommons.org/licenses/GPL/2.0/\" />
+     <dc:type rdf:resource=\"http://purl.org/dc/dcmitype/Software\" />
+  </Work>
+
+  <License rdf:about=\"http://creativecommons.org/licenses/GPL/2.0/\">
+     <permits rdf:resource=\"http://web.resource.org/cc/Reproduction\" />
+     <permits rdf:resource=\"http://web.resource.org/cc/Distribution\" />
+     <requires rdf:resource=\"http://web.resource.org/cc/Notice\" />
+     <permits rdf:resource=\"http://web.resource.org/cc/DerivativeWorks\" />
+     <requires rdf:resource=\"http://web.resource.org/cc/ShareAlike\" />
+     <requires rdf:resource=\"http://web.resource.org/cc/SourceCode\" />
+  </License>
+
+  </rdf:RDF>
+
+  -->
+
 "
+
       ))
     ;; link tab
     (L:tab
@@ -86,7 +118,7 @@ hosted by
 	    ,(cadr (assoc key page-alist)))
 	   (author " Kiyoka Nishiyama ")
 	   (hp " http://www.sumibi.org/ ")
-	   (date " $Date: 2005/09/04 14:54:03 $ "))
+	   (date " $Date: 2005/09/05 14:00:55 $ "))
 	  ,tree
 	  ))))
 

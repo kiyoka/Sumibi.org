@@ -69,7 +69,7 @@
      )
 
     (*section
-     "入手"
+     "入手方法"
      "How to get it"
      (*en
       (p "No documents in English, sorry..." ))
@@ -138,16 +138,16 @@ mkdir -p /usr/share/gauche/site/lib/sumibi/
       "install the sumibi and sumibi.cgi"
       (*ja
        (ol
-	(li "CVSの sumibi/sumibi と sumibi/server/sumibi.cgi を Apacheのcgi-binにコピーしてください"))))
+	(li "CVSの sumibi/sumibi と sumibi/server/sumibi.cgi を Apacheのcgi実行ディレクトリにコピーします。"))))
 
      (*subsection
-      "/sumibi エンジンの設定ファイル .sumibi を用意する"
+      "sumibi エンジンの設定ファイル .sumibi を用意する"
       "Prepare .sumibi file"
       (*ja
        (ol
-	(li "CVSのdot.sumibi.sampleを cgi-binディレクトリに .sumibi という名前で保存します。")
+	(li "CVSの dot.sumibi.sample を cgi-binディレクトリに .sumibi という名前で保存します。")
 	(li ".sumibiのDB接続の為のパラメータを正しい値に変更します。")
-	(p "※ sumiyakidbの方は、得に設定の必要はありません。")
+	(p "※ sumiyakidbの方は、得に設定の必要はありません。(こちらの設定は、辞書を鍛えるツールsumiyaki用です)")
 	(program
 "
 ;; sumiyaki db
@@ -160,7 +160,7 @@ mkdir -p /usr/share/gauche/site/lib/sumibi/
 (define sumibi-sumibidb-user         \"username\")
 (define sumibi-sumibidb-password     \"password\")
 
-;; debug flag on
+;; debug flag
 (set! sumibi-debug #f)
 "
 )))))

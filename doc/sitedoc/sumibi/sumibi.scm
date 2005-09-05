@@ -52,8 +52,9 @@
      "More and more..."
      (*ja
       (ul
+       (li (*link "SumibiWebAPIを使う(安定版)"          "sumibi_api_stable.html"))
        (li (*link "SumibiWebAPIを使う(テスト版)"        "sumibi_api_testing.html"))
-;;       (li (*link "Sumibi Serverを自分で用意する" "http://www.sumibi.org/sumibi-ajax/"))
+       (li (*link "Sumibi Serverを自分で用意する"       "sumibi_server_setup.html"))
 ;;       (li (*link "辞書を育てる" "sumibi_el_ja.html"))))
        ))
      (*en
