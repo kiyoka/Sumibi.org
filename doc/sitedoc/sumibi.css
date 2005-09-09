@@ -1,4 +1,4 @@
-/* $Id: sumibi.css,v 1.4 2005/09/04 14:54:03 kiyoka Exp $ */
+/* $Id: sumibi.css,v 1.5 2005/09/09 13:49:56 kiyoka Exp $ */
 
 body {
 	background-color: #ffffff;
@@ -8,13 +8,15 @@ a:visited { color: #72f; }
 a:active  { color: #f33; }
 
 table tr.odd,table tr.dark {
-	background-color: #f0f0e0;
+      	background-color: #e0e0d0;
 	vertical-align: top;
+	border-spacing: 1em;
 }
 
 table tr.even {
-	background-color: #f8f8e4;
+	background-color: #e8e8d4;
 	vertical-align: top;
+	border-spacing: 1em;
 }
 
 div.mirror {
