@@ -38,7 +38,7 @@
 		    (html:br)
 		    (if (cgi-get-parameter "long" params)
 			(html:a :href "." "Google検索モード(暗号化OFF)")
-			(html:a :href "?long=1" "長文作成モード(暗号化ON)"))
+			(html:a :href "https://sumibi.org/?long=1" "長文作成モード(暗号化ON)"))
 		    " / "
 		    (html:a :href "sumibi/sumibi.html"  "Documents")
 		    " / "
@@ -81,7 +81,7 @@
 	  (html:div :class "copyright"
 		    "Sumibi Engine:Copyright&copy 2005, Kiyoka / Sumibi Ajax:Copyright&copy 2005, Ktat"
 		    (html:br)
-		    "CVS version = $Date: 2005/09/10 04:37:23 $ ")
+		    "CVS version = $Date: 2005/09/10 05:16:47 $ ")
 
 	  (html:a :href "http://www.godaddy.com/gdshop/ssl/ssl_opensource.asp"
 		  (html:img :src "http://imagesak.godaddy.com/assets/ssl/img_cert_turbo_gd.jpg" :border "0" :alt "SourceForge.jp"))
