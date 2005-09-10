@@ -1,6 +1,10 @@
+AddType  "text/html;               charset=utf-8" .cgi
 AddType  "text/html;               charset=utf-8" .html
 AddType  "text/html;               charset=utf-8" .htm
-AddType  "text/xml" .wsdl
+AddType  "text/xml"                               .wsdl
+
+Options +ExecCGI
+AddHandler cgi-script cgi
 
 <Limit GET POST>
 </Limit>
