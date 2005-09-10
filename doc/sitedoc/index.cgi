@@ -55,7 +55,7 @@
 				    (html:p
 				     (html:a :href "http://www.google.com/"
 					     (html:img :src "http://www.google.com/logos/Logo_25wht.gif" :border "0" :alt "Google" :align "middle"))
-				     (html:input :type "input" :id "q" :name "q" :size "41" :maxlength "2048")
+				     (html:input :type "text" :id "q" :name "q" :size "41" :maxlength "2048")
 				     (html:input :type "submit" :name "sa" :value "検索"))))
 			       (html:input :type "hidden" :name "client" :value "pub-5721837636688174")
 			       (html:input :type "hidden" :name "forid"  :value "1")
@@ -81,7 +81,7 @@
 	  (html:div :class "copyright"
 		    "Sumibi Engine:Copyright&copy 2005, Kiyoka / Sumibi Ajax:Copyright&copy 2005, Ktat"
 		    (html:br)
-		    "CVS version = $Date: 2005/09/10 05:16:47 $ ")
+		    "CVS version = $Date: 2005/09/10 05:20:54 $ ")
 
 	  (html:a :href "http://www.godaddy.com/gdshop/ssl/ssl_opensource.asp"
 		  (html:img :src "http://imagesak.godaddy.com/assets/ssl/img_cert_turbo_gd.jpg" :border "0" :alt "SourceForge.jp"))
