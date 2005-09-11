@@ -5,9 +5,7 @@
 
 
 (define (L:body)
-  '(body
-    ,L:tab
-
+  '(
     (*section
      "Sumibiとは？"
      "What is Sumibi?"

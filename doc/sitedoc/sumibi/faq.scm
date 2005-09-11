@@ -5,9 +5,7 @@
 
 
 (define (L:body)
-  '(body
-    ,L:tab
-
+  '(
     (*section
      "使い方について"
      "How to use"
