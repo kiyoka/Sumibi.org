@@ -67,7 +67,8 @@
 		    (html:div :id "progress")
 		    (html:div :id "ime")
 		    (html:div :id "hist"))
-	  (html:ul	   
+	  
+	  (html:ul
 	   (html:li "単語をスペースで区切って入力します。 (例: ryokou ni kiteimasu . → 旅行に来ています。)")
 	   (html:li "句読点 、。はスペースの後に , . を入力します。(例: arigatou . → ありがとう。) ")
 	   (html:li "スペースは、スペースを二回入力して下さい。 (例: wa-kinguhoride-&nbsp;&nbsp;&nbsp;o-sutoraria → ワーキングホリデー&nbsp;&nbsp;オーストラリア)"))
@@ -81,8 +82,52 @@
 	  (html:div :class "copyright"
 		    "Sumibi Engine:Copyright&copy 2005, Kiyoka / Sumibi Ajax:Copyright&copy 2005, Ktat"
 		    (html:br)
-		    "CVS version = $Date: 2005/09/10 14:03:19 $ ")
+		    "Software version = $Date: 2005/09/11 15:09:27 $ ")
 
+
+	  ;;; --- 海外旅行者のための解説文章 ---
+	  (if (not (cgi-get-parameter "long" params))
+	      (html:div
+	       (html:h1 "海外旅行者の強い味方 Sumibi.org")
+		  
+	       (html:h3 "手ぶらで海外に行きたい、でもメールも送りたい")
+	       (html:p
+		"Sumibi.org (炭火.org) は海外のインターネットカフェや海外ホテルのビジネスセンターなどから"
+		"日本語でメールを書いたりブログを書いたりできるサイトです。")
+	       (html:p
+		"日本語入力(IME)の入っていない英語版Windowsからでも日本語入力できます。")
+	       (html:p
+		"このページからGoogle検索ができ、メール等長文を書く場合は『"
+		(html:a :href "https://sumibi.org/?long=1" "長文作成モード(暗号化ON)")
+		"』ページが便利です。")
+		  
+	       ;;	  (html:p
+	       ;;	   "海外のホテルにはビジネスセンターという施設があり、Internet接続されたPCが置いてあります。(料金の相場は30分 5ドルから10ドル程度です。)")
+	       ;;	  (html:p
+	       ;;	   "また、ライブラリ(共有書庫)にも無料でInternetが利用できるPCを開放しているホテルもあります。(『バリ島のマヤ ウブド』が無料でした。)")
+	       ;;	  (html:p
+	       ;;	   "世界的にブログが流行している現在、無料PCをホテルのライブラリ(共有書庫)に置くようになってきています。")
+		  
+	       ;;	  (html:p
+	       ;;	   "でも、そのほとんどは日本語入力IMEがインストールされておらず、困ることが多いでしょう。"
+	       ;;	   "そういう時にSumibiが大活躍します。")
+		  
+		  
+	       (html:h3 "『手ぶらで海外』を実践する方法")
+	       ;;	  (html:ol
+	       ;;	   (html:li "あなたの行く予定のホテルにPCが有るか、料金はいくらか聞いておきます。")
+	       ;;	   (html:p "( ついでに、日本語が表示できるかどうか確認しておくと良いでしょう。)")
+	       ;;	   (html:li "『sumibi.org』という言葉を覚えておきます。")
+	       (html:p "海外からgoogle で 『sumibi.org』を検索するとこのサイトが最初に出てきます。")
+		  
+	       (html:h3 "海外から日本語でメールを送りたい時")
+	       (html:p "海外に行く前にWebメールサービスに入っておきます。")
+	       (html:p "goo Mailや、Yahoo Mail、 Hotmail等が有名な無料Webメールサービスです。"
+		       "自分に合ったものを選びましょう。")))
+	  
+	  (html:hr)
+
+	  ;;; --- FLOSS関連ロゴ ---
 	  (html:a :href "http://www.godaddy.com/gdshop/ssl/ssl_opensource.asp"
 		  (html:img :src "http://imagesak.godaddy.com/assets/ssl/img_cert_turbo_gd.jpg" :border "0" :alt "SourceForge.jp"))
 
@@ -121,6 +166,7 @@
 
   -->
 "
+
 
 	  )
 	 (html:script :type "text/javascript" :src "ajax/Sumibi.js")
