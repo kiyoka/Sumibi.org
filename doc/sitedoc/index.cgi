@@ -82,11 +82,12 @@
 	  (html:div :class "copyright"
 		    "Sumibi Engine:Copyright&copy 2005, Kiyoka / Sumibi Ajax:Copyright&copy 2005, Ktat"
 		    (html:br)
-		    "Software version = $Date: 2005/09/11 15:09:27 $ ")
+		    "Software version = $Date: 2005/09/11 15:11:01 $ ")
 
 
 	  ;;; --- 海外旅行者のための解説文章 ---
-	  (if (not (cgi-get-parameter "long" params))
+	  (if (cgi-get-parameter "long" params)
+	      (html:p "")
 	      (html:div
 	       (html:h1 "海外旅行者の強い味方 Sumibi.org")
 		  
