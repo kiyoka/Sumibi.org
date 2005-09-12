@@ -48,9 +48,29 @@
 		    (html:form :method "get" :action "http://www.google.co.jp/custom" :target "_top"
 			       (html:input :type "hidden" :id "server" :name "server" :value "testing"  :onClick "select_server(this.value)")
 			       (if (cgi-get-parameter "long" params)
-				   (html:div :style "text-align: center; "
-					     (html:p "長文作成モード")
-					     (html:textarea :id "q" :name "q" :cols "60" :rows "5"))
+				   (html:div
+				    (html:div :style "text-align: center; "
+					      (html:p "[長文作成モード]")
+					      "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+					      (html:textarea :id "q" :name "q" :cols "60" :rows "5")
+					      "
+<script type=\"text/javascript\"><!--
+google_ad_client = \"pub-5721837636688174\";
+google_ad_width = 120;
+google_ad_height = 90;
+google_ad_format = \"120x90_0ads_al_s\";
+google_ad_channel =\"\";
+google_color_border = \"FFFFFF\";
+google_color_bg = \"FFFFFF\";
+google_color_link = \"0000CC\";
+google_color_url = \"008000\";
+google_color_text = \"000000\";
+//--></script>
+<script type=\"text/javascript\"
+  src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">
+</script>
+"
+				     ))
 				   (html:div
 				    (html:p
 				     (html:a :href "http://www.google.com/"
@@ -82,68 +102,83 @@
 	  (html:div :class "copyright"
 		    "Sumibi Engine:Copyright&copy 2005, Kiyoka / Sumibi Ajax:Copyright&copy 2005, Ktat"
 		    (html:br)
-		    "Software version = $Date: 2005/09/11 15:11:01 $ ")
-
-
-	  ;;; --- 海外旅行者のための解説文章 ---
-	  (if (cgi-get-parameter "long" params)
-	      (html:p "")
-	      (html:div
-	       (html:h1 "海外旅行者の強い味方 Sumibi.org")
-		  
-	       (html:h3 "手ぶらで海外に行きたい、でもメールも送りたい")
-	       (html:p
-		"Sumibi.org (炭火.org) は海外のインターネットカフェや海外ホテルのビジネスセンターなどから"
-		"日本語でメールを書いたりブログを書いたりできるサイトです。")
-	       (html:p
-		"日本語入力(IME)の入っていない英語版Windowsからでも日本語入力できます。")
-	       (html:p
-		"このページからGoogle検索ができ、メール等長文を書く場合は『"
-		(html:a :href "https://sumibi.org/?long=1" "長文作成モード(暗号化ON)")
-		"』ページが便利です。")
-		  
-	       ;;	  (html:p
-	       ;;	   "海外のホテルにはビジネスセンターという施設があり、Internet接続されたPCが置いてあります。(料金の相場は30分 5ドルから10ドル程度です。)")
-	       ;;	  (html:p
-	       ;;	   "また、ライブラリ(共有書庫)にも無料でInternetが利用できるPCを開放しているホテルもあります。(『バリ島のマヤ ウブド』が無料でした。)")
-	       ;;	  (html:p
-	       ;;	   "世界的にブログが流行している現在、無料PCをホテルのライブラリ(共有書庫)に置くようになってきています。")
-		  
-	       ;;	  (html:p
-	       ;;	   "でも、そのほとんどは日本語入力IMEがインストールされておらず、困ることが多いでしょう。"
-	       ;;	   "そういう時にSumibiが大活躍します。")
-		  
-		  
-	       (html:h3 "『手ぶらで海外』を実践する方法")
-	       ;;	  (html:ol
-	       ;;	   (html:li "あなたの行く予定のホテルにPCが有るか、料金はいくらか聞いておきます。")
-	       ;;	   (html:p "( ついでに、日本語が表示できるかどうか確認しておくと良いでしょう。)")
-	       ;;	   (html:li "『sumibi.org』という言葉を覚えておきます。")
-	       (html:p "海外からgoogle で 『sumibi.org』を検索するとこのサイトが最初に出てきます。")
-		  
-	       (html:h3 "海外から日本語でメールを送りたい時")
-	       (html:p "海外に行く前にWebメールサービスに入っておきます。")
-	       (html:p "goo Mailや、Yahoo Mail、 Hotmail等が有名な無料Webメールサービスです。"
-		       "自分に合ったものを選びましょう。")))
-	  
-	  (html:hr)
-
-	  ;;; --- FLOSS関連ロゴ ---
-	  (html:a :href "http://www.godaddy.com/gdshop/ssl/ssl_opensource.asp"
-		  (html:img :src "http://imagesak.godaddy.com/assets/ssl/img_cert_turbo_gd.jpg" :border "0" :alt "SourceForge.jp"))
-
-	  (html:a :href "http://sourceforge.jp/"
-		  (html:img :src "http://sourceforge.jp/sflogo.php?group_id=1476" :width="96" :height "31" :border "0" :alt "SourceForge.jp"))
-
-	  (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
-		  (html:img :alt "CC-GNU GPL" :border "0" :src "http://creativecommons.org/images/public/cc-GPL-a.png"))
+		    "Software version = $Date: 2005/09/12 14:37:37 $ ")
 
 	  (html:br)
-	  "This software is licensed under the "
-	  (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
-		  "CC-GNU GPL")
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
 
-"  
+	  ;;; --- 海外旅行者のための解説文章 ---
+	  (html:div
+	   (html:h1 "海外旅行者の強い味方 Sumibi.org")
+	   
+	   (html:h3 "手ぶらで海外に行きたい、でもメールも送りたい")
+	   (html:p
+	    "Sumibi.org (炭火.org) は海外のインターネットカフェや海外ホテルのビジネスセンターなどから"
+	    "日本語でメールを書いたりブログを書いたりできるサイトです。")
+	   (html:p
+	    "日本語入力(IME)の入っていない英語版Windowsからでも日本語入力できます。")
+	   
+	   (if (cgi-get-parameter "long" params)
+	       (html:p
+		"このページは長文作成用です。Google検索を行う場合は、"
+		(html:a :href "http://www.sumibi.org/" "Google検索モード(暗号化OFF)")
+		"』ページが便利です。")
+	       (html:p
+		"このページからGoogle検索ができます。メール等長文を書く場合は『"
+		(html:a :href "https://sumibi.org/?long=1" "長文作成モード(暗号化ON)")
+		"』ページが便利です。"))
+		   
+		  
+	   ;;	  (html:p
+	   ;;	   "海外のホテルにはビジネスセンターという施設があり、Internet接続されたPCが置いてあります。(料金の相場は30分 5ドルから10ドル程度です。)")
+	   ;;	  (html:p
+	   ;;	   "また、ライブラリ(共有書庫)にも無料でInternetが利用できるPCを開放しているホテルもあります。(『バリ島のマヤ ウブド』が無料でした。)")
+	   ;;	  (html:p
+	   ;;	   "世界的にブログが流行している現在、無料PCをホテルのライブラリ(共有書庫)に置くようになってきています。")
+		  
+	   ;;	  (html:p
+	   ;;	   "でも、そのほとんどは日本語入力IMEがインストールされておらず、困ることが多いでしょう。"
+	   ;;	   "そういう時にSumibiが大活躍します。")
+		  
+		  
+	   (html:h3 "『手ぶらで海外』を実践する方法")
+	   ;;	  (html:ol
+	   ;;	   (html:li "あなたの行く予定のホテルにPCが有るか、料金はいくらか聞いておきます。")
+	   ;;	   (html:p "( ついでに、日本語が表示できるかどうか確認しておくと良いでしょう。)")
+	   ;;	   (html:li "『sumibi.org』という言葉を覚えておきます。")
+	   (html:p "海外からgoogle で 『sumibi.org』を検索するとこのサイトが最初に出てきます。")
+		  
+	   (html:h3 "海外から日本語でメールを送りたい時")
+	   (html:p "海外に行く前にWebメールサービスに入っておきます。")
+	   (html:p "goo Mailや、Yahoo Mail、 Hotmail等が有名な無料Webメールサービスです。"
+		   "自分に合ったものを選びましょう。")
+	  
+	   (html:hr)
+
+	  ;;; --- FLOSS関連ロゴ ---
+	   (html:a :href "http://www.godaddy.com/gdshop/ssl/ssl_opensource.asp"
+		   (html:img :src "http://imagesak.godaddy.com/assets/ssl/img_cert_turbo_gd.jpg" :border "0" :alt "SourceForge.jp"))
+
+	   (html:a :href "http://sourceforge.jp/"
+		   (html:img :src "http://sourceforge.jp/sflogo.php?group_id=1476" :width="96" :height "31" :border "0" :alt "SourceForge.jp"))
+
+	   (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
+		   (html:img :alt "CC-GNU GPL" :border "0" :src "http://creativecommons.org/images/public/cc-GPL-a.png"))
+
+	   (html:br)
+	   "This software is licensed under the "
+	   (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
+		   "CC-GNU GPL")
+
+	   "  
   <!--
 
   <rdf:RDF xmlns=\"http://web.resource.org/cc/\"
@@ -169,11 +204,12 @@
 "
 
 
-	  )
+	   )
 	 (html:script :type "text/javascript" :src "ajax/Sumibi.js")
 	 (html:script :type "text/javascript" :src "ajax/SumibiSOAP.js")
 	 (html:script :type "text/javascript" :src "ajax/ajax_sumibi.js")
 
-	 )))))
+	 ))))))
+
 
 
