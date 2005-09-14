@@ -102,7 +102,50 @@ google_color_text = \"000000\";
 	  (html:div :class "copyright"
 		    "Sumibi Engine:Copyright&copy 2005, Kiyoka / Sumibi Ajax:Copyright&copy 2005, Ktat"
 		    (html:br)
-		    "Software version = $Date: 2005/09/12 14:37:37 $ ")
+		    "Software version = $Date: 2005/09/14 12:34:33 $ ")
+
+
+	   (html:hr)
+
+	  ;;; --- FLOSS関連ロゴ ---
+	   (html:a :href "http://www.godaddy.com/gdshop/ssl/ssl_opensource.asp"
+		   (html:img :src "http://imagesak.godaddy.com/assets/ssl/img_cert_turbo_gd.jpg" :border "0" :alt "SourceForge.jp"))
+
+	   (html:a :href "http://sourceforge.jp/"
+		   (html:img :src "http://sourceforge.jp/sflogo.php?group_id=1476" :width="96" :height "31" :border "0" :alt "SourceForge.jp"))
+
+	   (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
+		   (html:img :alt "CC-GNU GPL" :border "0" :src "http://creativecommons.org/images/public/cc-GPL-a.png"))
+
+	   (html:br)
+	   "This software is licensed under the "
+	   (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
+		   "CC-GNU GPL")
+
+	   "  
+  <!--
+
+  <rdf:RDF xmlns=\"http://web.resource.org/cc/\"
+     xmlns:dc=\"http://purl.org/dc/elements/1.1/\"
+     xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">
+  <Work rdf:about=\"\">
+     <license rdf:resource=\"http://creativecommons.org/licenses/GPL/2.0/\" />
+     <dc:type rdf:resource=\"http://purl.org/dc/dcmitype/Software\" />
+  </Work>
+
+  <License rdf:about=\"http://creativecommons.org/licenses/GPL/2.0/\">
+     <permits rdf:resource=\"http://web.resource.org/cc/Reproduction\" />
+     <permits rdf:resource=\"http://web.resource.org/cc/Distribution\" />
+     <requires rdf:resource=\"http://web.resource.org/cc/Notice\" />
+     <permits rdf:resource=\"http://web.resource.org/cc/DerivativeWorks\" />
+     <requires rdf:resource=\"http://web.resource.org/cc/ShareAlike\" />
+     <requires rdf:resource=\"http://web.resource.org/cc/SourceCode\" />
+  </License>
+
+  </rdf:RDF>
+
+  -->
+"
 
 	  (html:br)
 	  (html:br)
@@ -114,6 +157,12 @@ google_color_text = \"000000\";
 	  (html:br)
 	  (html:br)
 	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+
 
 	  ;;; --- 海外旅行者のための解説文章 ---
 	  (html:div
@@ -161,47 +210,11 @@ google_color_text = \"000000\";
 	   (html:p "goo Mailや、Yahoo Mail、 Hotmail等が有名な無料Webメールサービスです。"
 		   "自分に合ったものを選びましょう。")
 	  
-	   (html:hr)
 
-	  ;;; --- FLOSS関連ロゴ ---
-	   (html:a :href "http://www.godaddy.com/gdshop/ssl/ssl_opensource.asp"
-		   (html:img :src "http://imagesak.godaddy.com/assets/ssl/img_cert_turbo_gd.jpg" :border "0" :alt "SourceForge.jp"))
 
-	   (html:a :href "http://sourceforge.jp/"
-		   (html:img :src "http://sourceforge.jp/sflogo.php?group_id=1476" :width="96" :height "31" :border "0" :alt "SourceForge.jp"))
-
-	   (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
-		   (html:img :alt "CC-GNU GPL" :border "0" :src "http://creativecommons.org/images/public/cc-GPL-a.png"))
-
-	   (html:br)
-	   "This software is licensed under the "
-	   (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
-		   "CC-GNU GPL")
-
-	   "  
-  <!--
-
-  <rdf:RDF xmlns=\"http://web.resource.org/cc/\"
-     xmlns:dc=\"http://purl.org/dc/elements/1.1/\"
-     xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">
-  <Work rdf:about=\"\">
-     <license rdf:resource=\"http://creativecommons.org/licenses/GPL/2.0/\" />
-     <dc:type rdf:resource=\"http://purl.org/dc/dcmitype/Software\" />
-  </Work>
-
-  <License rdf:about=\"http://creativecommons.org/licenses/GPL/2.0/\">
-     <permits rdf:resource=\"http://web.resource.org/cc/Reproduction\" />
-     <permits rdf:resource=\"http://web.resource.org/cc/Distribution\" />
-     <requires rdf:resource=\"http://web.resource.org/cc/Notice\" />
-     <permits rdf:resource=\"http://web.resource.org/cc/DerivativeWorks\" />
-     <requires rdf:resource=\"http://web.resource.org/cc/ShareAlike\" />
-     <requires rdf:resource=\"http://web.resource.org/cc/SourceCode\" />
-  </License>
-
-  </rdf:RDF>
-
-  -->
-"
+	  ;;; --- mickeynet.com ---
+	   (html:a :href "http://www.mickeynetusa.com/ranking/counter/incount.asp?countid=174" :target "_blank"
+		   (html:img :src "http://www.mickeynet.com/e_ranklink/img/mickeynet130_35.gif" :width "130" :height "35" :border "0"))
 
 
 	   )
