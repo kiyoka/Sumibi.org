@@ -51,26 +51,8 @@
 				   (html:div
 				    (html:div :style "text-align: center; "
 					      (html:p "[長文作成モード]")
-					      "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
 					      (html:textarea :id "q" :name "q" :cols "60" :rows "5")
-					      "
-<script type=\"text/javascript\"><!--
-google_ad_client = \"pub-5721837636688174\";
-google_ad_width = 120;
-google_ad_height = 90;
-google_ad_format = \"120x90_0ads_al_s\";
-google_ad_channel =\"\";
-google_color_border = \"FFFFFF\";
-google_color_bg = \"FFFFFF\";
-google_color_link = \"0000CC\";
-google_color_url = \"008000\";
-google_color_text = \"000000\";
-//--></script>
-<script type=\"text/javascript\"
-  src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">
-</script>
-"
-				     ))
+					      ))
 				   (html:div
 				    (html:p
 				     (html:a :href "http://www.google.com/"
@@ -102,7 +84,7 @@ google_color_text = \"000000\";
 	  (html:div :class "copyright"
 		    "Sumibi Engine:Copyright&copy 2005, Kiyoka / Sumibi Ajax:Copyright&copy 2005, Ktat"
 		    (html:br)
-		    "Software version = $Date: 2005/09/14 12:37:15 $ ")
+		    "Software version = $Date: 2005/09/15 13:16:13 $ ")
 
 
 	  ;;; --- FLOSS関連ロゴ ---
@@ -115,12 +97,38 @@ google_color_text = \"000000\";
 	  (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
 		  (html:img :alt "CC-GNU GPL" :border "0" :src "http://creativecommons.org/images/public/cc-GPL-a.png"))
 	  
+
+	  ;;; --- google AdSense ---
+	  (if (cgi-get-parameter "long" params)
+	      "
+<script type=\"text/javascript\"><!--
+google_ad_client = \"pub-5721837636688174\";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = \"468x60_as\";
+google_ad_type = \"text_image\";
+google_ad_channel =\"\";
+google_color_border = \"FFFFFF\";
+google_color_bg = \"FFFFFF\";
+google_color_link = \"0000CC\";
+google_color_url = \"008000\";
+google_color_text = \"000000\";
+//--></script>
+<script type=\"text/javascript\"
+  src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">
+</script>
+"
+	      "")
+
+
+	  ;; --- FLOSS関連続き ---
 	  (html:br)
 	  "This software is licensed under the "
 	  (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
 		  "CC-GNU GPL")
 
-	   "  
+
+	  "  
   <!--
 
   <rdf:RDF xmlns=\"http://web.resource.org/cc/\"
@@ -145,6 +153,10 @@ google_color_text = \"000000\";
   -->
 "
 
+	   (html:br)
+	   (html:br)
+	   (html:br)
+	   (html:br)
 	   (html:br)
 	   (html:br)
 	   (html:br)
