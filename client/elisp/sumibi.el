@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/08/28 09:59:18 $
+;;     $Date: 2005/09/20 13:55:55 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -110,6 +110,11 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
   :type  'string
   :group 'sumibi)
 
+(defcustom sumibi-use-viper nil
+  "*Non-nil であれば、VIPER に対応する。"
+  :type 'boolean
+  :group 'sumibi)
+
 
 (defvar sumibi-mode nil             "漢字変換トグル変数")
 (defvar sumibi-mode-line-string     " Sumibi")
@@ -132,6 +137,13 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 			(cons 'sumibi-select-mode  sumibi-select-mode-map))
 		  minor-mode-map-alist)))
 
+
+;;;
+;;; hooks
+;;;
+(defvar sumibi-mode-hook nil)
+(defvar sumibi-select-mode-hook nil)
+(defvar sumibi-select-mode-end-hook nil)
 
 
 ;;--- デバッグメッセージ出力
@@ -342,7 +354,8 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 	    (sumibi-trap-server-down
 	     (beep)
 	     (message (error-message-string err))
-	     (setq sumibi-select-mode nil)) )
+	     (setq sumibi-select-mode nil))
+	    (run-hooks 'sumibi-select-mode-end-hook))
 	nil))))
 
 
@@ -530,6 +543,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
   ;; 候補番号リストをバックアップする。
   (setq sumibi-cand-n-backup (copy-list sumibi-cand-n))
   (setq sumibi-select-mode nil)
+  (run-hooks 'sumibi-select-mode-end-hook)
   (sumibi-select-update-display))
 
 ;; 候補選択をキャンセルする
@@ -539,6 +553,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
   ;; カレント候補番号をバックアップしていた候補番号で復元する。
   (setq sumibi-cand-n (copy-list sumibi-cand-n-backup))
   (setq sumibi-select-mode nil)
+  (run-hooks 'sumibi-select-mode-end-hook)
   (sumibi-select-update-display))
 
 ;; 前の候補に進める
@@ -684,6 +699,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 	(let
 	    ((cnt 0))
 	  (setq sumibi-select-mode t)
+	  (run-hooks 'sumibi-select-mode-hook)
 	  (setq sumibi-cand 0)		; 文節番号初期化
 	  
 	  (sumibi-debug-print "henkan mode ON\n")
@@ -750,6 +766,36 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 
       result)))
   
+;;;
+;;; with viper
+;;;
+;; code from skk-viper.el
+(defun sumibi-viper-normalize-map ()
+  (let ((other-buffer
+	 (if (featurep 'xemacs)
+	     (local-variable-p 'minor-mode-map-alist nil t)
+	   (local-variable-if-set-p 'minor-mode-map-alist))))
+    ;; for current buffer and buffers to be created in the future.
+    ;; substantially the same job as viper-harness-minor-mode does.
+    (viper-normalize-minor-mode-map-alist)
+    (setq-default minor-mode-map-alist minor-mode-map-alist)
+    (when other-buffer
+      ;; for buffers which are already created and have
+      ;; the minor-mode-map-alist localized by Viper.
+      (dolist (buf (buffer-list))
+	(with-current-buffer buf
+	  (unless (assq 'sumibi-mode minor-mode-map-alist)
+	    (setq minor-mode-map-alist
+		  (append (list (cons 'sumibi-mode sumibi-mode-map)
+				(cons 'sumibi-select-mode
+				      sumibi-select-mode-map))
+			  minor-mode-map-alist)))
+	  (viper-normalize-minor-mode-map-alist))))))
+
+(defun sumibi-viper-init-function ()
+  (sumibi-viper-normalize-map)
+  (remove-hook 'sumibi-mode-hook 'sumibi-viper-init-function))
+
 
 ;;;
 ;;; human interface
@@ -804,9 +850,14 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
       (make-local-variable 'sumibi-mode))
   (if global
       (progn
-	(setq-default sumibi-mode t)
+	(setq-default sumibi-mode (if (null arg) (not sumibi-mode)
+				    (> (prefix-numeric-value arg) 0)))
 	(sumibi-kill-sumibi-mode))
-    (setq sumibi-mode t)))
+    (setq sumibi-mode (if (null arg) (not sumibi-mode)
+			(> (prefix-numeric-value arg) 0))))
+  (when sumibi-use-viper
+    (add-hook 'sumibi-mode-hook 'sumibi-viper-init-function))
+  (when sumibi-mode (run-hooks 'sumibi-mode-hook)))
 
 
 ;; buffer local な sumibi-mode を削除する関数
@@ -842,13 +893,10 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/08/28 09:59:18 $ on CVS " ;;VERSION;;
+  " $Date: 2005/09/20 13:55:55 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
   (interactive "P")
   (message sumibi-version))
 (provide 'sumibi)
-
-;; Sumibi モードをバッファ全体で有効にする
-(global-sumibi-mode 1)

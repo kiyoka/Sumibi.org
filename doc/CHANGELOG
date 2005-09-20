@@ -2,6 +2,14 @@
 [0.5.0]
   - Ajaxクライアント
     1. 『決定』ボタン押下で、テキストボックスにフォーカスを返すようにした。
+  - sumibi.el
+    1. IRIE Tetsuya氏のパッチを適用した
+       - sumibi-mode-hookを追加
+       - sumibi-select-mode-hookを追加
+       - sumibi-select-mode-end-hookを追加
+       - leimの標準的なinput methodのルールに適合させた
+       - (sumibi-mode ARG) (global-sumibi-mode ARG)による変換エンジンのON/OFF動作を復活
+       - viperユーザ向けの考慮追加 ( カスタマイズ変数 sumibi-use-viper で有効化 )
 
 [0.4.0]
   - sumibi,sumiyaki,sumibi.cgi
