@@ -12,6 +12,7 @@ all :
 	cat ../../../server/soap/Sumibi.wsdl | sed -e 's/%URL%/https:\/\/sumibi.org\/cgi-bin\/sumibi\/stable\/sumibi.cgi/' > Sumibi_stable.wsdl
 	./convert_doc  sumibi
 	./convert_doc  faq                t
+	./convert_doc  privacy_policy
 	./convert_doc  sumibi_server_setup
 	./convert_doc  sumibi_el_stable
 	./convert_doc  sumibi_el_testing
