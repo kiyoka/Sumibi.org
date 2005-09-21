@@ -24,7 +24,11 @@
       "sumibi_server_setup.html")
     ( faq
       "FAQ"
-      "faq.html")))
+      "faq.html")
+    ( privacy-policy
+      "PrivacyPolicy"
+      "privacy_policy.html")
+    ))
 
 
 (define SmartDoc:abbrev-table
@@ -104,7 +108,7 @@ hosted by
 	    ,(cadr (assoc key page-alist)))
 	   (author " Kiyoka Nishiyama ")
 	   (hp " http://www.sumibi.org/ ")
-	   (date " $Date: 2005/09/11 11:20:40 $ "))
+	   (date " $Date: 2005/09/21 13:19:24 $ "))
 	  (body
 
 	   ;; navigation tab
