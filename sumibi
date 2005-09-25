@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;     $Date: 2005/08/21 05:10:43 $
+;;     $Date: 2005/09/25 14:44:00 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -24,6 +24,7 @@
 (use text.parse)
 (use gauche.parseopt)
 (use gauche.charconv)
+(use gauche.regexp)
 (use srfi-1)
 (use srfi-11)
 (use srfi-13)
@@ -845,7 +846,12 @@
     (romkan-roman->kana str))
 
   (let* (
-	 (command-and-arg (string-split str #/\t/))
+	 ;; 句読点の分割処理
+	 (_  (regexp-replace-all #/[,] / str " , "))
+	 (_  (regexp-replace-all #/[,]$/   _ " ,"))
+	 (_  (regexp-replace-all #/[.] /   _ " . "))
+	 (_  (regexp-replace-all #/[.]$/   _ " ."))
+	 (command-and-arg (string-split _ #/\t/))
 	 (command         (car  command-and-arg))
 	 (args-string	  (if (< 1 (length command-and-arg))
 			      (string-trim-both (cadr command-and-arg))

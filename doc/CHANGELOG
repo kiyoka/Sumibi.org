@@ -12,6 +12,7 @@
        - viperユーザ向けの考慮追加 ( カスタマイズ変数 sumibi-use-viper で有効化 )
   - Sumibi Server
     1. shu, chuが変換できないバグを修正した。
+    2. 句読点は "konoyouni, kakeru." の様にスペースで分離しなくても入力できるようにした。
 
 [0.4.0]
   - sumibi,sumiyaki,sumibi.cgi
