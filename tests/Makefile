@@ -25,8 +25,6 @@ load:
 
 ossbook:
 	find /home/park/sumibi_corpus/OSSBOOK -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
-jmm:
-	find /home/park/sumibi_corpus/JMM -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 jf:
 	find /home/park/sumibi_corpus/JFdocs -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 yamagata:
@@ -39,8 +37,6 @@ gauche-refj:
 	find /home/park/sumibi_corpus/gauche-refj -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 hatena:
 	find /home/park/sumibi_corpus/hatena -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
-kotowaza:
-	find /home/park/sumibi_corpus/kotowaza -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 fortest:
 	find /home/park/sumibi_corpus/fortest -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 
