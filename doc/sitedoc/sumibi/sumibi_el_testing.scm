@@ -64,9 +64,9 @@
        (p
 	(img (@ (src "modeline.png"))))
 
-       (li "Meadowをお使いの場合は、次の環境変数を設定が必要です。")
+       (li "Meadowをお使いの場合は、次の環境変数の設定が必要です。")
        (p "パス名はそれぞれの環境に合わせて読みかえて下さい。")
-       (p "cygwinではなく Windowsの環境変数に設定してください。そうしないとMeadowに環境変数がわたりません。")
+       (p "cygwinではなく Windowsの環境変数に設定してください。そうしないとMeadowに環境変数が渡りません。")
        (table 
 	(thead
 	 (tr  (td "環境変数") (td "設定値")))
@@ -90,7 +90,7 @@
 	(ul
 	 (li "(入力例)")
 	 (program
-	  "sumibi de oishii yakiniku wo tabeyou . [C-j]")
+	  "sumibi de oishii yakiniku wo tabeyou. [C-j]")
 	 (li "(結果  )")
 	 (program
 	  "炭火でおいしい焼肉を食べよう。"))
@@ -98,7 +98,7 @@
 	(ul
 	 (li "(入力例)")
 	 (program
-	  "sumibi de oishii /yakiniku wo tabeyou . [C-j]")
+	  "sumibi de oishii /yakiniku wo tabeyou. [C-j]")
 	 (li "(結果  )")
 	 (program
 	  "sumibi de oishii 焼肉を食べよう。"))
@@ -106,7 +106,7 @@
 	(ul
 	 (li "(入力例)")
 	 (program
-	  "sumibi.h de oishii.k yakiniku wo tabeyou . [C-j]")
+	  "sumibi.h de oishii.k yakiniku wo tabeyou. [C-j]")
 	 (li "(結果  )")
 	 (program
 	  "すみびでオイシイ焼肉を食べよう。")))))
@@ -218,8 +218,46 @@
 	(p "C-j キーでローマ字を変換する時、変換文章の停止文字を指定します。\n"
 	   "sumibi.elは C-j キーを押されるとカーソル位置から前方方向に sumibi-stop-chars で定義された停止文字にマッチするまでを捜査し、変換対象とします。")
 	(li "sumibi-curl")
-	(p "curlコマンドの絶対パスを指定します。通常は変更する必要はありません。")))))
+	(p "curlコマンドの絶対パスを指定します。通常は変更する必要はありません。")
+	(li "sumibi-use-viper")
+	(p "Non-nil であれば、VIPER モード対応になります。"
+	   "VIPERモードとSumibiを併用したとき C-j が効かなくなる問題が出る場合に有効にしてください。")))))
+	
+    (*section
+     "フック"
+     "Hooks"
+     (*en
+      (p "No documents in English, sorry..." ))
 
+     (*ja
+      (ul
+       (li "sumibi.elには以下のフックがサポートされています。")
+       (ol
+	(li "sumibi-mode-hook")
+	(p "sumibi.elを有効にするタイミングで実行する関数を定義できます。")
+	(li "sumibi-select-mode-hook")
+	(p "変換候補選択モードに以降するタイミングで実行する関数を定義できます。")
+	(li "sumibi-select-mode-end-hook")
+	(p "変換候補選択モードから脱出するタイミングで実行する関数を定義できます。")))))
+
+    (*section
+     "sumibi-modeのON/OFF"
+     "Toggle sumibi-mode."
+     (*en
+      (p "No documents in English, sorry..." ))
+
+     (*ja
+      (p
+       (p "sumibi.elは他のinput methodの様にON/OFFできます。")
+       (ol
+	(li ".emacsで以下のように記述した場合、sumibi-mode OFFでEmacsが起動します。")
+	(program
+	 "(load \"sumibi\")")
+	(li "M-x sumibi-mode で sumibi-modeのON/OFFをトグルします。")
+	(p "この場合、影響範囲はカレントバッファだけです。")
+	(li "M-x global-sumibi-mode で sumibi-modeのON/OFFをトグルします。")
+	(p "この場合、影響範囲はEmacs全体に及びます。")))))
+	
     ,W:sf-logo
     ))
 
