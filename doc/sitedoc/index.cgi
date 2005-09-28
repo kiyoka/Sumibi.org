@@ -86,7 +86,7 @@
 	  (html:div :class "copyright"
 		    "Sumibi Engine:Copyright&copy 2005, Kiyoka / Sumibi Ajax:Copyright&copy 2005, Ktat"
 		    (html:br)
-		    "Software version = $Date: 2005/09/21 13:19:24 $ ")
+		    "Software version = $Date: 2005/09/28 16:16:26 $ ")
 
 
 	  ;;; --- FLOSS関連ロゴ ---
@@ -101,8 +101,7 @@
 	  
 
 	  ;;; --- google AdSense ---
-	  (if (cgi-get-parameter "long" params)
-	      "
+	  "
 <script type=\"text/javascript\"><!--
 google_ad_client = \"pub-5721837636688174\";
 google_ad_width = 468;
@@ -120,7 +119,6 @@ google_color_text = \"000000\";
   src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">
 </script>
 "
-	      "")
 
 
 	  ;; --- FLOSS関連続き ---
