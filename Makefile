@@ -1,3 +1,6 @@
 
 
+dist:
+	./make-dist
+
 
