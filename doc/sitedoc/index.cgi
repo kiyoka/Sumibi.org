@@ -73,8 +73,7 @@
 		    (html:div :id "hist"))
 	  
 	  (html:ul
-	   (html:li "単語をスペースで区切って入力します。 (例: ryokou ni kiteimasu . → 旅行に来ています。)")
-	   (html:li "句読点 、。はスペースの後に , . を入力します。(例: arigatou . → ありがとう。) ")
+	   (html:li "単語をスペースで区切って入力します。 (例: ryokou ni kiteimasu. → 旅行に来ています。)")
 	   (html:li "スペースは、スペースを二回入力して下さい。 (例: wa-kinguhoride-&nbsp;&nbsp;&nbsp;o-sutoraria → ワーキングホリデー&nbsp;&nbsp;オーストラリア)"))
 
 	  (html:div :style "text-align: right; "
@@ -86,7 +85,7 @@
 	  (html:div :class "copyright"
 		    "Sumibi Engine:Copyright&copy 2005, Kiyoka / Sumibi Ajax:Copyright&copy 2005, Ktat"
 		    (html:br)
-		    "Software version = $Date: 2005/09/28 16:16:26 $ ")
+		    "Software version = $Date: 2005/09/29 12:21:03 $ ")
 
 
 	  ;;; --- FLOSS関連ロゴ ---
