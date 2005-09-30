@@ -27,6 +27,8 @@ ossbook:
 	find /home/park/sumibi_corpus/OSSBOOK -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 jf:
 	find /home/park/sumibi_corpus/JFdocs -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
+wikipedia:
+	find /home/park/sumibi_corpus/wikipedia_ja/data -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 yamagata:
 	find /home/park/sumibi_corpus/Yamagata -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 thinkgnu:
