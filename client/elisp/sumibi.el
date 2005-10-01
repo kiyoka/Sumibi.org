@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/10/01 14:19:38 $
+;;     $Date: 2005/10/01 14:36:34 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -138,7 +138,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 		  minor-mode-map-alist)))
 
 ;; ユーザー学習辞書
-(defvar sumibi-user-dict '())
+(defvar sumibi-kakutei-history '())
 
 
 ;;;
@@ -340,7 +340,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 	    ;; 文節が一つの場合だけユーザー辞書を利用する
 	    (when (>= 1 (length henkan-list))
 	      (let ( 
-		    (_ (assoc yomi sumibi-user-dict)))
+		    (_ (assoc yomi sumibi-kakutei-history)))
 		(when _
 		  (setq henkan-list
 			(list
@@ -473,10 +473,10 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 		       (insert insert-word)
 		       (message (format "[%s] candidate (%d/%d)" insert-word (+ _n 1) _max))
 		       ;; ユーザー辞書に登録する
-		       (setq sumibi-user-dict 
+		       (setq sumibi-kakutei-history 
 			     (append
 			      `((,ank-word . ,insert-word))
-			      sumibi-user-dict)))
+			      sumibi-kakutei-history)))
 		   (insert insert-word)))
 		(end         (point-marker))
 		(ov          (make-overlay start end)))
@@ -914,7 +914,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/10/01 14:19:38 $ on CVS " ;;VERSION;;
+  " $Date: 2005/10/01 14:36:34 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
