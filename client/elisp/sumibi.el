@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/09/21 14:12:15 $
+;;     $Date: 2005/10/01 00:28:17 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -136,6 +136,9 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 	  (append (list (cons 'sumibi-mode         sumibi-mode-map)
 			(cons 'sumibi-select-mode  sumibi-select-mode-map))
 		  minor-mode-map-alist)))
+
+;; ユーザー学習辞書
+(defvar sumibi-user-dict '())
 
 
 ;;;
@@ -331,31 +334,43 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
     (let* (
 	   (yomi (buffer-substring-no-properties b e))
 	   (henkan-list (sumibi-henkan-request (sumibi-replace-keyword yomi))))
-
+      
       (if henkan-list
-	  (condition-case err
-	      (progn
-		(setq
-		 ;; 変換結果の保持
-		 sumibi-henkan-list henkan-list
-		 ;; 文節選択初期化
-		 sumibi-cand-n   (make-list (length henkan-list) 0)
-		 ;; 
-		 sumibi-cand-max (mapcar
-				  (lambda (x)
-				    (length x))
-				  henkan-list))
-
-		(sumibi-debug-print (format "sumibi-henkan-list:%s \n" sumibi-henkan-list))
-		(sumibi-debug-print (format "sumibi-cand-n:%s \n" sumibi-cand-n))
-		(sumibi-debug-print (format "sumibi-cand-max:%s \n" sumibi-cand-max))
-		;;
-		t)
-	    (sumibi-trap-server-down
-	     (beep)
-	     (message (error-message-string err))
-	     (setq sumibi-select-mode nil))
-	    (run-hooks 'sumibi-select-mode-end-hook))
+	  (progn
+	    ;; 文節が一つの場合だけユーザー辞書を利用する
+	    (when (>= 1 (length henkan-list))
+	      (let ( 
+		    (_ (assoc yomi sumibi-user-dict)))
+		(when _
+		  (setq henkan-list
+			(list
+			 (append
+			  `((j ,(cdr _) 0 0))
+			  (car henkan-list)))))))
+		
+	    (condition-case err
+		(progn
+		  (setq
+		   ;; 変換結果の保持
+		   sumibi-henkan-list henkan-list
+		   ;; 文節選択初期化
+		   sumibi-cand-n   (make-list (length henkan-list) 0)
+		   ;; 
+		   sumibi-cand-max (mapcar
+				    (lambda (x)
+				      (length x))
+				    henkan-list))
+		  
+		  (sumibi-debug-print (format "sumibi-henkan-list:%s \n" sumibi-henkan-list))
+		  (sumibi-debug-print (format "sumibi-cand-n:%s \n" sumibi-cand-n))
+		  (sumibi-debug-print (format "sumibi-cand-max:%s \n" sumibi-cand-max))
+		  ;;
+		  t)
+	      (sumibi-trap-server-down
+	       (beep)
+	       (message (error-message-string err))
+	       (setq sumibi-select-mode nil))
+	      (run-hooks 'sumibi-select-mode-end-hook)))
 	nil))))
 
 
@@ -451,11 +466,17 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 		(_n          (nth cnt sumibi-cand-n))
 		(_max        (nth cnt sumibi-cand-max))
 		(insert-word (cadr (nth _n x)))
+		(ank-word    (cadr (assoc 'l x)))
 		(_     
 		 (if (eq cnt sumibi-cand)
 		     (progn
-		      (insert insert-word)
-		      (message (format "[%s] candidate (%d/%d)" insert-word (+ _n 1) _max)))
+		       (insert insert-word)
+		       (message (format "[%s] candidate (%d/%d)" insert-word (+ _n 1) _max))
+		       ;; ユーザー辞書に登録する
+		       (setq sumibi-user-dict 
+			     (append
+			      `((,ank-word . ,insert-word))
+			      sumibi-user-dict)))
 		   (insert insert-word)))
 		(end         (point-marker))
 		(ov          (make-overlay start end)))
@@ -893,7 +914,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/09/21 14:12:15 $ on CVS " ;;VERSION;;
+  " $Date: 2005/10/01 00:28:17 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
