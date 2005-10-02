@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/10/01 14:36:34 $
+;;     $Date: 2005/10/02 13:22:02 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -762,30 +762,56 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 ;; ローマ字漢字変換時、変換対象とするローマ字を読み飛ばす関数
 (defun sumibi-skip-chars-backward ()
   (let* (
+	 (skip-chars
+	  (if auto-fill-function
+	      ;; auto-fill-mode が有効になっている場合改行があってもskipを続ける
+	      (concat sumibi-skip-chars "\n")
+	    ;; auto-fill-modeが無効の場合はそのまま
+	    sumibi-skip-chars))
+	    
 	 ;; マークされている位置を求める。
 	 (pos (or (and (markerp (mark-marker)) (marker-position (mark-marker)))
 		  1))
+
 	 ;; 条件にマッチする間、前方方向にスキップする。
 	 (result (save-excursion
-		   (skip-chars-backward sumibi-skip-chars (and (< pos (point)) pos))))
-	 (indent 0))
+		   (skip-chars-backward skip-chars (and (< pos (point)) pos))))
+	 (limit-point 0))
 
-    ;; インデント位置を求める。
-    (save-excursion
-      (goto-char (point-at-bol))
-      (setq indent (skip-chars-forward (concat "\t " sumibi-stop-chars) (point-at-eol))))
+    (if auto-fill-function
+	;; auto-fill-modeが有効の時
+	(progn
+	  (save-excursion
+	    (backward-paragraph)
+	    (next-line)
+	    (setq limit-point (point)))
 
-    (sumibi-debug-print (format "(point) = %d  result = %d  indent = %d\n" (point) result indent))
-    (sumibi-debug-print (format "a = %d b = %d \n" (+ (point) result) (+ (point-at-bol) indent)))
+	  (sumibi-debug-print (format "(point) = %d  result = %d  limit-point = %d\n" (point) result limit-point))
+	  (sumibi-debug-print (format "a = %d b = %d \n" (+ (point) result) limit-point))
 
-    (if (< (+ (point) result)
-	   (+ (point-at-bol) indent))
-	;; インデント位置でストップする。
-	(- 
-	 (+ (point-at-bol) indent)
-	 (point))
+	  ;; パラグラフ位置でストップする
+	  (if (< (+ (point) result) limit-point)
+	      (- limit-point (point))
+	    result))
 
-      result)))
+      ;; auto-fill-modeが無効の時
+      (progn
+	(save-excursion
+	  (goto-char (point-at-bol))
+	  (setq limit-point (skip-chars-forward (concat "\t " sumibi-stop-chars) (point-at-eol))))
+      
+	(sumibi-debug-print (format "(point) = %d  result = %d  limit-point = %d\n" (point) result limit-point))
+	(sumibi-debug-print (format "a = %d b = %d \n" (+ (point) result) (+ (point-at-bol) limit-point)))
+
+	(if (< (+ (point) result)
+	       (+ (point-at-bol) limit-point))
+	    ;; インデント位置でストップする。
+	    (- 
+	     (+ (point-at-bol) limit-point)
+	     (point))
+
+	  result)))))
+
   
 ;;;
 ;;; with viper
@@ -914,7 +940,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/10/01 14:36:34 $ on CVS " ;;VERSION;;
+  " $Date: 2005/10/02 13:22:02 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
