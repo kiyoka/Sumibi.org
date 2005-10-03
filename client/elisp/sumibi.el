@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/10/02 13:22:02 $
+;;     $Date: 2005/10/03 12:48:38 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -783,33 +783,45 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 	(progn
 	  (save-excursion
 	    (backward-paragraph)
-	    (next-line)
-	    (setq limit-point (point)))
+	    (when (< 1 (point))
+	      (forward-line 1))
+	    (goto-char (point-at-bol))
+	    (let (
+		  (start-point (point)))
+	      (setq limit-point
+		    (+
+		     start-point
+		     (skip-chars-forward (concat "\t " sumibi-stop-chars) (point-at-eol))))))
 
 	  (sumibi-debug-print (format "(point) = %d  result = %d  limit-point = %d\n" (point) result limit-point))
 	  (sumibi-debug-print (format "a = %d b = %d \n" (+ (point) result) limit-point))
 
 	  ;; パラグラフ位置でストップする
 	  (if (< (+ (point) result) limit-point)
-	      (- limit-point (point))
+	      (- 
+	       limit-point
+	       (point))
 	    result))
 
       ;; auto-fill-modeが無効の時
       (progn
 	(save-excursion
 	  (goto-char (point-at-bol))
-	  (setq limit-point (skip-chars-forward (concat "\t " sumibi-stop-chars) (point-at-eol))))
-      
-	(sumibi-debug-print (format "(point) = %d  result = %d  limit-point = %d\n" (point) result limit-point))
-	(sumibi-debug-print (format "a = %d b = %d \n" (+ (point) result) (+ (point-at-bol) limit-point)))
+	  (let (
+		(start-point (point)))
+	    (setq limit-point
+		  (+ 
+		   start-point
+		   (skip-chars-forward (concat "\t " sumibi-stop-chars) (point-at-eol))))))
 
-	(if (< (+ (point) result)
-	       (+ (point-at-bol) limit-point))
+	(sumibi-debug-print (format "(point) = %d  result = %d  limit-point = %d\n" (point) result limit-point))
+	(sumibi-debug-print (format "a = %d b = %d \n" (+ (point) result) limit-point))
+
+	(if (< (+ (point) result) limit-point)
 	    ;; インデント位置でストップする。
 	    (- 
-	     (+ (point-at-bol) limit-point)
+	     limit-point
 	     (point))
-
 	  result)))))
 
   
@@ -940,7 +952,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/10/02 13:22:02 $ on CVS " ;;VERSION;;
+  " $Date: 2005/10/03 12:48:38 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
