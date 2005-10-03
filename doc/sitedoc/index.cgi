@@ -83,9 +83,9 @@
 		    (html:span :style "color:#6d5550;"
 			       "Sumibi.org provides roman to japanese conversion system and other services."))
 	  (html:div :class "copyright"
-		    "Sumibi Engine:Copyright&copy 2005, Kiyoka / Sumibi Ajax:Copyright&copy 2005, Ktat"
+		    "Sumibi Engine:Copyright&copy 2005, Kiyoka Nishiyama / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		    (html:br)
-		    "Software version = $Date: 2005/09/29 12:21:03 $ ")
+		    "Software version = $Date: 2005/10/03 14:41:51 $ ")
 
 
 	  ;;; --- FLOSS関連ロゴ ---
@@ -193,25 +193,8 @@ google_color_text = \"000000\";
 		 "このページからGoogle検索ができます。メール等長文を書く場合は『"
 		 (html:a :href "https://sumibi.org/?long=1" "長文作成モード(暗号化ON)")
 		 "』ページが便利です。"))
-		   
-		  
-	    ;;	  (html:p
-	    ;;	   "海外のホテルにはビジネスセンターという施設があり、Internet接続されたPCが置いてあります。(料金の相場は30分 5ドルから10ドル程度です。)")
-	    ;;	  (html:p
-	    ;;	   "また、ライブラリ(共有書庫)にも無料でInternetが利用できるPCを開放しているホテルもあります。(『バリ島のマヤ ウブド』が無料でした。)")
-	    ;;	  (html:p
-	    ;;	   "世界的にブログが流行している現在、無料PCをホテルのライブラリ(共有書庫)に置くようになってきています。")
-		  
-	    ;;	  (html:p
-	    ;;	   "でも、そのほとんどは日本語入力IMEがインストールされておらず、困ることが多いでしょう。"
-	    ;;	   "そういう時にSumibiが大活躍します。")
-		  
 		  
 	    (html:h3 "『手ぶらで海外』を実践する方法")
-	    ;;	  (html:ol
-	    ;;	   (html:li "あなたの行く予定のホテルにPCが有るか、料金はいくらか聞いておきます。")
-	    ;;	   (html:p "( ついでに、日本語が表示できるかどうか確認しておくと良いでしょう。)")
-	    ;;	   (html:li "『sumibi.org』という言葉を覚えておきます。")
 	    (html:p "海外からgoogle で 『sumibi.org』を検索するとこのサイトが最初に出てきます。")
 		  
 	    (html:h3 "海外から日本語でメールを送りたい時")
