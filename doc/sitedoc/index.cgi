@@ -34,7 +34,7 @@
 		    (html:span :style "color:#6d5550;"
 			       "Sumibi.orgはローマ字を日本語に変換できる、今すぐ使える無料サイトです。"
 			       (html:br)
-			       "Sumibi.org ha ro-maji wo nihongo ni henkan suru muryou saito desu . From romaji to kanji .")
+			       "Sumibi.org ha ro-maji wo nihongo ni henkan suru muryou saito desu. From romaji to kanji.")
 		    (html:br)
 		    (if (cgi-get-parameter "long" params)
 			(html:a :href "http://www.sumibi.org/"     "Google検索モード(暗号化OFF)")
@@ -73,7 +73,7 @@
 		    (html:div :id "hist"))
 	  
 	  (html:ul
-	   (html:li "単語をスペースで区切って入力します。 (例: ryokou ni kiteimasu. → 旅行に来ています。)")
+	   (html:li "単語をスペースで区切って入力し、確定ボタンを押します。 (例: ryokou ni kiteimasu. → 旅行に来ています。)")
 	   (html:li "スペースは、スペースを二回入力して下さい。 (例: wa-kinguhoride-&nbsp;&nbsp;&nbsp;o-sutoraria → ワーキングホリデー&nbsp;&nbsp;オーストラリア)"))
 
 	  (html:div :style "text-align: right; "
@@ -85,7 +85,7 @@
 	  (html:div :class "copyright"
 		    "Sumibi Engine:Copyright&copy 2005, Kiyoka Nishiyama / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		    (html:br)
-		    "Software version = $Date: 2005/10/03 14:41:51 $ ")
+		    "Software version = $Date: 2005/10/04 13:28:59 $ ")
 
 
 	  ;;; --- FLOSS関連ロゴ ---
