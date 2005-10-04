@@ -85,7 +85,7 @@
 	  (html:div :class "copyright"
 		    "Sumibi Engine:Copyright&copy 2005, Kiyoka Nishiyama / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		    (html:br)
-		    "Software version = $Date: 2005/10/04 13:28:59 $ ")
+		    "Software version = $Date: 2005/10/04 14:32:41 $ ")
 
 
 	  ;;; --- FLOSS関連ロゴ ---
@@ -118,8 +118,6 @@ google_color_text = \"000000\";
   src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">
 </script>
 "
-
-
 	  ;; --- FLOSS関連続き ---
 	  (html:br)
 	  "This software is licensed under the "
@@ -151,6 +149,15 @@ google_color_text = \"000000\";
 
   -->
 "
+
+
+	  (html:br)
+
+	  ;; --- Amazon associate ---
+	  "
+<iframe src=\"http://rcm-jp.amazon.co.jp/e/cm?t=kiye-22&o=9&p=15&l=st1&mode=books-jp&search=%25E6%25B5%25B7%25E5%25A4%2596%25E6%2597%2585%25E8%25A1%258C&fc1=&=1&lc1=&lt1=&bg1=&f=ifr\" marginwidth=\"0\" marginheight=\"0\" width=\"468\" height=\"240\" border=\"0\" frameborder=\"0\" style=\"border:none;\" scrolling=\"no\"></iframe>
+"
+
 
 	   (html:br)
 	   (html:br)
