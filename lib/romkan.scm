@@ -254,8 +254,13 @@
 
 (define romkan-kunrei-to-hepburn-alist
   '(
+    ("ca"   . "ka")
+    ("ci"   . "ki")
+    ("cu"   . "ku")
+    ("ce"   . "ke")
+    ("co"   . "ko")
+
     ("si"   . "shi")
-    ("ci"   . "chi")
     ("ti"   . "chi")
     ("hu"   . "fu")
     ("shu"  . "shu") ;; hu の例外処理: shu は sfu になってはいけない
