@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;     $Date: 2005/10/01 16:36:22 $
+;;     $Date: 2005/10/05 12:45:08 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -803,7 +803,7 @@
 	     (let* (
 		    (tango (car x))
 		    ;; メソッド指定のピックアップ
-		    (match (rxmatch #/\.([a-zA-Z0-9]+)$/ (car x)))
+		    (match (rxmatch #/\.([elkhj])$/ (car x)))
 		    (_ (if match
 			   (begin
 			     (set! tango (rxmatch-before match))
