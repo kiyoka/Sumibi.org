@@ -85,7 +85,7 @@
 	  (html:div :class "copyright"
 		    "Sumibi Engine:Copyright&copy 2005, Kiyoka Nishiyama / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		    (html:br)
-		    "Software version = $Date: 2005/10/04 14:32:41 $ ")
+		    "Software version = $Date: 2005/10/06 13:32:01 $ ")
 
 
 	  ;;; --- FLOSS関連ロゴ ---
@@ -187,7 +187,7 @@ google_color_text = \"000000\";
 	    (html:h3 "手ぶらで海外に行きたい、でもメールも送りたい")
 	    (html:p
 	     "Sumibi.org (炭火.org) は海外のインターネットカフェや海外ホテルのビジネスセンターなどから"
-	     "日本語でメールを書いたりブログを書いたりできるサイトです。")
+	     "日本語でメールやブログを書いたりできるサイトです。")
 	    (html:p
 	     "日本語入力(IME)の入っていない英語版Windowsからでも日本語入力できます。")
 	    
@@ -202,14 +202,16 @@ google_color_text = \"000000\";
 		 "』ページが便利です。"))
 		  
 	    (html:h3 "『手ぶらで海外』を実践する方法")
-	    (html:p "海外からgoogle で 『sumibi.org』を検索するとこのサイトが最初に出てきます。")
+	    (html:p "海外からYahooやGoogleで『sumibi』と検索するとこのサイトが出てきます。")
 		  
 	    (html:h3 "海外から日本語でメールを送りたい時")
 	    (html:p "海外に行く前にWebメールサービスに入っておきます。")
-	    (html:p "goo Mailや、Yahoo Mail、 Hotmail等が有名な無料Webメールサービスです。"
-		    "自分に合ったものを選びましょう。")
-	  
-
+	    (html:p 
+	     (html:a :href "http://mail.yahoo.co.jp/"                      "Yahoo!メール")
+	     "、"
+	     (html:a :href "http://mail.goo.ne.jp/goomail/index.ghtml"     "gooメール")
+	     "等が有名な無料Webメールサービスです。"
+	     "自分に合ったものを選びましょう。")
 
 	    (html:hr)
 	  ;;; --- mickeynet.com ---
