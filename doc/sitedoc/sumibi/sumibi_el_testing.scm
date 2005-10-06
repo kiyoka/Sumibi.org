@@ -12,7 +12,7 @@
      (*en
       (p "No documents in English, sorry..." ))
      (*ja
-      (p "このドキュメントは、sumibi.el 0.5.0についての解説です。")))
+      (p "このドキュメントは、sumibi.el 0.5.1についての解説です。")))
 
     (*section
      "sumibi.elの特徴"
