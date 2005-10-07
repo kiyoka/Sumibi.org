@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/10/05 12:45:08 $
+;;     $Date: 2005/10/07 13:45:19 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -933,7 +933,10 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
   "入力モード変更"
   (interactive "P")
   (if (< 0 arg)
-      (setq sumibi-mode t)
+      (progn
+	(setq inactivate-current-input-method-function 'sumibi-inactivate)
+	(setq sumibi-mode t))
+    (setq inactivate-current-input-method-function nil)
     (setq sumibi-mode nil)))
 
 
@@ -952,7 +955,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/10/05 12:45:08 $ on CVS " ;;VERSION;;
+  " $Date: 2005/10/07 13:45:19 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"

@@ -1,4 +1,8 @@
 
+[0.5.2]
+  - sumibi.el
+    1. toggle-input-methodでSumibiをOFFにした時、void functionエラーが出るバグを修正した。
+
 [0.5.1]
   - Ajaxクライアント
     1. 『決定』ボタンをセンターに出現するようにした。
