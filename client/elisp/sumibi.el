@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/10/07 13:45:19 $
+;;     $Date: 2005/10/07 15:14:11 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -315,16 +315,25 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 ;; 置換キーワードを解決する
 (defun sumibi-replace-keyword (str)
   (let (
-	(word-list (split-string str)))
-    (mapconcat
-     (lambda (x)
-       (let ((val (assoc x sumibi-replace-keyword-list)))
-	 (if val
-	     (cdr val)
-	   x)))
-     word-list
-     " ")))
+	;; 改行を一つのスペースに置換して、
+	;; キーワード置換処理の前処理として行頭と行末にスペースを追加する。
+	(replaced 
+	 (concat " " 
+		 (replace-regexp-in-string 
+		  "[\n]"
+		  " "
+		  str)
+		 " ")))
 
+    (mapcar
+     (lambda (x)
+       (setq replaced 
+	     (replace-regexp-in-string 
+	      (concat " " (car x) " ")
+	      (concat " " (cdr x) " ")
+	      replaced)))
+     sumibi-replace-keyword-list)
+    replaced))
 
 ;; リージョンをローマ字漢字変換する関数
 (defun sumibi-henkan-region (b e)
@@ -345,7 +354,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 		  (setq henkan-list
 			(list
 			 (append
-			  `((j ,(cdr _) 0 0))
+			  `((j ,(cdr _) 0 0 0))
 			  (car henkan-list)))))))
 		
 	    (condition-case err
@@ -465,24 +474,29 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 		(start       (point-marker))
 		(_n          (nth cnt sumibi-cand-n))
 		(_max        (nth cnt sumibi-cand-max))
+		(spaces      (nth 4 (nth _n x)))
 		(insert-word (cadr (nth _n x)))
+		(_insert-word
+		 (if (< 1 spaces)
+		     (concat " " insert-word)
+		   insert-word))
 		(ank-word    (cadr (assoc 'l x)))
 		(_     
 		 (if (eq cnt sumibi-cand)
 		     (progn
-		       (insert insert-word)
+		       (insert _insert-word)
 		       (message (format "[%s] candidate (%d/%d)" insert-word (+ _n 1) _max))
 		       ;; ユーザー辞書に登録する
 		       (setq sumibi-kakutei-history 
 			     (append
 			      `((,ank-word . ,insert-word))
 			      sumibi-kakutei-history)))
-		   (insert insert-word)))
+		   (insert _insert-word)))
 		(end         (point-marker))
 		(ov          (make-overlay start end)))
 
 	   ;; 確定文字列の作成
-	   (setq sumibi-last-fix (concat sumibi-last-fix insert-word))
+	   (setq sumibi-last-fix (concat sumibi-last-fix _insert-word))
 	   
 	   ;; 選択中の場所を装飾する。
 	   (overlay-put ov 'face 'default)
@@ -955,7 +969,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/10/07 13:45:19 $ on CVS " ;;VERSION;;
+  " $Date: 2005/10/07 15:14:11 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
