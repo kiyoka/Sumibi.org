@@ -85,7 +85,7 @@
 	  (html:div :class "copyright"
 		    "Sumibi Engine:Copyright&copy 2005, Kiyoka Nishiyama / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		    (html:br)
-		    "Software version = $Date: 2005/10/06 13:32:01 $ ")
+		    "Software version = $Date: 2005/10/11 13:32:52 $ ")
 
 
 	  ;;; --- FLOSS関連ロゴ ---
@@ -118,6 +118,10 @@ google_color_text = \"000000\";
   src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">
 </script>
 "
+	  ;;; --- mickeynet.com ---
+	  (html:a :href "http://www.mickeynetusa.com/ranking/counter/incount.asp?countid=174" :target "_blank"
+		  (html:img :src "http://www.mickeynet.com/e_ranklink/img/mickeynet130_35.gif" :width "130" :height "35" :border "0"))
+
 	  ;; --- FLOSS関連続き ---
 	  (html:br)
 	  "This software is licensed under the "
@@ -152,74 +156,61 @@ google_color_text = \"000000\";
 
 
 	  (html:br)
-
-	  ;; --- Amazon associate ---
-	  "
-<iframe src=\"http://rcm-jp.amazon.co.jp/e/cm?t=kiye-22&o=9&p=15&l=st1&mode=books-jp&search=%25E6%25B5%25B7%25E5%25A4%2596%25E6%2597%2585%25E8%25A1%258C&fc1=&=1&lc1=&lt1=&bg1=&f=ifr\" marginwidth=\"0\" marginheight=\"0\" width=\"468\" height=\"240\" border=\"0\" frameborder=\"0\" style=\"border:none;\" scrolling=\"no\"></iframe>
-"
-
-
-	   (html:br)
-	   (html:br)
-	   (html:br)
-	   (html:br)
-	   (html:br)
-	   (html:br)
-	   (html:br)
-	   (html:br)
-	   (html:br)
-	   (html:br)
-	   (html:br)
-	   (html:br)
-	   (html:br)
-	   (html:br)
-	   (html:br)
-	   (html:br)
-	   (html:br)
-	   (html:br)
-	   (html:br)
-
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
+	  (html:br)
 
 	  ;;; --- 海外旅行者のための解説文章 ---
-	   (html:div
-	    (html:h1 "海外旅行者の強い味方 Sumibi.org")
+	  (html:div
+	   (html:h1 "海外旅行者の強い味方 Sumibi.org")
 	    
-	    (html:h3 "手ぶらで海外に行きたい、でもメールも送りたい")
-	    (html:p
-	     "Sumibi.org (炭火.org) は海外のインターネットカフェや海外ホテルのビジネスセンターなどから"
-	     "日本語でメールやブログを書いたりできるサイトです。")
-	    (html:p
-	     "日本語入力(IME)の入っていない英語版Windowsからでも日本語入力できます。")
+	   (html:h3 "手ぶらで海外に行きたい、でもメールも送りたい")
+	   (html:p
+	    "Sumibi.org (炭火.org) は海外のインターネットカフェや海外ホテルのビジネスセンターなどから"
+	    "日本語でメールやブログを書いたりできるサイトです。")
+	   (html:p
+	    "日本語入力(IME)の入っていない英語版Windowsからでも日本語入力できます。")
 	    
-	    (if (cgi-get-parameter "long" params)
-		(html:p
-		 "このページは長文作成用です。Google検索を行う場合は、"
-		 (html:a :href "http://www.sumibi.org/" "Google検索モード(暗号化OFF)")
-		 "』ページが便利です。")
-		(html:p
-		 "このページからGoogle検索ができます。メール等長文を書く場合は『"
-		 (html:a :href "https://sumibi.org/?long=1" "長文作成モード(暗号化ON)")
-		 "』ページが便利です。"))
+	   (if (cgi-get-parameter "long" params)
+	       (html:p
+		"このページは長文作成用です。Google検索を行う場合は、"
+		(html:a :href "http://www.sumibi.org/" "Google検索モード(暗号化OFF)")
+		"』ページが便利です。")
+	       (html:p
+		"このページからGoogle検索ができます。メール等長文を書く場合は『"
+		(html:a :href "https://sumibi.org/?long=1" "長文作成モード(暗号化ON)")
+		"』ページが便利です。"))
 		  
-	    (html:h3 "『手ぶらで海外』を実践する方法")
-	    (html:p "海外からYahooやGoogleで『sumibi』と検索するとこのサイトが出てきます。")
+	   (html:h3 "『手ぶらで海外』を実践する方法")
+	   (html:p "海外からYahooやGoogleで『sumibi』と検索するとこのサイトが出てきます。")
 		  
-	    (html:h3 "海外から日本語でメールを送りたい時")
-	    (html:p "海外に行く前にWebメールサービスに入っておきます。")
-	    (html:p 
-	     (html:a :href "http://mail.yahoo.co.jp/"                      "Yahoo!メール")
-	     "、"
-	     (html:a :href "http://mail.goo.ne.jp/goomail/index.ghtml"     "gooメール")
-	     "等が有名な無料Webメールサービスです。"
-	     "自分に合ったものを選びましょう。")
+	   (html:h3 "海外から日本語でメールを送りたい時")
+	   (html:p "海外に行く前にWebメールサービスに入っておきます。")
+	   (html:p 
+	    (html:a :href "http://mail.yahoo.co.jp/"                      "Yahoo!メール")
+	    "、"
+	    (html:a :href "http://mail.goo.ne.jp/goomail/index.ghtml"     "gooメール")
+	    "等が有名な無料Webメールサービスです。"
+	    "自分に合ったものを選びましょう。")
 
-	    (html:hr)
-	  ;;; --- mickeynet.com ---
-	    (html:a :href "http://www.mickeynetusa.com/ranking/counter/incount.asp?countid=174" :target "_blank"
-		    (html:img :src "http://www.mickeynet.com/e_ranklink/img/mickeynet130_35.gif" :width "130" :height "35" :border "0"))
-
-
-	    )
+	   (html:hr)
+	   )
 	 (html:script :type "text/javascript" :src "ajax/Sumibi.js")
 	 (html:script :type "text/javascript" :src "ajax/SumibiSOAP.js")
 	 (html:script :type "text/javascript" :src "ajax/ajax_sumibi.js")
