@@ -18,3 +18,4 @@ all :
 	./convert_doc  sumibi_el_testing
 	./convert_doc  sumibi_api_stable
 	./convert_doc  sumibi_api_testing
+	./convert_doc  sumi

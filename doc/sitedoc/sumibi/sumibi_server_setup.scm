@@ -14,8 +14,7 @@
      (*ja
       (p
        (p "このドキュメントは" ,W:Sumibi.org "で提供しているような変換サービスをご自分のサイトにセットアップする方法を解説します。")
-       (p "Sumibi ServerはCVSリポジトリにしか存在しません。セットアップは若干煩雑なのですが、御了承ください。")
-       (p "注意!! : まだSumibiの辞書データを公開していません。しばらくお待ち下さい。"))))
+       (p "Sumibi ServerはCVSリポジトリにしか存在しません。セットアップは若干煩雑なのですが、御了承ください。"))))
 
     (*section
      "Sumibi Serverとは？"
@@ -99,7 +98,7 @@ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.jp:/cvsroot/sumibi co sumibi
 	(li "辞書DBを作成する")
 	(p "例)")
 	(program "
-mysqladmin -u アドミンユーザー  create sumi_bincho_1")
+echo 'create database sumi_bincho_1  DEFAULT CHARACTER SET utf8;' | mysql -u アドミンユーザー")
 	(li "辞書DBをリストアする")
 	(p "例)")
 	(program "

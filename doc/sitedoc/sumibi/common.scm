@@ -28,6 +28,9 @@
     ( privacy-policy
       "PrivacyPolicy"
       "privacy_policy.html")
+    ( sumi
+      "Sumi"
+      "sumi.html")
     ))
 
 
@@ -50,6 +53,8 @@
      (*link "CAcert.org" "http://www.cacert.org/"))
     (W:Sumibi.org
      (*link "Sumibi.org" "http://www.sumibi.org/"))
+    (W:GFDL
+     (*link "GFDL" "http://ja.wikipedia.org/wiki/Wikipedia:Text_of_GNU_Free_Documentation_License"))
     ;; sourceforge link logo
     (W:sf-logo
      (native
@@ -108,7 +113,7 @@ hosted by
 	    ,(cadr (assoc key page-alist)))
 	   (author " Kiyoka Nishiyama ")
 	   (hp " http://www.sumibi.org/ ")
-	   (date " $Date: 2005/09/21 13:19:24 $ "))
+	   (date " $Date: 2005/10/15 04:18:14 $ "))
 	  (body
 
 	   ;; navigation tab
