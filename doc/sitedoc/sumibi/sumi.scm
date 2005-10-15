@@ -37,7 +37,7 @@
        (p "SKKJISYO関連のみ読みこんだものです。")
        (li "small辞書")
        (ul
-	(li "とりあえず版(非商用利用不可)" (*link "[sumi_bincho_1_small_hisyouyou.sql.gz]" "sumi_bincho_1_small_hisyouyou.sql.gz)")
+	(li "とりあえず版(非商用利用不可)" (*link "[sumi_bincho_1_small_hisyouyou.sql.gz]" "sumi_bincho_1_small_hisyouyou.sql.gz")
 	(p "Linux JF文書全てと、Wikipedia日本語版の一部を読みこんだ辞書です。"
 	   "Linux JF文書を使った結果、商用利用ができません。")
 	(p "商用利用のできる辞書を構築するため、Linux JFを使わない方向で辞書を作りなおすことを考えています。")
@@ -91,9 +91,9 @@
 	  ))
 
 	(li "Linux JF文書")
-	(li (*link "JF 文書の著作権・再配布・リンクについて" "http://www.linux.or.jp/JF/copyright.html") 
-	    "を読む限り、ライセンスについては各文書に従う必要あります。一部商用利用の再配布に制限を掛けてある文書が含まれています。"
-	    "これを含むSumibi辞書をダウンロードして使用する場合は、商用利用ができないことになります。")
+	(p (*link "JF 文書の著作権・再配布・リンクについて" "http://www.linux.or.jp/JF/copyright.html") 
+	   "を読む限り、ライセンスについては各文書に従う必要あります。一部商用利用の再配布に制限を掛けてある文書が含まれています。"
+	   "これを含むSumibi辞書をダウンロードして使用する場合は、商用利用ができないことになります。")
 	(p "※とりあえず版(非商用利用不可)" (*link "[sumi_bincho_1_small_hisyouyou.sql.gz]" "sumi_bincho_1_small_hisyouyou.sql.gz") "では"
 	   (*link "Linux JF文書のhtml版" "http://www.linux.or.jp/JF/JFdocs/JFhtml.tar.gz") "全てを読みこんでいます。")
 
@@ -102,7 +102,7 @@
 	(p (*link "Wikipedia:著作権情報" "http://ja.wikipedia.org/wiki/Wikipedia:%E8%91%97%E4%BD%9C%E6%A8%A9") "に解説が掲載されていますので、参照してください。")
 	(p "上記のページには『ウィキペディアのコンテンツは、他の人々に対して同様の自由を認め、ウィキペディアがそのソースであることを
 知らせる限りにおいて、複製、改変、再配布することができます。』と解説されています。")
-	(p "つまり、Wikipedia日本語版を読みこんだSumibi辞書は、その旨を明記すれば再配布可能です。")))))
+	(p "つまり、Sumibi辞書がWikipedia日本語版を含んでいても、その旨を明記すれば再配布可能です。")))))
 
     ,W:sf-logo
     ))
