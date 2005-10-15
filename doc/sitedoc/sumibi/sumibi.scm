@@ -27,7 +27,7 @@
      "Use it now!"
      (*ja
       (ul
-       (li (*link "Webブラウザから使う" "http://www.sumibi.org/sumibi-ajax/"))
+       (li (*link "Webブラウザから使う"       "http://www.sumibi.org/"))
        (li (*link "Emacsに組みこむ(安定版)"   "sumibi_el_stable.html"))
        (li (*link "Emacsに組みこむ(テスト版)" "sumibi_el_testing.html"))))
      (*en

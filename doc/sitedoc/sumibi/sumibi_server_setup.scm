@@ -47,7 +47,7 @@
       "Sumibi Server depends on these software"
       (*ja
        (p
-	(p "下記はSumibi.orgサイト上で動作が確認されているバージョンです。(Debian sarge上で確認)")
+	(p "下記は " ,W:Sumibi.org "サイト上で動作が確認されているバージョンです。(Debian sarge上で確認)")
 	(p "※下記のバージョン以外の組合せでも動作するかも知れません")
 	(table
 	 (thead
