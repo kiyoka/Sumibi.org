@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/10/07 15:14:11 $
+;;     $Date: 2005/10/16 11:52:19 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -477,7 +477,8 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 		(spaces      (nth 4 (nth _n x)))
 		(insert-word (cadr (nth _n x)))
 		(_insert-word
-		 (if (< 1 spaces)
+		 ;; スペースが2個以上入れられたら、1個のスペースを入れる。(但し、auto-fill-modeが無効の場合のみ)
+		 (if (and (< 1 spaces) (not auto-fill-function))
 		     (concat " " insert-word)
 		   insert-word))
 		(ank-word    (cadr (assoc 'l x)))
@@ -969,7 +970,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/10/07 15:14:11 $ on CVS " ;;VERSION;;
+  " $Date: 2005/10/16 11:52:19 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
