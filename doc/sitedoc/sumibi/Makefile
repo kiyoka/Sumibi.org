@@ -10,7 +10,7 @@
 all :
 	cat ../../../server/soap/Sumibi.wsdl | sed -e 's/%URL%/https:\/\/sumibi.org\/cgi-bin\/sumibi\/testing\/sumibi.cgi/' > Sumibi_testing.wsdl
 	cat ../../../server/soap/Sumibi.wsdl | sed -e 's/%URL%/https:\/\/sumibi.org\/cgi-bin\/sumibi\/stable\/sumibi.cgi/' > Sumibi_stable.wsdl
-	./convert_doc  sumiyaki
+#	./convert_doc  sumiyaki
 	./convert_doc  sumi
 	./convert_doc  sumibi
 	./convert_doc  faq                t
