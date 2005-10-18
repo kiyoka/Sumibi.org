@@ -12,7 +12,7 @@
      (*en
       (p "No documents in English, sorry..." ))
      (*ja
-      (p "このドキュメントは『炭』(Sumibi Server用辞書)のダウンロードとインストールについて解説したものです。")))
+      (p "このドキュメントは『炭』(Sumibi辞書)のダウンロードとインストールについて解説したものです。")))
 
     (*section
      "炭とは"
@@ -21,7 +21,7 @@
       (p "No documents in English, sorry..." ))
      (*ja
       (ul
-       (li "炭とは、Sumibi Server用辞書のことです。")
+       (li "炭とは、Sumibi辞書のことです。")
        (li "Internet上にドキュメント群をコーパスとして利用してsumiyaki(炭焼き)というツールで構築しています。")
        (li "炭の作成には膨大な時間がかかるため、このページで配布しています。")
        (li "形式は、MySQLのmysqldumpイメージです。"))))
