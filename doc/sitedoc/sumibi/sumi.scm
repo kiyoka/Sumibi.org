@@ -33,18 +33,18 @@
       (p "No documents in English, sorry..." ))
      (*ja
       (ul
-       (li "Sumibiの初期状態辞書" (*link "[sumi_bincho_1_starter.sql.gz]" "sumi_bincho_1_starter.sql.gz"))
+       (li "Sumibiの初期状態辞書 (6.1M) " (*link "[sumi_bincho_1_starter.sql.gz]" "sumi_bincho_1_starter.sql.gz"))
        (p "SKKJISYO関連のみ読みこんだものです。")
        (li "small辞書")
        (ul
-	(li "とりあえず版(非商用利用不可)" (*link "[sumi_bincho_1_small_hisyouyou.sql.gz]" "sumi_bincho_1_small_hisyouyou.sql.gz")
+	(li "とりあえず版(商用利用不可) (33M) " (*link "[sumi_bincho_1_small_hisyouyou.sql.gz]" "sumi_bincho_1_small_hisyouyou.sql.gz")
 	(p "Linux JF文書全てと、Wikipedia日本語版の一部を読みこんだ辞書です。"
 	   "Linux JF文書を使った結果、商用利用ができません。")
 	(p "商用利用のできる辞書を構築するため、Linux JFを使わない方向で辞書を作りなおすことを考えています。")
 	
 	(li "正式版(商用利用可能)" "[sumi_bincho_1_small.sql.gz]")
 	(p "Wikipedia日本語版だけを読みこんだ辞書です。商用利用が可能です。")
-	(p "2006年 1月ごろの完成予定です。"))
+	(p "2006年 1月ごろの完成予定です。")))
        (li "medium辞書")
        (p "僕の所有マシンの処理性能からすると 2006年3月から 6月くらいの完成予定です。"
 	  "すごい性能のマシンをお持ちの方に手伝っていただけると、完成がもっと早まる可能性があります。"
@@ -54,7 +54,7 @@
        (p
 	"(Athron64 +3000 2GByte RAM) : (Celeron 1G 512MByte RAM) = 10 : 1")
        (li "large辞書, huge辞書")
-       (p "medium辞書が完成次第、作成していく予定です。コンピューターの性能次第で完成時期が決まります。")))))
+       (p "medium辞書が完成次第、作成していく予定です。コンピューターの性能次第で完成時期が決まります。"))))
 
     (*section
      "インストール"
@@ -94,7 +94,8 @@
 	(p (*link "JF 文書の著作権・再配布・リンクについて" "http://www.linux.or.jp/JF/copyright.html") 
 	   "を読む限り、ライセンスについては各文書に従う必要あります。一部商用利用の再配布に制限を掛けてある文書が含まれています。"
 	   "これを含むSumibi辞書をダウンロードして使用する場合は、商用利用ができないことになります。")
-	(p "※とりあえず版(非商用利用不可)" (*link "[sumi_bincho_1_small_hisyouyou.sql.gz]" "sumi_bincho_1_small_hisyouyou.sql.gz") "では"
+
+	(p "※とりあえず版(商用利用不可) (33M) " (*link "[sumi_bincho_1_small_hisyouyou.sql.gz]" "sumi_bincho_1_small_hisyouyou.sql.gz") "では"
 	   (*link "Linux JF文書のhtml版" "http://www.linux.or.jp/JF/JFdocs/JFhtml.tar.gz") "全てを読みこんでいます。")
 
 	(li "Wikipedia日本語版")
