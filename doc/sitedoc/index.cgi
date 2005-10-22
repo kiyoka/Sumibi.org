@@ -85,20 +85,24 @@
 	  (html:div :class "copyright"
 		    "Sumibi Engine:Copyright&copy 2005, Kiyoka Nishiyama / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		    (html:br)
-		    "Software version = $Date: 2005/10/11 13:32:52 $ ")
+		    "Software version = $Date: 2005/10/22 02:09:34 $ ")
 
 
 	  ;;; --- FLOSS関連ロゴ ---
 	  (html:a :href "http://www.godaddy.com/gdshop/ssl/ssl_opensource.asp"
 		  (html:img :src "http://imagesak.godaddy.com/assets/ssl/img_cert_turbo_gd.jpg" :border "0" :alt "SourceForge.jp"))
 
-	  (html:a :href "http://sourceforge.jp/"
-		  (html:img :src "http://sourceforge.jp/sflogo.php?group_id=1476" :width="96" :height "31" :border "0" :alt "SourceForge.jp"))
-	  
 	  (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
 		  (html:img :alt "CC-GNU GPL" :border "0" :src "http://creativecommons.org/images/public/cc-GPL-a.png"))
-	  
 
+	  (html:a :href "http://sourceforge.jp/"
+		  (html:img :src "http://sourceforge.jp/sflogo.php?group_id=1476" :width "96" :height "31" :border "0" :alt "SourceForge.jp"))
+
+	  ;;; --- No Software Patents ---
+	  (html:a :href "http://www.NoSoftwarePatents.com"
+		  (html:img :src "./nswpat80x15.png" :width "80" :height "15" :border "0" :alt "No Software Patents!"))
+	  
+	  
 	  ;;; --- google AdSense ---
 	  "
 <script type=\"text/javascript\"><!--
