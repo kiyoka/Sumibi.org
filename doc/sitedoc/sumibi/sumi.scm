@@ -33,11 +33,13 @@
       (p "No documents in English, sorry..." ))
      (*ja
       (ul
-       (li "Sumibiの初期状態辞書 (6.1M) " (*link "[sumi_bincho_1_starter.sql.gz]" "sumi_bincho_1_starter.sql.gz"))
+       (li "Sumibiの初期状態辞書 (6.1M) [md5=de099411b35c77567d0dcecd559ad0cc]"
+	   (*link "[sumi_bincho_1_starter.sql.gz]" "sumi_bincho_1_starter.sql.gz"))
        (p "SKKJISYO関連のみ読みこんだものです。")
        (li "small辞書")
        (ul
-	(li "とりあえず版(商用利用不可) (33M) " (*link "[sumi_bincho_1_small_hisyouyou.sql.gz]" "sumi_bincho_1_small_hisyouyou.sql.gz")
+	(li "とりあえず版(商用利用不可) (33M) [md5=66bb2940496ef92a6c8e9dad1374cc30]"
+	    (*link "[sumi_bincho_1_small_hisyouyou.sql.gz]" "sumi_bincho_1_small_hisyouyou.sql.gz")
 	(p "Linux JF文書全てと、Wikipedia日本語版の一部を読みこんだ辞書です。"
 	   "Linux JF文書を使った結果、商用利用ができません。")
 	(p "商用利用のできる辞書を構築するため、Linux JFを使わない方向で辞書を作りなおすことを考えています。")
@@ -95,7 +97,8 @@
 	   "を読む限り、ライセンスについては各文書に従う必要あります。一部商用利用の再配布に制限を掛けてある文書が含まれています。"
 	   "これを含むSumibi辞書をダウンロードして使用する場合は、商用利用ができないことになります。")
 
-	(p "※とりあえず版(商用利用不可) (33M) " (*link "[sumi_bincho_1_small_hisyouyou.sql.gz]" "sumi_bincho_1_small_hisyouyou.sql.gz") "では"
+	(p "※とりあえず版(商用利用不可) (33M) [md5=66bb2940496ef92a6c8e9dad1374cc30]"
+	   "では"
 	   (*link "Linux JF文書のhtml版" "http://www.linux.or.jp/JF/JFdocs/JFhtml.tar.gz") "全てを読みこんでいます。")
 
 	(li "Wikipedia日本語版")
