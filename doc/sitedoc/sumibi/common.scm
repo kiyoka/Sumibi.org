@@ -29,7 +29,7 @@
       "PrivacyPolicy"
       "privacy_policy.html")
     ( sumi
-      "Sumi"
+      "sumi"
       "sumi.html")
     ( sumiyaki
       "sumiyaki"
@@ -116,7 +116,7 @@ hosted by
 	    ,(cadr (assoc key page-alist)))
 	   (author " Kiyoka Nishiyama ")
 	   (hp " http://www.sumibi.org/ ")
-	   (date " $Date: 2005/10/24 13:32:02 $ "))
+	   (date " $Date: 2005/10/24 13:34:44 $ "))
 	  (body
 
 	   ;; navigation tab
