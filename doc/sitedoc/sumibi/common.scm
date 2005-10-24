@@ -32,7 +32,7 @@
       "Sumi"
       "sumi.html")
     ( sumiyaki
-      "Sumiyaki"
+      "sumiyaki"
       "sumiyaki.html")
     ))
 
@@ -116,7 +116,7 @@ hosted by
 	    ,(cadr (assoc key page-alist)))
 	   (author " Kiyoka Nishiyama ")
 	   (hp " http://www.sumibi.org/ ")
-	   (date " $Date: 2005/10/23 15:05:44 $ "))
+	   (date " $Date: 2005/10/24 13:32:02 $ "))
 	  (body
 
 	   ;; navigation tab
