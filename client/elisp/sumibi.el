@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/10/16 11:52:19 $
+;;     $Date: 2005/10/24 15:31:34 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -312,6 +312,14 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 	nil))))
 
 
+;; ポータブル文字列置換( EmacsとXEmacsの両方で動く )
+(defun sumibi-replace-regexp-in-string (regexp replace str)
+  (cond ((featurep 'xemacs)
+	 (replace-in-string str regexp replace))
+	(t
+	 (replace-regexp-in-string regexp replace str))))
+	
+
 ;; 置換キーワードを解決する
 (defun sumibi-replace-keyword (str)
   (let (
@@ -319,7 +327,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 	;; キーワード置換処理の前処理として行頭と行末にスペースを追加する。
 	(replaced 
 	 (concat " " 
-		 (replace-regexp-in-string 
+		 (sumibi-replace-regexp-in-string 
 		  "[\n]"
 		  " "
 		  str)
@@ -328,7 +336,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
     (mapcar
      (lambda (x)
        (setq replaced 
-	     (replace-regexp-in-string 
+	     (sumibi-replace-regexp-in-string 
 	      (concat " " (car x) " ")
 	      (concat " " (cdr x) " ")
 	      replaced)))
@@ -970,7 +978,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/10/16 11:52:19 $ on CVS " ;;VERSION;;
+  " $Date: 2005/10/24 15:31:34 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
