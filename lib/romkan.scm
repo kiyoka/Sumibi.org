@@ -263,6 +263,7 @@
     ("si"   . "shi")
     ("ti"   . "chi")
     ("hu"   . "fu")
+    ("hhu"  . "ffu")
     ("shu"  . "shu") ;; hu の例外処理: shu は sfu になってはいけない
     ("chu"  . "chu") ;; hu の例外処理: chu は cfu になってはいけない
 
