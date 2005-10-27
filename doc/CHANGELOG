@@ -4,7 +4,9 @@
     1. toggle-input-methodでSumibiをOFFにした時、void functionエラーが出るバグを修正した。
     2. スペースコントロール:2つ以上のスペースを入力すると1つのスペースを空けるようにした。
        (auto-fill-modeの場合は、この機能は無効となる。)
-    3. Sumibi_*.wsdlの記述バグを修正した。誤: xsd:getStatus →正:  typens:getStatus
+  - Sumibi Server
+    1. hhuが入力できない問題を修正した。(『っふ』になるようにした。)
+    2. Sumibi_*.wsdlの記述バグを修正した。誤: xsd:getStatus →正:  typens:getStatus
 
 [0.5.1]
   - Ajaxクライアント
