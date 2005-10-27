@@ -6,7 +6,10 @@
        (auto-fill-modeの場合は、この機能は無効となる。)
   - Sumibi Server
     1. hhuが入力できない問題を修正した。(『っふ』になるようにした。)
-    2. Sumibi_*.wsdlの記述バグを修正した。誤: xsd:getStatus →正:  typens:getStatus
+  - WSDL
+    2. Sumibi_*.wsdlの定義バグを修正した。 (ruby-1.8.3のSOAP4Rでうまく動かなかった問題)
+       1) targetNamespaceの指定間違い
+       2) getStatus()メソッドの引数なしのつもりがstring型を要求していた
 
 [0.5.1]
   - Ajaxクライアント

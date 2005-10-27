@@ -6,7 +6,7 @@
   change as we refine and extend our APIs.
   
      Copyright (C) 2005 Kiyoka Nishyama
-       $Date: 2005/10/17 14:57:15 $
+       $Date: 2005/10/27 16:22:11 $
   
    This file is part of Sumibi
   
@@ -25,7 +25,7 @@
   
 -->
 
-<!-- Revision $Date: 2005/10/17 14:57:15 $ -->
+<!-- Revision $Date: 2005/10/27 16:22:11 $ -->
 
 <definitions name="SumibiConvert"
              targetNamespace="urn:SumibiConvert"
@@ -40,7 +40,7 @@
 
   <types>
     <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" 
-                targetNamespace="urn:SumibiResult">
+                targetNamespace="urn:SumibiConvert">
             
       <xsd:complexType name="SumibiStatus">
         <xsd:all>
@@ -79,7 +79,6 @@
   <!-- note, ie and oe are ignored by server; all traffic is UTF-8. -->
 
   <message name="getStatus">
-    <part name="in"             type="xsd:string"/>
   </message>
 
   <message name="getStatusResponse">
