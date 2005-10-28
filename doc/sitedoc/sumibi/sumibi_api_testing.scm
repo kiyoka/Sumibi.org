@@ -168,6 +168,35 @@ dump    : $VAR1 = [
         ];
 hiragana: すみび
 "
+		 )))))
+
+     (*subsection
+      "rubyからsumibi.orgのサービスを呼びだす"
+      "Using sumibi.org with ruby"
+      (*en
+       (p "No documents in English, sorry..." ))
+      (*ja
+       (p
+	(p "サンプルプログラムの中にはGPLではなくLGPLのものもあります。")
+	(p "ライセンスはサンプルプログラムに明記していますので、"
+	   "再配布する場合は、ファイルの中身を良く確認してください。")
+	(p "以下の手順で ruby のサンプルプログラムを動かすことができます。")
+	(ul
+	 (li "Ruby 1.8.3をインストールする")
+	 (li "SumibiWebApiSample.rbを起動する")
+	 (p "./SumibiWebApiSample.rb sumibi")
+	 (p "[結果]")
+	 (program "
+version : 0.4.0
+sexp    : KCgoaiAiw7qy0CIgMCAwIDApIChoICKkuaTfpNMiIDAgMSAwKSAoayAipbml36XTIiAwIDIgMCkgKGwgInN1bWliaSIgMCAzIDApKSk=
+time    : 1
+dump    : 
+ cand:0 no:0 spaces:0 type:j word:炭火
+ cand:1 no:0 spaces:0 type:h word:すみび
+ cand:2 no:0 spaces:0 type:k word:スミビ
+ cand:3 no:0 spaces:0 type:l word:sumibi
+hiragana: すみび
+"
 		 ))))))
 
     (*section
