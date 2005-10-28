@@ -58,6 +58,7 @@ TARGET=../sumibi-${VERSION}
 awk -v VERSION=$VERSION  '{ if ( /;;VERSION;;/ ) { printf( "\"%s\"\n", VERSION ); } else { print; } }' < ./client/elisp/sumibi.el  >  $TARGET/client/elisp/sumibi.el
 /bin/cp -r  ./client/ajax                                  $TARGET/client
 /bin/cp -r  ./sample/client/perl                           $TARGET/sample/client
+/bin/cp -r  ./sample/client/ruby                           $TARGET/sample/client
 find        $TARGET -name CVS -type d -exec /bin/rm -rf {} \;
 
 cd ..
