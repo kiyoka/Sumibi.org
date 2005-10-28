@@ -12,7 +12,7 @@
      (*en
       (p "No documents in English, sorry..." ))
      (*ja
-      (p "このドキュメントは、sumibi.el 0.5.1についての解説です。")))
+      (p "このドキュメントは、sumibi.el 0.5.2についての解説です。")))
 
     (*section
      "sumibi.elの特徴"
@@ -109,7 +109,24 @@
 	  "sumibi.h de oishii.k yakiniku wo tabeyou. [C-j]")
 	 (li "(結果  )")
 	 (program
-	  "すみびでオイシイ焼肉を食べよう。")))))
+	  "すみびでオイシイ焼肉を食べよう。"))
+	(li ".l メソッドでアルファベットに固定する。")
+	(ul
+	 (li "(入力例)")
+	 (program
+	  "sumibi.l de oishii yakiniku.l wo tabeyou. [C-j]")
+	 (li "(結果  )")
+	 (program
+	  "sumibiでおいしいyakinikuをたべよう。"))
+	(li "スペースを2個以上入力すると1個のスペースになる")
+	(p "emacs-w3m等からgoogle検索する場合などに使います。")
+	(ul
+	 (li "(入力例)")
+	 (program
+	  "sumibi  yakiniku [C-j]")
+	 (li "(結果  )")
+	 (program
+	  "炭火 焼肉")))))
 
      (*subsection 
       "候補選択"
