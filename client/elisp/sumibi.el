@@ -2,10 +2,10 @@
 ;;
 ;; "sumibi.el" is a client for Sumibi server.
 ;;
-;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
+;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/10/24 15:31:34 $
+;;     $Date: 2005/10/30 10:31:29 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -149,6 +149,288 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 (defvar sumibi-select-mode-end-hook nil)
 
 
+(defvar sumibi-roman->kana-table
+  '(("kkya" . "っきゃ")
+    ("kkyu" . "っきゅ")
+    ("kkyo" . "っきょ")
+    ("ggya" . "っぎゃ")
+    ("ggyu" . "っぎゅ")
+    ("ggyo" . "っぎょ")
+    ("sshi" . "っし")
+    ("ssha" . "っしゃ")
+    ("sshu" . "っしゅ")
+    ("sshe" . "っしぇ")
+    ("ssho" . "っしょ")
+    ("cchi" . "っち")
+    ("ccha" . "っちゃ")
+    ("cchu" . "っちゅ")
+    ("cche" . "っちぇ")
+    ("ccho" . "っちょ")
+    ("ddya" . "っぢゃ")
+    ("ddyu" . "っぢゅ")
+    ("ddye" . "っぢぇ")
+    ("ddyo" . "っぢょ")
+    ("ttsu" . "っつ")
+    ("hhya" . "っひゃ")
+    ("hhyu" . "っひゅ")
+    ("hhyo" . "っひょ")
+    ("bbya" . "っびゃ")
+    ("bbyu" . "っびゅ")
+    ("bbyo" . "っびょ")
+    ("ppya" . "っぴゃ")
+    ("ppyu" . "っぴゅ")
+    ("ppyo" . "っぴょ")
+    ("rrya" . "っりゃ")
+    ("rryu" . "っりゅ")
+    ("rryo" . "っりょ")
+    ("ddyi" . "っでぃ")
+    ("ddhi" . "っでぃ")
+    ("xtsu" . "っ")
+    ("ttya" . "っちゃ")
+    ("ttyi" . "っち")
+    ("ttyu" . "っちゅ")
+    ("ttye" . "っちぇ")
+    ("ttyo" . "っちょ")
+    ("kya" . "きゃ")
+    ("kyu" . "きゅ")
+    ("kyo" . "きょ")
+    ("gya" . "ぎゃ")
+    ("gyu" . "ぎゅ")
+    ("gyo" . "ぎょ")
+    ("shi" . "し")
+    ("sha" . "しゃ")
+    ("shu" . "しゅ")
+    ("she" . "しぇ")
+    ("sho" . "しょ")
+    ("chi" . "ち")
+    ("cha" . "ちゃ")
+    ("chu" . "ちゅ")
+    ("che" . "ちぇ")
+    ("cho" . "ちょ")
+    ("dya" . "ぢゃ")
+    ("dyu" . "ぢゅ")
+    ("dye" . "ぢぇ")
+    ("dyo" . "ぢょ")
+    ("vvu" . "っう゛")
+    ("vva" . "っう゛ぁ")
+    ("vvi" . "っう゛ぃ")
+    ("vve" . "っう゛ぇ")
+    ("vvo" . "っう゛ぉ")
+    ("kka" . "っか")
+    ("gga" . "っが")
+    ("kki" . "っき")
+    ("ggi" . "っぎ")
+    ("kku" . "っく")
+    ("ggu" . "っぐ")
+    ("kke" . "っけ")
+    ("gge" . "っげ")
+    ("kko" . "っこ")
+    ("ggo" . "っご")
+    ("ssa" . "っさ")
+    ("zza" . "っざ")
+    ("jji" . "っじ")
+    ("jja" . "っじゃ")
+    ("jju" . "っじゅ")
+    ("jje" . "っじぇ")
+    ("jjo" . "っじょ")
+    ("ssu" . "っす")
+    ("zzu" . "っず")
+    ("sse" . "っせ")
+    ("zze" . "っぜ")
+    ("sso" . "っそ")
+    ("zzo" . "っぞ")
+    ("tta" . "った")
+    ("dda" . "っだ")
+    ("ddi" . "っぢ")
+    ("ddu" . "っづ")
+    ("tte" . "って")
+    ("dde" . "っで")
+    ("tto" . "っと")
+    ("ddo" . "っど")
+    ("hha" . "っは")
+    ("bba" . "っば")
+    ("ppa" . "っぱ")
+    ("hhi" . "っひ")
+    ("bbi" . "っび")
+    ("ppi" . "っぴ")
+    ("ffu" . "っふ")
+    ("ffa" . "っふぁ")
+    ("ffi" . "っふぃ")
+    ("ffe" . "っふぇ")
+    ("ffo" . "っふぉ")
+    ("bbu" . "っぶ")
+    ("ppu" . "っぷ")
+    ("hhe" . "っへ")
+    ("bbe" . "っべ")
+    ("ppe" . "っぺ")
+    ("hho" . "っほ")
+    ("bbo" . "っぼ")
+    ("ppo" . "っぽ")
+    ("yya" . "っや")
+    ("yyu" . "っゆ")
+    ("yyo" . "っよ")
+    ("rra" . "っら")
+    ("rri" . "っり")
+    ("rru" . "っる")
+    ("rre" . "っれ")
+    ("rro" . "っろ")
+    ("tsu" . "つ")
+    ("nya" . "にゃ")
+    ("nyu" . "にゅ")
+    ("nyo" . "にょ")
+    ("hya" . "ひゃ")
+    ("hyu" . "ひゅ")
+    ("hyo" . "ひょ")
+    ("bya" . "びゃ")
+    ("byu" . "びゅ")
+    ("byo" . "びょ")
+    ("pya" . "ぴゃ")
+    ("pyu" . "ぴゅ")
+    ("pyo" . "ぴょ")
+    ("mya" . "みゃ")
+    ("myu" . "みゅ")
+    ("myo" . "みょ")
+    ("xya" . "ゃ")
+    ("xyu" . "ゅ")
+    ("xyo" . "ょ")
+    ("rya" . "りゃ")
+    ("ryu" . "りゅ")
+    ("ryo" . "りょ")
+    ("xwa" . "ゎ")
+    ("dyi" . "でぃ")
+    ("thi" . "てぃ")
+    ("hhu" . "っふ")
+    ("shu" . "しゅ")
+    ("chu" . "ちゅ")
+    ("sya" . "しゃ")
+    ("syu" . "しゅ")
+    ("sye" . "しぇ")
+    ("syo" . "しょ")
+    ("jya" . "じゃ")
+    ("jyu" . "じゅ")
+    ("jye" . "じぇ")
+    ("jyo" . "じょ")
+    ("zya" . "じゃ")
+    ("zyu" . "じゅ")
+    ("zye" . "じぇ")
+    ("zyo" . "じょ")
+    ("tya" . "ちゃ")
+    ("tyi" . "ち")
+    ("tyu" . "ちゅ")
+    ("tye" . "ちぇ")
+    ("tyo" . "ちょ")
+    ("dhi" . "でぃ")
+    ("xtu" . "っ")
+    ("xa" . "ぁ")
+    ("xi" . "ぃ")
+    ("xu" . "ぅ")
+    ("vu" . "う゛")
+    ("va" . "う゛ぁ")
+    ("vi" . "う゛ぃ")
+    ("ve" . "う゛ぇ")
+    ("vo" . "う゛ぉ")
+    ("xe" . "ぇ")
+    ("xo" . "ぉ")
+    ("ka" . "か")
+    ("ga" . "が")
+    ("ki" . "き")
+    ("gi" . "ぎ")
+    ("ku" . "く")
+    ("gu" . "ぐ")
+    ("ke" . "け")
+    ("ge" . "げ")
+    ("ko" . "こ")
+    ("go" . "ご")
+    ("sa" . "さ")
+    ("za" . "ざ")
+    ("ji" . "じ")
+    ("ja" . "じゃ")
+    ("ju" . "じゅ")
+    ("je" . "じぇ")
+    ("jo" . "じょ")
+    ("su" . "す")
+    ("zu" . "ず")
+    ("se" . "せ")
+    ("ze" . "ぜ")
+    ("so" . "そ")
+    ("zo" . "ぞ")
+    ("ta" . "た")
+    ("da" . "だ")
+    ("di" . "ぢ")
+    ("tt" . "っ")
+    ("du" . "づ")
+    ("te" . "て")
+    ("de" . "で")
+    ("to" . "と")
+    ("do" . "ど")
+    ("na" . "な")
+    ("ni" . "に")
+    ("nu" . "ぬ")
+    ("ne" . "ね")
+    ("no" . "の")
+    ("ha" . "は")
+    ("ba" . "ば")
+    ("pa" . "ぱ")
+    ("hi" . "ひ")
+    ("bi" . "び")
+    ("pi" . "ぴ")
+    ("fu" . "ふ")
+    ("fa" . "ふぁ")
+    ("fi" . "ふぃ")
+    ("fe" . "ふぇ")
+    ("fo" . "ふぉ")
+    ("bu" . "ぶ")
+    ("pu" . "ぷ")
+    ("he" . "へ")
+    ("be" . "べ")
+    ("pe" . "ぺ")
+    ("ho" . "ほ")
+    ("bo" . "ぼ")
+    ("po" . "ぽ")
+    ("ma" . "ま")
+    ("mi" . "み")
+    ("mu" . "む")
+    ("me" . "め")
+    ("mo" . "も")
+    ("ya" . "や")
+    ("yu" . "ゆ")
+    ("yo" . "よ")
+    ("ra" . "ら")
+    ("ri" . "り")
+    ("ru" . "る")
+    ("re" . "れ")
+    ("ro" . "ろ")
+    ("wa" . "わ")
+    ("wi" . "ゐ")
+    ("we" . "ゑ")
+    ("wo" . "を")
+    ("n'" . "ん")
+    ("nn" . "ん")
+    ("ca" . "か")
+    ("ci" . "き")
+    ("cu" . "く")
+    ("ce" . "け")
+    ("co" . "こ")
+    ("si" . "し")
+    ("ti" . "ち")
+    ("hu" . "ふ")
+    ("tu" . "つ")
+    ("zi" . "じ")
+    ("la" . "ぁ")
+    ("li" . "ぃ")
+    ("lu" . "ぅ")
+    ("le" . "ぇ")
+    ("lo" . "ぉ")
+    ("a" . "あ")
+    ("i" . "い")
+    ("u" . "う")
+    ("e" . "え")
+    ("o" . "お")
+    ("n" . "ん")
+    ("-" . "ー")
+    ("^" . "ー")))
+
+
 ;;--- デバッグメッセージ出力
 (defvar sumibi-debug nil)		; デバッグフラグ
 (defun sumibi-debug-print (string)
@@ -179,6 +461,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 (defvar sumibi-repeat 0)		; 繰り返し回数
 (defvar sumibi-marker-list '())		; 文節開始、終了位置リスト: 次のような形式 ( ( 1 . 2 ) ( 5 . 7 ) ... ) 
 (defvar sumibi-timer    nil)            ; インターバルタイマー型変数
+(defvar sumibi-timer-busy  0)           ; タイマーハンドラが呼び出されている回数
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 表示系関数群
@@ -217,11 +500,9 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 		(delete-file sumibi-server-cert-file)))
 
     ;; タイマーイベント関数の登録
-    ;;    (setq sumibi-timer
-    ;;	  (run-at-time 1 1
-    ;;		       '(lambda ()
-    ;;			  (message "sumibi-time-handler"))))
-
+    (setq sumibi-timer
+    	  (run-at-time nil 0.5
+		       'sumibi-rt-hint-internal))
 
     ;; 初期化完了
     (setq sumibi-init t)))
@@ -847,6 +1128,40 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 	     (point))
 	  result)))))
 
+;;;
+;;; ローカルのEmacsLispだけで変換する処理
+;;;
+;; a-list を使って str の先頭に該当する文字列があるか調べる
+(defun romkan-scan-token (a-list str)
+  (let 
+      ((result     (substring str 0 1))
+       (rest       (substring str 1 (length str)))
+       (done       nil))
+
+    (mapcar
+     (lambda (x)
+       (if (and 
+	    (string-match (concat "^" (car x)) str)
+	    (not done))
+	   (progn
+	     (setq done t)
+	     (setq result (cdr x))
+	     (setq rest   (substring str (length (car x)))))))
+     a-list)
+    (cons result rest)))
+
+
+;; かな<->ローマ字変換する
+(defun romkan-convert (a-list str)
+  (cond ((= 0 (length str))
+	 "")
+	(t
+	 (let ((ret (romkan-scan-token a-list str)))
+	   (concat
+	    (car ret)
+	    (romkan-convert a-list (cdr ret)))))))
+
+
   
 ;;;
 ;;; with viper
@@ -877,6 +1192,35 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 (defun sumibi-viper-init-function ()
   (sumibi-viper-normalize-map)
   (remove-hook 'sumibi-mode-hook 'sumibi-viper-init-function))
+
+
+
+(defun sumibi-rt-hint-internal ()
+  "リアルタイムでヒントを出す
+sumibi-modeがONの間中呼び出される可能性がある・"
+  (let ((end (point))
+	(gap (sumibi-skip-chars-backward)))
+    (when (/= gap 0)
+      ;; 意味のある入力が見つかったので変換する
+      (let* (
+	     (b (+ end gap))
+	     (e end)
+	     (str (buffer-substring b e))
+	     (l (split-string str))
+	     (mess
+	      (mapconcat
+	       (lambda (x)
+		 (let ((hira
+			(romkan-convert sumibi-roman->kana-table
+					x)))
+		   (if (string-match "[a-z]+" hira)
+		       x
+		     hira)))
+
+	       l
+	       " ")))
+	
+	(message mess)))))
 
 
 ;;;
@@ -978,7 +1322,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/10/24 15:31:34 $ on CVS " ;;VERSION;;
+  " $Date: 2005/10/30 10:31:29 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"

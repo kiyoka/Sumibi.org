@@ -413,3 +413,30 @@
 ;; 平仮名の文字列かどうかを評価する
 (define (romkan-is-hiragana str)
   (rxmatch #/^[あ-んぁぃぅぇぉゃゅょっー]+$/ str))
+
+
+;;--------------------------------------------------
+;; テーブル内容出力(デバッグ用)
+;;--------------------------------------------------
+;; ヘボン->かなの完全なテーブル生成
+(define (generate-roman->kana-table)
+  (let ((result
+	 (map
+	  (lambda (x)
+	    (cons
+	     (cdr x)
+	     (romkan-roman->kana (cdr x))))
+	  
+	  (append
+	   romkan-hepburn-alist
+	   (map
+	    (lambda (x)
+	      (cons
+	       (cdr x)
+	       (car x)))
+	    romkan-kunrei-to-hepburn-alist)))))
+    
+    (sort result 
+	  (lambda (x y)
+	    (> (string-length (car x))
+	       (string-length (car y)))))))
