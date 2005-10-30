@@ -2,8 +2,8 @@
 ;;
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
-;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishyama
-;;     $Date: 2005/10/06 12:24:26 $
+;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
+;;     $Date: 2005/10/30 10:31:29 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -920,6 +920,8 @@
        (print docstring))
      docstrings)
     (exit 4))
+
+;;  (write (generate-roman->kana-table))
 
   (let* (
 	 (connection 

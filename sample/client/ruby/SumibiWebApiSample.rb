@@ -2,8 +2,8 @@
 #
 # "SumibiWebApiSample.rb" is a sample program.
 #
-#   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2005/10/28 14:18:55 $
+#   Copyright (C) 2005 Kiyoka Nishiyama
+#     $Date: 2005/10/30 10:31:29 $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
