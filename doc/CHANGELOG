@@ -1,4 +1,12 @@
 
+[0.5.3]
+  - sumibi.el
+    1. リアルタイムのひらがなガイド機能を追加した。
+       → この機能により、ローマ字のうちまちがいをリアルタイムに発見できる様になるはず。
+    2. カスタマイズ変数、sumibi-realtime-guide-running-secondsを追加した。
+       → リアルタイムガイド表示の継続時間を変更可能
+
+
 [0.5.2]
   - sumibi.el
     1. toggle-input-methodでSumibiをOFFにした時、void functionエラーが出るバグを修正した。
