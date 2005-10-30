@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/10/30 10:31:29 $
+;;     $Date: 2005/10/30 14:18:02 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -112,6 +112,11 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 
 (defcustom sumibi-use-viper nil
   "*Non-nil であれば、VIPER に対応する。"
+  :type 'boolean
+  :group 'sumibi)
+
+(defcustom sumibi-realtime-guide-running-seconds 60
+  "リアルタイムガイド表示の継続時間(最後に変換してから何秒間でガイド表示を止めるか)"
   :type 'boolean
   :group 'sumibi)
 
@@ -461,7 +466,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 (defvar sumibi-repeat 0)		; 繰り返し回数
 (defvar sumibi-marker-list '())		; 文節開始、終了位置リスト: 次のような形式 ( ( 1 . 2 ) ( 5 . 7 ) ... ) 
 (defvar sumibi-timer    nil)            ; インターバルタイマー型変数
-(defvar sumibi-timer-busy  0)           ; タイマーハンドラが呼び出されている回数
+(defvar sumibi-timer-rest  0)           ; あと何回呼出されたら、インターバルタイマの呼出を止めるか
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 表示系関数群
@@ -498,11 +503,6 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
     (add-hook 'kill-emacs-hook
 	      (lambda ()
 		(delete-file sumibi-server-cert-file)))
-
-    ;; タイマーイベント関数の登録
-    (setq sumibi-timer
-    	  (run-at-time nil 0.5
-		       'sumibi-rt-hint-internal))
 
     ;; 初期化完了
     (setq sumibi-init t)))
@@ -979,8 +979,19 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 ・カーソルから行頭方向にローマ字列が続く範囲でローマ字漢字変換を行う。"
   (interactive)
 ;  (print last-command)			; DEBUG
+
+  (when (not sumibi-timer)
+    ;; タイマーイベント関数の登録
+    (setq sumibi-timer
+	  (run-at-time nil 0.5
+		       'sumibi-realtime-guide)))
+
+  ;; ガイド表示継続回数の更新
+  (setq sumibi-timer-rest  
+	(/ sumibi-realtime-guide-running-seconds
+	   0.5))
+
   (cond
-   
    (sumibi-select-mode
     ;; 変換中に呼出されたら、候補選択モードに移行する。
     (funcall (lookup-key sumibi-select-mode-map sumibi-rK-trans-key)))
@@ -1195,9 +1206,16 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 
 
 
-(defun sumibi-rt-hint-internal ()
-  "リアルタイムでヒントを出す
+(defun sumibi-realtime-guide ()
+  "リアルタイムで変換中のガイドを出す
 sumibi-modeがONの間中呼び出される可能性がある・"
+  (when (> 1 sumibi-timer-rest)
+    (cancel-timer sumibi-timer)
+    (setq sumibi-timer nil))
+
+  ;; 残り回数のデクリメント
+  (setq sumibi-timer-rest (- sumibi-timer-rest 1))
+
   (let ((end (point))
 	(gap (sumibi-skip-chars-backward)))
     (when (/= gap 0)
@@ -1221,6 +1239,7 @@ sumibi-modeがONの間中呼び出される可能性がある・"
 	       " ")))
 	
 	(message mess)))))
+	
 
 
 ;;;
@@ -1322,7 +1341,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/10/30 10:31:29 $ on CVS " ;;VERSION;;
+  " $Date: 2005/10/30 14:18:02 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
