@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/10/30 14:18:02 $
+;;     $Date: 2005/10/31 14:48:00 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -467,6 +467,9 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 (defvar sumibi-marker-list '())		; 文節開始、終了位置リスト: 次のような形式 ( ( 1 . 2 ) ( 5 . 7 ) ... ) 
 (defvar sumibi-timer    nil)            ; インターバルタイマー型変数
 (defvar sumibi-timer-rest  0)           ; あと何回呼出されたら、インターバルタイマの呼出を止めるか
+(defvar sumibi-timer-interval  0.5)     ; タイマーが発火する間隔
+(defvar sumibi-guide-overlay   nil)     ; リアルタイムガイドに使用するオーバーレイ
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 表示系関数群
@@ -982,14 +985,22 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 
   (when (not sumibi-timer)
     ;; タイマーイベント関数の登録
-    (setq sumibi-timer
-	  (run-at-time nil 0.5
-		       'sumibi-realtime-guide)))
+    (progn
+      (setq sumibi-timer
+	    (run-at-time nil sumibi-timer-interval
+			 'sumibi-realtime-guide))
+      (let 
+	  ((ov-point
+	    (save-excursion
+	      (forward-line 1)
+	      (point))))
+	(setq sumibi-guide-overlay
+	      (make-overlay ov-point (+ ov-point 1) (current-buffer))))))
 
   ;; ガイド表示継続回数の更新
   (setq sumibi-timer-rest  
 	(/ sumibi-realtime-guide-running-seconds
-	   0.5))
+	   sumibi-timer-interval))
 
   (cond
    (sumibi-select-mode
@@ -1211,7 +1222,8 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 sumibi-modeがONの間中呼び出される可能性がある・"
   (when (> 1 sumibi-timer-rest)
     (cancel-timer sumibi-timer)
-    (setq sumibi-timer nil))
+    (setq sumibi-timer nil)
+    (delete-overlay sumibi-guide-overlay))
 
   ;; 残り回数のデクリメント
   (setq sumibi-timer-rest (- sumibi-timer-rest 1))
@@ -1238,7 +1250,8 @@ sumibi-modeがONの間中呼び出される可能性がある・"
 	       l
 	       " ")))
 	
-	(message mess)))))
+	(overlay-put sumibi-guide-overlay 'before-string mess)
+	(overlay-put sumibi-guide-overlay 'face 'shadow)))))
 	
 
 
@@ -1341,7 +1354,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/10/30 14:18:02 $ on CVS " ;;VERSION;;
+  " $Date: 2005/10/31 14:48:00 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
