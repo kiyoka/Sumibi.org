@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/10/31 14:48:00 $
+;;     $Date: 2005/11/01 12:24:56 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -115,7 +115,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
   :type 'boolean
   :group 'sumibi)
 
-(defcustom sumibi-realtime-guide-running-seconds 60
+(defcustom sumibi-realtime-guide-running-seconds 30
   "リアルタイムガイド表示の継続時間(最後に変換してから何秒間でガイド表示を止めるか)"
   :type 'boolean
   :group 'sumibi)
@@ -1220,39 +1220,46 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 (defun sumibi-realtime-guide ()
   "リアルタイムで変換中のガイドを出す
 sumibi-modeがONの間中呼び出される可能性がある・"
-  (when (> 1 sumibi-timer-rest)
+  (cond
+   ((> 1 sumibi-timer-rest)
     (cancel-timer sumibi-timer)
     (setq sumibi-timer nil)
     (delete-overlay sumibi-guide-overlay))
+   (t
+    ;; 残り回数のデクリメント
+    (setq sumibi-timer-rest (- sumibi-timer-rest 1))
 
-  ;; 残り回数のデクリメント
-  (setq sumibi-timer-rest (- sumibi-timer-rest 1))
-
-  (let ((end (point))
-	(gap (sumibi-skip-chars-backward)))
-    (when (/= gap 0)
-      ;; 意味のある入力が見つかったので変換する
-      (let* (
-	     (b (+ end gap))
-	     (e end)
-	     (str (buffer-substring b e))
-	     (l (split-string str))
-	     (mess
-	      (mapconcat
-	       (lambda (x)
-		 (let ((hira
-			(romkan-convert sumibi-roman->kana-table
-					x)))
-		   (if (string-match "[a-z]+" hira)
-		       x
-		     hira)))
-
-	       l
-	       " ")))
-	
-	(overlay-put sumibi-guide-overlay 'before-string mess)
-	(overlay-put sumibi-guide-overlay 'face 'shadow)))))
-	
+    (let ((end (point))
+	  (gap (sumibi-skip-chars-backward)))
+      (if (= gap 0)
+	  (overlay-put sumibi-guide-overlay 'before-string "")
+	;; 意味のある入力が見つかったので変換する
+	(let* (
+	       (b (+ end gap))
+	       (e end)
+	       (str (buffer-substring b e))
+	       (l (split-string str))
+	       (mess
+		(mapconcat
+		 (lambda (x)
+		   (let ((hira
+			  (romkan-convert sumibi-roman->kana-table
+					  x)))
+		     (if (string-match "[a-z]+" hira)
+			 x
+		       hira)))
+		 
+		 l
+		 " "))
+	       (disp-point 
+		(save-excursion
+		  (forward-line 1)
+		  (point))))
+	  (move-overlay sumibi-guide-overlay 
+			disp-point (+ disp-point 1) (current-buffer))
+	  (message mess)
+	  (overlay-put sumibi-guide-overlay 'before-string mess))))
+    (overlay-put sumibi-guide-overlay 'face 'shadow))))
 
 
 ;;;
@@ -1354,7 +1361,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/10/31 14:48:00 $ on CVS " ;;VERSION;;
+  " $Date: 2005/11/01 12:24:56 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
