@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/11/01 12:24:56 $
+;;     $Date: 2005/11/01 12:51:14 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -118,6 +118,12 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 (defcustom sumibi-realtime-guide-running-seconds 30
   "リアルタイムガイド表示の継続時間(最後に変換してから何秒間でガイド表示を止めるか)"
   :type 'boolean
+  :group 'sumibi)
+
+
+(defface sumibi-guide-face
+  '((((class color) (background light)) (:background "#C0C0C0" :foreground "#FF3030")))
+  "Face for sumibi guide."
   :group 'sumibi)
 
 
@@ -1231,9 +1237,12 @@ sumibi-modeがONの間中呼び出される可能性がある・"
 
     (let ((end (point))
 	  (gap (sumibi-skip-chars-backward)))
-      (if (= gap 0)
+      (if (or
+	   (minibufferp (current-buffer))
+	   (= gap 0))
+	  ;; ミニバッファか変換対象が無しならガイドは表示しない。
 	  (overlay-put sumibi-guide-overlay 'before-string "")
-	;; 意味のある入力が見つかったので変換する
+	;; 意味のある入力が見つかったのでガイドを表示する。
 	(let* (
 	       (b (+ end gap))
 	       (e end)
@@ -1248,7 +1257,6 @@ sumibi-modeがONの間中呼び出される可能性がある・"
 		     (if (string-match "[a-z]+" hira)
 			 x
 		       hira)))
-		 
 		 l
 		 " "))
 	       (disp-point 
@@ -1257,9 +1265,8 @@ sumibi-modeがONの間中呼び出される可能性がある・"
 		  (point))))
 	  (move-overlay sumibi-guide-overlay 
 			disp-point (+ disp-point 1) (current-buffer))
-	  (message mess)
 	  (overlay-put sumibi-guide-overlay 'before-string mess))))
-    (overlay-put sumibi-guide-overlay 'face 'shadow))))
+    (overlay-put sumibi-guide-overlay 'face 'sumibi-guide-face))))
 
 
 ;;;
@@ -1361,7 +1368,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/11/01 12:24:56 $ on CVS " ;;VERSION;;
+  " $Date: 2005/11/01 12:51:14 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
