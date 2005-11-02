@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/11/02 14:01:12 $
+;;     $Date: 2005/11/02 14:20:54 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -993,7 +993,12 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
   (interactive)
 ;  (print last-command)			; DEBUG
 
-  (when (not sumibi-timer)
+  (cond 
+   ;; タイマーイベントを設定しない条件
+   ((or
+     sumibi-timer
+     (featurep 'xemacs)))
+   (t
     ;; タイマーイベント関数の登録
     (progn
       (setq sumibi-timer
@@ -1005,7 +1010,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 	      (forward-line 1)
 	      (point))))
 	(setq sumibi-guide-overlay
-	      (make-overlay ov-point (+ ov-point 1) (current-buffer))))))
+	      (make-overlay ov-point (+ ov-point 1) (current-buffer)))))))
 
   ;; ガイド表示継続回数の更新
   (setq sumibi-timer-rest  
@@ -1382,7 +1387,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/11/02 14:01:12 $ on CVS " ;;VERSION;;
+  " $Date: 2005/11/02 14:20:54 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
