@@ -40,11 +40,11 @@
 			(html:a :href "http://www.sumibi.org/"     "Google検索モード(暗号化OFF)")
 			(html:a :href "https://sumibi.org/?long=1" "長文作成モード(暗号化ON)"))
 		    " / "
-		    (html:a :href "sumibi/sumibi.html"         "Documents")
+		    (html:a :href "http://www.sumibi.org/sumibi/sumibi.html"         "Documents")
 		    " / "
-		    (html:a :href "sumibi/privacy_policy.html" "Privacy Policy")
+		    (html:a :href "http://www.sumibi.org/sumibi/privacy_policy.html" "Privacy Policy")
 		    " / "
-		    (html:a :href "sumibi/faq.html"            "FAQ"))
+		    (html:a :href "http://www.sumibi.org/sumibi/faq.html"            "FAQ"))
 		    
 	  (html:div :style "text-align: center; "
 		    (html:form :method "get" :action "http://www.google.co.jp/custom" :target "_top"
@@ -85,7 +85,7 @@
 	  (html:div :class "copyright"
 		    "Sumibi Engine:Copyright&copy 2005, Kiyoka Nishiyama / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		    (html:br)
-		    "Software version = $Date: 2005/11/01 14:34:48 $ ")
+		    "Software version = $Date: 2005/11/06 16:07:33 $ ")
 
 
 	  ;;; --- FLOSS関連ロゴ ---
@@ -216,10 +216,15 @@ google_color_text = \"000000\";
 	    "自分に合ったものを選びましょう。")
 
 	   (html:hr)
-	   )
+
+	   ;;; --- ホスティングについての言及 ---
+	   (html:br)
+	   (html:div :class "footer"
+		     (html:p "本サイト(Sumibi.org)は小規模なハードウェア及びネットワーク資源を使ってホスティングしております。")
+		     (html:p "そこで、Sumibi.orgを無償でホスティングできる環境をご提供いただける企業様を募集しています。")
+		     (html:p "ご提供いただいた企業様におきましては、Sumibi.orgに優先して広告掲載させて頂きます。"))))
+
 	 (html:script :type "text/javascript" :src "ajax/Sumibi.js")
 	 (html:script :type "text/javascript" :src "ajax/SumibiSOAP.js")
 	 (html:script :type "text/javascript" :src "ajax/ajax_sumibi.js")
-
-	 ))))))
-
+	 )))))
