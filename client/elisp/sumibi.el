@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/11/02 14:20:54 $
+;;     $Date: 2005/11/06 15:48:07 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -997,12 +997,13 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
    ;; タイマーイベントを設定しない条件
    ((or
      sumibi-timer
-     (featurep 'xemacs)))
+;;     (featurep 'xemacs)
+     ))
    (t
     ;; タイマーイベント関数の登録
     (progn
       (setq sumibi-timer
-	    (run-at-time nil sumibi-realtime-guide-interval
+	    (run-at-time 0.1 sumibi-realtime-guide-interval
 			 'sumibi-realtime-guide))
       (let 
 	  ((ov-point
@@ -1010,7 +1011,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 	      (forward-line 1)
 	      (point))))
 	(setq sumibi-guide-overlay
-	      (make-overlay ov-point (+ ov-point 1) (current-buffer)))))))
+	      (make-overlay ov-point ov-point (current-buffer)))))))
 
   ;; ガイド表示継続回数の更新
   (setq sumibi-timer-rest  
@@ -1249,7 +1250,7 @@ sumibi-modeがONの間中呼び出される可能性がある・"
 	   (prev-line-point
 	    (save-excursion
 	      (if (= 0 (forward-line -1))
-		 (point)
+		  (point)
 		nil)))
 	   (next-line-point
 	    (save-excursion
@@ -1261,6 +1262,7 @@ sumibi-modeがONの間中呼び出される可能性がある・"
 
       (if 
 	  (or
+	   (= end (point-max))
 	   (not disp-point)
 	   (= gap 0))
 	  ;; 上下スペースが無い または 変換対象が無しならガイドは表示しない。
@@ -1387,7 +1389,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/11/02 14:20:54 $ on CVS " ;;VERSION;;
+  " $Date: 2005/11/06 15:48:07 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
