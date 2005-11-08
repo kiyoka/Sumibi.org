@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/11/06 15:48:07 $
+;;     $Date: 2005/11/08 13:07:01 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -115,7 +115,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
   :type 'boolean
   :group 'sumibi)
 
-(defcustom sumibi-realtime-guide-running-seconds 30
+(defcustom sumibi-realtime-guide-running-seconds 60
   "リアルタイムガイド表示の継続時間(最後に変換してから何秒間でガイド表示を止めるか)"
   :type  'integer
   :group 'sumibi)
@@ -127,7 +127,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 
 
 (defface sumibi-guide-face
-  '((((class color) (background light)) (:background "#D0D0D0" :foreground "#FF3030")))
+  '((((class color) (background light)) (:background "#E0E0E0" :foreground "#F03030")))
   "Face for sumibi guide."
   :group 'sumibi)
 
@@ -1002,21 +1002,21 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
    (t
     ;; タイマーイベント関数の登録
     (progn
-      (setq sumibi-timer
-	    (run-at-time 0.1 sumibi-realtime-guide-interval
-			 'sumibi-realtime-guide))
       (let 
 	  ((ov-point
 	    (save-excursion
 	      (forward-line 1)
 	      (point))))
-	(setq sumibi-guide-overlay
-	      (make-overlay ov-point ov-point (current-buffer)))))))
+	  (setq sumibi-guide-overlay
+			(make-overlay ov-point ov-point (current-buffer))))
+      (setq sumibi-timer
+			(run-at-time 0.1 sumibi-realtime-guide-interval
+						 'sumibi-realtime-guide)))))
 
   ;; ガイド表示継続回数の更新
   (setq sumibi-timer-rest  
-	(/ sumibi-realtime-guide-running-seconds
-	   sumibi-realtime-guide-interval))
+		(/ sumibi-realtime-guide-running-seconds
+		   sumibi-realtime-guide-interval))
 
   (cond
    (sumibi-select-mode
@@ -1241,29 +1241,35 @@ sumibi-modeがONの間中呼び出される可能性がある・"
     (cancel-timer sumibi-timer)
     (setq sumibi-timer nil)
     (delete-overlay sumibi-guide-overlay))
-   (t
+   (sumibi-guide-overlay
     ;; 残り回数のデクリメント
     (setq sumibi-timer-rest (- sumibi-timer-rest 1))
 
-    (let* ((end (point))
+    (let* (
+	   (end (point))
 	   (gap (sumibi-skip-chars-backward))
+	   (prev-line-existp
+	    (not (= (point-at-bol) (point-min))))
+	   (next-line-existp
+	    (not (= (point-at-eol) (point-max))))
 	   (prev-line-point
-	    (save-excursion
-	      (if (= 0 (forward-line -1))
-		  (point)
-		nil)))
+	    (when prev-line-existp
+	      (save-excursion
+		(forward-line -1)
+		(point))))
 	   (next-line-point
-	    (save-excursion
-	      (if (= 0 (forward-line 1))
-		  (point)
-		nil)))
+	    (when next-line-existp
+	      (save-excursion
+		(forward-line 1)
+		(point))))
 	   (disp-point
 	    (or next-line-point prev-line-point)))
 
       (if 
-	  (or
-	   (= end (point-max))
-	   (not disp-point)
+	  (or 
+	   (and
+	    (not next-line-point)
+	    (not prev-line-point))
 	   (= gap 0))
 	  ;; 上下スペースが無い または 変換対象が無しならガイドは表示しない。
 	  (overlay-put sumibi-guide-overlay 'before-string "")
@@ -1285,7 +1291,7 @@ sumibi-modeがONの間中呼び出される可能性がある・"
 		 l
 		 " ")))
 	  (move-overlay sumibi-guide-overlay 
-			disp-point (+ disp-point 1) (current-buffer))
+			disp-point (min (point-max) (+ disp-point 1)) (current-buffer))
 	  (overlay-put sumibi-guide-overlay 'before-string mess))))
     (overlay-put sumibi-guide-overlay 'face 'sumibi-guide-face))))
 
@@ -1389,7 +1395,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/11/06 15:48:07 $ on CVS " ;;VERSION;;
+  " $Date: 2005/11/08 13:07:01 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
