@@ -21,7 +21,15 @@
 	  (html:title "Sumibi.org ローマ字を日本語に変換できる無料サイト")
 	  (html:link :rel "shortcut icon" :href "/favicon.ico")
 	  (html:link :rel "icon" :href "/favicon.png" :type "image/png"))
+	 "
+<script>
+<!--
+ function sf() {document.getElementById('q').focus();}
+ // -->
+</script>
+"
 	 (html:body                                                     
+	  :onLoad "sf()"
 	  (html:div :style "text-align: center; "
 		    (html:br)
 		    (html:span :style "color:#6d5550;"
@@ -85,7 +93,7 @@
 	  (html:div :class "copyright"
 		    "Sumibi Engine:Copyright&copy 2005, Kiyoka Nishiyama / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		    (html:br)
-		    "Software version = $Date: 2005/11/07 14:44:36 $ ")
+		    "Software version = $Date: 2005/11/09 13:36:48 $ ")
 
 
 	  ;;; --- FLOSS関連ロゴ ---
