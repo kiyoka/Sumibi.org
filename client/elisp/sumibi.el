@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/11/08 13:07:01 $
+;;     $Date: 2005/11/09 13:44:00 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -1267,6 +1267,8 @@ sumibi-modeがONの間中呼び出される可能性がある・"
 
       (if 
 	  (or 
+	   (when (fboundp 'minibufferp)
+	     (minibufferp))
 	   (and
 	    (not next-line-point)
 	    (not prev-line-point))
@@ -1395,7 +1397,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/11/08 13:07:01 $ on CVS " ;;VERSION;;
+  " $Date: 2005/11/09 13:44:00 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
