@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/11/09 13:44:00 $
+;;     $Date: 2005/11/09 14:14:02 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -1284,12 +1284,26 @@ sumibi-modeがONの間中呼び出される可能性がある・"
 	       (mess
 		(mapconcat
 		 (lambda (x)
-		   (let ((hira
-			  (romkan-convert sumibi-roman->kana-table
-					  x)))
-		     (if (string-match "[a-z]+" hira)
-			 x
-		       hira)))
+		   (let* ((l (split-string x "\\."))
+			  (method
+			   (when (< 1 (length l))
+			     (cadr l)))
+			  (hira
+			   (romkan-convert sumibi-roman->kana-table
+					   (car l))))
+		     (cond
+		      ((string-match "[a-z]+" hira)
+		       x)
+		      ((not method)
+		       hira)
+		      ((or (string-equal "j" method) (string-equal "h" method))
+		       hira)
+		      ((or (string-equal "e" method) (string-equal "l" method))
+		       (car l))
+		      ((string-equal "k" method)
+		       hira)
+		      (t
+		       x))))
 		 l
 		 " ")))
 	  (move-overlay sumibi-guide-overlay 
@@ -1397,7 +1411,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/11/09 13:44:00 $ on CVS " ;;VERSION;;
+  " $Date: 2005/11/09 14:14:02 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
