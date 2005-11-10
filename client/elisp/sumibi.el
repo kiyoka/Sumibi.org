@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/11/09 14:14:02 $
+;;     $Date: 2005/11/10 13:57:26 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -116,7 +116,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
   :group 'sumibi)
 
 (defcustom sumibi-realtime-guide-running-seconds 60
-  "リアルタイムガイド表示の継続時間(最後に変換してから何秒間でガイド表示を止めるか)"
+  "リアルタイムガイド表示の継続時間(秒数)・ゼロでガイド表示機能が無効になります。"
   :type  'integer
   :group 'sumibi)
 
@@ -128,7 +128,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 
 (defface sumibi-guide-face
   '((((class color) (background light)) (:background "#E0E0E0" :foreground "#F03030")))
-  "Face for sumibi guide."
+  "リアルタイムガイドのフェイス(装飾、色などの指定)"
   :group 'sumibi)
 
 
@@ -997,7 +997,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
    ;; タイマーイベントを設定しない条件
    ((or
      sumibi-timer
-;;     (featurep 'xemacs)
+     (> 1 sumibi-realtime-guide-running-seconds)
      ))
    (t
     ;; タイマーイベント関数の登録
@@ -1014,9 +1014,10 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 						 'sumibi-realtime-guide)))))
 
   ;; ガイド表示継続回数の更新
-  (setq sumibi-timer-rest  
-		(/ sumibi-realtime-guide-running-seconds
-		   sumibi-realtime-guide-interval))
+  (when (< 0 sumibi-realtime-guide-running-seconds)
+    (setq sumibi-timer-rest  
+	  (/ sumibi-realtime-guide-running-seconds
+	     sumibi-realtime-guide-interval)))
 
   (cond
    (sumibi-select-mode
@@ -1411,7 +1412,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/11/09 14:14:02 $ on CVS " ;;VERSION;;
+  " $Date: 2005/11/10 13:57:26 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"

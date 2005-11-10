@@ -91,9 +91,10 @@
 		    (html:span :style "color:#6d5550;"
 			       "Sumibi.org provides roman to japanese conversion system and other services."))
 	  (html:div :class "copyright"
-		    "Sumibi Engine:Copyright&copy 2005, Kiyoka Nishiyama / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
+		    "Sumibi Engine:Copyright&copy 2005, "
+		    (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		    (html:br)
-		    "Software version = $Date: 2005/11/10 13:57:26 $ ")
+		    "Software version = $Date: 2005/11/10 14:00:10 $ ")
 
 
 	  ;;; --- FLOSS関連ロゴ ---
