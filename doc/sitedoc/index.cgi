@@ -48,11 +48,11 @@
 			(html:a :href "http://www.sumibi.org/"     "Google検索モード(暗号化OFF)")
 			(html:a :href "https://sumibi.org/?long=1" "長文作成モード(暗号化ON)"))
 		    " / "
-		    (html:a :href "http://www.sumibi.org/sumibi/sumibi.html"         "Documents")
+		    (html:a :href "sumibi/sumibi.html"         "Documents")
 		    " / "
-		    (html:a :href "http://www.sumibi.org/sumibi/privacy_policy.html" "Privacy Policy")
+		    (html:a :href "sumibi/privacy_policy.html" "Privacy Policy")
 		    " / "
-		    (html:a :href "http://www.sumibi.org/sumibi/faq.html"            "FAQ"))
+		    (html:a :href "sumibi/faq.html"            "FAQ"))
 		    
 	  (html:div :style "text-align: center; "
 		    (html:form :method "get" :action "http://www.google.co.jp/custom" :target "_top"
@@ -93,7 +93,7 @@
 	  (html:div :class "copyright"
 		    "Sumibi Engine:Copyright&copy 2005, Kiyoka Nishiyama / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		    (html:br)
-		    "Software version = $Date: 2005/11/09 13:36:48 $ ")
+		    "Software version = $Date: 2005/11/10 13:57:26 $ ")
 
 
 	  ;;; --- FLOSS関連ロゴ ---
