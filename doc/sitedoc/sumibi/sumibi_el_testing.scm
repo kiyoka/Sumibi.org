@@ -12,7 +12,7 @@
      (*en
       (p "No documents in English, sorry..." ))
      (*ja
-      (p "このドキュメントは、sumibi.el 0.5.2についての解説です。")))
+      (p "このドキュメントは、sumibi.el 0.5.3についての解説です。")))
 
     (*section
      "sumibi.elの特徴"
@@ -238,8 +238,14 @@
 	(p "curlコマンドの絶対パスを指定します。通常は変更する必要はありません。")
 	(li "sumibi-use-viper")
 	(p "Non-nil であれば、VIPER モード対応になります。"
-	   "VIPERモードとSumibiを併用したとき C-j が効かなくなる問題が出る場合に有効にしてください。")))))
-	
+	   "VIPERモードとSumibiを併用したとき C-j が効かなくなる問題が出る場合に有効にしてください。")
+	(li "sumibi-realtime-guide-running-seconds")
+	(p "リアルタイムガイド表示の継続時間(秒数)・ゼロでガイド表示機能が無効になります。")
+	(li "sumibi-realtime-guide-interval")
+	(p "リアルタイムガイド表示を更新する時間間隔を設定します。")
+	(li "sumibi-guide-face")
+	(p "リアルタイムガイドのフェイスを設定します。(装飾、色などの指定)")))))
+
     (*section
      "フック"
      "Hooks"
