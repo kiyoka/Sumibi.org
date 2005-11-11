@@ -1,4 +1,4 @@
-/* $Id: sumibi.css,v 1.6 2005/11/06 16:07:33 kiyoka Exp $ */
+/* $Id: sumibi.css,v 1.7 2005/11/11 14:36:30 kiyoka Exp $ */
 
 body {
 	background-color: #ffffff;
@@ -35,6 +35,11 @@ div.footer {
 	background-color: #ddc;
 	text-align: left;
 	font-size: smaller;
+	font-family: helvetica, sans-serif;
+}
+div.notice {
+	background-color: #d88;
+	text-align: center;
 	font-family: helvetica, sans-serif;
 }
 div.rcsid {

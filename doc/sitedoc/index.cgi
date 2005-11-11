@@ -81,31 +81,22 @@
 		    (html:div :id "hist"))
 	  
 	  (html:div :style "text-align: center; "
+
+		    ;; お知らせメッセージ notice.txt 
+		    (if (file-exists? "./notice.txt")
+			(html:div :class "notice"
+				  (html:p
+				   (port->string (open-input-file "./notice.txt"))))
+			"")
 		    (html:ul
 		     (html:li "単語をスペースで区切って入力し、確定ボタンを押します。 (例: ryokou ni kiteimasu. → 旅行に来ています。)")
 		     (html:li "スペースは、スペースを二回入力して下さい。 (例: wa-kinguhoride-&nbsp;&nbsp;&nbsp;o-sutoraria → ワーキングホリデー&nbsp;&nbsp;オーストラリア)"))
 
 		    
 		    ;; --- google AdSense ---
-		    "
-<script type=\"text/javascript\"><!--
-google_ad_client = \"pub-5721837636688174\";
-google_ad_width = 468;
-google_ad_height = 60;
-google_ad_format = \"468x60_as\";
-google_ad_type = \"text_image\";
-google_ad_channel =\"\";
-google_color_border = \"FFFFFF\";
-google_color_bg = \"FFFFFF\";
-google_color_link = \"0000CC\";
-google_color_url = \"008000\";
-google_color_text = \"000000\";
-//--></script>
-<script type=\"text/javascript\"
-  src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">
-</script>
-"
-		    )
+		    (if (file-exists? "./adsense1.txt")
+			(port->string (open-input-file "./adsense1.txt"))
+			""))
 
 	  (html:div :style "text-align: right; "
 		    (html:a :href "mailto:kiyoka@sumibi.org" "メールでのお問い合わせ(ローマ字でもOKです)"
@@ -117,7 +108,7 @@ google_color_text = \"000000\";
 		    "Sumibi Engine:Copyright&copy 2005, "
 		    (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		    (html:br)
-		    "Software version = $Date: 2005/11/11 13:32:19 $ ")
+		    "Software version = $Date: 2005/11/11 14:36:30 $ ")
 
 
 	  (html:div :style "text-align: center; "
@@ -228,6 +219,11 @@ google_color_text = \"000000\";
 	    (html:a :href "http://mail.goo.ne.jp/goomail/index.ghtml"     "gooメール")
 	    "等が有名な無料Webメールサービスです。"
 	    "自分に合ったものを選びましょう。")
+
+	   ;; --- google AdSense ---
+	   (if (file-exists? "./adsense2.txt")
+	       (port->string (open-input-file "./adsense2.txt"))
+	       "")
 
 	   (html:hr)
 
