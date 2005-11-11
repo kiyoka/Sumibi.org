@@ -80,42 +80,14 @@
 		    (html:div :id "ime")
 		    (html:div :id "hist"))
 	  
-	  (html:ul
-	   (html:li "単語をスペースで区切って入力し、確定ボタンを押します。 (例: ryokou ni kiteimasu. → 旅行に来ています。)")
-	   (html:li "スペースは、スペースを二回入力して下さい。 (例: wa-kinguhoride-&nbsp;&nbsp;&nbsp;o-sutoraria → ワーキングホリデー&nbsp;&nbsp;オーストラリア)"))
+	  (html:div :style "text-align: center; "
+		    (html:ul
+		     (html:li "単語をスペースで区切って入力し、確定ボタンを押します。 (例: ryokou ni kiteimasu. → 旅行に来ています。)")
+		     (html:li "スペースは、スペースを二回入力して下さい。 (例: wa-kinguhoride-&nbsp;&nbsp;&nbsp;o-sutoraria → ワーキングホリデー&nbsp;&nbsp;オーストラリア)"))
 
-	  (html:div :style "text-align: right; "
-		    (html:a :href "mailto:kiyoka@sumibi.org" "メールでのお問い合わせ(ローマ字でもOKです)"
-			    (html:img :alt "MailTo" :border "0" :src "sumibi_mailto.gif"))
-		    (html:br)
-		    (html:span :style "color:#6d5550;"
-			       "Sumibi.org provides roman to japanese conversion system and other services."))
-	  (html:div :class "copyright"
-		    "Sumibi Engine:Copyright&copy 2005, "
-		    (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
-		    (html:br)
-		    "Software version = $Date: 2005/11/10 14:00:10 $ ")
-
-
-	  ;;; --- FLOSS関連ロゴ ---
-	  (html:a :href "http://www.godaddy.com/gdshop/ssl/ssl_opensource.asp"
-		  (html:img :src "http://imagesak.godaddy.com/assets/ssl/img_cert_turbo_gd.jpg" 
-			    :width "88" :height "62"
-			    :border "0" :alt "SourceForge.jp"))
-
-	  (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
-		  (html:img :alt "CC-GNU GPL" :border "0" :src "http://creativecommons.org/images/public/cc-GPL-a.png"))
-
-	  (html:a :href "http://sourceforge.jp/"
-		  (html:img :src "http://sourceforge.jp/sflogo.php?group_id=1476" :width "96" :height "31" :border "0" :alt "SourceForge.jp"))
-
-	  ;;; --- No Software Patents ---
-	  (html:a :href "http://www.NoSoftwarePatents.com"
-		  (html:img :src "./nswpat80x15.png" :width "80" :height "15" :border "0" :alt "No Software Patents!"))
-	  
-	  
-	  ;;; --- google AdSense ---
-	  "
+		    
+		    ;; --- google AdSense ---
+		    "
 <script type=\"text/javascript\"><!--
 google_ad_client = \"pub-5721837636688174\";
 google_ad_width = 468;
@@ -133,18 +105,51 @@ google_color_text = \"000000\";
   src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">
 </script>
 "
-	  ;;; --- mickeynet.com ---
-	  (html:a :href "http://www.mickeynetusa.com/ranking/counter/incount.asp?countid=174" :target "_blank"
-		  (html:img :src "http://www.mickeynet.com/e_ranklink/img/mickeynet130_35.gif" :width "130" :height "35" :border "0"))
+		    )
 
-	  ;; --- FLOSS関連続き ---
-	  (html:br)
-	  "This software is licensed under the "
-	  (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
-		  "CC-GNU GPL")
+	  (html:div :style "text-align: right; "
+		    (html:a :href "mailto:kiyoka@sumibi.org" "メールでのお問い合わせ(ローマ字でもOKです)"
+			    (html:img :alt "MailTo" :border "0" :src "sumibi_mailto.gif"))
+		    (html:br)
+		    (html:span :style "color:#6d5550;"
+			       "Sumibi.org provides roman to japanese conversion system and other services."))
+	  (html:div :class "copyright"
+		    "Sumibi Engine:Copyright&copy 2005, "
+		    (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
+		    (html:br)
+		    "Software version = $Date: 2005/11/11 13:32:19 $ ")
 
 
-	  "  
+	  (html:div :style "text-align: center; "
+		    ;; --- FLOSS関連ロゴ ---
+		    (html:a :href "http://www.godaddy.com/gdshop/ssl/ssl_opensource.asp"
+			    (html:img :src "http://imagesak.godaddy.com/assets/ssl/img_cert_turbo_gd.jpg" 
+				      :width "88" :height "62"
+				      :border "0" :alt "SourceForge.jp"))
+
+		    (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
+			    (html:img :alt "CC-GNU GPL" :border "0" :src "http://creativecommons.org/images/public/cc-GPL-a.png"))
+
+		    ;; --- mickeynet.com ---
+		    (html:a :href "http://www.mickeynetusa.com/ranking/counter/incount.asp?countid=174" :target "_blank"
+			    (html:img :src "http://www.mickeynet.com/e_ranklink/img/mickeynet130_35.gif" :width "130" :height "35" :border "0"))
+
+		    (html:a :href "http://sourceforge.jp/"
+			    (html:img :src "http://sourceforge.jp/sflogo.php?group_id=1476" :width "96" :height "31" :border "0" :alt "SourceForge.jp"))
+
+		    ;; --- No Software Patents ---
+		    (html:a :href "http://www.NoSoftwarePatents.com"
+			    (html:img :src "./nswpat80x15.png" :width "80" :height "15" :border "0" :alt "No Software Patents!"))
+	  
+	  
+		    ;; --- FLOSS関連続き ---
+		    (html:br)
+		    "This software is licensed under the "
+		    (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
+			    "CC-GNU GPL")
+
+
+		    "  
   <!--
 
   <rdf:RDF xmlns=\"http://web.resource.org/cc/\"
@@ -168,7 +173,7 @@ google_color_text = \"000000\";
 
   -->
 "
-
+		    )
 
 	  (html:br)
 	  (html:br)
