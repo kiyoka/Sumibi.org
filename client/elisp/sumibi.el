@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/11/10 13:57:26 $
+;;     $Date: 2005/11/12 04:02:59 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -163,6 +163,38 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 (defvar sumibi-mode-hook nil)
 (defvar sumibi-select-mode-hook nil)
 (defvar sumibi-select-mode-end-hook nil)
+
+
+(defvar sumibi-hiragana->katakana-table
+  (mapcar
+   (lambda (c)
+     (cons
+      (char-to-string c)
+      (char-to-string
+       (+ c
+	  (- 
+	   (string-to-char "ア")
+	   (string-to-char "あ"))))))
+   (string-to-list
+    (concat 
+     "あいうえお"
+     "ぁぃぅぇぉ"
+     "かきくけこ"
+     "がぎぐげご"
+     "さしすせそ"
+     "ざじずぜぞ"
+     "たちつてと"
+     "だづづでど"
+     "なにぬねの"
+     "はひふへほ"
+     "ばびぶべぼ"
+     "ぱぴぷぺぽ"
+     "まみむめも"
+     "やゆよ"
+     "ゃゅょ"
+     "らりるれろ"
+     "わを"
+     "っん"))))
 
 
 (defvar sumibi-roman->kana-table
@@ -1302,7 +1334,8 @@ sumibi-modeがONの間中呼び出される可能性がある・"
 		      ((or (string-equal "e" method) (string-equal "l" method))
 		       (car l))
 		      ((string-equal "k" method)
-		       hira)
+		       (romkan-convert sumibi-hiragana->katakana-table
+				       hira))
 		      (t
 		       x))))
 		 l
@@ -1412,7 +1445,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/11/10 13:57:26 $ on CVS " ;;VERSION;;
+  " $Date: 2005/11/12 04:02:59 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
