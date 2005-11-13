@@ -108,7 +108,7 @@
 		    "Sumibi Engine:Copyright&copy 2005, "
 		    (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		    (html:br)
-		    "Software version = $Date: 2005/11/11 14:36:30 $ ")
+		    "Software version = $Date: 2005/11/13 08:17:22 $ ")
 
 
 	  (html:div :style "text-align: center; "
@@ -121,10 +121,6 @@
 		    (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
 			    (html:img :alt "CC-GNU GPL" :border "0" :src "http://creativecommons.org/images/public/cc-GPL-a.png"))
 
-		    ;; --- mickeynet.com ---
-		    (html:a :href "http://www.mickeynetusa.com/ranking/counter/incount.asp?countid=174" :target "_blank"
-			    (html:img :src "http://www.mickeynet.com/e_ranklink/img/mickeynet130_35.gif" :width "130" :height "35" :border "0"))
-
 		    (html:a :href "http://sourceforge.jp/"
 			    (html:img :src "http://sourceforge.jp/sflogo.php?group_id=1476" :width "96" :height "31" :border "0" :alt "SourceForge.jp"))
 
@@ -132,12 +128,12 @@
 		    (html:a :href "http://www.NoSoftwarePatents.com"
 			    (html:img :src "./nswpat80x15.png" :width "80" :height "15" :border "0" :alt "No Software Patents!"))
 	  
-	  
 		    ;; --- FLOSS関連続き ---
 		    (html:br)
 		    "This software is licensed under the "
 		    (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
 			    "CC-GNU GPL")
+		    (html:br)
 
 
 		    "  
@@ -164,6 +160,15 @@
 
   -->
 "
+		    ;; --- mickeynet.com ---
+		    (html:a :href "http://www.mickeynetusa.com/ranking/counter/incount.asp?countid=174" :target "_blank"
+			    (html:img :src "http://www.mickeynet.com/e_ranklink/img/mickeynet130_35.gif" :width "130" :height "35" :border "0"))
+		    
+		    ;; --- 4travel ---
+		    (html:a :href "http://4travel.jp/r.php?r=link"
+			    (html:img :src "http://4travel.jp/img/logo_88x31.gif" :border "0" :alt "旅行のクチコミサイト フォートラベル")
+			    (html:br)
+			    "旅行のクチコミサイト フォートラベル")
 		    )
 
 	  (html:br)
