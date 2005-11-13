@@ -17,6 +17,10 @@
 	  (html:meta :http-equiv "Content-Type"        :content "text/html; charset=utf-8")
 	  (html:meta :http-equiv "Content-Script-Type" :content "text/javascript")
 	  (html:meta :http-equiv "Content-Style-Type"  :content "text/css")
+	  (html:meta :name "description"               :content
+		     "海外の英語版PCからでもスイスイ日本語入力できる無料サイトです。インストール不要。日本語でGoogle検索もできます。")
+	  (html:meta :name "keywords"                  :content
+		     "ローマ字,日本語,Google検索,Ajax,海外,留学,オープンソース,漢字変換,海外旅行,ワーキングホリデー")
 	  (html:link :rel "stylesheet" :href "sumibi.css" :type"text/css")
 	  (html:title "Sumibi.org ローマ字を日本語に変換できる無料サイト")
 	  (html:link :rel "shortcut icon" :href "/favicon.ico")
@@ -108,7 +112,7 @@
 		    "Sumibi Engine:Copyright&copy 2005, "
 		    (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		    (html:br)
-		    "Software version = $Date: 2005/11/13 08:17:22 $ ")
+		    "Software version = $Date: 2005/11/13 09:10:54 $ ")
 
 
 	  (html:div :style "text-align: center; "
