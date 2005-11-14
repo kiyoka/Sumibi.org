@@ -28,12 +28,22 @@
 	 "
 <script>
 <!--
- function sf() {document.getElementById('q').focus();}
+ function setFocusToQ() {document.getElementById('q').focus();}
  // -->
 </script>
+
+<script>
+<!--
+function selectTextArea(){
+	document.getElementById('q').focus();	// テキストエリアにフォーカスを設定する
+	document.getElementById('q').select();	// テキストエリアを全選択する
+}
+//-->
+</script>
+
 "
 	 (html:body                                                     
-	  :onLoad "sf()"
+	  :onLoad "setFocusToQ()"
 	  (html:div :style "text-align: center; "
 		    (html:br)
 		    (html:span :style "color:#6d5550;"
@@ -65,13 +75,13 @@
 				   (html:div
 				    (html:div :style "text-align: center; "
 					      (html:p "[長文作成モード]")
-					      (html:textarea :id "q" :name "q" :cols "60" :rows "5")
+					      (html:textarea :id "q" :name "q" :cols "60" :rows "5" :onClick "selectTextArea()")
 					      ))
 				   (html:div
 				    (html:p
 				     (html:a :href "http://www.google.com/"
 					     (html:img :src "http://www.google.com/logos/Logo_25wht.gif" :border "0" :alt "Google" :align "middle"))
-				     (html:input :type "text" :id "q" :name "q" :size "41" :maxlength "2048")
+				     (html:input :type "text" :id "q" :name "q" :size "41" :maxlength "2048" :onClick "selectTextArea()")
 				     (html:input :type "submit" :name "sa" :value "検索"))))
 			       (html:input :type "hidden" :name "client" :value "pub-5721837636688174")
 			       (html:input :type "hidden" :name "forid"  :value "1")
@@ -112,7 +122,7 @@
 		    "Sumibi Engine:Copyright&copy 2005, "
 		    (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		    (html:br)
-		    "Software version = $Date: 2005/11/13 09:10:54 $ ")
+		    "Software version = $Date: 2005/11/14 15:15:22 $ ")
 
 
 	  (html:div :style "text-align: center; "
