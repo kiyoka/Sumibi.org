@@ -3,7 +3,7 @@
 ;; "Sumiyaki" is a maintenance tool for Sumibi.
 ;;
 ;;   Copyright (C) 2002,2003,2004 Kiyoka Nishiyama
-;;     $Date: 2005/10/30 10:31:29 $
+;;     $Date: 2005/11/19 10:19:40 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -105,8 +105,8 @@
 	    (guard (exc
 		    ((is-a? exc <dbi-exception>)
 		     ((display "error  : ")(display (ref exc 'message))(newline)
-		      (display "user   : ")(display sumibi-sumibidb-user)(newline)
-		      (display "db-name: ")(display sumibi-sumibidb-name)(newline)
+		      (display "user   : ")(display sumibi-sumiyakidb-user)(newline)
+		      (display "db-name: ")(display sumibi-sumiyakidb-name)(newline)
 		      (exit 1))))
 		   (dbi-make-connection driver 
 					sumibi-sumiyakidb-user
