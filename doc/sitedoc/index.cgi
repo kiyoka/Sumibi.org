@@ -77,13 +77,13 @@ function selectTextArea(){
 				     (html:div
 				      (html:div :style "text-align: center; "
 						(html:p "[長文作成モード]")
-						(html:textarea :id "q" :name "q" :cols "60" :rows "5" :onClick "selectTextArea()")
+						(html:textarea :id "q" :name "q" :cols "60" :rows "5")
 						))
 				     (html:div
 				      (html:p
 				       (html:a :href "http://www.google.com/"
 					       (html:img :src "http://www.google.com/logos/Logo_25wht.gif" :border "0" :alt "Google" :align "middle"))
-				       (html:input :type "text" :id "q" :name "q" :size "41" :maxlength "2048" :onClick "selectTextArea()")
+				       (html:input :type "text" :id "q" :name "q" :size "41" :maxlength "2048")
 				       (html:input :type "submit" :name "sa" :value "検索"))))
 				 (html:input :type "hidden" :name "client" :value "pub-5721837636688174")
 				 (html:input :type "hidden" :name "forid"  :value "1")
@@ -132,7 +132,7 @@ function selectTextArea(){
 		      "Sumibi Engine:Copyright&copy 2005, "
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2005/11/19 09:17:03 $ ")
+		      "Software version = $Date: 2005/11/19 14:05:50 $ ")
 
 	    (html:div :style "text-align: center; "
 		      ;; --- FLOSS関連ロゴ ---
