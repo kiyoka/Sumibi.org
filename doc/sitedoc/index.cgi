@@ -19,10 +19,11 @@
 	    (html:meta :http-equiv "Content-Script-Type" :content "text/javascript")
 	    (html:meta :http-equiv "Content-Style-Type"  :content "text/css")
 	    (html:meta :name "description"               :content
-		       "海外の英語版PCからでもスイスイ日本語入力できる無料サイトです。インストール不要。日本語でGoogle検索もできます。")
+		       (string-append "海外の英語版PCからでもスイスイ日本語入力できる無料サイトです。インストール不要。日本語でGoogle検索もできます。"
+				      "Sumibi.org provides roman to japanese conversion system and other services."))
 	    (html:meta :name "keywords"                  :content
 		       "ローマ字,日本語,Google検索,Ajax,海外,留学,オープンソース,漢字変換,海外旅行,ワーキングホリデー")
-	    (html:link :rel "stylesheet" :href "sumibi.css" :type"text/css")
+	    (html:link :rel "stylesheet" :href "sumibi.css" :type "text/css")
 	    (html:title "Sumibi.org ローマ字を日本語に変換できる無料サイト")
 	    (html:link :rel "shortcut icon" :href "/favicon.ico")
 	    (html:link :rel "icon" :href "/favicon.png" :type "image/png"))
@@ -47,14 +48,14 @@ function selectTextArea(){
 	    :onLoad "setFocusToQ()"
 	    (html:div :style "text-align: center; "
 		      (html:br)
-		      (html:span :style "color:#6d5550;"
+		      (html:span :class "subtitle"
 				 "世界の果てから漢字変換")
 		    
 		      (html:br)
 		      (html:img :src "sumibi_org_logo.png" :alt "Sumibi.org LOGO")
 		      (html:br)
 
-		      (html:span :style "color:#6d5550;"
+		      (html:span :class "subtitle"
 				 "Sumibi.orgはローマ字を日本語に変換できる、今すぐ使える無料サイトです。"
 				 (html:br)
 				 "Sumibi.org ha ro-maji wo nihongo ni henkan suru muryou saito desu. From romaji to kanji.")
@@ -115,17 +116,23 @@ function selectTextArea(){
 			  ""))
 
 	    (html:div :style "text-align: right; "
+		      ;; --- 日本時間の表示 ---
+		      "今現在の日本時間:"
+		      (sys-strftime "%d日 %T時 %Z" (sys-localtime (current-time)))
+		      "&nbsp;"
+		      "&nbsp;"
+		      "&nbsp;"
+		      "&nbsp;"
+		      "&nbsp;"
+		      "&nbsp;"
+		      "&nbsp;"
 		      (html:a :href "mailto:kiyoka@sumibi.org" "メールでのお問い合わせ(ローマ字でもOKです)"
-			      (html:img :alt "MailTo" :border "0" :src "sumibi_mailto.gif"))
-		      (html:br)
-		      (html:span :style "color:#6d5550;"
-				 "Sumibi.org provides roman to japanese conversion system and other services."))
+			      (html:img :alt "MailTo" :border "0" :src "sumibi_mailto.gif")))
 	    (html:div :class "copyright"
 		      "Sumibi Engine:Copyright&copy 2005, "
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2005/11/17 11:50:40 $ ")
-
+		      "Software version = $Date: 2005/11/19 09:17:03 $ ")
 
 	    (html:div :style "text-align: center; "
 		      ;; --- FLOSS関連ロゴ ---
