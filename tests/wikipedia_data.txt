@@ -12,11 +12,11 @@ j 世界中にエスペラントを信奉している話者が存在するが、この言語を自由に話せる話者
 
 
 # 1001
-r seiseibunpou toha , no-mu ten tyomusuki- niyotte 1950 nendai ni teihan sareta gengogaku no bunpouriron dearu.
+r seiseibunpou toha , no-mu ten tyomusuki- niyotte 1950 nendai ni teian sareta gengogaku no bunpouriron dearu.
 j 生成文法とは、ノーム・チョムスキーによって1950年代に提案された言語学の文法理論である。
 
 # 1001
-r gengo ni kakawaru syouge wo motanai ningen ha mina bogo ni kakawarazu gengo nouryoku dearu fuhenbunpou wo seitokuteki ni sonaeteiru to katei shi , sono tankyuu wo mezasu .
+r gengo ni kakawaru syouge wo motanai ningen ha mina bogo ni kakawarazu gengo nouryoku dearu fuhenbunpou wo seitokuteki ni sonaeteiru to kateishi , sono tankyuu wo mezasu .
 j 言語にかかわる障碍を持たない人間はみな母語にかかわらず言語能力である普遍文法を生得的に備えていると仮定し、その探求を目指す。
 
 # 1001
@@ -24,7 +24,7 @@ r kenkyuu houhou toshiteha , gutaiteki na gengo ni tuite , sono gengo de tadashi
 j 研究方法としては、具体的な言語について、その言語で正しいとされる文の全体を規定するような規則あるいは原理の体系を作り上げる。 
 
 # 2000
-r ho-mupe-ji toha , uxebusaito no iriguchi ni ataru bubun wo sasu uxbupe-ji dearu .
+r ho-mupe-ji toha , uxebusaito no iriguchi ni ataru bubun wo sasu uxebupe-ji dearu .
 j ホームページとは、ウェブサイトの入り口にあたる部分を指すウェブページである。 
 
 # 2000
@@ -37,11 +37,11 @@ r kikaihonnyaku toha , aru shizengengo wo betu no shizengengo he kikaiteki ni he
 j 機械翻訳とは、ある自然言語を別の自然言語へ機械的に変換する技術をいう。
 
 # 3000
-r rei toshite , eigo no bunsyou wo nyuuryoku suruto sorewo honnyaku shita nihongo no bunsyou wo syuturyoku suru nichiei honnyaku sofutouxea nadogaaru . jidouhonnyaku tomoiu .
+r rei toshite , eigo no bunsyou wo nyuuryoku suruto sorewo honnyaku shita nihongo no bunsyou wo syuturyoku suru einichi honnyaku sofutouxea nadogaaru . jidouhonnyaku tomoiu .
 j 例として、英語の文章を入力するとそれを翻訳した日本語の文章を出力する英日翻訳ソフトウエアなどがある。自動翻訳ともいう。 
 
 # 4000
-r oyayubi ha , te wo jimen ni muketa toki ni , ichiban uchigawa ni ichi suru yubi .
+r oyayubi ha , te wo jimen ni muketa toki ni , ichiban uchigawa ni ichi suru yubi . ippanteki ni ichiban futoi .
 j 親指は、掌を地面に向けたときに，一番内側に位置する指。一般的に一番太い。
 
 # 4000
@@ -53,7 +53,7 @@ r santakuro-su ha , kurisumasu ni yattekuru to sareteiru kakuu no ojiisan.
 j サンタクロースは、クリスマスにやってくるとされている架空のおじいさん。
 
 # 5007
-r nihon nanode hiroku ninchi sareteiru santakuro-su ha akai fuku wo kiteiruga , koreha katorikku kyoukai no saifuku no iro ni yurai shi ,
+r nihon nadode hiroku ninchi sareteiru santakuro-su ha akai fuku wo kiteiruga , koreha katorikku kyoukai no saifuku no iro ni yurai shi ,
 j 日本などで広く認知されているサンタクロースは赤い服を着ているが、これはカトリック教会の祭服の色に由来し、
 
 # 5007
@@ -64,16 +64,38 @@ j 1931年にコカ・コーラ社が宣伝に用いるために画家のハッドン・サンドブロムに依頼し
 r jyosei toha dansei to taihi sareru ningen no seibetu de mesu .
 j 女性とは男性と対比される人間の性別でメス。
 
-r seibutugakuteki na seisa ni kanshite iu baai , bunka ten syakaiteki na seisa ni kanshite iu baai , sorera wo tougou shita kouhan na ningen no syoseishitu ni kanshite iu baai nado ga aru .
+r seibutugakuteki na seisa ni kanshite iu baai , bunka ten syakaiteki na seisa ni kanshite iu baai , sorera wo sougou shita kouhan na ningen no syoseishitu ni kanshite iu baai nado ga aru .
 j 生物学的な性差に関して言う場合、文化・社会的な性差に関して言う場合、それらを総合した広範な人間の諸性質に関して言う場合などがある。
 
 # 7001
-r SARS uirusu ha jyuusyou kyuusei kokyuuki syoukougun SARS no byougentai toshite doutei sareta shinsyu no korona uirusu dearu .
+r SARS uirusu ha jyuusyou kyuusei kokyuuki syoukougun SARS no byougentai toshite doutei sareta shinsyu no korona uirusu dearu .。。
 j SARSウイルスは重症急性呼吸器症候群SARSの病原体として同定された新種のコロナウイルスである。
 
 # 8020
+r kaisyahou toha , syouhou no ichibunnya de kaisya ni tuite kitei suru hou wo atukau hou bunnya wo iu .
 j 会社法とは、商法の一分野で会社について規定する法を扱う法分野をいう。
+
+# 8020
+r gutaiteki niha , goumeigaisya , goushigaisya , kabushikigaisya ni tuite kitei sareta syouhou daini hen , yuugengaisya ni tuite kitei shita yuugengaisya hou , 
 j 具体的には、合名会社、合資会社、株式会社について規定された商法第二編、有限会社について規定した有限会社法、
-j および株式会社の監査等に関する商法の特例に関する法律（商法特例法）などの会社に関係する商事特別法がこの分野に含まれる。
-j 中でも株式会社についての研究が盛んである。
-j 民法や刑法と異なり、「会社法」という名の法典が存在するわけではない。
+
+# 9009
+r kyoukai youso hou
+j 境界要素法 : 
+
+r suuchi kaiseki syuhou no hitotu . guri-n no teiri wo mochiite , tokubeki taisyou dearu henbibun houteishiki wo , kyoukaijyou no bubun houteishiki no mondai ni okikaete toku syuhou
+j 数値解析手法の一つ。グリーンの定理を用いて、解くべき対象である偏微分方程式を、境界上の積分方程式の問題に置き換えて解く手法。
+
+# 9997
+r purojekuto X nami tyousensya tachi nami ha , NHK sougou terebi no dokyumentari- bangumi dearu . 
+j プロジェクトX ~挑戦者たち~は、NHK総合テレビのドキュメンタリー番組である。
+
+r 2000 nen 3 gatu 28 nichi ni housou kaishi . tuusyou [ purojekuto X ] .
+j 2000年3月28日に放映開始。通称「プロジェクトX」。
+
+r bangumi ha , samazama na kaihatu purojekuto ya jigyou ga , tyokumen shita nanmon wo donoyouni kokufuku shite seikou ni itattaka wo kandouteki ni syoukai suru dokyumento dearu .
+j 番組は、さまざまな開発プロジェクトや事業が、直面した難問をどのように克服して成功に至ったかを感動的に紹介するドキュメントである。
+
+r mumei no ookuno hitobito niyoru tyousen to doryoku ( gijyutu kaihatu ni kagiranai ) , soshite sono seika no syoukai ga te-ma dearuga , honda souichirou ya mouri mamoru ga toujyou suru kai mo aru .
+j 無名の多くの人々による挑戦と努力（技術開発に限らない）、そしてその成果の紹介がテーマであるが、本田宗一郎や毛利衛が登場する回もある。
+
