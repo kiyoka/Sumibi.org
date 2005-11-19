@@ -1,4 +1,4 @@
-/* $Id: sumibi.css,v 1.7 2005/11/11 14:36:30 kiyoka Exp $ */
+/* $Id: sumibi.css,v 1.8 2005/11/19 09:17:03 kiyoka Exp $ */
 
 body {
 	background-color: #ffffff;
@@ -49,6 +49,9 @@ div.rcsid {
 	font-family: helvetica, sans-serif;
 }
 
+span.subtitle {
+	color:#6d5550;
+}
 span.new {
 	font-family: helvetica, sans-serif;
 	font-weight: bold;
