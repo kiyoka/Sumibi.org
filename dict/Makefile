@@ -6,8 +6,8 @@ JISYO-ZIP-DL = SKK-JISYO.zipcode SKK-JISYO.office.zipcode
 ZIPFILTER = awk ' /^[0-9]+/ { printf( "%s-%s ", substr( $$1, 1, 3 ), substr( $$1, 4, 4 ) ); print $$2; } '
 
 
-SKK-JISYO.sumbi_starter :  SKK-JISYO.download SKK-JISYO.exclude_for_sumibi
-	skkdic-expr2 SKK-JISYO.download - SKK-JISYO.exclude_for_sumibi > SKK-JISYO.sumbi_starter
+SKK-JISYO.sumibi_starter :  SKK-JISYO.download SKK-JISYO.exclude_for_sumibi
+	skkdic-expr2 SKK-JISYO.download - SKK-JISYO.exclude_for_sumibi > SKK-JISYO.sumibi_starter
 
 
 SKK-JISYO.download :
@@ -30,4 +30,4 @@ SKK-JISYO.download :
 
 
 clean:
-	/bin/rm ${JISYO-DL} ${JISYO-ZIP-DL} SKK-JISYO.download SKK-JISYO.sumbi_starter *.modify
+	/bin/rm ${JISYO-DL} ${JISYO-ZIP-DL} SKK-JISYO.download SKK-JISYO.sumibi_starter *.modify
