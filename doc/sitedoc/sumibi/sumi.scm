@@ -77,8 +77,8 @@
        (p "Sumibi用辞書データ sumi_bincho_1_* は以下のコンテンツ(素材)を利用して作成されています。")
        (ol
 	(li "SKKJISYO関連")
-	(p "この辞書群を加工してSKK-JISYO.sumbi_starterという辞書を作成し、それをsumiyakiツールで読みこんだ状態をSumibi辞書の初期状態としています。"
-	   "SKK-JISYO.sumbi_starterを作成する手順については CVS上のdict/Makefile で自動化されています。")
+	(p "この辞書群を加工してSKK-JISYO.sumibi_starterという辞書を作成し、それをsumiyakiツールで読みこんだ状態をSumibi辞書の初期状態としています。"
+	   "SKK-JISYO.sumibi_starterを作成する手順については CVS上のdict/Makefile で自動化されています。")
 	(table 
 	 (thead
 	  (tr  (td "辞書名") (td "ライセンス")))
