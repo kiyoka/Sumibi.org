@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2005/10/04 13:28:59 $
+//     $Date: 2005/11/21 15:22:24 $
 //
 // This file is part of Sumibi
 //
@@ -175,7 +175,18 @@ Sumibi.prototype.format = function(array){
     output += '<div style="text-align:center;">' 
     + '<input type="button" id="define" name="define" value="確定" onClick="sumibi_define_candidate()">'
     + '</div>';
-    
+
+    var str = "";
+    for(i=0; i < array.length; i++){
+	str += array[i][0]["space"] + array[i][0]["word"];
+    }
+
+    output += '<br>'
+    + '<div style="text-align:center;">' 
+    + '<input type="submit" id="search" name="search" value="『' + str + '』で検索"'
+    + ' onClick="sumibi_define_candidate();document.getElementById(\'gform\').submit();">'
+    + '</div>';
+
     return output;
 }
 

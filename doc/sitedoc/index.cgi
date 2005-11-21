@@ -71,7 +71,7 @@ function selectTextArea(){
 		      (html:a :href "sumibi/faq.html"            "FAQ"))
 		    
 	    (html:div :style "text-align: center; "
-		      (html:form :method "get" :action "http://www.google.co.jp/custom" :target "_top"
+		      (html:form :id "gform" :method "get" :action "http://www.google.co.jp/custom" :target "_top"
 				 (html:input :type "hidden" :id "server" :name "server" :value "testing"  :onClick "select_server(this.value)")
 				 (if (cgi-get-parameter "long" params)
 				     (html:div
@@ -132,7 +132,7 @@ function selectTextArea(){
 		      "Sumibi Engine:Copyright&copy 2005, "
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2005/11/19 14:05:50 $ ")
+		      "Software version = $Date: 2005/11/21 15:24:15 $ ")
 
 	    (html:div :style "text-align: center; "
 		      ;; --- FLOSS関連ロゴ ---
