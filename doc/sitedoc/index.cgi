@@ -84,7 +84,7 @@ function selectTextArea(){
 				       (html:a :href "http://www.google.com/"
 					       (html:img :src "http://www.google.com/logos/Logo_25wht.gif" :border "0" :alt "Google" :align "middle"))
 				       (html:input :type "text" :id "q" :name "q" :size "41" :maxlength "2048")
-				       (html:input :type "submit" :name "sa" :value "検索"))))
+				       (html:input :type "submit" :name "sa" :value "Google検索"))))
 				 (html:input :type "hidden" :name "client" :value "pub-5721837636688174")
 				 (html:input :type "hidden" :name "forid"  :value "1")
 				 (html:input :type "hidden" :name "ie"     :value "UTF-8")
@@ -132,7 +132,7 @@ function selectTextArea(){
 		      "Sumibi Engine:Copyright&copy 2005, "
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2005/11/21 15:24:15 $ ")
+		      "Software version = $Date: 2005/11/21 15:57:17 $ ")
 
 	    (html:div :style "text-align: center; "
 		      ;; --- FLOSS関連ロゴ ---
