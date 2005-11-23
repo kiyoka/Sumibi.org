@@ -36,10 +36,19 @@
 
 <script>
 <!--
-function selectTextArea(){
-	document.getElementById('q').focus();	// テキストエリアにフォーカスを設定する
-	document.getElementById('q').select();	// テキストエリアを全選択する
-}
+ function submitGform() {sumibi_define_candidate();document.getElementById('gform').submit();}
+ function Sumibi_candidate_html_hook(space_array,words_array) {
+    var str = '';
+    for(i=0; i < words_array.length; i++){
+	str += space_array[i] + words_array[i];
+    }
+
+    return '<br>'
+    + '<div style=\"text-align:center;\">' 
+    + '<input type=\"button\" id=\"search\" name=\"search\" value=\"『' + str + '』でGoogle検索\"'
+    + ' onClick=\"submitGform();\">'
+    + '</div>';
+ }
 //-->
 </script>
 
@@ -148,7 +157,7 @@ function selectTextArea(){
 		      "Sumibi Engine:Copyright&copy 2005, "
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2005/11/23 00:38:00 $ ")
+		      "Software version = $Date: 2005/11/23 01:23:04 $ ")
 
 	    (html:div :style "text-align: center; "
 		      ;; --- FLOSS関連ロゴ ---

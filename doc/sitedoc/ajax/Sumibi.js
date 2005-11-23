@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2005/11/22 14:04:52 $
+//     $Date: 2005/11/23 01:23:04 $
 //
 // This file is part of Sumibi
 //
@@ -176,16 +176,15 @@ Sumibi.prototype.format = function(array){
     + '<input type="button" id="define" name="define" value="確定" onClick="sumibi_define_candidate()">'
     + '</div>';
 
-    var str = "";
+    // hook関数用の引数を作る ( 第一候補文字列の配列 )
+    var space_for_hook = new Array();
+    var words_for_hook = new Array();
     for(i=0; i < array.length; i++){
-	str += array[i][0]["space"] + array[i][0]["word"];
+	space_for_hook[i] = array[i][0]["space"];
+	words_for_hook[i] = array[i][0]["word"];
     }
-
-    output += '<br>'
-    + '<div style="text-align:center;">' 
-    + '<input type="button" id="search" name="search" value="『' + str + '』でGoogle検索"'
-    + ' onClick="sumibi_define_candidate();document.getElementById(\'gform\').submit();">'
-    + '</div>';
+    // hook関数の呼び出し
+    output += Sumibi_candidate_html_hook( space_for_hook, words_for_hook );
 
     return output;
 }
