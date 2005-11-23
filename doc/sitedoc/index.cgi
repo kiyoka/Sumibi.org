@@ -73,7 +73,7 @@ function selectTextArea(){
 	    (html:div :style "text-align: center; "
 		      (html:form :id "gform" :method "get" :action "http://www.google.co.jp/custom" :target "_top"
 				 (html:input :type "hidden" :id "server" :name "server" :value "testing"  :onClick "select_server(this.value)")
-				 (if (cgi-get-parameter "long" params)
+				 (if long-mode
 				     (html:div
 				      (html:div :style "text-align: center; "
 						(html:p "[長文作成モード]")
@@ -103,12 +103,28 @@ function selectTextArea(){
 			  (html:div :class "notice"
 				    (html:p
 				     (port->string (open-input-file "./notice.txt"))))
-			  "")
+			  ""))
+	    (html:div :class "usage"
+		      (html:span :class "usage" "使い方")
 		      (html:ul
-		       (html:li "単語をスペースで区切って入力し、確定ボタンを押します。 (例: ryokou ni kiteimasu. → 旅行に来ています。)")
-		       (html:li "スペースは、スペースを二回入力して下さい。 (例: wa-kinguhoride-&nbsp;&nbsp;&nbsp;o-sutoraria → ワーキングホリデー&nbsp;&nbsp;オーストラリア)"))
+		       (html:li "単語をスペースで区切って入力し、確定ボタンを押すと日本語が入力されます。 (例: ryokou ni kiteimasu. → 旅行に来ています。)")
+		       (if long-mode
+			   (html:li "助詞『は』『を』『と』『に』等 はスペースで区切って入力します。(例: kaigairyokou hoken ha →  海外旅行保険は)")
+			   (html:li "スペースは、スペースを二回入力して下さい。 (例: wa-kinguhoride-&nbsp;&nbsp;&nbsp;o-sutoraria → ワーキングホリデー&nbsp;&nbsp;オーストラリア)"))
 
-		    
+		       (if long-mode
+			   (html:li
+			    "このページは長文作成用です。Google検索を行う場合は、"
+			    (html:a :href "http://www.sumibi.org/" "Google検索モード(暗号化OFF)")
+			    "』ページが便利です。")
+			   (html:li
+			    "このページからGoogle検索ができます。メール等長文を書く場合は『"
+			    (html:a :href "https://sumibi.org/?long=1" "長文作成モード(暗号化ON)")
+			    "』ページが便利です。"))))
+			   
+
+		   
+	    (html:div :style "text-align: center; "
 		      ;; --- google AdSense ---
 		      (if (and (file-exists? "./adsense1.txt")
 			       (not long-mode))
@@ -132,7 +148,7 @@ function selectTextArea(){
 		      "Sumibi Engine:Copyright&copy 2005, "
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2005/11/21 15:57:17 $ ")
+		      "Software version = $Date: 2005/11/23 00:38:00 $ ")
 
 	    (html:div :style "text-align: center; "
 		      ;; --- FLOSS関連ロゴ ---
@@ -151,6 +167,10 @@ function selectTextArea(){
 		      (html:a :href "http://www.NoSoftwarePatents.com"
 			      (html:img :src "./nswpat80x15.png" :width "80" :height "15" :border "0" :alt "No Software Patents!"))
 	  
+		      ;; --- mickeynet.com ---
+		      (html:a :href "http://www.mickeynetusa.com/ranking/counter/incount.asp?countid=174" :target "_blank"
+			      (html:img :src "http://www.mickeynet.com/e_ranklink/img/mickeynet130_35.gif" :width "130" :height "35" :border "0"))
+		    
 		      ;; --- FLOSS関連続き ---
 		      (html:br)
 		      "This software is licensed under the "
@@ -183,35 +203,8 @@ function selectTextArea(){
 
   -->
 "
-		      ;; --- mickeynet.com ---
-		      (html:a :href "http://www.mickeynetusa.com/ranking/counter/incount.asp?countid=174" :target "_blank"
-			      (html:img :src "http://www.mickeynet.com/e_ranklink/img/mickeynet130_35.gif" :width "130" :height "35" :border "0"))
-		    
-		      ;; --- 4travel ---
-		      (html:a :href "http://4travel.jp/r.php?r=link"
-			      (html:img :src "http://4travel.jp/img/logo_88x31.gif" :border "0" :alt "旅行のクチコミサイト フォートラベル")
-			      (html:br)
-			      "旅行のクチコミサイト フォートラベル")
 		      )
 
-	    (html:br)
-	    (html:br)
-	    (html:br)
-	    (html:br)
-	    (html:br)
-	    (html:br)
-	    (html:br)
-	    (html:br)
-	    (html:br)
-	    (html:br)
-	    (html:br)
-	    (html:br)
-	    (html:br)
-	    (html:br)
-	    (html:br)
-	    (html:br)
-	    (html:br)
-	    (html:br)
 	    (html:br)
 	    (html:br)
 
@@ -222,31 +215,15 @@ function selectTextArea(){
 	     (html:h3 "手ぶらで海外に行きたい、でもメールも送りたい")
 	     (html:p
 	      "Sumibi.org (炭火.org) は海外のインターネットカフェや海外ホテルのビジネスセンターなどから"
-	      "日本語でメールやブログを書いたりできるサイトです。")
-	     (html:p
-	      "日本語入力(IME)の入っていない英語版Windowsからでも日本語入力できます。")
-	    
-	     (if (cgi-get-parameter "long" params)
-		 (html:p
-		  "このページは長文作成用です。Google検索を行う場合は、"
-		  (html:a :href "http://www.sumibi.org/" "Google検索モード(暗号化OFF)")
-		  "』ページが便利です。")
-		 (html:p
-		  "このページからGoogle検索ができます。メール等長文を書く場合は『"
-		  (html:a :href "https://sumibi.org/?long=1" "長文作成モード(暗号化ON)")
-		  "』ページが便利です。"))
-		  
-	     (html:h3 "『手ぶらで海外』を実践する方法")
-	     (html:p "海外からYahooやGoogleで『sumibi』と検索するとこのサイトが出てきます。")
-		  
-	     (html:h3 "海外から日本語でメールを送りたい時")
-	     (html:p "海外に行く前にWebメールサービスに入っておきます。")
-	     (html:p 
+	      "日本語でメールやブログを書いたりできるサイトです。"
+	      "日本語入力(IME)の入っていない英語版Windowsからでも日本語入力できます。"
+	      "海外からYahooやGoogleで『sumibi』と検索するとこのサイトが出てきます。"
+	      "海外から日本語でメールを送りたい時はWebメールサービスに入っておくと便利ですね。"
+	      "有名な無料Webメールサービスは"
 	      (html:a :href "http://mail.yahoo.co.jp/"                      "Yahoo!メール")
 	      "、"
 	      (html:a :href "http://mail.goo.ne.jp/goomail/index.ghtml"     "gooメール")
-	      "等が有名な無料Webメールサービスです。"
-	      "自分に合ったものを選びましょう。")
+	      "等があります。自分に合ったものを選びましょう。")
 
 	     ;; --- google AdSense ---
 	     (if (and (file-exists? "./adsense2.txt")
@@ -254,6 +231,15 @@ function selectTextArea(){
 		 (port->string (open-input-file "./adsense2.txt"))
 		 "")
 
+	     ;; --- 4travel ---
+	     (if (not long-mode)
+		 (html:div
+		  (html:br)
+		  (html:a :href "http://4travel.jp/r.php?r=link"
+			  (html:img :src "http://4travel.jp/img/logo_88x31.gif" :border "0" :alt "旅行のクチコミサイト フォートラベル")
+			  (html:br)
+			  "旅行のクチコミサイト フォートラベル"))
+		 "")
 	     (html:hr)
 
 ;;; --- ホスティング依頼メッセージ ---
@@ -261,9 +247,9 @@ function selectTextArea(){
 	   
 	     (html:div :class "footer"
 		       "<!-- google_ad_section_start -->"
-		       (html:p "本サイト(Sumibi.org)は小規模なハードウェア及びネットワーク資源を使ってホスティングしております。")
-		       (html:p "そこで、Sumibi.orgを無償でホスティングできる環境をご提供いただける企業様を募集しています。")
-		       (html:p "ご提供いただいた企業様におきましては、Sumibi.orgに優先して広告掲載させて頂きます。")
+		       (html:p "本サイト(Sumibi.org)は小規模なハードウェア及びネットワーク資源を使ってホスティングしております。"
+			       "そこで、Sumibi.orgを無償でホスティングできる環境をご提供いただける企業様を募集しています。"
+			       "ご提供いただいた企業様におきましては、Sumibi.orgに優先して広告掲載させて頂きます。")
 		       "<!-- google_ad_section_end -->"
 		       )))
 
