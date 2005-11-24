@@ -10,7 +10,8 @@
 (define (main args)                                                      
   (cgi-main                                                              
    (lambda (params)                                                     
-     (let ((long-mode (cgi-get-parameter "long" params)))
+     (let ((long-mode     (cgi-get-parameter "long" params))
+	   (darkside-mode (cgi-get-parameter "darkside" params)))
        `(,(cgi-header)                                                    
 	 ,(html-doctype)                                                  
 	 ,(html:html                                                      
@@ -131,38 +132,39 @@
 		      "Sumibi Engine:Copyright&copy 2005, "
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2005/11/24 13:48:34 $ ")
+		      "Software version = $Date: 2005/11/24 14:23:39 $ ")
 
-	    (html:div :style "text-align: center; "
-		      ;; --- FLOSS関連ロゴ ---
-		      (html:a :href "http://www.godaddy.com/gdshop/ssl/ssl_opensource.asp"
-			      (html:img :src "http://imagesak.godaddy.com/assets/ssl/img_cert_turbo_gd.jpg" 
-					:width "88" :height "62"
-					:border "0" :alt "SourceForge.jp"))
-
-		      (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
-			      (html:img :alt "CC-GNU GPL" :border "0" :src "http://creativecommons.org/images/public/cc-GPL-a.png"))
-
-		      (html:a :href "http://sourceforge.jp/"
-			      (html:img :src "http://sourceforge.jp/sflogo.php?group_id=1476" :width "96" :height "31" :border "0" :alt "SourceForge.jp"))
-
-		      ;; --- No Software Patents ---
-		      (html:a :href "http://www.NoSoftwarePatents.com"
-			      (html:img :src "./nswpat80x15.png" :width "80" :height "15" :border "0" :alt "No Software Patents!"))
+	    (if long-mode
+		(html:div :style "text-align: center; "
+			  ;; --- FLOSS関連ロゴ ---
+			  (html:a :href "http://www.godaddy.com/gdshop/ssl/ssl_opensource.asp"
+				  (html:img :src "http://imagesak.godaddy.com/assets/ssl/img_cert_turbo_gd.jpg" 
+					    :width "88" :height "62"
+					    :border "0" :alt "SourceForge.jp"))
+			  
+			  (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
+				  (html:img :alt "CC-GNU GPL" :border "0" :src "http://creativecommons.org/images/public/cc-GPL-a.png"))
+			  
+			  (html:a :href "http://sourceforge.jp/"
+				  (html:img :src "http://sourceforge.jp/sflogo.php?group_id=1476" :width "96" :height "31" :border "0" :alt "SourceForge.jp"))
+			  
+			  ;; --- No Software Patents ---
+			  (html:a :href "http://www.NoSoftwarePatents.com"
+				  (html:img :src "./nswpat80x15.png" :width "80" :height "15" :border "0" :alt "No Software Patents!"))
 	  
-		      ;; --- mickeynet.com ---
-		      (html:a :href "http://www.mickeynetusa.com/ranking/counter/incount.asp?countid=174" :target "_blank"
-			      (html:img :src "http://www.mickeynet.com/e_ranklink/img/mickeynet130_35.gif" :width "130" :height "35" :border "0"))
+			  ;; --- mickeynet.com ---
+			  (html:a :href "http://www.mickeynetusa.com/ranking/counter/incount.asp?countid=174" :target "_blank"
+				  (html:img :src "http://www.mickeynet.com/e_ranklink/img/mickeynet130_35.gif" :width "130" :height "35" :border "0"))
 		    
-		      ;; --- FLOSS関連続き ---
-		      (html:br)
-		      "This software is licensed under the "
-		      (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
-			      "CC-GNU GPL")
-		      (html:br)
+			  ;; --- FLOSS関連続き ---
+			  (html:br)
+			  "This software is licensed under the "
+			  (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
+				  "CC-GNU GPL")
+			  (html:br)
 
 
-		      "  
+			  "  
   <!--
 
   <rdf:RDF xmlns=\"http://web.resource.org/cc/\"
@@ -186,7 +188,8 @@
 
   -->
 "
-		      )
+			  )
+	    "")
 
 	    (html:br)
 	    (html:br)
@@ -240,4 +243,24 @@
 	   (html:script :type "text/javascript" :src "ajax/SumibiSOAP.js")
 	   (html:script :type "text/javascript" :src "ajax/ajax_sumibi.js")
 	   (html:script :type "text/javascript" :src "ajax/SumibiCustomize.js")
+	   (if darkside-mode
+"
+<script>
+<!--
+function generate_amazon(keyword){
+   var ret = '';
+   ret += '<iframe src=\"http://rcm-jp.amazon.co.jp/e/cm?t=kiye-22&o=9&p=8&l=st1&mode=books-jp&search=' + keyword + '&=1&fc1=&lt1=&lc1=&bg1=&f=ifr\"';
+   ret += ' marginwidth=\"0\" marginheight=\"0\" width=\"120\" height=\"240\" border=\"0\" frameborder=\"0\" style=\"border:none;\" scrolling=\"no\"></iframe>';
+   return ret;
+}
+-->
+</script>
+"
+"
+<script>
+<!--
+function generate_amazon(keyword){return '';}
+-->
+</script>
+")
 	   ))))))
