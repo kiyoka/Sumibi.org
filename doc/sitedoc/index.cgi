@@ -27,32 +27,6 @@
 	    (html:title "Sumibi.org ローマ字を日本語に変換できる無料サイト")
 	    (html:link :rel "shortcut icon" :href "/favicon.ico")
 	    (html:link :rel "icon" :href "/favicon.png" :type "image/png"))
-	   "
-<script>
-<!--
- function setFocusToQ() {document.getElementById('q').focus();}
- // -->
-</script>
-
-<script>
-<!--
- function submitGform() {sumibi_define_candidate();document.getElementById('gform').submit();}
- function Sumibi_candidate_html_hook(space_array,words_array) {
-    var str = '';
-    for(i=0; i < words_array.length; i++){
-	str += space_array[i] + words_array[i];
-    }
-
-    return '<br>'
-    + '<div style=\"text-align:center;\">' 
-    + '<input type=\"button\" id=\"search\" name=\"search\" value=\"『' + str + '』でGoogle検索\"'
-    + ' onClick=\"submitGform();\">'
-    + '</div>';
- }
-//-->
-</script>
-
-"
 	   (html:body                                                     
 	    :onLoad "setFocusToQ()"
 	    (html:div :style "text-align: center; "
@@ -157,7 +131,7 @@
 		      "Sumibi Engine:Copyright&copy 2005, "
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2005/11/23 01:23:04 $ ")
+		      "Software version = $Date: 2005/11/24 13:48:34 $ ")
 
 	    (html:div :style "text-align: center; "
 		      ;; --- FLOSS関連ロゴ ---
@@ -265,5 +239,5 @@
 	   (html:script :type "text/javascript" :src "ajax/Sumibi.js")
 	   (html:script :type "text/javascript" :src "ajax/SumibiSOAP.js")
 	   (html:script :type "text/javascript" :src "ajax/ajax_sumibi.js")
+	   (html:script :type "text/javascript" :src "ajax/SumibiCustomize.js")
 	   ))))))
-
