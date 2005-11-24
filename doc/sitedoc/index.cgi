@@ -28,7 +28,7 @@
 	    (html:title "Sumibi.org ローマ字を日本語に変換できる無料サイト")
 	    (html:link :rel "shortcut icon" :href "/favicon.ico")
 	    (html:link :rel "icon" :href "/favicon.png" :type "image/png"))
-	   (html:body                                                     
+	   (html:body
 	    :onLoad "setFocusToQ()"
 	    (html:div :style "text-align: center; "
 		      (html:br)
@@ -132,9 +132,9 @@
 		      "Sumibi Engine:Copyright&copy 2005, "
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2005/11/24 14:23:39 $ ")
+		      "Software version = $Date: 2005/11/24 14:35:08 $ ")
 
-	    (if long-mode
+	    (if (not long-mode)
 		(html:div :style "text-align: center; "
 			  ;; --- FLOSS関連ロゴ ---
 			  (html:a :href "http://www.godaddy.com/gdshop/ssl/ssl_opensource.asp"
