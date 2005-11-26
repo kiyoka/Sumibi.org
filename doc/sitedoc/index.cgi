@@ -88,23 +88,23 @@
 				    (html:p
 				     (port->string (open-input-file "./notice.txt"))))
 			  ""))
-	    (html:div :class "usage"
-		      (html:span :class "usage" "使い方")
-		      (html:ul
-		       (html:li "単語をスペースで区切って入力し、確定ボタンを押すと日本語が入力されます。 (例: ryokou ni kiteimasu. → 旅行に来ています。)")
-		       (if long-mode
-			   (html:li "助詞『は』『を』『と』『に』等 はスペースで区切って入力します。(例: kaigairyokou hoken ha →  海外旅行保険は)")
-			   (html:li "スペースは、スペースを二回入力して下さい。 (例: wa-kinguhoride-&nbsp;&nbsp;&nbsp;o-sutoraria → ワーキングホリデー&nbsp;&nbsp;オーストラリア)"))
-
-		       (if long-mode
-			   (html:li
-			    "このページは長文作成用です。Google検索を行う場合は、"
-			    (html:a :href "http://www.sumibi.org/" "Google検索モード(暗号化OFF)")
-			    "』ページが便利です。")
-			   (html:li
-			    "このページからGoogle検索ができます。メール等長文を書く場合は『"
-			    (html:a :href "https://sumibi.org/?long=1" "長文作成モード(暗号化ON)")
-			    "』ページが便利です。"))))
+	    (html:fieldset :class "fieldset"
+	     (html:legend :class "legend" "使い方")
+	     (html:ul
+	      (html:li "単語をスペースで区切って入力し、確定ボタンを押すと日本語が入力されます。 (例: ryokou ni kiteimasu. → 旅行に来ています。)")
+	      (if long-mode
+		  (html:li "助詞『は』『を』『と』『に』等 はスペースで区切って入力します。(例: kaigairyokou hoken ha →  海外旅行保険は)")
+		  (html:li "スペースは、スペースを二回入力して下さい。 (例: wa-kinguhoride-&nbsp;&nbsp;&nbsp;o-sutoraria → ワーキングホリデー&nbsp;&nbsp;オーストラリア)"))
+	      
+	      (if long-mode
+		  (html:li
+		   "このページは長文作成用です。Google検索を行う場合は、"
+		   (html:a :href "http://www.sumibi.org/" "Google検索モード(暗号化OFF)")
+		   "』ページが便利です。")
+		  (html:li
+		   "このページからGoogle検索ができます。メール等長文を書く場合は『"
+		   (html:a :href "https://sumibi.org/?long=1" "長文作成モード(暗号化ON)")
+		   "』ページが便利です。"))))
 			   
 
 		   
@@ -117,8 +117,8 @@
 
 	    (html:div :style "text-align: right; "
 		      ;; --- 日本時間の表示 ---
-		      "今現在の日本時間:"
-		      (sys-strftime "%d日 %T時 %Z" (sys-localtime (current-time)))
+		      "現在の日本時間:"
+		      (sys-strftime "%m月%d日 %k:%M %Z" (sys-localtime (current-time)))
 		      "&nbsp;"
 		      "&nbsp;"
 		      "&nbsp;"
@@ -132,7 +132,7 @@
 		      "Sumibi Engine:Copyright&copy 2005, "
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2005/11/24 14:35:08 $ ")
+		      "Software version = $Date: 2005/11/26 06:04:26 $ ")
 
 	    (if (not long-mode)
 		(html:div :style "text-align: center; "

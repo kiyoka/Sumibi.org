@@ -1,4 +1,4 @@
-/* $Id: sumibi.css,v 1.9 2005/11/23 00:38:00 kiyoka Exp $ */
+/* $Id: sumibi.css,v 1.10 2005/11/26 06:04:26 kiyoka Exp $ */
 
 body {
 	background-color: #ffffff;
@@ -6,6 +6,7 @@ body {
 a:link    { color: #44f; }
 a:visited { color: #72f; }
 a:active  { color: #f33; }
+
 
 table tr.odd,table tr.dark {
       	background-color: #e0e0d0;
@@ -152,6 +153,22 @@ div.usage {
 	border-width: 1px;
 	font-size: smaller;
 }
+
+fieldset {
+	margin-left:	7em;
+	margin-right:	7em;
+	font-size: smaller;
+}
+
+legend {
+	color: black;
+	padding-right: 0.5em;
+	padding-left:  0.5em;
+	font-size: 90%;
+	padding-bottom: 0.5em;
+	padding-top: 0.5em
+}
+
 
 
 
