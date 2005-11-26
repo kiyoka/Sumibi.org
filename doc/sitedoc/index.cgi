@@ -91,7 +91,7 @@
 	    (html:fieldset :class "fieldset"
 	     (html:legend :class "legend" "使い方")
 	     (html:ul
-	      (html:li "単語をスペースで区切って入力し、確定ボタンを押すと日本語が入力されます。 (例: ryokou ni kiteimasu. → 旅行に来ています。)")
+	      (html:li "単語をスペースで区切って入力し、確定ボタンを押すと日本語に変換されます。 (例: ryokou ni kiteimasu. → 旅行に来ています。)")
 	      (if long-mode
 		  (html:li "助詞『は』『を』『と』『に』等 はスペースで区切って入力します。(例: kaigairyokou hoken ha →  海外旅行保険は)")
 		  (html:li "スペースは、スペースを二回入力して下さい。 (例: wa-kinguhoride-&nbsp;&nbsp;&nbsp;o-sutoraria → ワーキングホリデー&nbsp;&nbsp;オーストラリア)"))
@@ -109,10 +109,10 @@
 
 		   
 	    (html:div :style "text-align: center; "
-		      ;; --- google AdSense ---
-		      (if (and (file-exists? "./adsense1.txt")
+		      ;; --- Ad ---
+		      (if (and (file-exists? "./ad1.txt")
 			       (not long-mode))
-			  (port->string (open-input-file "./adsense1.txt"))
+			  (port->string (open-input-file "./ad1.txt"))
 			  ""))
 
 	    (html:div :style "text-align: right; "
@@ -132,7 +132,7 @@
 		      "Sumibi Engine:Copyright&copy 2005, "
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2005/11/26 06:04:26 $ ")
+		      "Software version = $Date: 2005/11/26 13:42:07 $ ")
 
 	    (if (not long-mode)
 		(html:div :style "text-align: center; "
@@ -211,10 +211,10 @@
 	      (html:a :href "http://mail.goo.ne.jp/goomail/index.ghtml"     "gooメール")
 	      "等があります。自分に合ったものを選びましょう。")
 
-	     ;; --- google AdSense ---
-	     (if (and (file-exists? "./adsense2.txt")
+	     ;; --- Ad ---
+	     (if (and (file-exists? "./ad2.txt")
 		      (not long-mode))
-		 (port->string (open-input-file "./adsense2.txt"))
+		 (port->string (open-input-file "./ad2.txt"))
 		 "")
 
 	     ;; --- 4travel ---
@@ -232,11 +232,9 @@
 	     (html:br)
 	   
 	     (html:div :class "footer"
-		       "<!-- google_ad_section_start -->"
 		       (html:p "本サイト(Sumibi.org)は小規模なハードウェア及びネットワーク資源を使ってホスティングしております。"
 			       "そこで、Sumibi.orgを無償でホスティングできる環境をご提供いただける企業様を募集しています。"
 			       "ご提供いただいた企業様におきましては、Sumibi.orgに優先して広告掲載させて頂きます。")
-		       "<!-- google_ad_section_end -->"
 		       )))
 
 	   (html:script :type "text/javascript" :src "ajax/Sumibi.js")
