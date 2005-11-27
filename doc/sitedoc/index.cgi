@@ -110,10 +110,15 @@
 		   
 	    (html:div :style "text-align: center; "
 		      ;; --- Ad ---
-		      (if (and (file-exists? "./ad1.txt")
-			       (not long-mode))
-			  (port->string (open-input-file "./ad1.txt"))
-			  ""))
+		      (cond 
+		       (long-mode
+			(if (file-exists? "./ad1_s.txt")
+			    (port->string (open-input-file "./ad1_s.txt"))
+			    ""))
+		       (#t
+			(if (file-exists? "./ad1.txt")
+			    (port->string (open-input-file "./ad1.txt"))
+			    ""))))
 
 	    (html:div :style "text-align: right; "
 		      ;; --- 日本時間の表示 ---
@@ -132,7 +137,7 @@
 		      "Sumibi Engine:Copyright&copy 2005, "
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2005/11/26 13:42:07 $ ")
+		      "Software version = $Date: 2005/11/27 13:47:48 $ ")
 
 	    (if (not long-mode)
 		(html:div :style "text-align: center; "
@@ -241,23 +246,33 @@
 	   (html:script :type "text/javascript" :src "ajax/SumibiSOAP.js")
 	   (html:script :type "text/javascript" :src "ajax/ajax_sumibi.js")
 	   (html:script :type "text/javascript" :src "ajax/SumibiCustomize.js")
-	   (if darkside-mode
+	   (if long-mode
 "
 <script>
 <!--
-function generate_amazon(keyword){
-   var ret = '';
-   ret += '<iframe src=\"http://rcm-jp.amazon.co.jp/e/cm?t=kiye-22&o=9&p=8&l=st1&mode=books-jp&search=' + keyword + '&=1&fc1=&lt1=&lc1=&bg1=&f=ifr\"';
-   ret += ' marginwidth=\"0\" marginheight=\"0\" width=\"120\" height=\"240\" border=\"0\" frameborder=\"0\" style=\"border:none;\" scrolling=\"no\"></iframe>';
-   return ret;
-}
+function google_mode() { return false; }
 -->
 </script>
 "
 "
 <script>
 <!--
-function generate_amazon(keyword){return '';}
+function google_mode() { return true; }
+-->
+</script>
+")
+	   (if darkside-mode
+"
+<script>
+<!--
+function amazon_mode() { return true; }
+-->
+</script>
+"
+"
+<script>
+<!--
+function amazon_mode() { return false; }
 -->
 </script>
 ")
