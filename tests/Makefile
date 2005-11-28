@@ -20,8 +20,11 @@ create:
 	$(SUMIYAKI) -c
 
 load:
-	$(SUMIYAKI) -i ../dict/SKK-JISYO.sumbi_starter > ~/park/log
+	$(SUMIYAKI) -i ../dict/SKK-JISYO.sumibi_starter > ~/park/log
 
+loadS:
+	wget -nc http://openlab.jp/skk/skk/dic/SKK-JISYO.S
+	$(SUMIYAKI) -i ./SKK-JISYO.S > ~/park/log
 
 ossbook:
 	find /home/park/sumibi_corpus/OSSBOOK -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
@@ -48,5 +51,12 @@ sum:
 sumword:
 	echo "set character set utf8; select * from word;" | mysql $(DICT) > ~/park/summary.txt
 
+
+# ---- for testing ----
 debug:
 	echo "set character set utf8; select * from word where yomiank = 'ka' and okuri = 'k';" | mysql $(DICT) > log
+
+wikipedia_1:
+	cat ./1_100.txt       | awk '{ print "./sumiyaki.sh -l " $$0; }' | bash -s > ~/park/log
+wikipedia_2:
+	cat ./101_200.txt     | awk '{ print "./sumiyaki.sh -l " $$0; }' | bash -s > ~/park/log
