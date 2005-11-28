@@ -137,7 +137,7 @@
 		      "Sumibi Engine:Copyright&copy 2005, "
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2005/11/28 14:15:55 $ ")
+		      "Software version = $Date: 2005/11/28 14:20:39 $ ")
 
 	    (if (not long-mode)
 		(html:div :style "text-align: center; "
@@ -217,10 +217,15 @@
 	      "等があります。自分に合ったものを選びましょう。")
 
 	     ;; --- Ad ---
-	     (if (and (file-exists? "./ad2.txt")
-		      (not long-mode))
-		 (port->string (open-input-file "./ad2.txt"))
-		 "")
+	     (cond
+	      (long-mode
+	       (if (file-exists? "./ad2_s.txt")
+		   (port->string (open-input-file "./ad2_s.txt"))
+		   ""))
+	      (#t
+	       (if (file-exists? "./ad2.txt")
+		   (port->string (open-input-file "./ad2.txt"))
+		   "")))
 
 	     ;; --- 4travel ---
 	     (if (not long-mode)
