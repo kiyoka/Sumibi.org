@@ -110,7 +110,7 @@
 		   
 	    (html:div :style "text-align: center; "
 		      ;; --- Ad ---
-		      (cond 
+		      (cond
 		       (long-mode
 			(if (file-exists? "./ad1_s.txt")
 			    (port->string (open-input-file "./ad1_s.txt"))
@@ -137,7 +137,7 @@
 		      "Sumibi Engine:Copyright&copy 2005, "
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2005/11/27 13:47:48 $ ")
+		      "Software version = $Date: 2005/11/28 14:15:55 $ ")
 
 	    (if (not long-mode)
 		(html:div :style "text-align: center; "
@@ -224,14 +224,11 @@
 
 	     ;; --- 4travel ---
 	     (if (not long-mode)
-		 (html:div
-		  (html:br)
-		  (html:a :href "http://4travel.jp/r.php?r=link"
-			  (html:img :src "http://4travel.jp/img/logo_88x31.gif" :border "0" :alt "旅行のクチコミサイト フォートラベル")
-			  (html:br)
-			  "旅行のクチコミサイト フォートラベル"))
+		 (html:a :href "http://4travel.jp/r.php?r=link"
+			 (html:img :src "http://4travel.jp/img/logo_88x31.gif" :border "0" :alt "旅行のクチコミサイト フォートラベル")
+			 (html:br)
+			 "旅行のクチコミサイト フォートラベル")
 		 "")
-	     (html:hr)
 
 ;;; --- ホスティング依頼メッセージ ---
 	     (html:br)
