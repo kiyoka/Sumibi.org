@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION=0.5.3
+VERSION=0.5.4
 
 #### make-dist: create an Sumibi distribution tar file from the current
 #### source tree.  This basically creates a duplicate directory
