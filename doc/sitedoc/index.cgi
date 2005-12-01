@@ -137,37 +137,14 @@
 		      "Sumibi Engine:Copyright&copy 2005, "
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2005/11/28 14:20:39 $ ")
+		      "Software version = $Date: 2005/12/01 14:52:27 $ ")
 
 	    (if (not long-mode)
 		(html:div :style "text-align: center; "
 			  ;; --- FLOSS関連ロゴ ---
-			  (html:a :href "http://www.godaddy.com/gdshop/ssl/ssl_opensource.asp"
-				  (html:img :src "http://imagesak.godaddy.com/assets/ssl/img_cert_turbo_gd.jpg" 
-					    :width "88" :height "62"
-					    :border "0" :alt "SourceForge.jp"))
-			  
-			  (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
-				  (html:img :alt "CC-GNU GPL" :border "0" :src "http://creativecommons.org/images/public/cc-GPL-a.png"))
-			  
-			  (html:a :href "http://sourceforge.jp/"
-				  (html:img :src "http://sourceforge.jp/sflogo.php?group_id=1476" :width "96" :height "31" :border "0" :alt "SourceForge.jp"))
-			  
-			  ;; --- No Software Patents ---
-			  (html:a :href "http://www.NoSoftwarePatents.com"
-				  (html:img :src "./nswpat80x15.png" :width "80" :height "15" :border "0" :alt "No Software Patents!"))
-	  
-			  ;; --- mickeynet.com ---
-			  (html:a :href "http://www.mickeynetusa.com/ranking/counter/incount.asp?countid=174" :target "_blank"
-				  (html:img :src "http://www.mickeynet.com/e_ranklink/img/mickeynet130_35.gif" :width "130" :height "35" :border "0"))
-		    
-			  ;; --- FLOSS関連続き ---
-			  (html:br)
 			  "This software is licensed under the "
 			  (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
 				  "CC-GNU GPL")
-			  (html:br)
-
 
 			  "  
   <!--
@@ -193,8 +170,47 @@
 
   -->
 "
+			  (html:br)
+
+			  ;; --- Ad ---
+			  (cond
+			   (long-mode
+			    (if (file-exists? "./ad2_s.txt")
+				(port->string (open-input-file "./ad2_s.txt"))
+				""))
+			   (#t
+			    (if (file-exists? "./ad2.txt")
+				(port->string (open-input-file "./ad2.txt"))
+				"")))
+
+			  (html:a :href "http://www.godaddy.com/gdshop/ssl/ssl_opensource.asp"
+				  (html:img :src "http://imagesak.godaddy.com/assets/ssl/img_cert_turbo_gd.jpg" 
+					    :width "88" :height "62"
+					    :border "0" :alt "SourceForge.jp"))
+			  
+			  (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
+				  (html:img :alt "CC-GNU GPL" :border "0" :src "http://creativecommons.org/images/public/cc-GPL-a.png"))
+			  
+			  (html:a :href "http://sourceforge.jp/"
+				  (html:img :src "http://sourceforge.jp/sflogo.php?group_id=1476" :width "96" :height "31" :border "0" :alt "SourceForge.jp"))
+			  
+			  ;; --- No Software Patents ---
+			  (html:a :href "http://www.NoSoftwarePatents.com"
+				  (html:img :src "./nswpat80x15.png" :width "80" :height "15" :border "0" :alt "No Software Patents!"))
+
+			  ;; --- mickeynet.com ---
+			  (html:a :href "http://www.mickeynetusa.com/ranking/counter/incount.asp?countid=174" :target "_blank"
+				  (html:img :src "http://www.mickeynet.com/e_ranklink/img/mickeynet130_35.gif" :width "130" :height "35" :border "0"))
+		    
+			  ;; --- 4travel ---
+			  (if (not long-mode)
+			      (html:a :href "http://4travel.jp/r.php?r=link"
+				      (html:img :src "http://4travel.jp/img/logo_88x31.gif" :border "0" :alt "旅行のクチコミサイト フォートラベル")
+				      (html:br)
+				      "旅行のクチコミサイト フォートラベル")
+			      "")
 			  )
-	    "")
+		"")
 
 	    (html:br)
 	    (html:br)
@@ -219,21 +235,13 @@
 	     ;; --- Ad ---
 	     (cond
 	      (long-mode
-	       (if (file-exists? "./ad2_s.txt")
-		   (port->string (open-input-file "./ad2_s.txt"))
+	       (if (file-exists? "./ad3_s.txt")
+		   (port->string (open-input-file "./ad3_s.txt"))
 		   ""))
 	      (#t
-	       (if (file-exists? "./ad2.txt")
-		   (port->string (open-input-file "./ad2.txt"))
+	       (if (file-exists? "./ad3.txt")
+		   (port->string (open-input-file "./ad3.txt"))
 		   "")))
-
-	     ;; --- 4travel ---
-	     (if (not long-mode)
-		 (html:a :href "http://4travel.jp/r.php?r=link"
-			 (html:img :src "http://4travel.jp/img/logo_88x31.gif" :border "0" :alt "旅行のクチコミサイト フォートラベル")
-			 (html:br)
-			 "旅行のクチコミサイト フォートラベル")
-		 "")
 
 ;;; --- ホスティング依頼メッセージ ---
 	     (html:br)
