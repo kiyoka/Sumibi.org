@@ -89,6 +89,19 @@
 				    (html:p
 				     (port->string (open-input-file "./notice.txt"))))
 			  ""))
+
+	    (html:div :style "text-align: center; "
+		      ;; --- Ad ---
+		      (cond
+		       (long-mode
+			(if (file-exists? "./ad1_s.txt")
+			    (port->string (open-input-file "./ad1_s.txt"))
+			    ""))
+		       (#t
+			(if (file-exists? "./ad1.txt")
+			    (port->string (open-input-file "./ad1.txt"))
+			    ""))))
+
 	    (html:fieldset :class "fieldset"
 	     (html:legend :class "legend" "使い方")
 	     (html:ul
@@ -109,18 +122,6 @@
 			   
 
 		   
-	    (html:div :style "text-align: center; "
-		      ;; --- Ad ---
-		      (cond
-		       (long-mode
-			(if (file-exists? "./ad1_s.txt")
-			    (port->string (open-input-file "./ad1_s.txt"))
-			    ""))
-		       (#t
-			(if (file-exists? "./ad1.txt")
-			    (port->string (open-input-file "./ad1.txt"))
-			    ""))))
-
 	    (html:div :style "text-align: right; "
 		      ;; --- 日本時間の表示 ---
 		      "現在の日本時間:"
@@ -138,7 +139,7 @@
 		      "Sumibi Engine:Copyright&copy 2005, "
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2005/12/01 15:10:56 $ ")
+		      "Software version = $Date: 2005/12/14 14:09:24 $ ")
 
 	    (if (not long-mode)
 		(html:div :style "text-align: center; "
