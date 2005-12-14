@@ -27,7 +27,6 @@ function Sumibi_candidate_html_hook(space_array,words_array) {
 	    }
 	}
     }
-    ret += '<br>';
     return ret;
 }
 
