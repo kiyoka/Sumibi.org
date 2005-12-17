@@ -139,7 +139,7 @@
 		      "Sumibi Engine:Copyright&copy 2005, "
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2005/12/14 14:09:24 $ ")
+		      "Software version = $Date: 2005/12/17 15:50:22 $ ")
 
 	    (if (not long-mode)
 		(html:div :style "text-align: center; "
@@ -249,10 +249,13 @@
 	     (html:br)
 	   
 	     (html:div :class "footer"
+		       "<!-- google_ad_section_start -->"
 		       (html:p "本サイト(Sumibi.org)は小規模なハードウェア及びネットワーク資源を使ってホスティングしております。"
 			       "そこで、Sumibi.orgを無償でホスティングできる環境をご提供いただける企業様を募集しています。"
 			       "ご提供いただいた企業様におきましては、Sumibi.orgに優先して広告掲載させて頂きます。")
+		       "<!-- google_ad_section_end -->"
 		       )))
+	     
 
 	   (html:script :type "text/javascript" :src "ajax/Sumibi.js")
 	   (html:script :type "text/javascript" :src "ajax/SumibiSOAP.js")
