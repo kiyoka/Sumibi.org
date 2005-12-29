@@ -32,10 +32,8 @@
 	    :onLoad "setFocusToQ()"
 	    (html:div :style "text-align: center; "
 		      (html:br)
-		      (html:img :src "xmas-17.gif" :border "0" :alt "xmas_image_L")
 		      (html:span :class "subtitle"
 				 "世界の果てから漢字変換")
-		      (html:img :src "xmas-19.gif" :border "0" :alt "xmas_image_R")
 		      (html:br)
 		      (html:img :src "sumibi_org_logo.png" :alt "Sumibi.org LOGO")
 		      (html:br)
@@ -139,7 +137,7 @@
 		      "Sumibi Engine:Copyright&copy 2005, "
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2005/12/17 15:50:22 $ ")
+		      "Software version = $Date: 2005/12/29 07:50:27 $ ")
 
 	    (if (not long-mode)
 		(html:div :style "text-align: center; "
