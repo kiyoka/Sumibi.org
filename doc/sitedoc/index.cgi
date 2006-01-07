@@ -134,10 +134,10 @@
 		      (html:a :href "mailto:kiyoka@sumibi.org" "メールでのお問い合わせ(ローマ字でもOKです)"
 			      (html:img :alt "MailTo" :border "0" :src "sumibi_mailto.gif")))
 	    (html:div :class "copyright"
-		      "Sumibi Engine:Copyright&copy 2005, "
-		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "Kiyoka Nishiyama") " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
+		      "Sumibi Engine:Copyright&copy 2005, Kiyoka Nishiyama("
+		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/?category=Sumibi" "開発者ブログ") ") / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2005/12/29 07:50:27 $ ")
+		      "Software version = $Date: 2006/01/07 13:49:55 $ ")
 
 	    (if (not long-mode)
 		(html:div :style "text-align: center; "
