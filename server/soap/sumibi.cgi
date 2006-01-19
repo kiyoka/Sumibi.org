@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2005/07/31 13:40:50 $
+#     $Date: 2006/01/19 15:25:37 $
 #
 # This file is part of Sumibi
 #
@@ -21,6 +21,7 @@
 # along with Sumibi; see the file COPYING.
 #
 #
+my( $TIMEOUT_SECOND ) = 10;
 
 use utf8;
 use strict;
@@ -42,30 +43,51 @@ use IPC::Open2;
 sub _sumibiEngine {
     my( $arg ) = @_;
     my( @result );
+    my( $ok ) = 1;
+    
+    eval {                                      
+	local $SIG{ALRM} = sub { die "timeout" }; 
+	alarm $TIMEOUT_SECOND;
 
-    local( *Reader, *Writer );
-    my $pid = open2( *Reader, *Writer, './sumibi' );
-    Writer->autoflush(); # default here, actually
-    print Writer $arg;
-    my $ok     = <Reader>; # ok/error
-
-    # 空行が来るまで入力を読みこむ
-    while( 1 ) {
-	$_ = <Reader>;
-	# 改行を落とす
-	chomp;
-	if ( 0 >= length( $_ )  ) {
-	    last;
+	local( *Reader, *Writer );
+	my $pid = open2( *Reader, *Writer, './sumibi' );
+	Writer->autoflush(); # default here, actually
+	print Writer $arg;
+	$ok     = <Reader>; # ok/error
+	
+	# 空行が来るまで入力を読みこむ
+	while( 1 ) {
+	    $_ = <Reader>;
+	    # 改行を落とす
+	    chomp;
+	    if ( 0 >= length( $_ )  ) {
+		last;
+	    }
+	    else {
+		push( @result, $_ );
+	    }
 	}
-	else {
-	    push( @result, $_ );
-	}
-    }
-
-    close( Reader );
-    close( Writer );
-    waitpid($pid, 0);
-
+	
+	close( Reader );
+	close( Writer );
+	waitpid($pid, 0);
+	
+	alarm 0;                                  
+    };                                          
+    alarm 0;                                    
+    if($@) {                                    
+	if($@ =~ /timeout/) {                     
+	    # タイムアウト時の処理                  
+	    if ( $arg =~ /convertsexp/ ) {
+		push( @result, "(((j \"！！タイムアウトしました。サーバーに負荷がかかっています！！\" 0 0 0)))" );
+	    }
+	    else {
+		push( @result, "j ！！タイムアウトしました。サーバーに負荷がかかっています！！ 0 0 0" );
+	    }
+	} else {                                  
+	    # その他例外時の処理                    
+	}                                         
+    }                                           
     return ( $ok, @result );
 }
 
