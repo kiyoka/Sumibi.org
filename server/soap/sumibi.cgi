@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2006/01/19 15:25:37 $
+#     $Date: 2006/01/24 15:14:15 $
 #
 # This file is part of Sumibi
 #
@@ -44,13 +44,14 @@ sub _sumibiEngine {
     my( $arg ) = @_;
     my( @result );
     my( $ok ) = 1;
+    my( $pid ) = 0;
     
     eval {                                      
 	local $SIG{ALRM} = sub { die "timeout" }; 
 	alarm $TIMEOUT_SECOND;
 
 	local( *Reader, *Writer );
-	my $pid = open2( *Reader, *Writer, './sumibi' );
+	$pid = open2( *Reader, *Writer, './sumibi' );
 	Writer->autoflush(); # default here, actually
 	print Writer $arg;
 	$ok     = <Reader>; # ok/error
@@ -72,22 +73,23 @@ sub _sumibiEngine {
 	close( Writer );
 	waitpid($pid, 0);
 	
-	alarm 0;                                  
-    };                                          
-    alarm 0;                                    
-    if($@) {                                    
-	if($@ =~ /timeout/) {                     
-	    # タイムアウト時の処理                  
+	alarm 0;
+    };
+    alarm 0;
+    if($@) {
+	if($@ =~ /timeout/) {
+	    # タイムアウト時の処理
 	    if ( $arg =~ /convertsexp/ ) {
-		push( @result, "(((j \"！！タイムアウトしました。サーバーに負荷がかかっています！！\" 0 0 0)))" );
+		push( @result, "！！タイムアウトしました。サーバーに負荷がかかっています！！" );
+		kill( 'KILL', $pid );
 	    }
 	    else {
 		push( @result, "j ！！タイムアウトしました。サーバーに負荷がかかっています！！ 0 0 0" );
 	    }
-	} else {                                  
-	    # その他例外時の処理                    
-	}                                         
-    }                                           
+	} else {
+	    # その他例外時の処理
+	}
+    }
     return ( $ok, @result );
 }
 
