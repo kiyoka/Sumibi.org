@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2006/01/25 14:01:14 $
+#     $Date: 2006/01/25 14:02:50 $
 #
 # This file is part of Sumibi
 #
@@ -79,7 +79,7 @@ sub _sumibiEngine {
     if($@) {
 	if($@ =~ /timeout/) {
 	    # タイムアウト時の処理
-	    if ( $arg =~ /convertsexp/ ) {
+	    if ( $arg =~ /convert/ ) {
 		push( @result, "！！タイムアウトしました。サーバーに負荷がかかっています！！" );
 		openlog( __FILE__, 'Sumibi', 'user' );
 		syslog( 'warning', sprintf( "Sumibi: pid=%d timeout... sending SIGKILL", $pid ));
