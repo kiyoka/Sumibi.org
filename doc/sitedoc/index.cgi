@@ -106,8 +106,8 @@
 	      (html:li "単語をスペースで区切って入力し、確定ボタンを押すと日本語に変換されます。 (例: ryokou ni kiteimasu. → 旅行に来ています。)")
 	      (if long-mode
 		  (html:li "助詞『は』『を』『と』『に』等 はスペースで区切って入力します。(例: kaigairyokou hoken ha →  海外旅行保険は)")
-		  (html:li "スペースは、スペースを二回入力して下さい。 (例: wa-kinguhoride-&nbsp;&nbsp;&nbsp;o-sutoraria → ワーキングホリデー&nbsp;&nbsp;オーストラリア)"))
-	      
+		  (html:li "スペースは、スペースを二回入力して下さい。 (例: torino&nbsp;&nbsp;&nbsp;orinpikku →  トリノ&nbsp;&nbsp;オリンピック)"))
+
 	      (if long-mode
 		  (html:li
 		   "このページは長文作成用です。Google検索を行う場合は、"
@@ -137,7 +137,7 @@
 		      "Sumibi Engine:Copyright&copy 2005, Kiyoka Nishiyama("
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/?category=Sumibi" "開発者ブログ") ") / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2006/01/08 13:01:15 $ ")
+		      "Software version = $Date: 2006/02/14 14:07:44 $ ")
 
 	    (if (not long-mode)
 		(html:div :style "text-align: center; "
