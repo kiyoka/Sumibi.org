@@ -40,7 +40,10 @@
      (*ja
       (ul
        (li (*link "よくある質問を読む" "faq.html"))
-       (li (*link "Sumibi.orgの状態を見る" "/sumibi/mrtg/"))))
+       (li (*link "Sumibi.orgサーバーの状態を見る" "/sumibi/mrtg/"))
+       (li (*link "httpページへのアクセス統計を見る" "/sumibi/webalizer.public/"))
+       (li (*link "httpsページへのアクセス統計を見る" "/sumibi/webalizer_s.public/"))))
+
      (*en
       (p
        ("sorry , Japanese only ..."))))
