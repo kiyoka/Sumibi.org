@@ -135,9 +135,9 @@
 			      (html:img :alt "MailTo" :border "0" :src "sumibi_mailto.gif")))
 	    (html:div :class "copyright"
 		      "Sumibi Engine:Copyright&copy 2005, Kiyoka Nishiyama("
-		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/?category=Sumibi" "開発者ブログ") ") / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
+		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "開発者ブログ") ") / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
 		      (html:br)
-		      "Software version = $Date: 2006/02/14 14:07:44 $ ")
+		      "Software version = $Date: 2006/02/21 14:24:53 $ ")
 
 	    (if (not long-mode)
 		(html:div :style "text-align: center; "
