@@ -43,15 +43,7 @@
 				 (html:br)
 				 "Sumibi.org ha ro-maji wo nihongo ni henkan suru muryou saito desu. From romaji to kanji.")
 		      (html:br)
-		      (if long-mode
-			  (html:a :href "http://www.sumibi.org/"     "Google検索モード(暗号化OFF)")
-			  (html:a :href "https://sumibi.org/?long=1" "長文作成モード(暗号化ON)"))
-		      " / "
-		      (html:a :href "sumibi/sumibi.html"         "Documents")
-		      " / "
-		      (html:a :href "sumibi/privacy_policy.html" "Privacy Policy")
-		      " / "
-		      (html:a :href "sumibi/faq.html"            "FAQ"))
+		      )
 		    
 	    (html:div :style "text-align: center; "
 		      (html:form :id "gform" :method "get" :action "http://www.google.co.jp/custom" :target "_top"
@@ -64,8 +56,6 @@
 						))
 				     (html:div
 				      (html:p
-				       (html:a :href "http://www.google.com/"
-					       (html:img :src "http://www.google.com/logos/Logo_25wht.gif" :border "0" :alt "Google" :align "middle"))
 				       (html:input :type "text" :id "q" :name "q" :size "41" :maxlength "2048")
 				       (html:input :type "submit" :name "sa" :value "Google検索"))))
 				 (html:input :type "hidden" :name "client" :value "pub-5721837636688174")
@@ -88,6 +78,26 @@
 				     (port->string (open-input-file "./notice.txt"))))
 			  ""))
 
+
+	    (html:fieldset :class "fieldset"
+	     (html:legend :class "legend" "使い方")
+	     (html:ul
+	      (html:li "ローマ字で単語を入力し、スペースを入力すると日本語に変換されます。 (例: ryokou ni kiteimasu. → 旅行に来ています。)")
+	      (if long-mode
+		  (html:li
+		   "このページは長文作成用です。Google検索を行う場合は、"
+		   (html:a :href "http://www.sumibi.org/" "Google検索モード(暗号化OFF)")
+		   "』ページが便利です。")
+		  (html:li
+		   "このページからGoogle検索ができます。メール等長文を書く場合は『"
+		   (html:a :href "https://sumibi.org/?long=1" "長文作成モード(暗号化ON)")
+		   "』ページが便利です。"))
+	      (if long-mode
+		  (html:li "助詞『は』『を』『と』『に』等 はスペースで区切って入力します。(例: kaigairyokou hoken ha →  海外旅行保険は)")
+		  (html:li "スペースは、スペースを二回入力して下さい。 (例: orinpikku&nbsp;&nbsp;&nbsp;kekka →  オリンピック&nbsp;&nbsp;結果)"))))
+			   
+	    (html:br)
+	    
 	    (html:div :style "text-align: center; "
 		      ;; --- Ad ---
 		      (cond
@@ -100,161 +110,42 @@
 			    (port->string (open-input-file "./ad1.txt"))
 			    ""))))
 
-	    (html:fieldset :class "fieldset"
-	     (html:legend :class "legend" "使い方")
-	     (html:ul
-	      (html:li "単語をスペースで区切って入力し、確定ボタンを押すと日本語に変換されます。 (例: ryokou ni kiteimasu. → 旅行に来ています。)")
-	      (if long-mode
-		  (html:li "助詞『は』『を』『と』『に』等 はスペースで区切って入力します。(例: kaigairyokou hoken ha →  海外旅行保険は)")
-		  (html:li "スペースは、スペースを二回入力して下さい。 (例: torino&nbsp;&nbsp;&nbsp;orinpikku →  トリノ&nbsp;&nbsp;オリンピック)"))
-
-	      (if long-mode
-		  (html:li
-		   "このページは長文作成用です。Google検索を行う場合は、"
-		   (html:a :href "http://www.sumibi.org/" "Google検索モード(暗号化OFF)")
-		   "』ページが便利です。")
-		  (html:li
-		   "このページからGoogle検索ができます。メール等長文を書く場合は『"
-		   (html:a :href "https://sumibi.org/?long=1" "長文作成モード(暗号化ON)")
-		   "』ページが便利です。"))))
-			   
-
-		   
-	    (html:div :style "text-align: right; "
-		      ;; --- 日本時間の表示 ---
-		      "現在の日本時間:"
-		      (sys-strftime "%m月%d日 %k:%M %Z" (sys-localtime (current-time)))
-		      "&nbsp;"
-		      "&nbsp;"
-		      "&nbsp;"
-		      "&nbsp;"
-		      "&nbsp;"
-		      "&nbsp;"
-		      "&nbsp;"
-		      (html:a :href "mailto:kiyoka@netfort.gr.jp" "メールでのお問い合わせ(ローマ字でもOKです)"
-			      (html:img :alt "MailTo" :border "0" :src "sumibi_mailto.gif")))
+	    (html:br)
+	    (html:div :style "text-align: center; "
+		      (html:a :href "sumibi/faq.html"            "Q&A")
+		      " / "
+		      (html:a :href "sumibi/privacy_policy.html" "Privacy Policy")
+		      " / "
+		      (html:a :href "sumibi/sumibi.html"         "Documents"))
+	    (html:br)
+		      
 	    (html:div :class "copyright"
-		      "Sumibi Engine:Copyright&copy 2005, Kiyoka Nishiyama("
-		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "開発者ブログ") ") / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
-		      (html:br)
-		      "Software version = $Date: 2006/02/21 14:24:53 $ ")
-
-	    (if (not long-mode)
-		(html:div :style "text-align: center; "
-			  ;; --- FLOSS関連ロゴ ---
-			  "This software is licensed under the "
-			  (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
-				  "CC-GNU GPL")
-
-			  "  
-  <!--
-
-  <rdf:RDF xmlns=\"http://web.resource.org/cc/\"
-     xmlns:dc=\"http://purl.org/dc/elements/1.1/\"
-     xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">
-  <Work rdf:about=\"\">
-     <license rdf:resource=\"http://creativecommons.org/licenses/GPL/2.0/\" />
-     <dc:type rdf:resource=\"http://purl.org/dc/dcmitype/Software\" />
-  </Work>
-
-  <License rdf:about=\"http://creativecommons.org/licenses/GPL/2.0/\">
-     <permits rdf:resource=\"http://web.resource.org/cc/Reproduction\" />
-     <permits rdf:resource=\"http://web.resource.org/cc/Distribution\" />
-     <requires rdf:resource=\"http://web.resource.org/cc/Notice\" />
-     <permits rdf:resource=\"http://web.resource.org/cc/DerivativeWorks\" />
-     <requires rdf:resource=\"http://web.resource.org/cc/ShareAlike\" />
-     <requires rdf:resource=\"http://web.resource.org/cc/SourceCode\" />
-  </License>
-
-  </rdf:RDF>
-
-  -->
-"
-			  (html:br)
-
-			  ;; --- Ad ---
-			  (cond
-			   (long-mode
-			    (if (file-exists? "./ad2_s.txt")
-				(port->string (open-input-file "./ad2_s.txt"))
-				""))
-			   (#t
-			    (if (file-exists? "./ad2.txt")
-				(port->string (open-input-file "./ad2.txt"))
-				"")))
-
-			  (html:a :href "http://www.godaddy.com/gdshop/ssl/ssl_opensource.asp"
-				  (html:img :src "http://imagesak.godaddy.com/assets/ssl/img_cert_turbo_gd.jpg" 
-					    :width "88" :height "62"
-					    :border "0" :alt "SourceForge.jp"))
-			  
-			  (html:a :href "http://creativecommons.org/licenses/GPL/2.0/"
-				  (html:img :alt "CC-GNU GPL" :border "0" :src "http://creativecommons.org/images/public/cc-GPL-a.png"))
-			  
-			  (html:a :href "http://sourceforge.jp/"
-				  (html:img :src "http://sourceforge.jp/sflogo.php?group_id=1476" :width "96" :height "31" :border "0" :alt "SourceForge.jp"))
-			  
-			  ;; --- No Software Patents ---
-			  (html:a :href "http://www.NoSoftwarePatents.com"
-				  (html:img :src "./nswpat80x15.png" :width "80" :height "15" :border "0" :alt "No Software Patents!"))
-
-			  ;; --- mickeynet.com ---
-			  (html:a :href "http://www.mickeynetusa.com/ranking/counter/incount.asp?countid=174" :target "_blank"
-				  (html:img :src "http://www.mickeynet.com/e_ranklink/img/mickeynet130_35.gif" :width "130" :height "35" :border "0"))
-		    
-			  ;; --- 4travel ---
-			  (if (not long-mode)
-			      (html:a :href "http://4travel.jp/r.php?r=link"
-				      (html:img :src "http://4travel.jp/img/logo_88x31.gif" :border "0" :alt "旅行のクチコミサイト フォートラベル")
-				      (html:br)
-				      "旅行のクチコミサイト フォートラベル")
-			      "")
-			  )
-		"")
-
+		      "Sumibi Engine:Copyright&copy 2005, Kiyoka Nishiyama"
+		      "("
+		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "開発者ブログ")
+		      ")"
+		      "("
+		      (html:a :href "mailto:kiyoka@netfort.gr.jp" "メール")
+		      ")"
+		      " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
+		      "&nbsp;"
+		      "&nbsp;"
+		      "&nbsp;"
+		      "&nbsp;"
+		      "&nbsp;"
+		      "&nbsp;"
+		      "&nbsp;"
+		      "&nbsp;"
+		      "&nbsp;"
+		      "&nbsp;"
+		      "&nbsp;"
+		      "&nbsp;"
+		      "現在の日本時間:"
+		      (sys-strftime "%m月%d日 %k:%M" (sys-localtime (current-time))))
 	    (html:br)
 	    (html:br)
 
-;;; --- 海外旅行者のための解説文章 ---
-	    (html:div
-	     (html:h1 "海外旅行者の強い味方 Sumibi.org")
-	    
-	     (html:h3 "手ぶらで海外に行きたい、でもメールも送りたい")
-	     (html:p
-	      "Sumibi.org (炭火.org) は海外のインターネットカフェや海外ホテルのビジネスセンターなどから"
-	      "日本語でメールやブログを書いたりできるサイトです。"
-	      "日本語入力(IME)の入っていない英語版Windowsからでも日本語入力できます。"
-	      "海外からYahooやGoogleで『sumibi』と検索するとこのサイトが出てきます。"
-	      "海外から日本語でメールを送りたい時はWebメールサービスに入っておくと便利ですね。"
-	      "有名な無料Webメールサービスは"
-	      (html:a :href "http://mail.yahoo.co.jp/"                      "Yahoo!メール")
-	      "、"
-	      (html:a :href "http://mail.goo.ne.jp/goomail/index.ghtml"     "gooメール")
-	      "等があります。自分に合ったものを選びましょう。")
-
-	     ;; --- Ad ---
-	     (cond
-	      (long-mode
-	       (if (file-exists? "./ad3_s.txt")
-		   (port->string (open-input-file "./ad3_s.txt"))
-		   ""))
-	      (#t
-	       (if (file-exists? "./ad3.txt")
-		   (port->string (open-input-file "./ad3.txt"))
-		   "")))
-
-;;; --- ホスティング依頼メッセージ ---
-	     (html:br)
-	   
-	     (html:div :class "footer"
-		       "<!-- google_ad_section_start -->"
-		       (html:p "本サイト(Sumibi.org)は小規模なハードウェア及びネットワーク資源を使ってホスティングしております。"
-			       "そこで、Sumibi.orgを無償でホスティングできる環境をご提供いただける企業様を募集しています。"
-			       "ご提供いただいた企業様におきましては、Sumibi.orgに優先して広告掲載させて頂きます。")
-		       "<!-- google_ad_section_end -->"
-		       )))
-	     
-
+	    )
 	   (html:script :type "text/javascript" :src "ajax/Sumibi.js")
 	   (html:script :type "text/javascript" :src "ajax/SumibiSOAP.js")
 	   (html:script :type "text/javascript" :src "ajax/ajax_sumibi.js")
