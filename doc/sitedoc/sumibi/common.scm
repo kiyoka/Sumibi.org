@@ -23,7 +23,7 @@
       "SumibiServerSetup"
       "sumibi_server_setup.html")
     ( faq
-      "FAQ"
+      "Q&A"
       "faq.html")
     ( privacy-policy
       "PrivacyPolicy"
@@ -116,7 +116,7 @@ hosted by
 	    ,(cadr (assoc key page-alist)))
 	   (author " Kiyoka Nishiyama ")
 	   (hp " http://www.sumibi.org/ ")
-	   (date " $Date: 2005/10/24 13:34:44 $ "))
+	   (date " $Date: 2006/02/22 15:42:00 $ "))
 	  (body
 
 	   ;; navigation tab

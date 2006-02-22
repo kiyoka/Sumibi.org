@@ -1,4 +1,4 @@
-/* $Id: sumibi.css,v 1.10 2005/11/26 06:04:26 kiyoka Exp $ */
+/* $Id: sumibi.css,v 1.11 2006/02/22 15:42:00 kiyoka Exp $ */
 
 body {
 	background-color: #ffffff;
@@ -28,7 +28,7 @@ div.mirror {
 }
 div.copyright {
 	background-color: #ddc;
-	text-align: right;
+	text-align: center;
 	font-size: smaller;
 	font-family: helvetica, sans-serif;
 }
