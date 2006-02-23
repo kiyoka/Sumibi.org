@@ -64,16 +64,10 @@
       (@ (format "html"))
       "
 <hr>
-hosted by 
-<a href=\"http://sourceforge.jp/\"><img src=\"http://sourceforge.jp/sflogo.php?group_id=1476\" width=\"96\" height=\"31\" border=\"0\" alt=\"SourceForge.jp\"></a>
-
-
   <!-- Creative Commons License -->
-  <a href=\"http://creativecommons.org/licenses/GPL/2.0/\"><img alt=\"CC-GNU GPL\" border=\"0\" src=\"http://creativecommons.org/images/public/cc-GPL-a.png\" /></a>  
-  This software is licensed under the <a href=\"http://creativecommons.org/licenses/GPL/2.0/\">CC-GNU GPL</a>.
+  <a href=\"http://creativecommons.org/licenses/GPL/2.0/\"><img alt=\"CC-GNU GPL\" border=\"0\" src=\"http://creativecommons.org/images/public/cc-GPL-a.png\" /></a>
   <!-- /Creative Commons License -->
   
-
   <!--
 
   <rdf:RDF xmlns=\"http://web.resource.org/cc/\"
@@ -96,9 +90,21 @@ hosted by
   </rdf:RDF>
 
   -->
+  <a href=\"http://www.godaddy.com/gdshop/ssl/ssl_opensource.asp\"
+     <img src=\"http://imagesak.godaddy.com/assets/ssl/img_cert_turbo_gd.jpg\"
+  	width=\"88\" height=\"62\"
+  	border=\"0\" alt=\"SourceForge.jp\">
+  </a>
 
+  <a href=\"http://sourceforge.jp/\"><img src=\"http://sourceforge.jp/sflogo.php?group_id=1476\" width=\"96\" height=\"31\" border=\"0\" alt=\"SourceForge.jp\"></a>
+
+  <a href=\"http://www.mickeynetusa.com/ranking/counter/incount.asp?countid=174\" target=\"_blank\"
+     <img src=\"http://www.mickeynet.com/e_ranklink/img/mickeynet130_35.gif\" width=\"130\" height=\"35\" border=\"0\">
+  </a>
+  <a href=\"http://www.NoSoftwarePatents.com\"
+     <img src=\"../nswpat80x15.png\" width=\"80\" height=\"15\" border=\"0\" alt=\"No Software Patents!\">
+  </a>
 "
-
       ))))
 
 (define (output key tree)
@@ -116,7 +122,7 @@ hosted by
 	    ,(cadr (assoc key page-alist)))
 	   (author " Kiyoka Nishiyama ")
 	   (hp " http://www.sumibi.org/ ")
-	   (date " $Date: 2006/02/22 15:42:00 $ "))
+	   (date " $Date: 2006/02/23 14:09:37 $ "))
 	  (body
 
 	   ;; navigation tab

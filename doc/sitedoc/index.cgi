@@ -85,7 +85,7 @@
 	      (html:li "ローマ字で単語を入力し、スペースを入力すると日本語に変換されます。 (例: ryokou ni kiteimasu. → 旅行に来ています。)")
 	      (if long-mode
 		  (html:li
-		   "このページは長文作成用です。Google検索を行う場合は、"
+		   "このページは長文作成用です。Google検索を行う場合は『"
 		   (html:a :href "http://www.sumibi.org/" "Google検索モード(暗号化OFF)")
 		   "』ページが便利です。")
 		  (html:li
@@ -93,7 +93,7 @@
 		   (html:a :href "https://sumibi.org/?long=1" "長文作成モード(暗号化ON)")
 		   "』ページが便利です。"))
 	      (if long-mode
-		  (html:li "助詞『は』『を』『と』『に』等 はスペースで区切って入力します。(例: kaigairyokou hoken ha →  海外旅行保険は)")
+		  (html:li "助詞『は』『を』『と』『に』等 はスペースで区切って入力します。(例: watashi ha ongaku ga sukidesu.  →  私は音楽が好きです。)")
 		  (html:li "スペースは、スペースを二回入力して下さい。 (例: orinpikku&nbsp;&nbsp;&nbsp;kekka →  オリンピック&nbsp;&nbsp;結果)"))))
 			   
 	    (html:br)
