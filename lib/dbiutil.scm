@@ -6,7 +6,6 @@
 (use gauche.collection)
 (use text.tr)
 
-
 ;; SQLのSELECTコマンドを発行して、結果をリストで取得する
 ;; カラムの型は、この関数専用のフォーマットで与える
 ;; 例)
@@ -60,7 +59,9 @@
 			"")))))
 	      format-list))
 	   _)))
-    result))
+;;    (print (format "QQQ:~a" sql))
+;;    (print (format "RRR:~a" result))
+    #?=result))
 
 
 ;; sumibi-select-query で求めた結果から、第一カラムの値のリストを作る

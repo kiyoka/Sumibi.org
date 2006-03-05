@@ -1,10 +1,10 @@
 (use file.util)
-
+(use dbd.mysql)
 
 (define sumibi-debug #f)
 
 (define sumibi-version 
-  " $Date: 2005/08/23 14:57:38 $ on CVS " ;;VERSION;;
+  " $Date: 2006/03/05 11:54:58 $ on CVS " ;;VERSION;;
   )
 (define driver (dbi-make-driver "mysql"))
 

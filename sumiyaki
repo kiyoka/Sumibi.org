@@ -1,9 +1,9 @@
-#!/usr/local/bin/gosh
+#!/usr/bin/gosh
 ;;
 ;; "Sumiyaki" is a maintenance tool for Sumibi.
 ;;
 ;;   Copyright (C) 2002,2003,2004 Kiyoka Nishiyama
-;;     $Date: 2005/11/19 10:19:40 $
+;;     $Date: 2006/03/05 11:54:58 $
 ;;
 ;; This file is part of Sumibi
 ;;

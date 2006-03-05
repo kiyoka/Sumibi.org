@@ -94,8 +94,7 @@
 		   "』ページが便利です。"))
 	      (if long-mode
 		  (html:li "助詞『は』『を』『と』『に』等 はスペースで区切って入力します。(例: watashi ha ongaku ga sukidesu.  →  私は音楽が好きです。)")
-		  (html:li "スペースは、スペースを二回入力して下さい。 (例: orinpikku&nbsp;&nbsp;&nbsp;kekka →  オリンピック&nbsp;&nbsp;結果)"))))
-			   
+		  (html:li "スペースは、スペースを二回入力して下さい。 (例: wa-rudokappu&nbsp;&nbsp;&nbsp;doitu →  ワールドカップ&nbsp;&nbsp;ドイツ)"))))
 	    (html:br)
 	    
 	    (html:div :style "text-align: center; "
