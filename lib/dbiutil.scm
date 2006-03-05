@@ -1,5 +1,3 @@
-#!/usr/local/bin/gosh
-
 ;;
 ;; DBI のアクセス用ユーティリティー
 ;;
