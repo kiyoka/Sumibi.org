@@ -86,11 +86,11 @@
 	      (if long-mode
 		  (html:li
 		   "このページは長文作成用です。Google検索を行う場合は『"
-		   (html:a :href "http://www.sumibi.org/" "Google検索モード(暗号化OFF)")
+		   (html:a :href "http://www.sumibi.org/" "Google検索モード")
 		   "』ページが便利です。")
 		  (html:li
 		   "このページからGoogle検索ができます。メール等長文を書く場合は『"
-		   (html:a :href "https://sumibi.org/?long=1" "長文作成モード(暗号化ON)")
+		   (html:a :href "http://sumibi.org/?long=1" "長文作成モード")
 		   "』ページが便利です。"))
 	      (if long-mode
 		  (html:li "助詞『は』『を』『と』『に』等 はスペースで区切って入力します。(例: watashi ha ongaku ga sukidesu.  →  私は音楽が好きです。)")
@@ -100,10 +100,10 @@
 	    (html:div :style "text-align: center; "
 		      ;; --- Ad ---
 		      (cond
-		       (long-mode
-			(if (file-exists? "./ad1_s.txt")
-			    (port->string (open-input-file "./ad1_s.txt"))
-			    ""))
+;;		       (long-mode
+;;			(if (file-exists? "./ad1_s.txt")
+;;			    (port->string (open-input-file "./ad1_s.txt"))
+;;			    ""))
 		       (#t
 			(if (file-exists? "./ad1.txt")
 			    (port->string (open-input-file "./ad1.txt"))
