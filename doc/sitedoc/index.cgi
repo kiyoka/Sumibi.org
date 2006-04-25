@@ -141,16 +141,15 @@
 		      "&nbsp;"
 		      "現在の日本時間:"
 		      (sys-strftime "%m月%d日 %k:%M" (sys-localtime (current-time))))
-	    (if long-mode
-		(html:div)
-		(html:div 
-		 (html:p
-		  "好きなブログをメルマガ化して携帯で読める"
-		  (html:a :href "http://r.eply.org/"
-			  (html:img :src "http://r.eply.org/eply_org_icon.gif" :alt "eply.org LOGO" :width 120)
-			  "メール配信型WebリーダーR＠eply.org")
-		  "もよろしく！"))
-		)
+	    (html:div 
+	     "<!-- google_ad_section_start(weight=ignore) -->"
+	     (html:p
+	      "好きなブログをメルマガ化して携帯で読める"
+	      (html:a :href "http://r.eply.org/"
+		      (html:img :src "http://r.eply.org/eply_org_icon.gif" :alt "eply.org LOGO" :width 120)
+		      "メール配信型WebリーダーR＠eply.org")
+	      "もよろしく！"))
+	    "<!-- google_ad_section_end -->"
 	    (html:br)
 	    (html:br)
 	    )
