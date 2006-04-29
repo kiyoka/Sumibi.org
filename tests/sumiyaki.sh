@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash 
 
 HOUR=`date +'%H'`
 GO=1
@@ -11,9 +11,9 @@ do
 done
 
 if [ $GO = 1 ] ; then
-  ../sumiyaki $*
+  echo "sumiyaki=>[" $* "]"
+  gosh ../sumiyaki $*
 else
   echo "skip" $*
   sleep 3600
 fi
-

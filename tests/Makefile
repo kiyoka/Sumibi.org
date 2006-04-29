@@ -32,7 +32,6 @@ jf:
 	find /home/park/sumibi_corpus/JFdocs -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 wikipedia:
 	find /home/park/sumibi_corpus/wikipedia_ja/data -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
-#	cat ~/park/sumibi_corpus/wikipedia_files.txt | awk -v sumiyaki="${SUMIYAKI}" '{ printf("%s -l %s\n", sumiyaki, $$1 );}' | bash -s > ~/park/log
 yamagata:
 	find /home/park/sumibi_corpus/Yamagata -name '*.txt' -exec $(SUMIYAKI) -l {} \; > ~/park/log
 thinkgnu:
