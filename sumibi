@@ -1,9 +1,9 @@
-#!/usr/bin/gosh
+#!/usr/local/bin/gosh
 ;;
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
-;;     $Date: 2006/03/05 11:54:58 $
+;;     $Date: 2006/04/30 11:30:36 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -110,7 +110,7 @@
 ;;      (freq     . 頻度:回数)
 ;;   )
 ;;
-(define (sumibi-lookup-candidate-bunsetu str method spaces query)
+(define (sumibi-lookup-candidate-bunsetu str method spaces conn)
   (let* (
 	 (hiragana (sumibi-roman->kana str))
 	 (katakana (if hiragana
@@ -186,7 +186,7 @@
 	       (yomi     . ,(list-ref x 2))
 	       (okuri    . ,(list-ref x 3))
 	       (freq     . ,(list-ref x 4))))
-	   (sumibi-select-query query 
+	   (sumibi-select-query conn
 				query-string
 				"dsssd"
 				))))
@@ -291,7 +291,7 @@
 ;;
 ;; 前後に2連鎖した単語候補から、全組合せの共起確率を求める
 ;;
-(define (sumibi-compute-candidate-pacent-sub rensa-bunsetu query)
+(define (sumibi-compute-candidate-pacent-sub rensa-bunsetu conn)
 
   ;; 総あたりのwhere句を生成する
   (define (make-souatari-where-exp id-list1 id-list2)
@@ -309,14 +309,14 @@
 
 
   ;; 共起頻度を集計し％で結果を求める
-  (define (exec-bigram-search-pre id-list table-name where-exp key debug-message query)
+  (define (exec-bigram-search-pre id-list table-name where-exp key debug-message conn)
     (let* (
 	   (sum-query-string
 	    (string-append "SELECT SUM(freq_base) FROM " table-name " WHERE " where-exp))
 	   (_
 	    (if (null? id-list)
 		'((1))
-		(sumibi-select-query query 
+		(sumibi-select-query conn
 				     sum-query-string
 				     "d")))
 	   (sum-str (number->string (caar _)))
@@ -346,19 +346,20 @@
 		     (,(string->symbol key) . ,(list-ref x 3))
 		     (tango     . ,(list-ref x 4))
 		     (okuri     . ,(list-ref x 5))))
-		 (sumibi-select-query query 
+		 (sumibi-select-query conn 
 				      bigram-query-string
-				      "ddddss")))))))
+				      "ddddss")))))
+      result-bigram))
 
   ;; 共起頻度を集計し％で結果を求める
-  (define (exec-bigram-search-post id-list table-name where-exp key debug-message query)
+  (define (exec-bigram-search-post id-list table-name where-exp key debug-message conn)
     (let* (
 	   (sum-query-string
 	    (string-append "SELECT SUM(freq_base) FROM " table-name " WHERE " where-exp))
 	   (_
 	    (if (null? id-list)
 		'((1))
-		(sumibi-select-query query 
+		(sumibi-select-query conn 
 				     sum-query-string
 				     "d")))
 	   (sum-str (number->string (caar _)))
@@ -388,9 +389,10 @@
 		     (,(string->symbol key) . ,(list-ref x 3))
 		     (tango     . ,(list-ref x 4))
 		     (okuri     . ,(list-ref x 5))))
-		 (sumibi-select-query query 
+		 (sumibi-select-query conn 
 				      bigram-query-string
-				      "ddddss")))))))
+				      "ddddss")))))
+      result-bigram))
 
   (let* (
 	 ;; 二つ前の単語の候補ID
@@ -453,7 +455,7 @@
 	 (sum-query-string
 	  (string-append "SELECT SUM(freq_base) FROM word WHERE " where-exp))
 	 (_
-	  (sumibi-select-query query 
+	  (sumibi-select-query conn 
 			       sum-query-string
 			       "d"))
 	 (sum-str (number->string (caar _)))
@@ -482,26 +484,26 @@
 	       (sum0      . ,(list-ref x 5))
 	       (relative0 . ,(list-ref x 6))))
 
-	   (sumibi-select-query query 
+	   (sumibi-select-query conn 
 				query-string
 				"dsssddd")))
 
 
 	 ;; 頻度総計を求める(pre1)
 	 (result-bigram-pre1
-	  (exec-bigram-search-pre id-list-pre1 "bigram" where-exp-pre1 "relative-1" "#search-pre1" query))
+	  (exec-bigram-search-pre id-list-pre1 "bigram" where-exp-pre1 "relative-1" "#search-pre1" conn))
 
 	 ;; 頻度総計を求める(pre2)
 	 (result-bigram-pre2
-	  (exec-bigram-search-pre id-list-pre2 "skip_bigram" where-exp-pre2 "relative-2" "#search-pre2" query))
+	  (exec-bigram-search-pre id-list-pre2 "skip_bigram" where-exp-pre2 "relative-2" "#search-pre2" conn))
 
 	 ;; 頻度総計を求める(post1)
 	 (result-bigram-post1
-	  (exec-bigram-search-post id-list-post1 "bigram" where-exp-post1 "relative1" "#search-post1" query))
+	  (exec-bigram-search-post id-list-post1 "bigram" where-exp-post1 "relative1" "#search-post1" conn))
 
 	 ;; 頻度総計を求める(post2)
 	 (result-bigram-post2
-	  (exec-bigram-search-post id-list-post2 "skip_bigram" where-exp-post2 "relative2" "#search-post2" query)))
+	  (exec-bigram-search-post id-list-post2 "skip_bigram" where-exp-post2 "relative2" "#search-post2" conn)))
 
     (when sumibi-debug
 	  (begin
@@ -524,7 +526,7 @@
 ;;
 ;; 前後に2連鎖した単語候補から、全組合せの共起確率を求める
 ;;
-(define (sumibi-compute-candidate-pacent rensa-bunsetu query)
+(define (sumibi-compute-candidate-pacent rensa-bunsetu conn)
   (when sumibi-debug
 	(begin
 	  (display "#2#:")
@@ -552,14 +554,14 @@
 	;; 候補が存在するものについて実際に計算する
 	`(
 	  ,(car (list-ref rensa-bunsetu 2))
-	  ,(sumibi-compute-candidate-pacent-sub rensa-bunsetu query)))))
+	  ,(sumibi-compute-candidate-pacent-sub rensa-bunsetu conn)))))
 
 
 ;;
 ;; 変換候補リストを作成する
 ;;  連鎖する単語の評価値を求め、一番評価値の高い候補に並べる
 ;;
-(define (sumibi-make-henkan-kouho kouho-list query)
+(define (sumibi-make-henkan-kouho kouho-list conn)
   (let* (
 	 ;; ダミーの文節データ
 	 (dummy-bunsetu
@@ -625,7 +627,7 @@
 	 (point-result
 	  (map
 	   (lambda (rensa-bunsetu)
-	     (sumibi-compute-candidate-pacent rensa-bunsetu query))
+	     (sumibi-compute-candidate-pacent rensa-bunsetu conn))
 	   (zip
 	    kouho-list-pre4
 	    kouho-list-pre3
@@ -774,7 +776,7 @@
 ;;
 ;; 文章文字列を変換する。
 ;;
-(define (sumibi-convert-sentence str query)
+(define (sumibi-convert-sentence str conn)
   (let* (
 	 ;; 文節リスト ( 一つ一つの文節は、全てローマ字のまま )
 	 (bunsetu-list (string-split str #/\s+/))
@@ -813,7 +815,7 @@
 				(cdr (assoc _ sumibi-method-list))
 				#f)))
 
-	       (sumibi-lookup-candidate-bunsetu tango method (cadr x) query)))
+	       (sumibi-lookup-candidate-bunsetu tango method (cadr x) conn)))
 	   (zip
 	    bunsetu-list
 	    spaces-list)))
@@ -826,7 +828,7 @@
 		  (newline))))
 
 	 ;; 評価値順の候補リストを求める
-	 (henkan-kouho-list (sumibi-make-henkan-kouho lookup-list query))
+	 (henkan-kouho-list (sumibi-make-henkan-kouho lookup-list conn))
 
 	 ;; 変換候補リストを完成させて返す。
 	 (complete-henkan-kouho-list (sumibi-output-henkan-kouho-list henkan-kouho-list)))
@@ -836,7 +838,7 @@
 
 
 ;; 一行コマンドを実行する
-(define (sumibi-do-command str query)
+(define (sumibi-do-command str conn)
 
 
   ;;
@@ -865,7 +867,7 @@
       ('convertsexp
        (let (
 	     (result
-	      (sumibi-convert-sentence args-string query)))
+	      (sumibi-convert-sentence args-string conn)))
 	 (list
 	  "ok\n"
 	  (string-append (write-to-string result) "\n"))))
@@ -873,7 +875,7 @@
       ('convert
        (let (
 	     (result
-	      (sumibi-convert-sentence args-string query)))
+	      (sumibi-convert-sentence args-string conn)))
 	 (list
 	  "ok\n"
 	 (map
@@ -924,19 +926,12 @@
 ;;  (write (generate-roman->kana-table))
 
   (let* (
-	 (connection 
-	  (guard (exc
-		  ((is-a? exc <dbi-exception>)
-		   ((display "error  : ")(display (ref exc 'message))(newline)
-		    (display "user   : ")(display sumibi-sumibidb-user)(newline)
-		    (display "db-name: ")(display sumibi-sumibidb-name)(newline)
-		    (exit 1))))
-		 (dbi-make-connection driver 
-				      sumibi-sumibidb-user
-				      sumibi-sumibidb-password
-				      sumibi-sumibidb-name)))
-	 (query (dbi-make-query connection))
-	 (_ (sumibi-query query "SET CHARACTER SET utf8;"))
+	 (conn
+	  (sumibi-db-connect
+	   sumibi-sumibidb-host
+	   sumibi-sumibidb-name
+	   sumibi-sumibidb-user
+	   sumibi-sumibidb-password))
 
 	 ;; 第一引数を捨てる
 	 (_ (cdr args))
@@ -950,7 +945,7 @@
     ;; 標準入出力による対話式プロトコル
     (port-for-each
      (lambda (x)
-       (let ((result (sumibi-do-command x query)))
+       (let ((result (sumibi-do-command x conn)))
 	 (when (not result)
 	       (exit 0))
 	 (write-tree result)

@@ -45,7 +45,7 @@
 
 
 ;; SKK辞書をロードしてデータベースに登録する
-(define (sumibi-skkdict-load input-port connection)
+(define (sumibi-skkdict-load input-port conn)
   (for-each
    (lambda (x)
      (when (not (rxmatch #/^;/ x))
@@ -69,13 +69,16 @@
 		    (_ (cdr (drop-right (string-split (cadr field) "/") 1)))
 		    ;; '("笑" "嗤")
 		    (words
-		     (map
+		     (filter-map
 		      (lambda (x)
-			(or (string-scan x 
-					 ";"
-					 'before)
-			    x))
-		      
+			(if (rxmatch #/^\(/ x)
+			    ;; S式は除外する
+			    #f
+			    ;; それ以外
+			    (or (string-scan x 
+					     ";"
+					     'before)
+				x)))
 		      _))
 
 		    ;; '("わら" "u")
@@ -92,8 +95,6 @@
 			    (cadr hira-list))
 		      (cons 'kanji
 			    (list words))))
-		    
-		    (query (dbi-make-query connection))
 		    )
 
 	       ;; デバッグ表示
@@ -108,7 +109,7 @@
 				kanji-str
 				))
 
-		       (result-set (sumibi-query query 
+		       (result-set (sumibi-query conn
 						 query-string
 						 )))
 		       

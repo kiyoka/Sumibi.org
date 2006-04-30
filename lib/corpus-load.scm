@@ -12,7 +12,7 @@
 
 
 ;; 送りがなの処理を追加してマッチするかどうかをチェックする
-(define (sumibi-decide-id-with-okuri tango rows query)
+(define (sumibi-decide-id-with-okuri tango rows conn)
   (let*
       (
        ;; 漢字部分と送り部分を分割して確認する
@@ -48,7 +48,7 @@
 		   (format "SELECT id, tango, okuri FROM word WHERE tango = ~s and okuri = ~s;" kanji okuri))
 		  (rows
 		   (sumibi-result-slice
-		    (sumibi-select-query query sql "d"))))
+		    (sumibi-select-query conn sql "d"))))
 
 	     (when sumibi-debug
 		   (begin
@@ -58,7 +58,7 @@
 	     ;; 送りがなを送りがなテーブルに登録する
 	     (when (< 0 (length rows))
 		   (begin
-		     (sumibi-register-okuri okuri-kana query)
+		     (sumibi-register-okuri okuri-kana conn)
 		     (when sumibi-debug
 			   (display (format "OKURI: kanji=~s okuri=~s okuri-kana=~s" kanji okuri okuri-kana)))))
 	     rows)))))
@@ -66,7 +66,7 @@
 
 
 ;; 送り仮名が形態素解析で分離されているものを、辞書を使って結合可能かチェックする
-(define (sumibi-is-exist-series-word tango next-tango query)
+(define (sumibi-is-exist-series-word tango next-tango conn)
   (if (romkan-is-hiragana next-tango)
       (let* (
 	     (okuri
@@ -77,7 +77,7 @@
 	      (format "SELECT id, tango, okuri FROM word WHERE tango = ~s and okuri = ~s;" tango okuri))
 	     (rows
 	      (sumibi-result-slice
-	       (sumibi-select-query query sql "d"))))
+	       (sumibi-select-query conn sql "d"))))
 
 	(< 0 (length rows)))
       #f))
@@ -86,7 +86,7 @@
 
 
 ;; 送りがなを送りがなテーブルに登録する
-(define (sumibi-register-okuri kana query)
+(define (sumibi-register-okuri kana conn)
   (let* (
 	 (okuri
 	  (substring  
@@ -109,18 +109,18 @@
 		  (newline))))
 
 	 (_
-	  (sumibi-query query 
+	  (sumibi-query conn 
 			sql1
 			))
 	 (_
-	  (sumibi-query query 
+	  (sumibi-query conn 
 			sql2
 			))))
   #t)
 
 
 ;; 送り仮名が形態素解析で分離してしまっている連語を統合する
-(define (sumibi-union-series-word wakachi-list query)
+(define (sumibi-union-series-word wakachi-list conn)
   (cond ((null? wakachi-list)
 	 '())
 	((> 2 (length wakachi-list))
@@ -130,7 +130,7 @@
 	    (sumibi-is-exist-series-word 
 	     (car wakachi-list)
 	     (cadr wakachi-list)
-	     query)
+	     conn)
 	    (begin
 	      (display (format "#2# GOT okuri( ~s ~s )" (car wakachi-list) (cadr wakachi-list)))
 	      (newline)
@@ -140,21 +140,21 @@
 	       (string-append
 		(car wakachi-list)
 		(cadr wakachi-list))
-	       (sumibi-union-series-word (cddr wakachi-list) query)))
+	       (sumibi-union-series-word (cddr wakachi-list) conn)))
 	    (cons
 	     (car wakachi-list)
-	     (sumibi-union-series-word (cdr wakachi-list)  query))))))
+	     (sumibi-union-series-word (cdr wakachi-list)  conn))))))
 
 
 
 ;; コーパスの単語からDB中のidを決定する
-(define (sumibi-tango->tango-id tango query)
+(define (sumibi-tango->tango-id tango conn)
   (let* (
 	 (sql     
 	  (format "SELECT id, tango, okuri FROM word WHERE tango = ~s AND tango IS NOT NULL;" tango))
 	 (rows
 	  (sumibi-result-slice
-	   (sumibi-select-query query sql "d")))
+	   (sumibi-select-query conn sql "d")))
 	 )
     (when sumibi-debug
 	  (begin
@@ -164,7 +164,7 @@
     (cond ((rxmatch #/^[\.0-9０-９]+$/ tango)
 	   ;; 数字のみで構成される場合、数値型レコードのIDをもとめて返す (小数点もOK)
 	   (sumibi-result-slice
-	    (sumibi-select-query query "SELECT id FROM word WHERE kind = 'n';" "d")))
+	    (sumibi-select-query conn "SELECT id FROM word WHERE kind = 'n';" "d")))
 
 	  ((not (null? rows))
 	   ;; そのままの文字列でデータベースから結果が取得できた場合
@@ -172,7 +172,7 @@
 
 	  (else
 	   ;; 送りがなの処理を追加してマッチするかどうかをチェックする
-	   (let* ((result (sumibi-decide-id-with-okuri tango rows query)))
+	   (let* ((result (sumibi-decide-id-with-okuri tango rows conn)))
 	     (cond (
 		    
 		    ;; 新規の単語を学習する(英単語、ひらがな、カタカナ語で未定義の単語を、word テーブルに追加する)
@@ -189,14 +189,14 @@
 				    yomi
 				    tango
 				    ))
-			   (_       (dbi-execute-query query sql)))
+			   (_       (sumibi-query conn sql)))
 		      
 		      (when sumibi-debug
 			    (begin
 			      (display "#4# ") (display sql) 
 			      (newline)))
 		      
-		      (sumibi-tango->tango-id tango query)))
+		      (sumibi-tango->tango-id tango conn)))
 
 		   (else
 		    ;; 学習処理なし
@@ -214,7 +214,7 @@
 
 
 ;; ペアの単語をテーブルに登録する
-(define (register-pair-to-bigram pair-member query table-name)
+(define (register-pair-to-bigram pair-member conn table-name)
   (let (
 	(first-word  (or (caar pair-member)
 			 '()))
@@ -238,21 +238,21 @@
 		       table-name
 		       (car x)
 		       (cadr x)))
-	      (_       (sumibi-query query sql1))
+	      (_       (sumibi-query conn sql1))
 	      (sql2
 	       (format "UPDATE LOW_PRIORITY ~a SET freq_base=freq_base+1 WHERE id_m1 = ~d and id_base = ~d;"
 		       table-name
 		       (car x)
 		       (cadr x)))
-	      (_       (sumibi-query query sql2))
+	      (_       (sumibi-query conn sql2))
 	      (sql3
 	       (format "UPDATE LOW_PRIORITY word SET freq_base=freq_base+1 WHERE id = ~d;"
 		       (car x)))
-	      (_       (sumibi-query query sql3))
+	      (_       (sumibi-query conn sql3))
 	      (sql4
 	       (format "UPDATE LOW_PRIORITY word SET freq_base=freq_base+1 WHERE id = ~d;"
 		       (cadr x)))
-	      (_       (sumibi-query query sql4))
+	      (_       (sumibi-query conn sql4))
 	      )
 	 (when sumibi-debug
 	       (begin
@@ -272,32 +272,32 @@
 
 ;; わかち書きされたリストからbigramテーブルに出現頻度を登録する
 ;; ( ((1 2 3 4) "単語") ((100 "を")) ... )
-(define (register-to-bigram wakachi-list query)
+(define (register-to-bigram wakachi-list conn)
   (if (> 2 (length wakachi-list))
       #f
       (begin
 	(register-pair-to-bigram (list 
 				  (car wakachi-list)
 				  (cadr wakachi-list))
-				 query
+				 conn
 				 "bigram")
-	(register-to-bigram (cdr wakachi-list) query))))
+	(register-to-bigram (cdr wakachi-list) conn))))
 
 
 ;; わかち書きされたリストからskip_bigramテーブルに出現頻度を登録する
 ;; bigram テーブルとの違いは、隣接する単語どうしではなく、一つの単語を飛ばした単語どうしを登録する
 ;;  以下の例では [単語] と [登録] という単語が 組合せで登録される
 ;;   ( ((1 2 3 4) "単語") ((100 "を")) ((125 "登録")) ... )
-(define (register-to-skip-bigram wakachi-list query)
+(define (register-to-skip-bigram wakachi-list conn)
   (if (> 3 (length wakachi-list))
       #f
       (begin
 	(register-pair-to-bigram (list 
 				  (car wakachi-list)
 				  (caddr wakachi-list))
-				 query
+				 conn
 				 "skip_bigram")
-	(register-to-skip-bigram (cdr wakachi-list) query))))
+	(register-to-skip-bigram (cdr wakachi-list) conn))))
 
 
 ;; コーパス全体を入力して 読点までを１行に分割する
@@ -317,7 +317,7 @@
 
 
 ;; コーパスを読み込んで、テーブルに登録する
-(define (sumibi-corpus-load-from-port input-port query)
+(define (sumibi-corpus-load-from-port input-port conn)
   (let* (
 	 (line-list
 	  (corpus-split-to-sentence input-port)))
@@ -333,14 +333,14 @@
 		  #/[\s]+/))
 		
 		;; 複数の単語に分かれている送りがなを一つの単語に統合する
-		(word-list (sumibi-union-series-word word-list query))
+		(word-list (sumibi-union-series-word word-list conn))
 		
 		;; 各単語の単語IDをDBから求める
 		(result
 		 (map
 		  (lambda (arg)
 		    (list
-		     (sumibi-tango->tango-id arg query)
+		     (sumibi-tango->tango-id arg conn)
 		     arg))
 		  word-list))
 		)
@@ -353,34 +353,33 @@
 		   (newline)))
 		       
 	   ;; bigram テーブルに連鎖して出現する頻度を登録する
-	   (register-to-bigram result query)
+	   (register-to-bigram result conn)
 	   ;; skip-bigram テーブルに連鎖して出現する頻度を登録する
-	   (register-to-skip-bigram result query))))
+	   (register-to-skip-bigram result conn))))
 
      line-list)))
 
 
 
 ;; 新規のコーパスファイルの場合だけ、ロードする。
-(define (sumibi-corpus-load input-port input-file connection)
+(define (sumibi-corpus-load input-port input-file conn)
   (let* (
 	 ;; 入力ファイルが、既に処理済みかどうかを調べる
-	 (query (dbi-make-query connection))
 	 (sql     (format "SELECT filename FROM file WHERE filename = ~s;" input-file))
 	 (rows
 	  (sumibi-result-slice
-	   (sumibi-select-query query
+	   (sumibi-select-query conn
 				sql
 				"s"))))
 
     (if (< 0 (length rows))
 	(begin
-	  (display (format "#5# already load file [~s]   " input-file)) (display sql) 
+	  (display (format "#5# already load file [~s]   " input-file))
 	  (newline))
 	(begin
-	  (sumibi-corpus-load-from-port input-port query)
+	  (sumibi-corpus-load-from-port input-port conn)
 	  ;; 読み込んだファイル名をデータベースに登録する。
 	  (let* (
-		 (_       (sumibi-query query 
+		 (_       (sumibi-query conn 
 					(format "INSERT LOW_PRIORITY IGNORE file ( filename, date ) VALUES ( ~s, NOW() );" input-file)))))))))
 
