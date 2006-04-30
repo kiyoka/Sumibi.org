@@ -1,3 +1,4 @@
+convert	Sumibi ha toukeiteki apuro-chi wo tukatta ro-maji kanjihenkann enjinn desu .
 convert	watashi no.h namae ha.h nakano desu .
 convert	tokkyo ha shinsa ni jikan ga kakari masu
 convert	kyouha ii tenki nanode , sukoshi ashi wo nobashite kaimono ni ikimashita .

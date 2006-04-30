@@ -16,7 +16,7 @@ h2:
 
 
 create:
-	echo "create database " $(DICT) " DEFAULT CHARACTER SET utf8;" | mysql
+#	echo "create database " $(DICT) " DEFAULT CHARACTER SET utf8;" | mysql
 	$(SUMIYAKI) -c
 
 load:

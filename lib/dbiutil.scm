@@ -6,11 +6,39 @@
 (use gauche.collection)
 (use text.tr)
 
+;;
+;; DBサーバーに接続する ( DBサーバーはMySQL固定 )
+;;
+;;   DBサーバーに接続したらそのコネクションを返す
+;;   ついでに、クライアントがutf8である旨をMySQLに申告しておく
+;;
+(define (sumibi-db-connect host dbname user password)
+  (let* (
+	 (conn
+	  (guard (exc
+		  ((is-a? exc <dbi-exception>)
+		   ((display "error  : ")(display (ref exc 'message))(newline)
+		    (display "host   : ")(display host)(newline)
+		    (display "dbname : ")(display dbname)(newline)
+		    (display "user   : ")(display user)(newline)
+		    (exit 1))))
+		 (dbi-connect
+		  (format #f "dbi:mysql:~a;host=~a" dbname host)
+		  :username user 
+		  :password password)))
+	 (query (dbi-prepare
+		 conn
+		 "SET CHARACTER SET utf8;"))
+	 (result (dbi-execute query)))
+    conn))
+
+	 
+
 ;; SQLのSELECTコマンドを発行して、結果をリストで取得する
 ;; カラムの型は、この関数専用のフォーマットで与える
 ;; 例)
 ;;   呼出し
-;;     (sumibi-select-squery "SELECT * FROM t;" "dds" query)
+;;     (sumibi-select-query conn "SELECT * FROM t;" "dds")
 ;;   format-string のルール
 ;;     d ... 数値型
 ;;     s ... 文字列型
@@ -28,7 +56,7 @@
 ;;       )
 ;;    )
 ;;
-(define (sumibi-select-query query sql format-string)
+(define (sumibi-select-query conn sql format-string)
   (let* (
 	 (_ 
 	  (guard (exc
@@ -36,7 +64,8 @@
 		   ((display "error: ")(display (ref exc 'message))(newline)
 		    (display "query: ")(display sql)(newline)
 		    (exit 1))))
-		 (dbi-execute-query query sql)))
+		 (dbi-execute 
+		  (dbi-prepare conn sql))))
 	 (format-list '())
 	 (__
 	  (dotimes (i (string-length format-string))
@@ -59,9 +88,7 @@
 			"")))))
 	      format-list))
 	   _)))
-;;    (print (format "QQQ:~a" sql))
-;;    (print (format "RRR:~a" result))
-    #?=result))
+    result))
 
 
 ;; sumibi-select-query で求めた結果から、第一カラムの値のリストを作る
@@ -79,11 +106,37 @@
 
 ;; SQLのSELECT以外のクエリを発行する
 ;;
-(define (sumibi-query query sql)
+(define (sumibi-query conn sql)
   (guard (exc
 	  ((is-a? exc <dbi-exception>)
 	   ((display "error: ")(display (ref exc 'message))(newline)
 	    (display "query: ")(display sql)(newline)
 	    (exit 1))))
-	 (dbi-execute-query query sql)))
+	 (dbi-execute 
+	  (dbi-prepare conn sql))))
+
+
+;; 簡単な試験を行う
+(if #t
+    (begin
+      (define sumibi-debug #f)
+      (load "~/.sumibi")
+      (define (main args)  (sumibi-db-test))))
+    
+(define (sumibi-db-test)
+  (let* (
+	 (conn
+	  (sumibi-db-connect 
+	   sumibi-sumibidb-host
+	   sumibi-sumibidb-name
+	   sumibi-sumibidb-user
+	   sumibi-sumibidb-password))
+	 (result
+	  (sumibi-select-query
+	   conn
+	   "show tables;" "s")))
+    (print result)
+    ))
+
+
 
