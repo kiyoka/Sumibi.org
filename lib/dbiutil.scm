@@ -2,9 +2,16 @@
 ;; DBI のアクセス用ユーティリティー
 ;;
 
-(use dbi)
-(use gauche.collection)
-(use text.tr)
+
+(define-module sumibi.dbiutil
+  (use dbi)
+  (use gauche.collection)
+  (use text.tr)
+  (export sumibi-dbi-connect
+	  sumibi-dbi-read-query
+	  sumibi-dbi-slice-result
+	  sumibi-dbi-write-query))
+(select-module sumibi.dbiutil)
 
 ;;
 ;; DBサーバーに接続する ( DBサーバーはMySQL固定 )
@@ -12,7 +19,7 @@
 ;;   DBサーバーに接続したらそのコネクションを返す
 ;;   ついでに、クライアントがutf8である旨をMySQLに申告しておく
 ;;
-(define (sumibi-db-connect host dbname user password)
+(define (sumibi-dbi-connect host dbname user password)
   (let* (
 	 (conn
 	  (guard (exc
@@ -56,7 +63,7 @@
 ;;       )
 ;;    )
 ;;
-(define (sumibi-select-query conn sql format-string)
+(define (sumibi-dbi-read-query conn sql format-string)
   (let* (
 	 (_ 
 	  (guard (exc
@@ -92,7 +99,7 @@
 
 ;; sumibi-select-query で求めた結果から、第一カラムの値のリストを作る
 ;;
-(define (sumibi-result-slice rows)
+(define (sumibi-dbi-slice-result rows)
   (when (null? rows)
 	rows)
   (map
@@ -105,7 +112,7 @@
 
 ;; SQLのSELECT以外のクエリを発行する
 ;;
-(define (sumibi-query conn sql)
+(define (sumibi-dbi-write-query conn sql)
   (guard (exc
 	  ((is-a? exc <dbi-exception>)
 	   ((display "error: ")(display (ref exc 'message))(newline)
@@ -114,27 +121,30 @@
 	 (dbi-do conn sql)))
 
 
-;; 簡単な試験を行う
-(if #f
-    (begin
-      (define sumibi-debug #f)
-      (load "~/.sumibi")
-      (define (main args)  (sumibi-db-test))))
-    
-(define (sumibi-db-test)
+(define (sumibi-dbi-test)
   (let* (
 	 (conn
-	  (sumibi-db-connect 
+	  (sumibi-dbi-connect 
 	   sumibi-sumibidb-host
 	   sumibi-sumibidb-name
 	   sumibi-sumibidb-user
 	   sumibi-sumibidb-password))
 	 (result
-	  (sumibi-select-query
+	  (sumibi-dbi-read-query
 	   conn
 	   "show tables;" "s")))
     (print result)
     ))
+
+;; 簡単な試験を行う
+(if #f
+    (begin
+      (define sumibi-debug #f)
+      (load "~/.sumibi")
+      (sumibi-dbi-test)))
+
+
+(provide "sumibi/dbiutil")
 
 
 
