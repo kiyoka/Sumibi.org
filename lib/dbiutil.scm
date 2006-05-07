@@ -64,8 +64,7 @@
 		   ((display "error: ")(display (ref exc 'message))(newline)
 		    (display "query: ")(display sql)(newline)
 		    (exit 1))))
-		 (dbi-execute 
-		  (dbi-prepare conn sql))))
+		 (dbi-do conn sql)))
 	 (format-list '())
 	 (__
 	  (dotimes (i (string-length format-string))
@@ -112,8 +111,7 @@
 	   ((display "error: ")(display (ref exc 'message))(newline)
 	    (display "query: ")(display sql)(newline)
 	    (exit 1))))
-	 (dbi-execute 
-	  (dbi-prepare conn sql))))
+	 (dbi-do conn sql)))
 
 
 ;; 簡単な試験を行う
