@@ -1,5 +1,5 @@
 ;;
-;; DBI �Υ��������ѥ桼�ƥ���ƥ���
+;; DBI のアクセス用ユーティリティー
 ;;
 
 (use dbi)
@@ -7,10 +7,10 @@
 (use text.tr)
 
 ;;
-;; DB�����С�����³���� ( DB�����С���MySQL���� )
+;; DBサーバーに接続する ( DBサーバーはMySQL固定 )
 ;;
-;;   DB�����С�����³�����餽�Υ��ͥ��������֤�
-;;   �Ĥ��Ǥˡ����饤����Ȥ�utf8�Ǥ���ݤ�MySQL�˿��𤷤Ƥ���
+;;   DBサーバーに接続したらそのコネクションを返す
+;;   ついでに、クライアントがutf8である旨をMySQLに申告しておく
 ;;
 (define (sumibi-db-connect host dbname user password)
   (let* (
@@ -34,22 +34,22 @@
 
 	 
 
-;; SQL��SELECT���ޥ�ɤ�ȯ�Ԥ��ơ���̤�ꥹ�ȤǼ�������
-;; �����η��ϡ����δؿ����ѤΥե����ޥåȤ�Ϳ����
-;; ��)
-;;   �ƽФ�
+;; SQLのSELECTコマンドを発行して、結果をリストで取得する
+;; カラムの型は、この関数専用のフォーマットで与える
+;; 例)
+;;   呼出し
 ;;     (sumibi-select-query conn "SELECT * FROM t;" "dds")
-;;   format-string �Υ롼��
-;;     d ... ���ͷ�
-;;     s ... ʸ����
-;;   ��̥ꥹ��
+;;   format-string のルール
+;;     d ... 数値型
+;;     s ... 文字列型
+;;   結果リスト
 ;;     (
-;;       (             ;; ������
+;;       (             ;; １行目
 ;;         (10
 ;;         (20
 ;;         ("value1")
 ;;       )
-;;       (             ;; ������
+;;       (             ;; ２行目
 ;;         (100
 ;;         (200
 ;;         ("value2")
@@ -90,7 +90,7 @@
     result))
 
 
-;; sumibi-select-query �ǵ�᤿��̤��顢��쥫�����ͤΥꥹ�Ȥ���
+;; sumibi-select-query で求めた結果から、第一カラムの値のリストを作る
 ;;
 (define (sumibi-result-slice rows)
   (when (null? rows)
@@ -103,7 +103,7 @@
 
 
 
-;; SQL��SELECT�ʳ��Υ������ȯ�Ԥ���
+;; SQLのSELECT以外のクエリを発行する
 ;;
 (define (sumibi-query conn sql)
   (guard (exc
@@ -114,7 +114,7 @@
 	 (dbi-do conn sql)))
 
 
-;; ��ñ�ʻ��Ԥ�
+;; 簡単な試験を行う
 (if #f
     (begin
       (define sumibi-debug #f)
