@@ -117,7 +117,7 @@
 
 
 ;; 簡単な試験を行う
-(if #t
+(if #f
     (begin
       (define sumibi-debug #f)
       (load "~/.sumibi")
