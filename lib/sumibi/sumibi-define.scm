@@ -4,7 +4,7 @@
 (define sumibi-debug #f)
 
 (define sumibi-version 
-  " $Date: 2006/05/07 11:41:56 $ on CVS " ;;VERSION;;
+  " $Date: 2006/05/07 12:05:56 $ on CVS " ;;VERSION;;
   )
 
 ;; 評価バランス ( skip-2重マルコフ 2重マルコフ 1重マルコフ 2重マルコフ skip-2重マルコフ)
