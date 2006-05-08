@@ -1,5 +1,17 @@
-
-
+;;
+;; ローマ字と仮名、カタカナを扱うライブラリ
+;;
+(define-module sumibi.romkan
+  (use text.tr)
+  (use gauche.collection)
+  (export 
+   romkan-roman->kana
+   romkan-kana->roman
+   romkan-hiragana->katakana
+   romkan-katakana->hiragana
+   romkan-is-katakana
+   romkan-is-hiragana))
+(select-module sumibi.romkan)
 
 ;; このテーブルはruby-romkan から変換した
 ;;   クンレイ式と仮名の変換テーブルはSumibiには不要なので除去した。
@@ -440,3 +452,5 @@
 	  (lambda (x y)
 	    (> (string-length (car x))
 	       (string-length (car y)))))))
+
+(provide "sumibi/romkan")

@@ -6,12 +6,12 @@
 (define-module sumibi.dbiutil
   (use dbi)
   (use gauche.collection)
-  (use text.tr)
   (export sumibi-dbi-connect
 	  sumibi-dbi-read-query
 	  sumibi-dbi-slice-result
 	  sumibi-dbi-write-query))
 (select-module sumibi.dbiutil)
+
 
 ;;
 ;; DBサーバーに接続する ( DBサーバーはMySQL固定 )
@@ -145,6 +145,3 @@
 
 
 (provide "sumibi/dbiutil")
-
-
-
