@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
-;;     $Date: 2006/04/30 11:30:36 $
+;;     $Date: 2006/05/08 03:25:15 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -31,11 +31,13 @@
 (use dbi)
 (use gauche.collection)
 (use util.list)
+(use util.combinations)
 (use www.cgi)
 (use text.tree)
-(load "sumibi/sumibi-define.scm")
-(load "sumibi/skkdict-load.scm")
-(load "sumibi/corpus-load.scm")
+(use sumibi.define)
+(use sumibi.dbiutil)
+(use sumibi.romkan)
+
 ;; デバッグモードの時だけ、slibを読みこむ
 (when sumibi-debug
       (begin
@@ -186,10 +188,10 @@
 	       (yomi     . ,(list-ref x 2))
 	       (okuri    . ,(list-ref x 3))
 	       (freq     . ,(list-ref x 4))))
-	   (sumibi-select-query conn
-				query-string
-				"dsssd"
-				))))
+	   (sumibi-dbi-read-query conn
+				  query-string
+				  "dsssd"
+				  ))))
 
     (when sumibi-debug
 	  (begin
@@ -316,9 +318,9 @@
 	   (_
 	    (if (null? id-list)
 		'((1))
-		(sumibi-select-query conn
-				     sum-query-string
-				     "d")))
+		(sumibi-dbi-read-query conn
+				       sum-query-string
+				       "d")))
 	   (sum-str (number->string (caar _)))
 	   
 	   (bigram-query-string
@@ -346,9 +348,9 @@
 		     (,(string->symbol key) . ,(list-ref x 3))
 		     (tango     . ,(list-ref x 4))
 		     (okuri     . ,(list-ref x 5))))
-		 (sumibi-select-query conn 
-				      bigram-query-string
-				      "ddddss")))))
+		 (sumibi-dbi-read-query conn 
+					bigram-query-string
+					"ddddss")))))
       result-bigram))
 
   ;; 共起頻度を集計し％で結果を求める
@@ -359,9 +361,9 @@
 	   (_
 	    (if (null? id-list)
 		'((1))
-		(sumibi-select-query conn 
-				     sum-query-string
-				     "d")))
+		(sumibi-dbi-read-query conn 
+				       sum-query-string
+				       "d")))
 	   (sum-str (number->string (caar _)))
 	   
 	   (bigram-query-string
@@ -389,9 +391,9 @@
 		     (,(string->symbol key) . ,(list-ref x 3))
 		     (tango     . ,(list-ref x 4))
 		     (okuri     . ,(list-ref x 5))))
-		 (sumibi-select-query conn 
-				      bigram-query-string
-				      "ddddss")))))
+		 (sumibi-dbi-read-query conn 
+					bigram-query-string
+					"ddddss")))))
       result-bigram))
 
   (let* (
@@ -455,9 +457,9 @@
 	 (sum-query-string
 	  (string-append "SELECT SUM(freq_base) FROM word WHERE " where-exp))
 	 (_
-	  (sumibi-select-query conn 
-			       sum-query-string
-			       "d"))
+	  (sumibi-dbi-read-query conn 
+				 sum-query-string
+				 "d"))
 	 (sum-str (number->string (caar _)))
 
 	 (query-string
@@ -484,26 +486,30 @@
 	       (sum0      . ,(list-ref x 5))
 	       (relative0 . ,(list-ref x 6))))
 
-	   (sumibi-select-query conn 
-				query-string
-				"dsssddd")))
+	   (sumibi-dbi-read-query conn 
+				  query-string
+				  "dsssddd")))
 
 
 	 ;; 頻度総計を求める(pre1)
 	 (result-bigram-pre1
-	  (exec-bigram-search-pre id-list-pre1 "bigram" where-exp-pre1 "relative-1" "#search-pre1" conn))
+	  (time
+	   (exec-bigram-search-pre id-list-pre1 "bigram" where-exp-pre1 "relative-1" "#search-pre1" conn)))
 
 	 ;; 頻度総計を求める(pre2)
 	 (result-bigram-pre2
-	  (exec-bigram-search-pre id-list-pre2 "skip_bigram" where-exp-pre2 "relative-2" "#search-pre2" conn))
-
+	  (time
+	   (exec-bigram-search-pre id-list-pre2 "skip_bigram" where-exp-pre2 "relative-2" "#search-pre2" conn)))
+	 
 	 ;; 頻度総計を求める(post1)
 	 (result-bigram-post1
-	  (exec-bigram-search-post id-list-post1 "bigram" where-exp-post1 "relative1" "#search-post1" conn))
+	  (time
+	   (exec-bigram-search-post id-list-post1 "bigram" where-exp-post1 "relative1" "#search-post1" conn)))
 
 	 ;; 頻度総計を求める(post2)
 	 (result-bigram-post2
-	  (exec-bigram-search-post id-list-post2 "skip_bigram" where-exp-post2 "relative2" "#search-post2" conn)))
+	  (time
+	   (exec-bigram-search-post id-list-post2 "skip_bigram" where-exp-post2 "relative2" "#search-post2" conn))))
 
     (when sumibi-debug
 	  (begin
@@ -927,7 +933,7 @@
 
   (let* (
 	 (conn
-	  (sumibi-db-connect
+	  (sumibi-dbi-connect
 	   sumibi-sumibidb-host
 	   sumibi-sumibidb-name
 	   sumibi-sumibidb-user
