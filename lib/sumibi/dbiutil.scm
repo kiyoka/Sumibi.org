@@ -71,7 +71,8 @@
 		   ((display "error: ")(display (ref exc 'message))(newline)
 		    (display "query: ")(display sql)(newline)
 		    (exit 1))))
-		 (dbi-do conn sql)))
+		 (dbi-execute (dbi-prepare conn sql
+					   :pass-through #t))))
 	 (format-list '())
 	 (__
 	  (dotimes (i (string-length format-string))
@@ -118,7 +119,8 @@
 	   ((display "error: ")(display (ref exc 'message))(newline)
 	    (display "query: ")(display sql)(newline)
 	    (exit 1))))
-	 (dbi-do conn sql)))
+	 (dbi-execute (dbi-prepare conn sql
+				   :pass-through #t))))
 
 
 (define (sumibi-dbi-test)

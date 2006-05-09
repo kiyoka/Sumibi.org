@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
-;;     $Date: 2006/05/08 03:25:15 $
+;;     $Date: 2006/05/09 15:59:36 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -493,23 +493,19 @@
 
 	 ;; 頻度総計を求める(pre1)
 	 (result-bigram-pre1
-	  (time
-	   (exec-bigram-search-pre id-list-pre1 "bigram" where-exp-pre1 "relative-1" "#search-pre1" conn)))
+	  (exec-bigram-search-pre id-list-pre1 "bigram" where-exp-pre1 "relative-1" "#search-pre1" conn))
 
 	 ;; 頻度総計を求める(pre2)
 	 (result-bigram-pre2
-	  (time
-	   (exec-bigram-search-pre id-list-pre2 "skip_bigram" where-exp-pre2 "relative-2" "#search-pre2" conn)))
+	  (exec-bigram-search-pre id-list-pre2 "skip_bigram" where-exp-pre2 "relative-2" "#search-pre2" conn))
 	 
 	 ;; 頻度総計を求める(post1)
 	 (result-bigram-post1
-	  (time
-	   (exec-bigram-search-post id-list-post1 "bigram" where-exp-post1 "relative1" "#search-post1" conn)))
+	  (exec-bigram-search-post id-list-post1 "bigram" where-exp-post1 "relative1" "#search-post1" conn))
 
 	 ;; 頻度総計を求める(post2)
 	 (result-bigram-post2
-	  (time
-	   (exec-bigram-search-post id-list-post2 "skip_bigram" where-exp-post2 "relative2" "#search-post2" conn))))
+	  (exec-bigram-search-post id-list-post2 "skip_bigram" where-exp-post2 "relative2" "#search-post2" conn)))
 
     (when sumibi-debug
 	  (begin
