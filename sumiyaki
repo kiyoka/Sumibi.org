@@ -3,7 +3,7 @@
 ;; "Sumiyaki" is a maintenance tool for Sumibi.
 ;;
 ;;   Copyright (C) 2002,2003,2004 Kiyoka Nishiyama
-;;     $Date: 2006/05/13 01:37:23 $
+;;     $Date: 2006/05/13 02:44:07 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -131,7 +131,8 @@
 					    "INDEX index_tango ( tango(20) ),"
 					    "INDEX index_tango_okuri ( tango(20), okuri ),"
 					    "INDEX index_tango_yomi ( tango(20), yomi(20) ),"
-					    "INDEX index_yomi_okuri ( yomi(20), okuri )"
+					    "INDEX index_yomi_okuri ( yomi(20), okuri ),"
+					    "INDEX index_kind ( kind )"
 					    " )  ;" )))
 		(_ (sumibi-dbi-write-query conn "INSERT INTO word VALUES (0, 'n', NULL, NULL, NULL, NULL, 1, 0);"))
 		(_ (sumibi-dbi-write-query conn "INSERT INTO word VALUES (0, 'U', NULL, NULL, NULL, NULL, 1, 0);"))
