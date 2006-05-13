@@ -3,7 +3,7 @@
 ;; "Sumiyaki" is a maintenance tool for Sumibi.
 ;;
 ;;   Copyright (C) 2002,2003,2004 Kiyoka Nishiyama
-;;     $Date: 2006/04/30 11:30:36 $
+;;     $Date: 2006/05/13 01:37:23 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -28,11 +28,10 @@
 (use srfi-13)
 (use dbi)
 (use gauche.collection)
-(load "sumibi/sumibi-define.scm")
-(load "sumibi/dbiutil.scm")
-(load "sumibi/skkdict-load.scm")
-(load "sumibi/corpus-load.scm")
-
+(use sumibi.define)
+(use sumibi.dbiutil)
+(use sumibi.corpus)
+(use sumibi.skkdict)
 
 
 ;; Main -------------------------------------------------------
@@ -101,7 +100,7 @@
 	    (exit 0)))
 
     (let ((conn
-	   (sumibi-db-connect
+	   (sumibi-dbi-connect
 	    sumibi-sumiyakidb-host
 	    sumibi-sumiyakidb-name
 	    sumibi-sumiyakidb-user
@@ -110,67 +109,67 @@
       (case command
 	((drop)
 	 (let* (
-		(_ (sumibi-query conn "DROP TABLE IF EXISTS word;"))
-		(_ (sumibi-query conn "DROP TABLE IF EXISTS bigram;"))
-		(_ (sumibi-query conn "DROP TABLE IF EXISTS skip_bigram;"))
-		(_ (sumibi-query conn "DROP TABLE IF EXISTS okuri;"))
-		(_ (sumibi-query conn "DROP TABLE IF EXISTS file;")))))
+		(_ (sumibi-dbi-write-query conn "DROP TABLE IF EXISTS word;"))
+		(_ (sumibi-dbi-write-query conn "DROP TABLE IF EXISTS bigram;"))
+		(_ (sumibi-dbi-write-query conn "DROP TABLE IF EXISTS skip_bigram;"))
+		(_ (sumibi-dbi-write-query conn "DROP TABLE IF EXISTS okuri;"))
+		(_ (sumibi-dbi-write-query conn "DROP TABLE IF EXISTS file;")))))
 	((create)
 	 (let* (
-		(_ (sumibi-query conn 
-				 (string-append
-				  "CREATE TABLE IF NOT EXISTS word ("
-				  "id INT NOT NULL AUTO_INCREMENT,"
-				  "kind CHAR(1)," 
-				  "yomiank CHAR(255),"
-				  "yomi CHAR(255),"
-				  "okuri CHAR(1),"
-				  "tango CHAR(255),"
-				  "freq_base INT NOT NULL,"
-				  "freq_user INT NOT NULL,"
-				  "PRIMARY KEY (id),"
-				  "INDEX index_tango ( tango(20) ),"
-				  "INDEX index_tango_okuri ( tango(20), okuri ),"
-				  "INDEX index_tango_yomi ( tango(20), yomi(20) ),"
-				  "INDEX index_yomi_okuri ( yomi(20), okuri )"
-				  " )  ;" )))
-		(_ (sumibi-query conn "INSERT INTO word VALUES (0, 'n', NULL, NULL, NULL, NULL, 1, 0);"))
-		(_ (sumibi-query conn "INSERT INTO word VALUES (0, 'U', NULL, NULL, NULL, NULL, 1, 0);"))
-		(_ (sumibi-query conn 
-				 (string-append
-				  "CREATE TABLE IF NOT EXISTS bigram ("
-				  "id_m1   INT NOT NULL,"
-				  "id_base INT NOT NULL,"
-				  "freq_base INT,"
-				  "freq_user INT,"
-				  "INDEX index_base ( id_base ),"
-				  "PRIMARY KEY (id_m1, id_base)"
-				  " )  ;" )))
-		(_ (sumibi-query conn 
-				 (string-append
-				  "CREATE TABLE IF NOT EXISTS skip_bigram ("
-				  "id_m1   INT NOT NULL,"
-				  "id_base INT NOT NULL,"
-				  "freq_base INT,"
-				  "freq_user INT,"
-				  "INDEX index_base ( id_base ),"
-				  "PRIMARY KEY (id_m1, id_base)"
-				  " )  ;" )))
-		(_ (sumibi-query conn 
-				 (string-append
-				  "CREATE TABLE IF NOT EXISTS okuri ("
-				  "okuri CHAR(1),"
-				  "kana  CHAR(255),"
-				  "freq_base INT,"
-				  "PRIMARY KEY ( okuri, kana )"
-				  " )  ;" )))
-		(_ (sumibi-query conn 
-				 (string-append
-				  "CREATE TABLE IF NOT EXISTS file ("
-				  "filename VARCHAR(255) NOT NULL,"
-				  "date     DATETIME     NOT NULL,"
-				  "PRIMARY KEY (filename)"
-				  " )  ;" ))))))
+		(_ (sumibi-dbi-write-query conn 
+					   (string-append
+					    "CREATE TABLE IF NOT EXISTS word ("
+					    "id INT NOT NULL AUTO_INCREMENT,"
+					    "kind CHAR(1)," 
+					    "yomiank CHAR(255),"
+					    "yomi CHAR(255),"
+					    "okuri CHAR(1),"
+					    "tango CHAR(255),"
+					    "freq_base INT NOT NULL,"
+					    "freq_user INT NOT NULL,"
+					    "PRIMARY KEY (id),"
+					    "INDEX index_tango ( tango(20) ),"
+					    "INDEX index_tango_okuri ( tango(20), okuri ),"
+					    "INDEX index_tango_yomi ( tango(20), yomi(20) ),"
+					    "INDEX index_yomi_okuri ( yomi(20), okuri )"
+					    " )  ;" )))
+		(_ (sumibi-dbi-write-query conn "INSERT INTO word VALUES (0, 'n', NULL, NULL, NULL, NULL, 1, 0);"))
+		(_ (sumibi-dbi-write-query conn "INSERT INTO word VALUES (0, 'U', NULL, NULL, NULL, NULL, 1, 0);"))
+		(_ (sumibi-dbi-write-query conn 
+					   (string-append
+					    "CREATE TABLE IF NOT EXISTS bigram ("
+					    "id_m1   INT NOT NULL,"
+					    "id_base INT NOT NULL,"
+					    "freq_base INT,"
+					    "freq_user INT,"
+					    "INDEX index_base ( id_base ),"
+					    "PRIMARY KEY (id_m1, id_base)"
+					    " )  ;" )))
+		(_ (sumibi-dbi-write-query conn 
+					   (string-append
+					    "CREATE TABLE IF NOT EXISTS skip_bigram ("
+					    "id_m1   INT NOT NULL,"
+					    "id_base INT NOT NULL,"
+					    "freq_base INT,"
+					    "freq_user INT,"
+					    "INDEX index_base ( id_base ),"
+					    "PRIMARY KEY (id_m1, id_base)"
+					    " )  ;" )))
+		(_ (sumibi-dbi-write-query conn 
+					   (string-append
+					    "CREATE TABLE IF NOT EXISTS okuri ("
+					    "okuri CHAR(1),"
+					    "kana  CHAR(255),"
+					    "freq_base INT,"
+					    "PRIMARY KEY ( okuri, kana )"
+					    " )  ;" )))
+		(_ (sumibi-dbi-write-query conn 
+					   (string-append
+					    "CREATE TABLE IF NOT EXISTS file ("
+					    "filename VARCHAR(255) NOT NULL,"
+					    "date     DATETIME     NOT NULL,"
+					    "PRIMARY KEY (filename)"
+					    " )  ;" ))))))
 	((skk)
 	 (sumibi-skkdict-load input-port conn))
 	((load)
@@ -178,7 +177,7 @@
 	((show)
 	 ;; word テーブルの件数表示
 	 (display "### word:total ")
-	 (display (caar (sumibi-select-query conn "SELECT count(*) FROM word;" "d")))
+	 (display (caar (sumibi-dbi-read-query conn "SELECT count(*) FROM word;" "d")))
 	 (newline)
 	 
 	 ;; word テーブルの全内容表示
@@ -186,13 +185,13 @@
 	       (for-each
 		(lambda (x)
 		  (display x) (newline))
-		(sumibi-select-query conn 
-				     "SELECT id,kind,yomi, yomiank,tango,okuri,freq_base FROM word ORDER BY freq_base DESC LIMIT 0,30;"
-				     "sssssss")))
+		(sumibi-dbi-read-query conn 
+				       "SELECT id,kind,yomi, yomiank,tango,okuri,freq_base FROM word ORDER BY freq_base DESC LIMIT 0,30;"
+				       "sssssss")))
 	    
 	 ;; bigram テーブルの件数表示
 	 (display "### bigram:total ")
-	 (display (caar (sumibi-select-query conn "SELECT count(*) FROM bigram;" "d")))
+	 (display (caar (sumibi-dbi-read-query conn "SELECT count(*) FROM bigram;" "d")))
 	 (newline)
 
 	 ;; bigram テーブルの全内容表示
@@ -200,13 +199,13 @@
 	       (for-each
 		(lambda (x)
 		  (display x) (newline))
-		(sumibi-select-query conn
-				     "SELECT b.freq_base, b.id_m1, w1.tango, w1.okuri, b.id_base, w2.tango, w2.okuri FROM bigram b CROSS JOIN word w1, word w2 WHERE b.id_m1 = w1.id and b.id_base = w2.id ORDER BY b.freq_base DESC LIMIT 0,30;"
-				     "sssssss")))
+		(sumibi-dbi-read-query conn
+				       "SELECT b.freq_base, b.id_m1, w1.tango, w1.okuri, b.id_base, w2.tango, w2.okuri FROM bigram b CROSS JOIN word w1, word w2 WHERE b.id_m1 = w1.id and b.id_base = w2.id ORDER BY b.freq_base DESC LIMIT 0,30;"
+				       "sssssss")))
 	 
 	 ;; skip_bigram テーブルの件数表示
 	 (display "### skip_bigram:total ")
-	 (display (caar (sumibi-select-query conn "SELECT count(*) FROM skip_bigram;" "d")))
+	 (display (caar (sumibi-dbi-read-query conn "SELECT count(*) FROM skip_bigram;" "d")))
 	 (newline)
 
 	 ;; skip_bigram テーブルの全内容表示
@@ -214,30 +213,30 @@
 	       (for-each
 		(lambda (x)
 		  (display x) (newline))
-		(sumibi-select-query conn
-				     "SELECT b.freq_base, b.id_m1, w1.tango, w1.okuri, b.id_base, w2.tango, w2.okuri FROM skip_bigram b CROSS JOIN word w1, word w2 WHERE b.id_m1 = w1.id and b.id_base = w2.id ORDER BY b.freq_base DESC LIMIT 0,30;"
-				     "sssssss")))
-	 
+		(sumibi-dbi-read-query conn
+				       "SELECT b.freq_base, b.id_m1, w1.tango, w1.okuri, b.id_base, w2.tango, w2.okuri FROM skip_bigram b CROSS JOIN word w1, word w2 WHERE b.id_m1 = w1.id and b.id_base = w2.id ORDER BY b.freq_base DESC LIMIT 0,30;"
+				       "sssssss")))
+
 	 ;; okuri テーブルの件数表示
 	 (display "### okuri:total ")
-	 (display (caar (sumibi-select-query conn "SELECT count(*) FROM okuri;" "d")))
+	 (display (caar (sumibi-dbi-read-query conn "SELECT count(*) FROM okuri;" "d")))
 	 (newline)
 	 
 	 ;; okuri テーブルの全内容表示
 	 (for-each
 	  (lambda (x)
 	    (display x) (newline))
-	  (sumibi-select-query conn 
-			       "SELECT okuri,kana,freq_base FROM okuri ORDER BY freq_base DESC LIMIT 0,30;"
-			       "sss"))
+	  (sumibi-dbi-read-query conn 
+				 "SELECT okuri,kana,freq_base FROM okuri ORDER BY freq_base DESC LIMIT 0,30;"
+				 "sss"))
 	 
 	 ;; file テーブルの全内容表示
 	 (for-each
 	  (lambda (x)
 	    (display x) (newline))
-	  (sumibi-select-query conn 
-			       "SELECT date,filename FROM file ORDER BY date DESC;"
-			       "ss")
+	  (sumibi-dbi-read-query conn 
+				 "SELECT date,filename FROM file ORDER BY date DESC;"
+				 "ss")
 	  ))
 	(else
 	 (print "Error: unknown command")
@@ -245,4 +244,3 @@
 	 ))))
 
   (exit 0))
-

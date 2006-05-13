@@ -2,13 +2,19 @@
 ;; コーパスを読み込んで、テーブルに登録する
 ;;
 
-(use gauche.regexp)
-(use srfi-1)
-(use dbi)
-(use gauche.collection)
-(use util.combinations)
-(use text.tr)
-(use text.kakasi)
+(define-module sumibi.corpus
+  (use gauche.regexp)
+  (use srfi-1)
+  (use dbi)
+  (use gauche.collection)
+  (use util.combinations)
+  (use text.tr)
+  (use text.kakasi)
+  (use sumibi.define)
+  (use sumibi.romkan)
+  (use sumibi.dbiutil)
+  (export sumibi-corpus-load))
+(select-module sumibi.corpus)
 
 
 ;; 送りがなの処理を追加してマッチするかどうかをチェックする
@@ -47,8 +53,8 @@
 		  (sql
 		   (format "SELECT id, tango, okuri FROM word WHERE tango = ~s and okuri = ~s;" kanji okuri))
 		  (rows
-		   (sumibi-result-slice
-		    (sumibi-select-query conn sql "d"))))
+		   (sumibi-dbi-slice-result
+		    (sumibi-dbi-read-query conn sql "d"))))
 
 	     (when sumibi-debug
 		   (begin
@@ -76,8 +82,8 @@
 	     (sql
 	      (format "SELECT id, tango, okuri FROM word WHERE tango = ~s and okuri = ~s;" tango okuri))
 	     (rows
-	      (sumibi-result-slice
-	       (sumibi-select-query conn sql "d"))))
+	      (sumibi-dbi-slice-result
+	       (sumibi-dbi-read-query conn sql "d"))))
 
 	(< 0 (length rows)))
       #f))
@@ -109,13 +115,13 @@
 		  (newline))))
 
 	 (_
-	  (sumibi-query conn 
-			sql1
-			))
+	  (sumibi-dbi-write-query conn 
+				  sql1
+				  ))
 	 (_
-	  (sumibi-query conn 
-			sql2
-			))))
+	  (sumibi-dbi-write-query conn 
+				  sql2
+				  ))))
   #t)
 
 
@@ -153,8 +159,8 @@
 	 (sql     
 	  (format "SELECT id, tango, okuri FROM word WHERE tango = ~s AND tango IS NOT NULL;" tango))
 	 (rows
-	  (sumibi-result-slice
-	   (sumibi-select-query conn sql "d")))
+	  (sumibi-dbi-slice-result
+	   (sumibi-dbi-read-query conn sql "d")))
 	 )
     (when sumibi-debug
 	  (begin
@@ -163,8 +169,8 @@
 	  
     (cond ((rxmatch #/^[\.0-9０-９]+$/ tango)
 	   ;; 数字のみで構成される場合、数値型レコードのIDをもとめて返す (小数点もOK)
-	   (sumibi-result-slice
-	    (sumibi-select-query conn "SELECT id FROM word WHERE kind = 'n';" "d")))
+	   (sumibi-dbi-slice-result
+	    (sumibi-dbi-read-query conn "SELECT id FROM word WHERE kind = 'n';" "d")))
 
 	  ((not (null? rows))
 	   ;; そのままの文字列でデータベースから結果が取得できた場合
@@ -189,7 +195,7 @@
 				    yomi
 				    tango
 				    ))
-			   (_       (sumibi-query conn sql)))
+			   (_       (sumibi-dbi-write-query conn sql)))
 		      
 		      (when sumibi-debug
 			    (begin
@@ -238,21 +244,21 @@
 		       table-name
 		       (car x)
 		       (cadr x)))
-	      (_       (sumibi-query conn sql1))
+	      (_       (sumibi-dbi-write-query conn sql1))
 	      (sql2
 	       (format "UPDATE LOW_PRIORITY ~a SET freq_base=freq_base+1 WHERE id_m1 = ~d and id_base = ~d;"
 		       table-name
 		       (car x)
 		       (cadr x)))
-	      (_       (sumibi-query conn sql2))
+	      (_       (sumibi-dbi-write-query conn sql2))
 	      (sql3
 	       (format "UPDATE LOW_PRIORITY word SET freq_base=freq_base+1 WHERE id = ~d;"
 		       (car x)))
-	      (_       (sumibi-query conn sql3))
+	      (_       (sumibi-dbi-write-query conn sql3))
 	      (sql4
 	       (format "UPDATE LOW_PRIORITY word SET freq_base=freq_base+1 WHERE id = ~d;"
 		       (cadr x)))
-	      (_       (sumibi-query conn sql4))
+	      (_       (sumibi-dbi-write-query conn sql4))
 	      )
 	 (when sumibi-debug
 	       (begin
@@ -367,10 +373,10 @@
 	 ;; 入力ファイルが、既に処理済みかどうかを調べる
 	 (sql     (format "SELECT filename FROM file WHERE filename = ~s;" input-file))
 	 (rows
-	  (sumibi-result-slice
-	   (sumibi-select-query conn
-				sql
-				"s"))))
+	  (sumibi-dbi-slice-result
+	   (sumibi-dbi-read-query conn
+				  sql
+				  "s"))))
 
     (if (< 0 (length rows))
 	(begin
@@ -380,6 +386,8 @@
 	  (sumibi-corpus-load-from-port input-port conn)
 	  ;; 読み込んだファイル名をデータベースに登録する。
 	  (let* (
-		 (_       (sumibi-query conn 
-					(format "INSERT LOW_PRIORITY IGNORE file ( filename, date ) VALUES ( ~s, NOW() );" input-file)))))))))
+		 (_       (sumibi-dbi-write-query conn 
+						  (format "INSERT LOW_PRIORITY IGNORE file ( filename, date ) VALUES ( ~s, NOW() );" input-file)))))))))
 
+
+(provide "sumibi/corpus")

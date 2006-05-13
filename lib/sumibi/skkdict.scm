@@ -2,11 +2,15 @@
 ;; SKK の辞書を読み込んで、テーブルに登録する
 ;;
 
-(use gauche.regexp)
-(use srfi-1)
-(use dbi)
-(load "sumibi/romkan.scm")
-(load "sumibi/dbiutil.scm")
+(define-module sumibi.skkdict
+  (use gauche.regexp)
+  (use srfi-1)
+  (use dbi)
+  (use sumibi.define)
+  (use sumibi.romkan)
+  (use sumibi.dbiutil)
+  (export sumibi-skkdict-load))
+(select-module sumibi.skkdict)
 
 
 ;; 文字列を 1文字 1件のリストにして返す
@@ -109,9 +113,9 @@
 				kanji-str
 				))
 
-		       (result-set (sumibi-query conn
-						 query-string
-						 )))
+		       (result-set (sumibi-dbi-write-query conn
+							   query-string
+							   )))
 		       
 		    (when sumibi-debug
 			  (begin
@@ -125,5 +129,5 @@
      (port->string-list input-port)))
 
 
-
+(provide "sumibi/skkdict")
 
