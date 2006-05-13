@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2006/03/05 11:54:58 $
+#     $Date: 2006/05/13 00:49:17 $
 #
 # This file is part of Sumibi
 #
@@ -51,7 +51,7 @@ sub _sumibiEngine {
 	alarm $TIMEOUT_SECOND;
 
 	local( *Reader, *Writer );
-	$pid = open2( *Reader, *Writer, 'gosh -I./here ./sumibi' );
+	$pid = open2( *Reader, *Writer, 'gosh -I./lib ./sumibi' );
 	Writer->autoflush(); # default here, actually
 	print Writer $arg;
 	$ok     = <Reader>; # ok/error
