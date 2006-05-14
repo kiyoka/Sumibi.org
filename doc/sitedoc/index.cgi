@@ -119,14 +119,17 @@
 	    (html:br)
 		      
 	    (html:div :class "copyright"
-		      "Sumibi Engine:Copyright&copy 2005, Kiyoka Nishiyama"
+		      "Sumibi Engine:Copyright&copy 2005,2006 Kiyoka Nishiyama"
 		      "("
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "開発者ブログ")
 		      ")"
 		      "("
 		      (html:a :href "mailto:kiyoka@netfort.gr.jp" "メール")
 		      ")"
-		      " / Sumibi Ajax:Copyright&copy 2005, Kato Atsushi"
+		      " / Sumibi Ajax:Copyright&copy 2005,2006 Kato Atsushi"
+		      "("
+		      (html:a :href "http://d.hatena.ne.jp/ktat/" "開発者ブログ")
+		      ")"
 		      "&nbsp;"
 		      "&nbsp;"
 		      "&nbsp;"
