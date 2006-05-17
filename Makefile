@@ -11,6 +11,21 @@ SITELIBDIR = `gauche-config --sitelibdir`
 
 all: dist
 
+
+clean:
+	/bin/rm -rf ${TARGET} ${TARGET}.tar.gz
+
+
+install: sumibi sumiyaki
+	mkdir -p $(BINDIR)
+	mkdir -p $(DATADIR)
+	mkdir -p $(SITELIBDIR)/sumibi
+	mkdir -p $(DATADIR)/dot.sumibi
+	cp -fp sumibi sumiyaki $(BINDIR)
+	cp -fp dot.sumibi/*.sample $(DATADIR)/dot.sumibi
+	cp -fp lib/sumibi/*.scm $(SITELIBDIR)/sumibi
+
+
 sumibi: sumibi.in Makefile
 	rm -f sumibi
 	GOSH=`which gosh` && sed -e "s!@GOSH@!$$GOSH!g" \
@@ -25,10 +40,6 @@ sumiyaki: sumiyaki.in Makefile
 	    sumiyaki.in > sumiyaki.tmp
 	mv sumiyaki.tmp sumiyaki
 	chmod 555 sumiyaki
-
-
-clean:
-	/bin/rm -rf ${TARGET} ${TARGET}.tar.gz
 
 
 
@@ -46,10 +57,10 @@ dist:
 	/bin/cp -rf ./sample/client/ruby                   ${TARGET}/sample/client
 	/bin/cp -rf ./server                               ${TARGET}
 	/bin/cp -rf ./lib                                  ${TARGET}
-	echo        "# @GOSH@"                    >        ${TARGET}/sumibi
-	/bin/cat    ./sumibi                      >>       ${TARGET}/sumibi
-	echo        "# @GOSH@"                    >        ${TARGET}/sumiyaki
-	/bin/cat    ./sumiyaki                    >>       ${TARGET}/sumiyaki
+	echo        "# @GOSH@"                    >        ${TARGET}/sumibi.in
+	/bin/cat    ./sumibi                      >>       ${TARGET}/sumibi.in
+	echo        "# @GOSH@"                    >        ${TARGET}/sumiyaki.in
+	/bin/cat    ./sumiyaki                    >>       ${TARGET}/sumiyaki.in
 	/bin/cp -f  ./Makefile                             ${TARGET}
 	find        ${TARGET} -name CVS -type d | xargs /bin/rm -rf 
 	tar zcf ${TARGET}.tar.gz  ${TARGET}
