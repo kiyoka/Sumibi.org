@@ -1,14 +1,35 @@
 VERSION=0.5.5
 TARGET=./sumibi-${VERSION}
 
+PREFIX = /usr/local
+BINDIR = $(PREFIX)/bin
+DATADIR = $(PREFIX)/share/sumibi
+SITELIBDIR = `gauche-config --sitelibdir`
+
+
 .PHONY=dist
 
-
 all: dist
+
+sumibi: sumibi.in Makefile
+	rm -f sumibi
+	GOSH=`which gosh` && sed -e "s!@GOSH@!$$GOSH!g" \
+	    sumibi.in > sumibi.tmp
+	mv sumibi.tmp sumibi
+	chmod 555 sumibi
+
+
+sumiyaki: sumiyaki.in Makefile
+	rm -f sumiyaki
+	GOSH=`which gosh` && sed -e "s!@GOSH@!$$GOSH!g" \
+	    sumiyaki.in > sumiyaki.tmp
+	mv sumiyaki.tmp sumiyaki
+	chmod 555 sumiyaki
 
 
 clean:
 	/bin/rm -rf ${TARGET} ${TARGET}.tar.gz
+
 
 
 dist:
@@ -25,8 +46,10 @@ dist:
 	/bin/cp -rf ./sample/client/ruby                   ${TARGET}/sample/client
 	/bin/cp -rf ./server                               ${TARGET}
 	/bin/cp -rf ./lib                                  ${TARGET}
-	/bin/cp -f  ./sumibi                               ${TARGET}
-	/bin/cp -f  ./sumiyaki                             ${TARGET}
+	echo        "# @GOSH@"                    >        ${TARGET}/sumibi
+	/bin/cat    ./sumibi                      >>       ${TARGET}/sumibi
+	echo        "# @GOSH@"                    >        ${TARGET}/sumiyaki
+	/bin/cat    ./sumiyaki                    >>       ${TARGET}/sumiyaki
 	/bin/cp -f  ./Makefile                             ${TARGET}
 	find        ${TARGET} -name CVS -type d | xargs /bin/rm -rf 
 	tar zcf ${TARGET}.tar.gz  ${TARGET}
