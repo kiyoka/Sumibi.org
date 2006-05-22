@@ -7,10 +7,10 @@ DATADIR = $(PREFIX)/share/sumibi
 SITELIBDIR = `gauche-config --sitelibdir`
 
 
-.PHONY=dist
+.PHONY=all dist
 
-all: dist
-
+all:
+	@echo "nothing to make"
 
 clean:
 	/bin/rm -rf ${TARGET} ${TARGET}.tar.gz
