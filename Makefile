@@ -25,6 +25,12 @@ install: sumibi sumiyaki platform-check
 	cp -fp dot.sumibi/*.sample $(DATADIR)/dot.sumibi
 	cp -fp lib/sumibi/*.scm $(SITELIBDIR)/sumibi
 
+
+deploy: sumibi sumiyaki platform-check
+	cp -fp sumibi                  ../
+	GOSH="`which gosh` -I${TARGET}/lib ./sumibi"&& cat server/soap/sumibi.cgi | sed -e "s!@GOSH@!$$GOSH!g" > ../sumibi.cgi
+
+
 platform-check:
 	@gauche-package list | grep Gauche-dbd-mysql
 	@gauche-package list | grep Gauche-kakasi
@@ -60,9 +66,9 @@ dist:
 	/bin/cp -rf ./sample/client/ruby                   ${TARGET}/sample/client
 	/bin/cp -rf ./server                               ${TARGET}
 	/bin/cp -rf ./lib                                  ${TARGET}
-	echo        "# @GOSH@"                    >        ${TARGET}/sumibi.in
+	echo        "#!@GOSH@"                    >        ${TARGET}/sumibi.in
 	/bin/cat    ./sumibi                      >>       ${TARGET}/sumibi.in
-	echo        "# @GOSH@"                    >        ${TARGET}/sumiyaki.in
+	echo        "#!@GOSH@"                    >        ${TARGET}/sumiyaki.in
 	/bin/cat    ./sumiyaki                    >>       ${TARGET}/sumiyaki.in
 	/bin/cp -f  ./Makefile                             ${TARGET}
 	find        ${TARGET} -name CVS -type d | xargs /bin/rm -rf 
