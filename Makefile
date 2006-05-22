@@ -29,6 +29,7 @@ install: sumibi sumiyaki platform-check
 deploy: sumibi sumiyaki platform-check
 	cp -fp sumibi                  ../
 	GOSH="`which gosh` -I${TARGET}/lib ./sumibi"&& cat server/soap/sumibi.cgi | sed -e "s!@GOSH@!$$GOSH!g" > ../sumibi.cgi
+	chmod +x ../sumibi.cgi
 
 
 platform-check:
