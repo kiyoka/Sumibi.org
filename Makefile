@@ -7,7 +7,7 @@ DATADIR = $(PREFIX)/share/sumibi
 SITELIBDIR = `gauche-config --sitelibdir`
 
 
-.PHONY=all dist
+.PHONY=all dist platform-check
 
 all:
 	@echo "nothing to make"
@@ -16,7 +16,7 @@ clean:
 	/bin/rm -rf ${TARGET} ${TARGET}.tar.gz
 
 
-install: sumibi sumiyaki
+install: sumibi sumiyaki platform-check
 	mkdir -p $(BINDIR)
 	mkdir -p $(DATADIR)
 	mkdir -p $(SITELIBDIR)/sumibi
@@ -25,6 +25,9 @@ install: sumibi sumiyaki
 	cp -fp dot.sumibi/*.sample $(DATADIR)/dot.sumibi
 	cp -fp lib/sumibi/*.scm $(SITELIBDIR)/sumibi
 
+platform-check:
+	@gauche-package list | grep Gauche-dbd-mysql
+	@gauche-package list | grep Gauche-kakasi
 
 sumibi: sumibi.in Makefile
 	rm -f sumibi
