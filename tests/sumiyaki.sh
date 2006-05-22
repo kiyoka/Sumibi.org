@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 HOUR=`date +'%H'`
-GO=1
+GO=0
 
 for i in 01 02 03 04 05 06 07 08
 do
@@ -12,7 +12,7 @@ done
 
 if [ $GO = 1 ] ; then
   echo "sumiyaki=>[" $* "]"
-  gosh ../sumiyaki $*
+  gosh -I ../lib ../sumiyaki $*
 else
   echo "skip" $*
   sleep 3600
