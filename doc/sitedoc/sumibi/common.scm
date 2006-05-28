@@ -122,7 +122,7 @@
 	    ,(cadr (assoc key page-alist)))
 	   (author " Kiyoka Nishiyama ")
 	   (hp " http://www.sumibi.org/ ")
-	   (date " $Date: 2006/02/23 14:09:37 $ "))
+	   (date " $Date: 2006/05/28 11:53:15 $ "))
 	  (body
 
 	   ;; navigation tab
@@ -144,7 +144,3 @@
 
 	   ,tree
 	   )))))
-
-
-	  
-
