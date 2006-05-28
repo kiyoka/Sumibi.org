@@ -1,5 +1,7 @@
 
 [0.5.5]
+  - 配布物の追加
+    1. sumibi.cgi sumibi sumiyakiコマンド Sumibi.wsdlファイルを追加した
   - Sumibi Server(sumibi.cgi)
     1. サーバーの処理タイムアウトを実装した。タイムアウト時、クライアントにメッセージを返す。
        (デフォルトタイムアウト値は10秒に設定した)
