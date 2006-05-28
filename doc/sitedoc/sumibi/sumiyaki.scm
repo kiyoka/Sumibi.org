@@ -14,7 +14,7 @@
      (*ja
       (ul
        (li "このドキュメントは『sumiyaki』(Sumibi辞書構築ツール)についての解説です。")
-       (li "sumiyakiはCVSリポジトリにしか存在しません。セットアップは若干煩雑なのですが御了承ください。"))))
+       (li "sumiyakiは 0.5.5以上のソースディストリビューションに含まれています。"))))
 
     (*section
      "sumiyakiとは"
@@ -24,19 +24,68 @@
      (*ja
       (ul
        (li "sumiyakiとは、Sumibi辞書構築ツールの名前です。")
-       (li "Internet上にドキュメント群をコーパスとして辞書構築するためのツールです。"))))
+       (li "Internet上の無数のドキュメント群をコーパスとして辞書構築するためのツールです。"))))
 
     (*section
-     "入手方法・セットアップ"
+     "入手方法"
+     "How to get it"
+     (*en
+      (p "No documents in English, sorry..." ))
+     (*subsection
+      "sumiyakiツールのダウンロード方法"
+      "How to Download"
+      (*ja
+       (p
+	(p "リリースパッケージを以下のサイトからダウンロードしてください。(0.5.5以上)")
+	(*link "download" "http://sourceforge.jp/projects/sumibi/")
+	))))
+    
+
+    (*section
+     "セットアップ"
      "How to setup"
      (*en
       (p "No documents in English, sorry..." ))
-     (*ja
-      (ul
-       (li "ツールのインストール方法については、" (*link "SumibiServerSetup" "sumibi_server_setup.html")
-	   "で示す方法でライブラリ群とともにインストールしてください。")
-       (li "その後、sumiyakiというスクリプトをパスの通った場所にコピーしてください。")
-       (li "※ sumiyaki も sumibiと共通の設定ファイル ~/.sumibi で接続するデータベースサーバを指定します。"))))
+     (*subsection
+      "sumiyakiのインストール"
+      "install of sumiyaki"
+      (*ja
+       (p
+	"以下の手順でsumiyakiツールをインストールします。"
+	(ol
+	 (li "Sumibiのディストリビューションを展開し、make installします")
+	 (p "例)")
+	 (program "
+tar zxf sumibi-0.5.5.tar.gz
+cd sumibi-0.5.5
+make install
+")))))
+     
+     (*subsection
+      "sumibi エンジンの設定ファイル .sumibi を用意する"
+      "Prepare .sumibi file"
+      (*ja
+       (ol
+	(li "Sumibiのディストリビューションに含まれる dot.sumibi.sample を ~/.sumibi という名前で保存します。")
+	(li ".sumibiのDB接続の為のパラメータを正しい値に変更します。")
+	(program
+"
+;; sumiyaki db
+(define sumibi-sumiyakidb-host       \"myhostname\")
+(define sumibi-sumiyakidb-name       \"sumi_bincho_1\")
+(define sumibi-sumiyakidb-user       \"username\")
+(define sumibi-sumiyakidb-password   \"password\")
+
+;; sumibi db
+(define sumibi-sumibidb-host         \"myhostname\")
+(define sumibi-sumibidb-name         \"sumi_bincho_1\")
+(define sumibi-sumibidb-user         \"username\")
+(define sumibi-sumibidb-password     \"password\")
+
+;; debug flag
+(set! sumibi-debug #f)
+"
+)))))
 
     (*section
      "sumiyakiコマンドの使いかた"
@@ -55,10 +104,10 @@
        (program "sumiyaki -l プレーンテキストファイル")
        (ul
 	(li "読み込むファイルはプレーンテキストのみです。")
-	(p "※ htmlファイルなどは、w3m -dump コマンド等で使って全てプレーンテキストに変換してから読み込ませてください。")
-	(li "文字コードは、内部で自動的にUTF-8に変換するので、SJIS,EUC,UTF-8どれでもOKです。")
+	(p "※ htmlファイルなどは、w3m -dump コマンド等を使って全てプレーンテキストに変換してから読み込ませてください。")
+	(li "文字コードは、sumiyakiコマンドが読みこみ時に自動的にUTF-8に変換するので、SJIS,EUC,UTF-8どれでもOKです。")
 	(li "辞書学習処理の概要は以下の通りです。")
-	(p "元の文章は辞書に蓄積されません。")
+	(p "元の文章情報がそのまま辞書に蓄積される訳けではありません。")
 	(p "読み込んだ文章に出現した隣接する語・1単語離れて隣接する語の共起頻度のカウントを行ないます。")
 	(p "初めて出現したカタカナ語、ひらがな語、送り仮名のパターンも学習し辞書に登録されていきます。(これも出現頻度を記録します)"))
        (li "辞書のサマリー表示")
