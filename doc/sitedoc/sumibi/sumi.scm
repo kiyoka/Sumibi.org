@@ -89,15 +89,6 @@
 	  (tr   (td "SKK-JISYO.office.zipcode")   (td "public domain"))
 	  ))
 
-	(li "Linux JF文書")
-	(p (*link "JF 文書の著作権・再配布・リンクについて" "http://www.linux.or.jp/JF/copyright.html") 
-	   "を読む限り、ライセンスについては各文書に従う必要あります。一部商用利用の再配布に制限を掛けてある文書が含まれています。"
-	   "これを含むSumibi辞書をダウンロードして使用する場合は、商用利用ができないことになります。")
-
-	(p "※とりあえず版(商用利用不可) (33M) [md5=66bb2940496ef92a6c8e9dad1374cc30]"
-	   "では"
-	   (*link "Linux JF文書のhtml版" "http://www.linux.or.jp/JF/JFdocs/JFhtml.tar.gz") "全てを読みこんでいます。")
-
 	(li "Wikipedia日本語版")
 	(p "ライセンスは、" ,W:GFDL "です。")
 	(p (*link "Wikipedia:著作権情報" "http://ja.wikipedia.org/wiki/Wikipedia:%E8%91%97%E4%BD%9C%E6%A8%A9") "に解説が掲載されていますので、参照してください。")

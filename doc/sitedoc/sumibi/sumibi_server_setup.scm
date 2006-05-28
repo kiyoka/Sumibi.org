@@ -14,7 +14,7 @@
      (*ja
       (p
        (p "このドキュメントは" ,W:Sumibi.org "で提供しているような変換サービスをご自分のサイトにセットアップする方法を解説します。")
-       (p "Sumibi ServerはCVSリポジトリにしか存在しません。セットアップは若干煩雑なのですが御了承ください。"))))
+       (p "Sumibi Serverは 0.5.5のソースディストリビューションから含まれています。"))))
 
     (*section
      "Sumibi Serverとは？"
@@ -56,10 +56,9 @@
 	 (tbody
 	  (tr (td "Apache")            (td "1.3.x or 2.0.x")   (td "○"))
 	  (tr (td "MySQL")             (td "4.1.x")            (td "○"))
-	  (tr (td "Gauche")            (td "0.8.3 or later")   (td "○"))
+	  (tr (td "Gauche")            (td "0.8.7 or later")   (td "○"))
 	  (tr (td "Gauche-kakasi")     (td "0.1.0")            (td "×"))
-	  (tr (td "Gauche-dbi" )       (td "0.1.4")            (td "×"))
-	  (tr (td "Gauche-dbd-mysql" ) (td "0.1.4")            (td "×"))
+	  (tr (td "Gauche-dbd-mysql" ) (td "0.2.2 or later")   (td "×"))
 	  (tr (td "Perl")              (td "5.8.x or later")   (td "○"))
 	  (tr (td "Perl SOAP::Lite")   (td "0.60 or later")    (td "○"))
 	  (tr (td "Perl Jcode.pm")     (td "any version")      (td "○")))))))
@@ -75,13 +74,10 @@
       "How to Download"
       (*ja
        (p
-	(p "リリースパッケージはまだありません。CVSから匿名CVSで直接ダウンロードしてください。")
-	(program "
-cvs -d:pserver:anonymous@cvs.sourceforge.jp:/cvsroot/sumibi login
-cvs -z3 -d:pserver:anonymous@cvs.sourceforge.jp:/cvsroot/sumibi co sumibi
-")
+	(p "リリースパッケージを以下のサイトからダウンロードしてください。(0.5.5以上)")
+	(*link "download" "http://sourceforge.jp/projects/sumibi/")
 	))))
-
+    
     (*section
      "セットアップ"
      "How to Setup"
@@ -103,54 +99,49 @@ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.jp:/cvsroot/sumibi co sumibi
 	(program "mysql -u アドミンユーザー  sumi_bincho_1 < 辞書DBイメージ"))))
 
      (*subsection
-      "sumibiエンジンのライブラリインストール"
-      "Install the library files for sumibi engine"
-      (*ja
-       (ol
-	(li "CVSの sumibi/lib 以下を Gaucheのライブラリパスにコピーしてください。")
-	(p "例)")
-	(program "
-mkdir -p /usr/share/gauche/site/lib/sumibi/
-/bin/cp sumibi/lib/* /usr/share/gauche/site/lib/sumibi/ "))))
-
-     (*subsection
-      "cgi関連のインストール"
-      "install the cgi"
+      "SumibiServerのデプロイ(設置)"
+      "deploy the sumibi server"
       (*ja
        (p
-	(p "インストールすべきファイルは以下のものです。")
-	(table
-	 (thead
-	  (tr
-	   (td "CVS中のファイル") (td "コピー後の名前") (td "役割")))
-	 (tbody
-	  (tr (td "sumibi")              (td "sumibi")         (td "sumibiエンジン本体"))
-	  (tr (td "dot.sumibi.sample")   (td ".sumibi")        (td "sumibiエンジン用設定ファイル"))
-	  (tr (td "sumibi.cgi")          (td "sumibi.cgi")     (td "sumibiエンジンの入出力をSOAP 1.1プロトコルに変換するブリッジ")))))))
-
-     (*subsection
-      "sumibi と sumibi.cgi のインストール"
-      "install the sumibi and sumibi.cgi"
-      (*ja
-       (ol
-	(li "CVSの sumibi/sumibi と sumibi/server/sumibi.cgi を Apacheのcgi実行ディレクトリにコピーします。"))))
-
+	"以下の手順でSumibiWebAPI(SOAPプロトコル)でアクセス可能なSumibiサーバーを設置可能です。"
+	(ol
+	 (li "Sumibiのディストリビューションを展開し、make deployします")
+	 (p "例)")
+	 (program "
+tar zxf sumibi-0.5.5.tar.gz
+cd sumibi-0.5.5
+make deploy
+cd ..
+ls -al
+")
+	 (li "その結果、次のファイルが生成されます。")
+	 (table
+	  (thead
+	   (tr
+	    (td "ファイル名") (td "役割")))
+	  (tbody
+	   (tr (td "sumibi")            (td "sumibiエンジン本体"))
+	   (tr (td "sumibi.cgi")        (td "sumibiエンジンの入出力をSOAP 1.1プロトコルに変換するブリッジ"))
+	   (tr (td "sumibi-0.5.5/lib")  (td "sumibiエンジンが使用するライブラリ"))))))))
+      
      (*subsection
       "sumibi エンジンの設定ファイル .sumibi を用意する"
       "Prepare .sumibi file"
       (*ja
        (ol
-	(li "CVSの dot.sumibi.sample を cgi-binディレクトリに .sumibi という名前で保存します。")
+	(li "Sumibiのディストリビューションに含まれる dot.sumibi.sample を deployした sumibi本体と同じディレクトリに .sumibi という名前で保存します。")
 	(li ".sumibiのDB接続の為のパラメータを正しい値に変更します。")
 	(program
 "
 ;; sumiyaki db
-(define sumibi-sumiyakidb-name       \"host=localhost;db=sumi_bincho_1\")
+(define sumibi-sumiyakidb-host       \"myhostname\")
+(define sumibi-sumiyakidb-name       \"sumi_bincho_1\")
 (define sumibi-sumiyakidb-user       \"username\")
 (define sumibi-sumiyakidb-password   \"password\")
 
 ;; sumibi db
-(define sumibi-sumibidb-name         \"host=localhost;db=sumi_bincho_1\")
+(define sumibi-sumibidb-host         \"myhostname\")
+(define sumibi-sumibidb-name         \"sumi_bincho_1\")
 (define sumibi-sumibidb-user         \"username\")
 (define sumibi-sumibidb-password     \"password\")
 
