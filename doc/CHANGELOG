@@ -1,4 +1,9 @@
 
+
+[0.6.0]
+  - 0.5.5からの変更は無し
+
+
 [0.5.5]
   - 配布物の追加
     1. sumibi.cgi sumibi sumiyakiコマンド Sumibi.wsdlファイルを追加した
