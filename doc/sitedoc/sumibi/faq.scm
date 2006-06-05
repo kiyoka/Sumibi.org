@@ -69,20 +69,20 @@
      (*ja
       (p
        (subsection
-	(@ (title "sumibi.orgとの通信路は安全ですか？"))
-	(p "sumibi.orgはGoDaddy社提供の商用SSL証明書を使っています。")
+	(@ (title "Sumibi.orgとの通信路は安全ですか？"))
+	(p "Sumibi.orgのSumibiWebAPIではGoDaddy社提供の商用SSL証明書を使っています。")
 	(p "クライアントがSSL通信をサポートしており、対応するSSL証明書がインストールされていれば安全に通信できます。")
 	(p "SSL証明書を利用しているかどうかはあなたがどのような形でSumibi.orgにアクセスしているかで変わります。")
-	(p "注意: 以前はAjaxの『長文作成モード』も暗号化していたのですが、現在はサーバー負荷軽減のため、http:ページへのリンクに切替えました。")
 	(ul
 	 (li "Webブラウザから利用した場合")
-	 (p "基本的には、ブラウザの暗号化通信アイコン(鍵マーク) が出ているかどうかで確認してください。")
-	 (p "鍵マークが出ていれば、あなたとSumibi.org の通信路は盗聴することはできません。")
-	 (p "以下は、暗号化通信が行われている時のInternet Explorerの画面の例です。")
-	 (img (@ (src "ssl_image.png")))
+	 (p "通信路の暗号化されていません。")
+	 (p "理由は、Sumibi.orgのサーバーの負荷軽減です。ご了承ください。")
+	 (p "基本的にWebブラウザからSumibi.orgを利用して入力された文章は、ブログやWebメールから送信されるものが中心だと思われますので、暗号化されていなくても問題ないと考えています。")
+	 (li "SumibiWebAPIを直接利用した場合(文章が専門的になります)")
+	 (p "SSLで暗号化されたSOAP通信が行われます。Sumibi.orgで公開しているSumibiWebAPIはSSLでしか公開していません。")
 	 (li "Emacsから利用した場合(文章が専門的になります)")
 	 (p "sumibi.elには sumibi.orgに対応するSSL証明書が組み込まれています。")
-	 (p "よって後は、変数 sumibi-server-url のスキームが https: になっており、且つ、変数 sumibi-server-use-cert が t になっていればSSL証明書を使った通信が行なわれます。" )))
+	 (p "よって後は、変数 sumibi-server-url のスキームが https: になっており、且つ、変数 sumibi-server-use-cert が t になっていればSSL証明書を使った安全な通信が行なわれます。" )))
        (subsection
 	(@ (title "sumibi.orgとの通信情報はどこへ行くのですか？"))
 	(p "単純に捨てられ、記録には残りません。")
@@ -90,7 +90,7 @@
 	   "それを受けたApache Webサーバーはリクエスト元の IPアドレス、ユーザーエージェント等"
 	   "combined形式(標準ログ形式)でアクセスを記録しています。")
 	(p "その中には、変換される文章等は含まれません。")))))
-
+    
 
     (*section
      "Sumibiプロジェクトについて"
@@ -135,9 +135,18 @@
 	)
        (subsection
 	(@ (title "プロジェクトに貢献したいのですが、何か出来ることはありますか？"))
-	(p "本サイト(Sumibi.org)は小規模なハードウェア及びネットワーク資源を使ってホスティングしております。そこで、Sumibi.orgを無償でホスティングできる環境をご提供いただける企業様を募集しています。"
+	(p "本サイト(Sumibi.org)は基本的にkiyoka(Sumibi作者)個人の資材で運用しています。運用のための資材等を提供頂けると大変助かります。"
 	   "ご提供いただいた企業様におきましては、Sumibi.orgに優先して広告掲載させて頂きます。"
-	   )))))
+	   )
+	(p "2006年6月現在、Sumibi Projectに機材などを御提供頂いている企業様は以下の通りです。本当にすばらしい企業様ばかりです。ありがとうございます。")
+	(table
+	 (thead
+	  (tr
+	   (td "企業名") (td "提供機材等")))
+	 (tbody
+	  (tr (td (*link "インフォテリア株式会社" "http://www.infoteria.com/jp/"))  (td "Sumibi.orgのホスティング用サーバーマシン( CPU:Athron64x2 RAM:4GByte )"))
+	  (tr (td (*link "GoDaddy.com" "https://www.godaddy.com/gdshop/ssl/ssl_opensource.asp?se=%2B"))     (td "Turbo SSL Secure Certificate (sumibi.orgドメインのSSL証明書)")))))
+       )))
 
     (*section
      "Sumibi.orgのWebサービス利用について"

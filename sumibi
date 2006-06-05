@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
-;;     $Date: 2006/05/09 15:59:36 $
+;;     $Date: 2006/06/05 14:44:01 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -33,10 +33,16 @@
 (use util.list)
 (use util.combinations)
 (use www.cgi)
+(use text.html-lite)
 (use text.tree)
 (use sumibi.define)
 (use sumibi.dbiutil)
 (use sumibi.romkan)
+
+
+
+(define sumibi-inner-info '()) ;; Sumibiの演算過程の記録
+
 
 ;; デバッグモードの時だけ、slibを読みこむ
 (when sumibi-debug
@@ -779,6 +785,84 @@
 ;; 文章文字列を変換する。
 ;;
 (define (sumibi-convert-sentence str conn)
+
+  ;; ユーザー入力を表示(デバッグ用)
+  (define (output-user-input-list bunsetu-and-spaces)
+    (list
+     (html:h1 "ユーザー入力")
+     (html:table
+      :border 1
+      (html:tr (html:th "文節") (html:th "文節の頭のスペース文字数")) 
+      (map
+       (lambda (x)
+	 (html:tr 
+	  (html:td 
+	   (car x))
+	  (html:td 
+	   (cadr x))))
+       bunsetu-and-spaces))))
+
+
+  ;; 1文節文の出力
+  (define (output-bunsetu bunsetu)
+    (let (
+	  (first-assoc (car bunsetu)))
+
+      (list
+       (html:table
+	:border 1
+	(html:h2 (format #f "~s" (cdr (assq 'orig      first-assoc))))
+	(html:tr (html:th "オリジナル") (html:th "ひらがな") (html:th "カタカナ") (html:th "アルファベット") (html:th "スペース") (html:th "メソッド"))
+	(html:tr 
+	 (html:td 
+	  (cdr (assq 'orig      first-assoc)))
+	 (html:td 
+	  (cdr (assq 'hiragana  first-assoc)))
+	 (html:td
+	  (cdr (assq 'katakana  first-assoc)))
+	 (html:td
+	  (cdr (assq 'alpha     first-assoc)))
+	 (html:td 
+	  (cdr (assq 'spaces    first-assoc)))
+	 (html:td 
+	  (cdr (assq 'method    first-assoc)))))
+       (html:h3 "候補リスト")
+       (html:table
+	:border 1
+	(html:tr (html:th "id") (html:th "単語") (html:th "読み") (html:th "送り")
+		 (html:th "『単語』出現回数") (html:th "『読み』出現回数")
+		 (html:th "[-2,0]出現割合") (html:th "[-1,0]出現割合")  (html:th "[0]出現割合") (html:th "[0,1]出現割合") (html:th "[0,2]出現割合"))
+	(map
+	 (lambda (x)
+	   (let1 _assoc (cdr x)
+		 (html:tr
+		  (html:td
+		   (car x))
+		  (html:td   (cdr (assq 'tango        _assoc)))
+		  (html:td   (cdr (assq 'yomi         _assoc)))
+		  (html:td   (cdr (assq 'okuri        _assoc)))
+		  (html:td   (cdr (assq 'freq0        _assoc)))
+		  (html:td   (cdr (assq 'sum0         _assoc)))
+		  (html:td   (cdr (assq 'relative-2   _assoc)))
+		  (html:td   (cdr (assq 'relative-1   _assoc)))
+		  (html:td   (cdr (assq 'relative0    _assoc)))
+		  (html:td   (cdr (assq 'relative1    _assoc)))
+		  (html:td   (cdr (assq 'relative2    _assoc)))
+		  )))
+	 (cadr bunsetu))))))
+
+  ;; 共起頻度を考えない候補リストを表示
+  (define (output-henkan-kouho-list henkan-kouho-list)
+    (list
+     (html:h1 "共起頻度を考えない単純候補リスト")
+     (map
+      (lambda (x)
+	(output-bunsetu x))
+      henkan-kouho-list)))
+	 
+  ;; 計算過程情報をクリア
+  (set! sumibi-inner-info '())
+
   (let* (
 	 ;; 文節リスト ( 一つ一つの文節は、全てローマ字のまま )
 	 (bunsetu-list (string-split str #/\s+/))
@@ -794,12 +878,16 @@
 		(string-length x))
 	      _)))))
 
-	 (_
-	  (when sumibi-debug
-		(display "#0#")
-		(write bunsetu-list)
-		(newline)))
+	 ;; 文節をリストにしたものと、文節の間のスペースの数をzipしたリスト
+	 (zipped-list
+	  (zip
+	   bunsetu-list
+	   spaces-list))
 
+	 (_
+	  (push! sumibi-inner-info 
+		 (output-user-input-list zipped-list)))
+    
 	 ;; 候補を検索する
 	 (lookup-list
 	  (map
@@ -818,19 +906,15 @@
 				#f)))
 
 	       (sumibi-lookup-candidate-bunsetu tango method (cadr x) conn)))
-	   (zip
-	    bunsetu-list
-	    spaces-list)))
-
-	 (_
-	  (when sumibi-debug
-		(begin
-		  (display "#1#")
-		  (write lookup-list)
-		  (newline))))
+	   zipped-list))
 
 	 ;; 評価値順の候補リストを求める
 	 (henkan-kouho-list (sumibi-make-henkan-kouho lookup-list conn))
+
+	 ;; 評価結果を表示する
+	 (_
+	  (push! sumibi-inner-info
+		 (output-henkan-kouho-list henkan-kouho-list)))
 
 	 ;; 変換候補リストを完成させて返す。
 	 (complete-henkan-kouho-list (sumibi-output-henkan-kouho-list henkan-kouho-list)))
@@ -885,19 +969,36 @@
 	     (map
 	      (lambda (kouho)
 		(format "~a ~a ~a ~a ~a\n"
-			(car kouho)
-			(cadr kouho)
-			(caddr kouho)
-			(cadddr kouho)
-			(car (cddddr kouho))
+			(first   kouho)
+			(second  kouho)
+			(third   kouho)
+			(fourth  kouho)
+			(fifth   kouho)
 			))
 	      word))
 	   result))))
-
+      
       ('converthira
        (list
 	"ok\n"
 	(string-append (sumibi-local-roman->kana args-string) "\n")))
+
+      ('innerinfo
+       (list
+	"ok\n"
+	 (let1 str 
+	       (tree->string
+		(html:html
+		 (html:head
+		  (html:link :rel "stylesheet" :href "sumibi.css" :type "text/css"))
+		 (html:body
+		  (reverse
+		   sumibi-inner-info))))
+	       (call-with-output-file
+		   "./out.html"
+		 (lambda (port)
+		   (display str port)))
+	       str)))
 
       (else
        ;; 未定義のコマンドが指定された場合

@@ -26,11 +26,11 @@
 (define sumibi-debug #f)
 
 (define sumibi-version 
-  " $Date: 2006/05/08 03:25:15 $ on CVS " ;;VERSION;;
+  " $Date: 2006/06/05 14:44:01 $ on CVS " ;;VERSION;;
   )
 
 ;; 評価バランス ( skip-2重マルコフ 2重マルコフ 1重マルコフ 2重マルコフ skip-2重マルコフ)
-(define sumibi-evaluate-balance   '(0.1 0.3 0.1 0.3 0.1))
+(define sumibi-evaluate-balance   '(0.1 0.5 0.1 0.5 0.1))
 
 ;; 送りがな付きの単語の評価値計数
 (define sumibi-evaluate-okurigana (/ 1.0 30.0))
