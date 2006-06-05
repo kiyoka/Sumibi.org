@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2005/11/12 04:02:59 $
+;;     $Date: 2006/06/05 08:48:42 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -49,7 +49,7 @@
   :group 'input-method
   :group 'Japanese)
 
-(defcustom sumibi-server-url "https://sumibi.org/cgi-bin/sumibi/testing/sumibi.cgi"
+(defcustom sumibi-server-url "https://sumibi.org/cgi-bin/sumibi/stable/sumibi.cgi"
   "SumibiサーバーのURLを指定する。"
   :type  'string
   :group 'sumibi)
@@ -1445,7 +1445,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2005/11/12 04:02:59 $ on CVS " ;;VERSION;;
+  " $Date: 2006/06/05 08:48:42 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
