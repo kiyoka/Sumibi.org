@@ -1,7 +1,8 @@
-convert	Sumibi ha toukeiteki apuro-chi wo tukatta ro-maji kanjihenkann enjinn desu .
+convert	utada hikaru , kirakira hikaru
+innerinfo
 convert	watashi no.h namae ha.h nakano desu .
 convert	tokkyo ha shinsa ni jikan ga kakari masu
-convert	kyouha ii tenki nanode , sukoshi ashi wo nobashite kaimono ni ikimashita .
+convert	kyouha yoi tenki nanode , sukoshi ashi wo nobashite kaimono ni ikimashita .
 convert	kyoudai no.h mawari niha igokochi no ii.h kissaten ga takusan arimasu .
 convert	hakushi ga hyakunin iru mura
 convert	tango henkan ha [ watashi.h ] wo [ watashi ] ni henkan suru toiuyouna , hitotu no tango nomi wo henkan suru houshiki dearu . 
@@ -27,7 +28,7 @@ convert	o-punso-su purogurama ga ganbatte sakusei shita sofutouxea gaaru .
 convert	free na renbunsetu henkan enjin de henkan arugorizumu no kairyou ga genzai demo keizokuteki ni tudukerareteiru noha anthy dake dearu . 
 convert	source kara build sezu binary ban wo install seyo .
 convert	shin riri-su deha eigo document wo fukumemashita .
-convert	senmonka tachini kiku zadankai deno en'yasu to kinnyuu fuan . 
+convert	senmonka tachini kiku zadankai deno ennyasu to kinnyuu fuan . 
 convert	kana wo kanji ni henkan surutameno houhou toshiteha , tango henkanhoushiki ya tannbunsetu henkanhoushiki , rennbunnsetu hennkannhoushiki nadono bunnrui gaaru . 
 convert	kono dokyumento ha , UNIX USER 2004 5 gatugou ni keisai sareta tokusyuu [ saiteki na nihongo nyuuryoku kankyou wo hakkutu seyo ] wo  hensyuubu no kyoka wo ete HTML ka shitamonodesu .
 convert	saiteki na nihongo nyuuryoku wo hakkutu seyo .
