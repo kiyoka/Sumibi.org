@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
-;;     $Date: 2006/06/10 14:19:22 $
+;;     $Date: 2006/06/10 14:53:38 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -1010,11 +1010,12 @@
 	     (result
 	      (sumibi-convert-sentence args-string conn)))
 
+	 (when sumibi-debug
+	       (sumibi-save-inner-info sumibi-inner-info))
 	 (list
 	  "ok\n"
-	  (string-append (write-to-string result) "\n")
-	  (when sumibi-debug
-		(sumibi-save-inner-info sumibi-inner-info)))))
+	  (string-append (write-to-string result) "\n"))))
+
       ('convert
        ;; 計算過程情報をクリア
        (set! sumibi-inner-info '())
@@ -1022,6 +1023,8 @@
 	     (result
 	      (sumibi-convert-sentence args-string conn)))
 	 
+	 (when sumibi-debug
+	       (sumibi-save-inner-info sumibi-inner-info))
 	 (list
 	  "ok\n"
 	  (map
@@ -1036,10 +1039,8 @@
 			(fifth   kouho)
 			))
 	      word))
-	   result))
-	 (when sumibi-debug
-	       (sumibi-save-inner-info sumibi-inner-info))))
-    
+	   result))))
+	 
       ('converthira
        (list
 	"ok\n"
