@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
-;;     $Date: 2006/06/05 14:44:01 $
+;;     $Date: 2006/06/10 14:19:22 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -40,13 +40,13 @@
 (use sumibi.romkan)
 
 
-
 (define sumibi-inner-info '()) ;; Sumibiの演算過程の記録
 
 
 ;; デバッグモードの時だけ、slibを読みこむ
 (when sumibi-debug
       (begin
+	(use file.util)
 	(use slib)
 	(require 'pretty-print)
 	(require 'collect)))
@@ -199,14 +199,6 @@
 				  "dsssd"
 				  ))))
 
-    (when sumibi-debug
-	  (begin
-	    (display (format "bunsetu = ~s" hiragana)) (newline)
-	    (display (format "method  = ~s" method)) (newline)
-	    (display (format "#search1# = ~s" query-string)) (newline)
-	    (display "result1:")
-	    (display result)
-	    (newline)))
     `(
       ,(append
 	`((method   . ,method))
@@ -438,7 +430,7 @@
 	     (car x))
 	   (cadr (list-ref rensa-bunsetu 4))))
 
-	 ;; 単語の候補IDを全て総あたり検索するWHERE句
+	 ;; 単語の候補ID全てを単純検索するWHERE句
 	 (where-exp
 	  (string-join
 	   (map
@@ -446,6 +438,25 @@
 	      (string-join `(" id = " ,(write-to-string x) " ") " "))
 	    id-list)
 	   " OR "))
+
+	 (_
+	  (when sumibi-debug
+		(begin
+		  (push! sumibi-inner-info
+			 (list
+			  2 ;; stage
+			  (list
+			   (html:p
+			    (string-append
+			     "center-query: "
+			     (string-join
+			      (map
+			       (lambda (x) 
+				 (format "~a"  x))
+			       id-list)
+			      ", ")))))))))
+	 
+
 	 (where-exp-pre1
 	  (make-souatari-where-exp
 	   id-list id-list-pre1))
@@ -475,11 +486,6 @@
 	   "      WHERE " where-exp 
 	   ))
 
-	 (_
-	  (when sumibi-debug
-		(begin
-		  (display (format "#search2# = ~s" query-string)) (newline))))
-		  
 	 (result-word
 	  (map
 	   (lambda (x)
@@ -542,7 +548,7 @@
 	  (newline)))
   (let* (
 	;; 注目している単語の候補ID
-	 (center(list-ref rensa-bunsetu 2))
+	 (center (list-ref rensa-bunsetu 2))
 
 	 (id-list
 	  (map
@@ -789,18 +795,20 @@
   ;; ユーザー入力を表示(デバッグ用)
   (define (output-user-input-list bunsetu-and-spaces)
     (list
-     (html:h1 "ユーザー入力")
-     (html:table
-      :border 1
-      (html:tr (html:th "文節") (html:th "文節の頭のスペース文字数")) 
-      (map
-       (lambda (x)
-	 (html:tr 
-	  (html:td 
-	   (car x))
-	  (html:td 
-	   (cadr x))))
-       bunsetu-and-spaces))))
+     5 ;; stage
+     (list
+      (html:h1 "ユーザー入力")
+      (html:table
+       :border 1
+       (html:tr (html:th "文節") (html:th "文節の頭のスペース文字数")) 
+       (map
+	(lambda (x)
+	  (html:tr 
+	   (html:td 
+	    (car x))
+	   (html:td 
+	    (cadr x))))
+	bunsetu-and-spaces)))))
 
 
   ;; 1文節文の出力
@@ -854,15 +862,14 @@
   ;; 共起頻度を考えない候補リストを表示
   (define (output-henkan-kouho-list henkan-kouho-list)
     (list
-     (html:h1 "共起頻度を考えない単純候補リスト")
-     (map
-      (lambda (x)
-	(output-bunsetu x))
-      henkan-kouho-list)))
+     5 ;; stage
+     (list
+      (html:h1 "共起頻度を考えない単純候補リスト")
+      (map
+       (lambda (x)
+	 (output-bunsetu x))
+       henkan-kouho-list))))
 	 
-  ;; 計算過程情報をクリア
-  (set! sumibi-inner-info '())
-
   (let* (
 	 ;; 文節リスト ( 一つ一つの文節は、全てローマ字のまま )
 	 (bunsetu-list (string-split str #/\s+/))
@@ -923,9 +930,55 @@
     complete-henkan-kouho-list))
 
 
+(define (sumibi-save-inner-info inner-info)
+  (let1 dirname "./out"
+
+	(make-directory* dirname)
+
+	(for-each
+	 (lambda (num)
+	   (let1 this-stage
+		 (filter-map
+		  (lambda (x)
+		    (if (= (car x) num)
+			(cadr x)
+			#f))
+		  inner-info)
+
+		 (call-with-output-file
+		     (format "~a/~a.html" dirname num)
+		   (lambda (port)
+		     (display
+		      (tree->string
+		       (html:html
+			(html:head
+			 (html:link :rel "stylesheet" :href "sumibi.css" :type "text/css"))
+			(html:body
+			 (reverse this-stage))))
+		      port)))))
+	 '(1 2 3 4 5))
+		  
+	(call-with-output-file
+	    (format "~a/index.html" dirname)
+	  (lambda (port)
+	    (display
+	     (tree->string
+	      (html:html
+	       (html:head
+		(html:link :rel "stylesheet" :href "sumibi.css" :type "text/css"))
+	       (html:body
+		(html:ul
+		 (html:li  (html:a :href "1.html" "stage1"))
+		 (html:li  (html:a :href "2.html" "stage2 共起頻度の計算"))
+		 (html:li  (html:a :href "3.html" "stage3"))
+		 (html:li  (html:a :href "4.html" "stage4"))
+		 (html:li  (html:a :href "5.html" "stage5 最終結果"))
+		 ))))
+	     port)))))
+
+
 ;; 一行コマンドを実行する
 (define (sumibi-do-command str conn)
-
 
   ;;
   ;; roman 文字列をかな文字列に変換する
@@ -951,20 +1004,27 @@
 	(string-append sumibi-version "\n")))
 
       ('convertsexp
+       ;; 計算過程情報をクリア
+       (set! sumibi-inner-info '())
        (let (
 	     (result
 	      (sumibi-convert-sentence args-string conn)))
-	 (list
-	  "ok\n"
-	  (string-append (write-to-string result) "\n"))))
 
+	 (list
+	  "ok\n"
+	  (string-append (write-to-string result) "\n")
+	  (when sumibi-debug
+		(sumibi-save-inner-info sumibi-inner-info)))))
       ('convert
+       ;; 計算過程情報をクリア
+       (set! sumibi-inner-info '())
        (let (
 	     (result
 	      (sumibi-convert-sentence args-string conn)))
+	 
 	 (list
 	  "ok\n"
-	 (map
+	  (map
 	   (lambda (word)
 	     (map
 	      (lambda (kouho)
@@ -976,30 +1036,15 @@
 			(fifth   kouho)
 			))
 	      word))
-	   result))))
-      
+	   result))
+	 (when sumibi-debug
+	       (sumibi-save-inner-info sumibi-inner-info))))
+    
       ('converthira
        (list
 	"ok\n"
 	(string-append (sumibi-local-roman->kana args-string) "\n")))
-
-      ('innerinfo
-       (list
-	"ok\n"
-	 (let1 str 
-	       (tree->string
-		(html:html
-		 (html:head
-		  (html:link :rel "stylesheet" :href "sumibi.css" :type "text/css"))
-		 (html:body
-		  (reverse
-		   sumibi-inner-info))))
-	       (call-with-output-file
-		   "./out.html"
-		 (lambda (port)
-		   (display str port)))
-	       str)))
-
+	  
       (else
        ;; 未定義のコマンドが指定された場合
        nil))))
