@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
-;;     $Date: 2006/06/12 15:24:45 $
+;;     $Date: 2006/06/13 13:13:26 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -170,7 +170,8 @@
 			 (html:h1 str)
 			 (html:table
 			  :border 1
-			  (html:tr (html:th "オリジナル") (html:th "ひらがな") (html:th "カタカナ") (html:th "アルファベット") (html:th "スペース") (html:th "メソッド"))
+			  (html:tr (html:th "オリジナル") (html:th "ひらがな") (html:th "カタカナ")
+				   (html:th "アルファベット") (html:th "スペース") (html:th "メソッド"))
 			  (html:tr 
 			   (html:td  str)
 			   (html:td  hiragana)
@@ -255,7 +256,16 @@
 	   (sumibi-dbi-read-query conn
 				  query-string
 				  "dsssd"
-				  ))))
+				  )))
+	   
+	 ;; 結果をソートする
+	 (result
+	  (sort result
+		(lambda (x y)
+		  (>
+		   (cdr (assq 'freq x))
+		   (cdr (assq 'freq y)))))))
+	  
 
     (when sumibi-debug
 	  (push! sumibi-inner-info
@@ -278,11 +288,7 @@
 			      (html:td   (cdr (assq 'okuri        _assoc)))
 			      (html:td   (cdr (assq 'freq         _assoc)))
 			      )))
-		     (sort result
-			   (lambda (x y)
-			     (>
-			      (cdr (assq 'freq x))
-			      (cdr (assq 'freq y)))))))))))
+		     result))))))
 
     `(
       ,(append
@@ -380,6 +386,29 @@
 
   ;; 総あたりのwhere句を生成する
   (define (make-souatari-where-exp id-list1 id-list2)
+    (when sumibi-debug
+	  (begin
+	    (push! sumibi-inner-info
+		   (list
+		    3 ;; stage
+		    (list
+		     (html:h3
+		      "総当り IDs")
+		     (html:table
+		      :border 1
+		      (html:tr 
+		       (map
+			(lambda (x)
+			  (html:td
+			   (format "~a" x)))
+			id-list1))
+		      (html:tr 
+		       (map
+			(lambda (x)
+			  (html:td
+			   (format "~a" x)))
+			id-list2))))))))
+
     (if (null? id-list2)
 	""
 	(string-join
@@ -524,6 +553,9 @@
 	    id-list)
 	   " OR "))
 
+	 ;; センター(中央)のデータ
+	 (center (list-ref rensa-bunsetu 2))
+
 	 (_
 	  (when sumibi-debug
 		(begin
@@ -531,9 +563,14 @@
 			 (list
 			  3 ;; stage
 			  (list
-			   (html:p
-			    (string-append
-			     "center-query: "
+			   (html:h2
+			    (format "~a (~a)"
+				    (cdr (assq 'orig
+					       (car center)))
+				    (cdr (assq 'hiragana
+					       (car center)))))
+			   (html:ul
+			    (html:li
 			     (string-join
 			      (map
 			       (lambda (x) 
@@ -626,11 +663,6 @@
 ;; 前後に2連鎖した単語候補から、全組合せの共起確率を求める
 ;;
 (define (sumibi-compute-candidate-pacent rensa-bunsetu conn)
-  (when sumibi-debug
-	(begin
-	  (display "#2#:")
-	  (pretty-print rensa-bunsetu)
-	  (newline)))
   (let* (
 	;; 注目している単語の候補ID
 	 (center (list-ref rensa-bunsetu 2))
@@ -642,17 +674,11 @@
 	   (cadr center))))
 
     (if (null? id-list)
-	(begin
-	  (if sumibi-debug
-	      (begin
-		(display "#kouho none#: ")
-		(write (list-ref rensa-bunsetu 2))
-		(newline)))
-	  (list-ref rensa-bunsetu 2))
+	center
 	
 	;; 候補が存在するものについて実際に計算する
 	`(
-	  ,(car (list-ref rensa-bunsetu 2))
+	  ,(car center)
 	  ,(sumibi-compute-candidate-pacent-sub rensa-bunsetu conn)))))
 
 
@@ -1052,6 +1078,7 @@
 	       (html:head
 		(html:link :rel "stylesheet" :href "sumibi.css" :type "text/css"))
 	       (html:body
+		(html:h1 "Sumibi計算過程目次")
 		(html:ul
 		 (html:li  (html:a :href "1.html" "stage1 ユーザー入力"))
 		 (html:li  (html:a :href "2.html" "stage2 単語候補のリストアップ"))
