@@ -46,7 +46,7 @@
 	  (thead
 	   (tr  (td "名前") (td "値")))
 	  (tbody
-	   (tr   (td "version")   (td "APIのバージョン番号(例:0.3.3)")))))
+	   (tr   (td "version")   (td "APIのバージョン番号(例:0.6.0)")))))
 
 	(li "doSumibiConvertメソッド")
 	(ul
@@ -137,7 +137,7 @@
 	 (p "./SumibiWebApiSample.pl sumibi")
 	 (p "[結果]")
 	 (program "
-version : 0.4.0
+version : 0.6.0
 sexp    : KCgoaiAiw7qy0CIgMCAwKSAoaCAipLmk36TTIiAwIDEpIChrICKluaXfpdMiIDAgMikgKGwgInN1bWliaSIgMCAzKSkp
 time    : 1
 dump    : $VAR1 = [
