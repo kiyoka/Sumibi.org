@@ -187,7 +187,7 @@ hiragana: すみび
 	 (p "./SumibiWebApiSample.rb sumibi")
 	 (p "[結果]")
 	 (program "
-version : 0.4.0
+version : 0.6.0
 sexp    : KCgoaiAiw7qy0CIgMCAwIDApIChoICKkuaTfpNMiIDAgMSAwKSAoayAipbml36XTIiAwIDIgMCkgKGwgInN1bWliaSIgMCAzIDApKSk=
 time    : 1
 dump    : 
