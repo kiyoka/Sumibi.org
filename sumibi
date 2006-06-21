@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
-;;     $Date: 2006/06/21 12:39:45 $
+;;     $Date: 2006/06/21 13:43:40 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -380,25 +380,40 @@
     (when sumibi-debug
 	  (begin
 	    (push! sumibi-inner-info
-		   (list
-		    3 ;; stage
-		    (list
-		     (html:h3
-		      "総当り IDs")
-		     (html:table
-		      :border 1
-		      (html:tr 
-		       (map
-			(lambda (x)
-			  (html:td
-			   (format "~a" x)))
-			id-list1))
-		      (html:tr 
-		       (map
-			(lambda (x)
-			  (html:td
-			   (format "~a" x)))
-			id-list2))))))))
+		   (let1 num-list (append (iota 
+					   sumibi-candidate-top-limit)
+					  '(#f #f #f #f #f #f #f #f #f #f)
+					  '(#f #f #f #f #f #f #f #f #f #f)
+					  '(#f #f #f #f #f #f #f #f #f #f)
+					  '(#f #f #f #f #f #f #f #f #f #f)
+					  '(#f #f #f #f #f #f #f #f #f #f))
+			 (list
+			  3 ;; stage
+			  (list
+			   (html:h3
+			    "総当り IDs (上と下の総当りの共起頻度を全て評価)")
+			   (html:table
+			    :border 1
+			    (html:tr 
+			     (map
+			      (lambda (x)
+				(html:td
+				 (if (car x)
+				     (format "~a" (cadr x))
+				     (format "(~a)" (cadr x)))))
+			      (zip
+			       num-list
+			       id-list1))
+			     (html:tr 
+			      (map
+			       (lambda (x)
+				 (html:td
+				  (if (car x)
+				      (format "~a" (cadr x))
+				      (format "(~a)" (cadr x)))))
+			       (zip
+				num-list
+				id-list2)))))))))))
 
     (if (null? id-list2)
 	""
@@ -434,11 +449,6 @@
 	     "    GROUP BY id_base ;"
 	     ))
 	   
-	   (_
-	    (when sumibi-debug
-		  (begin
-		    (display (format "~a = ~s" debug-message bigram-query-string)) (newline))))
-	   
 	   (result-bigram
 	    (if (null? id-list)
 		'()
@@ -454,6 +464,13 @@
 		 (sumibi-dbi-read-query conn 
 					bigram-query-string
 					"ddddss")))))
+
+      (when sumibi-debug
+	    (push! sumibi-inner-info
+		   (list
+		    3 ;; stage
+		    (list
+		     (html:p (format "~a = ~s" debug-message bigram-query-string))))))
       result-bigram))
 
   ;; 共起頻度を集計し％で結果を求める
@@ -477,11 +494,6 @@
 	     "    GROUP BY id_base ;"
 	     ))
 	   
-	   (_
-	    (when sumibi-debug
-		  (begin
-		    (display (format "~a = ~s" debug-message bigram-query-string)) (newline))))
-	   
 	   (result-bigram
 	    (if (null? id-list)
 		'()
@@ -497,6 +509,12 @@
 		 (sumibi-dbi-read-query conn 
 					bigram-query-string
 					"ddddss")))))
+      (when sumibi-debug
+	    (push! sumibi-inner-info
+		   (list
+		    3 ;; stage
+		    (list
+		     (html:p (format "~a = ~s" debug-message bigram-query-string))))))
       result-bigram))
 
   (let* (
@@ -616,30 +634,23 @@
 				  "dsssddd")))
 
 
-	 ;; 頻度総計を求める(pre1)
-	 (result-bigram-pre1
-	  (exec-bigram-search-pre id-list-pre1 "bigram" where-exp-pre1 "relative-1" "#search-pre1" conn))
-
 	 ;; 頻度総計を求める(pre2)
 	 (result-bigram-pre2
-	  (exec-bigram-search-pre id-list-pre2 "skip_bigram" where-exp-pre2 "relative-2" "#search-pre2" conn))
+	  (exec-bigram-search-pre id-list-pre2 "skip_bigram" where-exp-pre2 "relative-2" "pre2" conn))
 	 
+	 ;; 頻度総計を求める(pre1)
+	 (result-bigram-pre1
+	  (exec-bigram-search-pre id-list-pre1 "bigram" where-exp-pre1 "relative-1" "pre1" conn))
+
 	 ;; 頻度総計を求める(post1)
 	 (result-bigram-post1
-	  (exec-bigram-search-post id-list-post1 "bigram" where-exp-post1 "relative1" "#search-post1" conn))
+	  (exec-bigram-search-post id-list-post1 "bigram" where-exp-post1 "relative1" "post1" conn))
 
 	 ;; 頻度総計を求める(post2)
 	 (result-bigram-post2
-	  (exec-bigram-search-post id-list-post2 "skip_bigram" where-exp-post2 "relative2" "#search-post2" conn)))
+	  (exec-bigram-search-post id-list-post2 "skip_bigram" where-exp-post2 "relative2" "post2" conn)))
 
-    (when sumibi-debug
-	  (begin
-	    (display "result-pre2:")   (write result-bigram-pre2)   (newline)
-	    (display "result-pre1:")   (write result-bigram-pre1)   (newline)
-	    (display "result-base:")   (write result-word)          (newline)
-	    (display "result-post1:")  (write result-bigram-post1)  (newline)
-	    (display "result-post2:")  (write result-bigram-post2)  (newline)
-	    ))
+
 
     (sumibi-compute-pacent
      result-bigram-pre2
