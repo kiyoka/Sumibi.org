@@ -8,6 +8,7 @@
    sumibi-debug
    sumibi-version
    sumibi-evaluate-balance
+   sumibi-candidate-top-limit
    sumibi-evaluate-okurigana
    sumibi-interface
    sumibi-method-list
@@ -26,7 +27,7 @@
 (define sumibi-debug #f)
 
 (define sumibi-version 
-  " $Date: 2006/06/10 14:19:22 $ on CVS " ;;VERSION;;
+  " $Date: 2006/06/21 13:43:39 $ on CVS " ;;VERSION;;
   )
 
 ;; 評価バランス ( skip-2重マルコフ 2重マルコフ 1重マルコフ 2重マルコフ skip-2重マルコフ)
