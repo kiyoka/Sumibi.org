@@ -1,14 +1,19 @@
 
+.PHONY = all
+
 DICT=sumi_bincho_1
 SUMIBI=nice -19 gosh -I../lib ../sumibi
 SUMIYAKI=nice -19 ./sumiyaki.sh
+
+
+all : h1
 
 
 h: 
 	$(SUMIBI) < input-data1.txt | egrep ' 0 .$$' > result_list.log
 
 h1:
-	head -1 input-data1.txt | $(SUMIBI) | egrep ' 0 .$$' > result.log
+	head -1 input-data1.txt | $(SUMIBI) -d > result.log
 
 h2:
 	cat /home/park/$(SUMIBI)_corpus/unixuser/200405/part1.txt | kakasi -Ja -Ka -Ha -Ea -s > henkan2.txt
