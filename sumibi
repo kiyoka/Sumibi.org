@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
-;;     $Date: 2006/06/13 13:13:26 $
+;;     $Date: 2006/06/21 12:39:45 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -35,24 +35,15 @@
 (use www.cgi)
 (use text.html-lite)
 (use text.tree)
+(use file.util)
 (use sumibi.define)
 (use sumibi.dbiutil)
 (use sumibi.romkan)
 
 
-;;(set! sumibi-debug #t)
 
 
 (define sumibi-inner-info '()) ;; Sumibiの演算過程の記録
-
-
-;; デバッグモードの時だけ、slibを読みこむ
-(when sumibi-debug
-      (begin
-	(use file.util)
-	(use slib)
-	(require 'pretty-print)
-	(require 'collect)))
 
 
 ;;
@@ -643,11 +634,11 @@
 
     (when sumibi-debug
 	  (begin
-	    (display "result-pre2:")   (pretty-print result-bigram-pre2)   (newline)
-	    (display "result-pre1:")   (pretty-print result-bigram-pre1)   (newline)
-	    (display "result-base:")   (pretty-print result-word)          (newline)
-	    (display "result-post1:")  (pretty-print result-bigram-post1)  (newline)
-	    (display "result-post2:")  (pretty-print result-bigram-post2)  (newline)
+	    (display "result-pre2:")   (write result-bigram-pre2)   (newline)
+	    (display "result-pre1:")   (write result-bigram-pre1)   (newline)
+	    (display "result-base:")   (write result-word)          (newline)
+	    (display "result-post1:")  (write result-bigram-post1)  (newline)
+	    (display "result-post2:")  (write result-bigram-post2)  (newline)
 	    ))
 
     (sumibi-compute-pacent
@@ -769,7 +760,7 @@
     (when sumibi-debug
 	  (begin
 	    (display "point-result:")
-	    (pretty-print point-result)
+	    (write point-result)
 	    (newline)))
 
 
@@ -1174,6 +1165,7 @@
       ""
       " Switches:"
       "     -h ... Display this help message."
+      "     -d ... Output debug information to ./out ."
       ))
 
   (define (display-help)
@@ -1200,7 +1192,9 @@
 	 (_ (parse-options
 	     _
 	     (
-	      ("h" () (display-help))))))
+	      ("h" () (display-help))
+	      ("d" () (set! sumibi-debug #t))))))
+
 
     ;; 標準入出力による対話式プロトコル
     (port-for-each
