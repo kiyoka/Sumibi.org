@@ -1,4 +1,4 @@
-convert	utada hikaru , kirakira hikaru
+convert	bunsyou wo kousei suru
 innerinfo
 convert	watashi no.h namae ha.h nakano desu .
 convert	tokkyo ha shinsa ni jikan ga kakari masu
@@ -52,4 +52,4 @@ convert	sekai niha , mojisuu ga oosugite ki-bo-do kara tyokusetu nyuuryoku dekin
 convert	inagaki gorou to katori shingo ha SMAP no member desu .
 convert	niwa niha 2 wa niwatori ga iru . boku no namae ha nishiyama desu .
 convert	eiyou seibun ha kettouchi no kontoro-ru ya ketuatu antei ni kouka ga arimasu .
-convert	hatuga genmai niha kono gyaba wo hajime syokumotusenni ya bitamin' ten mineraru rui ga hakumai ni kurabe kakudan ni ooku fukumareteimasu maru
+convert	hatuga genmai niha kono gyaba wo hajime syokumotusenni ya bitamin ten mineraru rui ga hakumai ni kurabe kakudan ni ooku fukumareteimasu maru
