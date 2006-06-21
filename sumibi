@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
-;;     $Date: 2006/06/21 13:43:40 $
+;;     $Date: 2006/06/21 14:20:04 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -158,7 +158,7 @@
 		       (list
 			2 ;; stage
 			(list
-			 (html:h1 str)
+			 (html:h2 str)
 			 (html:table
 			  :border 1
 			  (html:tr (html:th "オリジナル") (html:th "ひらがな") (html:th "カタカナ")
@@ -181,7 +181,7 @@
 			 (list
 			  2 ;; stage
 			  (list
-			   (html:h2 "hiragana-query")
+			   (html:h3 "hiragana-query")
 			   (html:ul
 			    (html:li hiragana-query))))))
 	    hiragana-query
@@ -193,7 +193,7 @@
 			 (list
 			  2 ;; stage
 			  (list
-			   (html:h2 "katakana-query")
+			   (html:h3 "katakana-query")
 			   (html:ul
 			    (html:li katakana-query))))))
 	    katakana-query
@@ -205,7 +205,7 @@
 			 (list
 			  2 ;; stage
 			  (list
-			   (html:h2 "alphabet-query")
+			   (html:h3 "alphabet-query")
 			   (html:ul
 			    (html:li alphabet-query))))))
 	    alphabet-query
@@ -229,7 +229,7 @@
 			       (list
 				2 ;; stage
 				(list
-				 (html:h2 "method-free-query")
+				 (html:h3 "method-free-query")
 				 (html:ul
 				  (html:li _q))))))
 		  _q)
@@ -415,16 +415,18 @@
 				num-list
 				id-list2)))))))))))
 
-    (if (null? id-list2)
-	""
+    (if (or 
+	 (null? id-list1) (eqv? 0 (car id-list1))
+	 (null? id-list2) (eqv? 0 (car id-list2)))
+	" id_base = 0 "
 	(string-join
 	 (map
 	  (lambda (x)
 	    (string-join `(" (id_base = " ,(write-to-string (car x)) "  AND  id_m1 = " ,(write-to-string (cadr x)) ") " ) " "))
 	  (cartesian-product-right
 	   (list
-	    id-list1
-	    id-list2)))
+	    (take* id-list1 sumibi-candidate-top-limit)
+	    (take* id-list2 sumibi-candidate-top-limit))))
 	 " OR ")))
 
 
@@ -572,7 +574,7 @@
 			 (list
 			  3 ;; stage
 			  (list
-			   (html:h2
+			   (html:h3
 			    (format "~a (~a)"
 				    (cdr (assq 'orig
 					       (car center)))
@@ -910,7 +912,6 @@
     (list
      1 ;; stage
      (list
-      (html:h1 "ユーザー入力")
       (html:table
        :border 1
        (html:tr (html:th "文節") (html:th "文節の頭のスペース文字数")) 
@@ -977,7 +978,6 @@
     (list
      4 ;; stage
      (list
-      (html:h1 "共起頻度を考えない単純候補リスト")
       (map
        (lambda (x)
 	 (output-bunsetu x))
@@ -1044,50 +1044,58 @@
 
 
 (define (sumibi-save-inner-info inner-info)
-  (let1 dirname "./out"
+  (let (
+	(dirname "./out")
+	(title-alist
+	 '((1 . "stage1 ユーザー入力")
+	   (2 . "stage2 単語候補のリストアップ")
+	   (3 . "stage3 共起頻度の計算")
+	   (4 . "stage4 最終結果"))))
 
-	(make-directory* dirname)
+    (make-directory* dirname)
 
-	(for-each
-	 (lambda (num)
-	   (let1 this-stage
-		 (filter-map
-		  (lambda (x)
-		    (if (= (car x) num)
-			(cadr x)
-			#f))
-		  inner-info)
+    (for-each
+     (lambda (_alist)
+       (let1 this-stage
+	     (filter-map
+	      (lambda (x)
+		(if (= (car x) (car _alist))
+		    (cadr x)
+		    #f))
+	      inner-info)
+	     
+	     (call-with-output-file
+		 (format "~a/~a.html" dirname (car _alist))
+	       (lambda (port)
+		 (display
+		  (tree->string
+		   (html:html
+		    (html:head
+		     (html:link :rel "stylesheet" :href "sumibi.css" :type "text/css")
+		     (html:title (cdr _alist)))
+		    (html:body
+		     (list
+		      (html:h1 (cdr _alist))
+		      (reverse this-stage)))))
+		  port)))))
+     title-alist)
 
-		 (call-with-output-file
-		     (format "~a/~a.html" dirname num)
-		   (lambda (port)
-		     (display
-		      (tree->string
-		       (html:html
-			(html:head
-			 (html:link :rel "stylesheet" :href "sumibi.css" :type "text/css"))
-			(html:body
-			 (reverse this-stage))))
-		      port)))))
-	 '(1 2 3 4))
-
-	(call-with-output-file
-	    (format "~a/index.html" dirname)
-	  (lambda (port)
-	    (display
-	     (tree->string
-	      (html:html
-	       (html:head
-		(html:link :rel "stylesheet" :href "sumibi.css" :type "text/css"))
-	       (html:body
-		(html:h1 "Sumibi計算過程目次")
-		(html:ul
-		 (html:li  (html:a :href "1.html" "stage1 ユーザー入力"))
-		 (html:li  (html:a :href "2.html" "stage2 単語候補のリストアップ"))
-		 (html:li  (html:a :href "3.html" "stage3 共起頻度の計算"))
-		 (html:li  (html:a :href "4.html" "stage4 最終結果"))
-		 ))))
-	     port)))))
+    (call-with-output-file
+	(format "~a/index.html" dirname)
+      (lambda (port)
+	(display
+	 (tree->string
+	  (html:html
+	   (html:head
+	    (html:link :rel "stylesheet" :href "sumibi.css" :type "text/css"))
+	   (html:body
+	    (html:h1 "Sumibi計算過程目次")
+	    (html:ul
+	     (map
+	      (lambda (x)
+		(html:li  (html:a :href (format "~a.html" (car x)) (cdr x))))
+	      title-alist)))))
+	 port)))))
 
 
 ;; 一行コマンドを実行する
