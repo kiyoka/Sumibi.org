@@ -27,11 +27,11 @@
 (define sumibi-debug #f)
 
 (define sumibi-version 
-  " $Date: 2006/06/21 13:43:39 $ on CVS " ;;VERSION;;
+  " $Date: 2006/06/22 14:04:27 $ on CVS " ;;VERSION;;
   )
 
 ;; 評価バランス ( skip-2重マルコフ 2重マルコフ 1重マルコフ 2重マルコフ skip-2重マルコフ)
-(define sumibi-evaluate-balance   '(0.5 0.3 0.1 0.3 0.5))
+(define sumibi-evaluate-balance   '(0.5 0.5 0.1 0.5 0.5))
 
 ;; 出現頻度上位 N位を次の共起頻度計算のステージに乗せる
 (define sumibi-candidate-top-limit  8)
