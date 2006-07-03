@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
-;;     $Date: 2006/06/21 14:20:04 $
+;;     $Date: 2006/07/03 13:54:07 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -391,7 +391,7 @@
 			  3 ;; stage
 			  (list
 			   (html:h3
-			    "総当り IDs (上と下の総当りの共起頻度を全て評価)")
+			    "総当り IDs (上段と下段の総当りの共起頻度を全て評価)")
 			   (html:table
 			    :border 1
 			    (html:tr 
@@ -416,9 +416,9 @@
 				id-list2)))))))))))
 
     (if (or 
-	 (null? id-list1) (eqv? 0 (car id-list1))
-	 (null? id-list2) (eqv? 0 (car id-list2)))
-	" id_base = 0 "
+	 (null-list? id-list1)
+	 (null-list? id-list2))
+	#f
 	(string-join
 	 (map
 	  (lambda (x)
@@ -432,28 +432,26 @@
 
   ;; 共起頻度を集計し％で結果を求める
   (define (exec-bigram-search-pre id-list table-name where-exp key debug-message conn)
-    (let* (
-	   (sum-query-string
-	    (string-append "SELECT SUM(freq_base) FROM " table-name " WHERE " where-exp))
-	   (_
-	    (if (null? id-list)
-		'((1))
+    (if (not where-exp)
+	'()
+	(let* (
+	       (sum-query-string
+		(string-append "SELECT SUM(freq_base) FROM " table-name " WHERE " where-exp))
+	       (_
 		(sumibi-dbi-read-query conn
 				       sum-query-string
-				       "d")))
-	   (sum-str (number->string (caar _)))
-	   
-	   (bigram-query-string
-	    (string-append
-	     "    SELECT id_base, SUM( " table-name ".freq_base ), " sum-str ", SUM( " table-name ".freq_base )/ " sum-str " ,word.tango, okuri "
-	     "      FROM " table-name " JOIN word ON id_base = word.id "
-	     "      WHERE " where-exp
-	     "    GROUP BY id_base ;"
-	     ))
-	   
-	   (result-bigram
-	    (if (null? id-list)
-		'()
+				       "d"))
+	       (sum-str (number->string (caar _)))
+	       
+	       (bigram-query-string
+		(string-append
+		 "    SELECT id_base, SUM( " table-name ".freq_base ), " sum-str ", SUM( " table-name ".freq_base )/ " sum-str " ,word.tango, okuri "
+		 "      FROM " table-name " JOIN word ON id_base = word.id "
+		 "      WHERE " where-exp
+		 "    GROUP BY id_base ;"
+		 ))
+	       
+	       (result-bigram
 		(map
 		 (lambda (x)
 		   `(
@@ -465,40 +463,39 @@
 		     (okuri     . ,(list-ref x 5))))
 		 (sumibi-dbi-read-query conn 
 					bigram-query-string
-					"ddddss")))))
+					"ddddss"))))
+	
+	  (when sumibi-debug
+		(push! sumibi-inner-info
+		       (list
+			3 ;; stage
+			(list
+			 (html:p (format "~a = ~s" debug-message bigram-query-string))))))
+	  result-bigram)))
 
-      (when sumibi-debug
-	    (push! sumibi-inner-info
-		   (list
-		    3 ;; stage
-		    (list
-		     (html:p (format "~a = ~s" debug-message bigram-query-string))))))
-      result-bigram))
 
   ;; 共起頻度を集計し％で結果を求める
   (define (exec-bigram-search-post id-list table-name where-exp key debug-message conn)
-    (let* (
-	   (sum-query-string
-	    (string-append "SELECT SUM(freq_base) FROM " table-name " WHERE " where-exp))
-	   (_
-	    (if (null? id-list)
-		'((1))
+    (if (not where-exp)
+	'()
+	(let* (
+	       (sum-query-string
+		(string-append "SELECT SUM(freq_base) FROM " table-name " WHERE " where-exp))
+	       (_
 		(sumibi-dbi-read-query conn 
 				       sum-query-string
-				       "d")))
-	   (sum-str (number->string (caar _)))
+				       "d"))
+	       (sum-str (number->string (caar _)))
 	   
-	   (bigram-query-string
-	    (string-append
-	     "    SELECT id_m1, SUM( " table-name ".freq_base ), " sum-str ", SUM( " table-name ".freq_base )/ " sum-str " ,word.tango, okuri "
-	     "      FROM " table-name " JOIN word ON id_m1 = word.id "
-	     "      WHERE " where-exp
-	     "    GROUP BY id_base ;"
-	     ))
-	   
-	   (result-bigram
-	    (if (null? id-list)
-		'()
+	       (bigram-query-string
+		(string-append
+		 "    SELECT id_m1, SUM( " table-name ".freq_base ), " sum-str ", SUM( " table-name ".freq_base )/ " sum-str " ,word.tango, okuri "
+		 "      FROM " table-name " JOIN word ON id_m1 = word.id "
+		 "      WHERE " where-exp
+		 "    GROUP BY id_base ;"
+		 ))
+	       
+	       (result-bigram
 		(map
 		 (lambda (x)
 		   `(
@@ -510,59 +507,71 @@
 		     (okuri     . ,(list-ref x 5))))
 		 (sumibi-dbi-read-query conn 
 					bigram-query-string
-					"ddddss")))))
-      (when sumibi-debug
-	    (push! sumibi-inner-info
-		   (list
-		    3 ;; stage
-		    (list
-		     (html:p (format "~a = ~s" debug-message bigram-query-string))))))
-      result-bigram))
+					"ddddss"))))
+	  (when sumibi-debug
+		(push! sumibi-inner-info
+		       (list
+			3 ;; stage
+			(list
+			 (html:p (format "~a = ~s" debug-message bigram-query-string))))))
+	  result-bigram)))
 
   (let* (
 	 ;; 二つ前の単語の候補ID
 	 (id-list-pre2
-	  (map
+	  (filter-map
 	   (lambda (x)
-	     (car x))
+	     (if (eqv? 0 (car x))
+		 #f
+		 (car x)))
 	   (cadr (list-ref rensa-bunsetu 0))))
 
 	 ;; 一つ前の単語の候補ID
 	 (id-list-pre1
-	  (map
+	  (filter-map
 	   (lambda (x)
-	     (car x))
+	     (if (eqv? 0 (car x))
+		 #f
+		 (car x)))
 	   (cadr (list-ref rensa-bunsetu 1))))
 
 	 ;; 注目位置の単語候補
 	 (id-list
-	  (map
+	  (filter-map
 	   (lambda (x)
-	     (car  x))
+	     (if (eqv? 0 (car x))
+		 #f
+		 (car x)))
 	   (cadr (list-ref rensa-bunsetu 2))))
 
 	 ;; 一つ後ろの単語の候補ID
 	 (id-list-post1
-	  (map
+	  (filter-map
 	   (lambda (x)
-	     (car x))
+	     (if (eqv? 0 (car x))
+		 #f
+		 (car x)))
 	   (cadr (list-ref rensa-bunsetu 3))))
 
 	 ;; 二つ後ろの単語の候補ID
 	 (id-list-post2
-	  (map
+	  (filter-map
 	   (lambda (x)
-	     (car x))
+	     (if (eqv? 0 (car x))
+		 #f
+		 (car x)))
 	   (cadr (list-ref rensa-bunsetu 4))))
 
 	 ;; 単語の候補ID全てを単純検索するWHERE句
 	 (where-exp
-	  (string-join
-	   (map
-	    (lambda (x)
-	      (string-join `(" id = " ,(write-to-string x) " ") " "))
-	    id-list)
-	   " OR "))
+	  (if (null-list? id-list)
+	      " id = 0 "
+	      (string-join
+	       (map
+		(lambda (x)
+		  (string-join `(" id = " ,(write-to-string x) " ") " "))
+		id-list)
+	       " OR ")))
 
 	 ;; センター(中央)のデータ
 	 (center (list-ref rensa-bunsetu 2))
