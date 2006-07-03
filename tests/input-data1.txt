@@ -1,5 +1,5 @@
+convert	natu ha atui
 convert	bunsyou wo kousei suru
-innerinfo
 convert	watashi no.h namae ha.h nakano desu .
 convert	tokkyo ha shinsa ni jikan ga kakari masu
 convert	kyouha yoi tenki nanode , sukoshi ashi wo nobashite kaimono ni ikimashita .
