@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
-;;     $Date: 2006/07/03 13:54:07 $
+;;     $Date: 2006/07/03 14:29:07 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -982,11 +982,49 @@
 		  )))
 	 (cadr bunsetu))))))
 
-  ;; 共起頻度を考えない候補リストを表示
+  ;; 関せいした文章をHTMLの表として出力する
+  (define (output-complete-sentence henkan-kouho-list)
+    (html:h2 "完成した文章")
+    (html:table
+     :border 1
+     (html:tr
+      (html:th "1")
+      (html:th "2")
+      (html:th "3")
+      (html:th "4")
+      (html:th "5")
+      (html:th "6")
+      (html:th "7")
+      (html:th "8")
+      (html:th "9")
+      (html:th "10")
+      (html:th "11")
+      (html:th "12")
+      (html:th "13")
+      (html:th "14")
+      (html:th "15")
+      (html:th "16"))
+     (map 
+      (lambda (bunsetu-kouho)
+	(html:tr
+	 (map
+	  (lambda (bunsetu)
+	    (let1 _assoc (cdr bunsetu)
+		  (html:td  
+		   (string-append
+		    (cdr (assq 'tango        _assoc))
+		    (cdr (assq 'okuri        _assoc))))))
+	  (cadr bunsetu-kouho))))
+      henkan-kouho-list)))
+
+
+  ;; 最終的な変換結果を標示する
   (define (output-henkan-kouho-list henkan-kouho-list)
     (list
      4 ;; stage
      (list
+      (output-complete-sentence
+       henkan-kouho-list)
       (map
        (lambda (x)
 	 (output-bunsetu x))
