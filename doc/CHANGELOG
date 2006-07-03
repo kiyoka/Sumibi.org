@@ -6,6 +6,7 @@
        パラメータ sumibi-evaluate-balance
     3. bi-gram skip-bi-gram の評価値の組合せを最大 8x8=64パターンに制限した
        その変数 sumibi-candidate-top-limit の値は .sumibiで調整可能
+    4. SQLのWHERE句の条件が id = 0 の様な意味の無いクエリを発行しないようにした。
 
 
 [0.6.0]
