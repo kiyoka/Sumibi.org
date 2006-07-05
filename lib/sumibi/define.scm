@@ -27,7 +27,7 @@
 (define sumibi-debug #f)
 
 (define sumibi-version 
-  " $Date: 2006/06/22 14:04:27 $ on CVS " ;;VERSION;;
+  " $Date: 2006/07/05 12:28:26 $ on CVS " ;;VERSION;;
   )
 
 ;; 評価バランス ( skip-2重マルコフ 2重マルコフ 1重マルコフ 2重マルコフ skip-2重マルコフ)
@@ -37,7 +37,7 @@
 (define sumibi-candidate-top-limit  8)
 
 ;; 送りがな付きの単語の評価値計数
-(define sumibi-evaluate-okurigana (/ 1.0 30.0))
+(define sumibi-evaluate-okurigana (/ 1.0 50.0))
 
 ;; 外部との動作インターフェースモード ( 'std  か 'cgi )
 (define sumibi-interface 'std)
