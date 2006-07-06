@@ -30,30 +30,37 @@
 	    (html:link :rel "icon" :href "/favicon.png" :type "image/png"))
 	   (html:body
 	    :onLoad "setFocusToQ()"
-	    (html:div :style "text-align: center; "
-		      (html:br)
-		      (html:span :class "subtitle"
-				 "世界の果てから漢字変換")
-		      (html:br)
-		      (html:img :src "sumibi_org_logo.png" :alt "Sumibi.org LOGO")
-		      (html:br)
-
-		      (html:span :class "subtitle"
-				 "Sumibi.orgはローマ字を日本語に変換できる、今すぐ使える無料サイトです。"
-				 (html:br)
-				 "Sumibi.org ha ro-maji wo nihongo ni henkan suru muryou saito desu. From romaji to kanji.")
-		      (html:br)
-		      )
+	    (cond
+	     (long-mode
+	      (html:div :style "text-align: center; "
+			(html:span :class "subtitle"
+				   "世界の果てから漢字変換")
+			(html:br)
+			(html:img :src "sumibi_org_logo.png" :alt "Sumibi.org LOGO" :width "80" :height "25")
+			"  [長文作成モード]  "))
+	     (else
+	      (html:div :style "text-align: center; "
+			(html:br)
+			(html:span :class "subtitle"
+				   "世界の果てから漢字変換")
+			(html:br)
+			(html:img :src "sumibi_org_logo.png" :alt "Sumibi.org LOGO")
+			(html:br)
+			
+			(html:span :class "subtitle"
+				   "Sumibi.orgはローマ字を日本語に変換できる、今すぐ使える無料サイトです。"
+				   (html:br)
+				   "Sumibi.org ha ro-maji wo nihongo ni henkan suru muryou saito desu. From romaji to kanji.")
+			(html:br)
+			)))
 		    
 	    (html:div :style "text-align: center; "
 		      (html:form :id "gform" :method "get" :action "http://www.google.co.jp/custom" :target "_top"
 				 (html:input :type "hidden" :id "server" :name "server" :value "testing"  :onClick "select_server(this.value)")
 				 (if long-mode
-				     (html:div
-				      (html:div :style "text-align: center; "
-						(html:p "[長文作成モード]")
-						(html:textarea :id "q" :name "q" :cols "60" :rows "5")
-						))
+				     (html:div :style "text-align: center; "
+					       (html:textarea :id "q" :name "q" :cols "90%" :rows "12")
+					       )
 				     (html:div
 				      (html:p
 				       (html:input :type "text" :id "q" :name "q" :size "41" :maxlength "2048")
