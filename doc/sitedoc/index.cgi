@@ -36,7 +36,7 @@
 			(html:span :class "subtitle"
 				   "世界の果てから漢字変換")
 			(html:br)
-			(html:img :src "sumibi_org_logo.png" :alt "Sumibi.org LOGO" :width "80" :height "25")
+			(html:img :src "sumibi_org_logo_small.png" :alt "Sumibi.org LOGO")
 			"  [長文作成モード]  "))
 	     (else
 	      (html:div :style "text-align: center; "
