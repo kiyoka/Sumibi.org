@@ -1,21 +1,27 @@
 #!/usr/bin/env python
-
-"""
-SUMIBI Sample Program
-
-required modules
-	-SOAPpy
-	-PyXML
-	-fpconst(may be...)
-
-	and python(recommend version 2.4.3) with ssl support
-
-License
-	LGPL
-
-Programmer
-	Yusuke Muraoka(yusuke.muraoka@gmail.com)
-"""
+#
+# "SumibiWebApiSample.py" is a sample program.
+#
+#   Copyright (C) 2006 Yusuke Muraoka(yusuke.muraoka@gmail.com)
+#     $Date: 2006/07/11 12:25:27 $
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# required modules
+#	-SOAPpy
+#	-PyXML
+#	-fpconst(may be...)
+#
+#	and python(recommend version 2.4.3) with ssl support
+#
 
 import SOAPpy, sys, string
 
