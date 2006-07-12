@@ -67,6 +67,8 @@ dist:
 	/bin/cp -rf ./client/ajax                          ${TARGET}/client
 	/bin/cp -rf ./sample/client/perl                   ${TARGET}/sample/client
 	/bin/cp -rf ./sample/client/ruby                   ${TARGET}/sample/client
+	/bin/cp -rf ./sample/client/python                 ${TARGET}/sample/client
+	chmod +x                                           ${TARGET}/sample/client/*/SumibiWebApiSample.*
 	/bin/cp -rf ./server                               ${TARGET}
 	/bin/cp -rf ./lib                                  ${TARGET}
 	awk -v VERSION=${VERSION}  '{ if ( /;;VERSION;;/ ) { printf( "\"%s\"\n", VERSION ); } else { print; } }' < ./lib/sumibi/define.scm  >  ${TARGET}/lib/sumibi/define.scm
