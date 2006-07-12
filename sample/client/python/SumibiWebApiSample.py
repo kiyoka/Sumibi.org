@@ -3,7 +3,7 @@
 # "SumibiWebApiSample.py" is a sample program.
 #
 #   Copyright (C) 2006 Yusuke Muraoka(yusuke.muraoka@gmail.com)
-#     $Date: 2006/07/12 13:22:33 $
+#     $Date: 2006/07/12 14:20:12 $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -25,8 +25,11 @@
 
 import SOAPpy, sys, string
 
-query = sys.argv[1]
+if len(sys.argv) < 2:
+	print "usage : SumibiWebApiSample.rb string"
+	sys.exit(0)
 
+query = " ".join(sys.argv[1:])
 sumibi = SOAPpy.WSDL.Proxy('http://www.sumibi.org/sumibi/Sumibi_stable.wsdl')
 
 #
