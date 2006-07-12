@@ -12,6 +12,7 @@ SITELIBDIR = `gauche-config --sitelibdir`
 all:
 	@echo "nothing to make"
 
+
 clean:
 	/bin/rm -rf ${TARGET} ${TARGET}.tar.gz
 
@@ -35,6 +36,7 @@ deploy: sumibi sumiyaki platform-check
 platform-check:
 	@gauche-package list | grep Gauche-dbd-mysql
 	@gauche-package list | grep Gauche-kakasi
+
 
 sumibi: sumibi.in Makefile
 	rm -f sumibi
@@ -67,6 +69,7 @@ dist:
 	/bin/cp -rf ./sample/client/ruby                   ${TARGET}/sample/client
 	/bin/cp -rf ./server                               ${TARGET}
 	/bin/cp -rf ./lib                                  ${TARGET}
+	awk -v VERSION=${VERSION}  '{ if ( /;;VERSION;;/ ) { printf( "\"%s\"\n", VERSION ); } else { print; } }' < ./lib/sumibi/define.scm  >  ${TARGET}/lib/sumibi/define.scm
 	echo        "#!@GOSH@"                    >        ${TARGET}/sumibi.in
 	/bin/cat    ./sumibi                      >>       ${TARGET}/sumibi.in
 	echo        "#!@GOSH@"                    >        ${TARGET}/sumiyaki.in
