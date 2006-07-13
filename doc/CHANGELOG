@@ -1,12 +1,15 @@
 
 [0.7.0]
   - sumibi
-    1. -d オプションで演算過程をHTML出力できるようにした。出力先は ./out 固定
+    1. -d オプションで演算過程をHTML出力できるようにした。(出力先は ./out 固定)
     2. 変換候補の評価パラメータを変更した
-       パラメータ sumibi-evaluate-balance
-    3. bi-gram skip-bi-gram の評価値の組合せを最大 8x8=64パターンに制限した
-       その変数 sumibi-candidate-top-limit の値は .sumibiで調整可能
-    4. SQLのWHERE句の条件が id = 0 の様な意味の無いクエリを発行しないようにした。
+       (パラメータ sumibi-evaluate-balance)
+    3. 大量の演算時間がかかってしまう問題を修正した。
+       1) bi-gram skip-bi-gram の評価値の組合せを最大 8x8=64パターンに制限した。
+          (その変数 sumibi-candidate-top-limit の値は .sumibiで調整可能)
+          制限しない場合5000パターン以上の計算をする場合もあった
+    4. ムダなSQLのリダクションを行った。
+       1) SQLのWHERE句の条件が id = 0 の様な意味の無いクエリを発行しないようにした。
 
 
 [0.6.0]
