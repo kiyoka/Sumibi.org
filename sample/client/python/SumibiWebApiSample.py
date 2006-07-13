@@ -3,7 +3,7 @@
 # "SumibiWebApiSample.py" is a sample program.
 #
 #   Copyright (C) 2006 Yusuke Muraoka(yusuke.muraoka@gmail.com)
-#     $Date: 2006/07/12 14:20:12 $
+#     $Date: 2006/07/13 11:56:38 $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -26,7 +26,7 @@
 import SOAPpy, sys, string
 
 if len(sys.argv) < 2:
-	print "usage : SumibiWebApiSample.rb string"
+	print "usage : SumibiWebApiSample.py string"
 	sys.exit(0)
 
 query = " ".join(sys.argv[1:])
