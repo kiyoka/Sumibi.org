@@ -143,5 +143,9 @@
 
 [done] - SKK辞書から取り除きたい単語をSKKの辞書形式でCVS上でメンテする。
 
+    --- logo
+
+[done] - 和紙で作ったロゴをレタッチする ( Brightness = -84 , Contrast = +114 )
+
 
 [EOF]
