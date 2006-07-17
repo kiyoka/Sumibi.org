@@ -36,7 +36,7 @@
 			(html:span :class "subtitle"
 				   "世界の果てから漢字変換")
 			(html:br)
-			(html:img :src "sumibi_org_logo_small.png" :alt "Sumibi.org LOGO")
+			(html:img :src "sumibi_org_WASHIlogo_small.png" :alt "Sumibi.org LOGO")
 			"  [長文作成モード]  "))
 	     (else
 	      (html:div :style "text-align: center; "
@@ -44,7 +44,7 @@
 			(html:span :class "subtitle"
 				   "世界の果てから漢字変換")
 			(html:br)
-			(html:img :src "sumibi_org_logo.png" :alt "Sumibi.org LOGO")
+			(html:img :src "sumibi_org_WASHIlogo.png" :alt "Sumibi.org LOGO")
 			(html:br)
 			
 			(html:span :class "subtitle"
