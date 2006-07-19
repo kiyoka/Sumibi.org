@@ -6,7 +6,7 @@
   change as we refine and extend our APIs.
   
      Copyright (C) 2005 Kiyoka Nishyama
-       $Date: 2006/07/19 13:27:49 $
+       $Date: 2006/07/19 13:32:31 $
   
    This file is part of Sumibi
   
@@ -25,7 +25,7 @@
   
 -->
 
-<!-- Revision $Date: 2006/07/19 13:27:49 $ -->
+<!-- Revision $Date: 2006/07/19 13:32:31 $ -->
 
 <definitions name="SumibiConvert"
              targetNamespace="urn:SumibiConvert"
@@ -198,7 +198,7 @@
   <!-- Endpoint for Sumibi Web APIs -->
   <service name="SumibiConvertService">
     <port name="SumibiConvertPort" binding="typens:SumibiConvertBinding">
-      <soap:address location="%URL%"/>
+      <soap:address location="https://sumibi.org/cgi-bin/sumibi/testing/sumibi.cgi/"/>
     </port>
   </service>
 
