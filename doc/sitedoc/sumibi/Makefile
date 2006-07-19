@@ -8,8 +8,8 @@
 
 
 all :
-	cat ../../../server/soap/Sumibi.wsdl | sed -e 's/%URL%/https:\/\/sumibi.org\/cgi-bin\/sumibi\/testing\/sumibi.cgi/' > Sumibi_testing.wsdl
-	cat ../../../server/soap/Sumibi.wsdl | sed -e 's/%URL%/https:\/\/sumibi.org\/cgi-bin\/sumibi\/stable\/sumibi.cgi/' > Sumibi_stable.wsdl
+	/bin/cp ../../../server/soap/Sumibi.testing.wsdl   Sumibi_testing.wsdl
+	/bin/cp ../../../server/soap/Sumibi.stable.wsdl    Sumibi_stable.wsdl
 	./convert_doc  sumiyaki
 	./convert_doc  sumi
 	./convert_doc  sumibi
