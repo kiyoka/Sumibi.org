@@ -3,7 +3,7 @@
 ;; "Sumiyaki" is a maintenance tool for Sumibi.
 ;;
 ;;   Copyright (C) 2002,2003,2004 Kiyoka Nishiyama
-;;     $Date: 2006/08/02 11:47:26 $
+;;     $Date: 2006/08/02 11:56:48 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -49,6 +49,7 @@
       "     -c ... create sumibi DB"
       "     -i ... initialize sumibi dictionary with SKK-JISYO.L"
       "     -l ... load from corpus file"
+      "     -d ... Output debug information to stdout."
       ))
 
   (define (display-help)
@@ -68,7 +69,8 @@
 	 (_ (parse-options
 	     _
 	     (
-	      ("d" () (set! command 'drop))
+	      ("d" () (set! sumibi-debug #t))
+	      ("x" () (set! command 'drop))
 	      ("c" () (set! command 'create))
 	      ("i" () (set! command 'skk))
 	      ("l" () (set! command 'load))
