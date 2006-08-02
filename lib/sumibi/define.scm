@@ -10,6 +10,7 @@
    sumibi-evaluate-balance
    sumibi-candidate-top-limit
    sumibi-evaluate-okurigana
+   sumibi-dict-max-characters
    sumibi-interface
    sumibi-method-list
    sumibi-sumibidb-host
@@ -27,7 +28,7 @@
 (define sumibi-debug #f)
 
 (define sumibi-version 
-  " $Date: 2006/07/05 12:54:29 $ on CVS " ;;VERSION;;
+  " $Date: 2006/08/02 12:56:36 $ on CVS " ;;VERSION;;
   )
 
 ;; 評価バランス ( skip-2重マルコフ 2重マルコフ 1重マルコフ 2重マルコフ skip-2重マルコフ)
@@ -41,6 +42,9 @@
 
 ;; 外部との動作インターフェースモード ( 'std  か 'cgi )
 (define sumibi-interface 'std)
+
+;; 辞書に登録する単語の最大文字数
+(define sumibi-dict-max-characters 30)
 
 
 ;;
