@@ -3,7 +3,7 @@
 ;; "Sumiyaki" is a maintenance tool for Sumibi.
 ;;
 ;;   Copyright (C) 2002,2003,2004 Kiyoka Nishiyama
-;;     $Date: 2006/05/13 02:44:07 $
+;;     $Date: 2006/08/02 11:47:26 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -176,12 +176,12 @@
 	((load)
 	 (sumibi-corpus-load input-port input-file conn))
 	((show)
-	 ;; word テーブルの件数表示
+	 ;; word table records
 	 (display "### word:total ")
 	 (display (caar (sumibi-dbi-read-query conn "SELECT count(*) FROM word;" "d")))
 	 (newline)
 	 
-	 ;; word テーブルの全内容表示
+	 ;; word table data
 	 (when #t
 	       (for-each
 		(lambda (x)
@@ -190,12 +190,12 @@
 				       "SELECT id,kind,yomi, yomiank,tango,okuri,freq_base FROM word ORDER BY freq_base DESC LIMIT 0,30;"
 				       "sssssss")))
 	    
-	 ;; bigram テーブルの件数表示
+	 ;; bigram table records
 	 (display "### bigram:total ")
 	 (display (caar (sumibi-dbi-read-query conn "SELECT count(*) FROM bigram;" "d")))
 	 (newline)
 
-	 ;; bigram テーブルの全内容表示
+	 ;; bigram table data
 	 (when #t
 	       (for-each
 		(lambda (x)
@@ -204,12 +204,12 @@
 				       "SELECT b.freq_base, b.id_m1, w1.tango, w1.okuri, b.id_base, w2.tango, w2.okuri FROM bigram b CROSS JOIN word w1, word w2 WHERE b.id_m1 = w1.id and b.id_base = w2.id ORDER BY b.freq_base DESC LIMIT 0,30;"
 				       "sssssss")))
 	 
-	 ;; skip_bigram テーブルの件数表示
+	 ;; skip_bigram table records
 	 (display "### skip_bigram:total ")
 	 (display (caar (sumibi-dbi-read-query conn "SELECT count(*) FROM skip_bigram;" "d")))
 	 (newline)
 
-	 ;; skip_bigram テーブルの全内容表示
+	 ;; skip_bigram table data
 	 (when #t
 	       (for-each
 		(lambda (x)
@@ -218,12 +218,12 @@
 				       "SELECT b.freq_base, b.id_m1, w1.tango, w1.okuri, b.id_base, w2.tango, w2.okuri FROM skip_bigram b CROSS JOIN word w1, word w2 WHERE b.id_m1 = w1.id and b.id_base = w2.id ORDER BY b.freq_base DESC LIMIT 0,30;"
 				       "sssssss")))
 
-	 ;; okuri テーブルの件数表示
+	 ;; okuri table records
 	 (display "### okuri:total ")
 	 (display (caar (sumibi-dbi-read-query conn "SELECT count(*) FROM okuri;" "d")))
 	 (newline)
 	 
-	 ;; okuri テーブルの全内容表示
+	 ;; okuri table data
 	 (for-each
 	  (lambda (x)
 	    (display x) (newline))
@@ -231,7 +231,7 @@
 				 "SELECT okuri,kana,freq_base FROM okuri ORDER BY freq_base DESC LIMIT 0,30;"
 				 "sss"))
 	 
-	 ;; file テーブルの全内容表示
+	 ;; list files
 	 (for-each
 	  (lambda (x)
 	    (display x) (newline))
