@@ -184,7 +184,8 @@
 		    ;; 新規の単語を学習する(英単語、ひらがな、カタカナ語で未定義の単語を、word テーブルに追加する)
 		    (and
 		     (null? result)
-		     (rxmatch #/^[a-zA-Zあ-んア-ンー]+$/ tango))
+		     (rxmatch #/^[a-zA-Zあ-んア-ンー]+$/ tango)
+                     (< (string-length tango) sumibi-dict-max-characters))
 		    
 		    (let* (
 			   (yomiank (romkan-kana->roman tango))
