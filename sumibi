@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
-;;     $Date: 2006/07/03 14:29:07 $
+;;     $Date: 2006/08/03 13:19:06 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -382,11 +382,11 @@
 	    (push! sumibi-inner-info
 		   (let1 num-list (append (iota 
 					   sumibi-candidate-top-limit)
-					  '(#f #f #f #f #f #f #f #f #f #f)
-					  '(#f #f #f #f #f #f #f #f #f #f)
-					  '(#f #f #f #f #f #f #f #f #f #f)
-					  '(#f #f #f #f #f #f #f #f #f #f)
-					  '(#f #f #f #f #f #f #f #f #f #f))
+					  (make-list 10 #f)
+					  (make-list 10 #f)
+					  (make-list 10 #f)
+					  (make-list 10 #f)
+					  (make-list 10 #f))
 			 (list
 			  3 ;; stage
 			  (list
@@ -914,7 +914,7 @@
 ;;
 ;; 文章文字列を変換する。
 ;;
-(define (sumibi-convert-sentence str conn)
+(define (sumibi-convert-sentence str _sumibi-history conn)
 
   ;; ユーザー入力を表示(デバッグ用)
   (define (output-user-input-list bunsetu-and-spaces)
@@ -1145,6 +1145,61 @@
 	 port)))))
 
 
+
+;; 初期化用のデータ
+(define sumibi-history-init-data '(
+                                   (word        . ()) ;; 単漢字出現頻度
+                                   (bigram      . ()) ;; 隣接する単語の共起頻度の生成
+                                   (skip-bigram . ()) ;; 1つ単語をスキップして隣接する単語共起頻度の生成
+                                   ))
+;; 変換履歴データ
+(define sumibi-history sumibi-history-init-data)
+
+
+;; ユーザー変換履歴を追加する
+(define (sumibi-add-history str)
+
+  ;; "単語ID 単語ID 単語ID" の様な文字列を数値のリストに変換する
+  (define (convert-to-id-list str)
+    (map
+     string->number
+     (string-split (string-trim-both str) #/[ ]+/)))
+
+  ;; 単漢字出現頻度の生成
+  (define (make-history-word str)
+    (convert-to-id-list str))
+
+  ;; 隣接する単語の共起頻度の生成
+  (define (make-history-bigram str)
+    (let1 bigram (convert-to-id-list str)
+          (map
+           (lambda (x) x)
+           (zip
+            (drop-right  bigram 1)
+            (drop        bigram 1)))))
+
+  ;; 1つ単語をスキップして隣接する単語共起頻度の生成
+  (define (make-history-skip-bigram str)
+    (let1 bigram (convert-to-id-list str)
+          (map
+           (lambda (x) x)
+           (zip
+            (drop-right  bigram 2)
+            (drop        bigram 2)))))
+
+  (set! sumibi-history 
+        `(
+          (word        . ,(append
+                           (assq-ref sumibi-history 'word)
+                           (make-history-word          str)))
+          (bigram      . ,(append
+                           (assq-ref sumibi-history 'bigram)
+                           (make-history-bigram        str)))
+          (skip-bigram . ,(append
+                           (assq-ref sumibi-history 'skip-bigram)
+                           (make-history-skip-bigram   str))))))
+
+
 ;; 一行コマンドを実行する
 (define (sumibi-do-command str conn)
 
@@ -1167,32 +1222,57 @@
 			      "")))
     (case (string->symbol command)
       ('version
+       ;; バージョンの表示
        (list
 	"ok\n"
 	(string-append sumibi-version "\n")))
+      ('addhistory
+       (let1 _
+             ;; ユーザーの履歴を追加する
+             (sumibi-add-history args-string)
 
+             ;; ユーザー履歴を表示(デバッグ用)
+             (when sumibi-debug
+               (begin
+                 (push! sumibi-inner-info
+                        (list
+                         1 ;; stage
+                         (list
+                          (html:h2 "履歴")
+                          (html:h3 "オリジナル:")
+                          (html:p args-string)
+                          (html:h3 "single:")
+                          (html:p (format #f "~a" (assq-ref _ 'word)))
+                          (html:h3 "bigram:")
+                          (html:p (format #f "~a" (assq-ref _ 'bigram)))
+                          (html:h3 "skip-bigram:")
+                          (html:p (format #f "~a" (assq-ref _ 'skip-bigram))))))))
+             (when sumibi-debug
+               (sumibi-save-inner-info sumibi-inner-info))))
+      ('resethistory
+       ;; ユーザーの履歴をリセットして全てクリアする
+       )
       ('convertsexp
        ;; 計算過程情報をクリア
-       (set! sumibi-inner-info '())
        (let (
 	     (result
-	      (sumibi-convert-sentence args-string conn)))
-
+	      (sumibi-convert-sentence args-string
+                                       sumibi-history
+                                       conn)))
 	 (when sumibi-debug
-	       (sumibi-save-inner-info sumibi-inner-info))
+           (sumibi-save-inner-info sumibi-inner-info))
 	 (list
 	  "ok\n"
 	  (string-append (write-to-string result) "\n"))))
 
       ('convert
-       ;; 計算過程情報をクリア
-       (set! sumibi-inner-info '())
        (let (
 	     (result
-	      (sumibi-convert-sentence args-string conn)))
-	 
+	      (sumibi-convert-sentence args-string
+                                       sumibi-history
+                                       conn)))
 	 (when sumibi-debug
-	       (sumibi-save-inner-info sumibi-inner-info))
+           (sumibi-save-inner-info sumibi-inner-info))
 	 (list
 	  "ok\n"
 	  (map
@@ -1216,7 +1296,7 @@
 	  
       (else
        ;; 未定義のコマンドが指定された場合
-       nil))))
+       #f))))
 
 
 ;; Main -------------------------------------------------------
