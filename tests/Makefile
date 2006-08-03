@@ -15,7 +15,7 @@ h:
 h0:
 	head -1 input-data1.txt | $(SUMIBI) -d | grep -e ' [0-9]* 0 [0-9]*'
 h1:
-	head -1 input-data1.txt | $(SUMIBI) -d > result.log
+	head -2 input-data1.txt | $(SUMIBI) -d > result.log
 
 
 create:

@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
-;;     $Date: 2006/08/03 13:19:06 $
+;;     $Date: 2006/08/03 14:19:09 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -802,6 +802,7 @@
   (map
    (lambda (x)
      (let (
+           (id       (car x))
 	   (hiragana (cdr (assq 'hiragana tango-info)))
 	   (orig     (cdr (assq 'orig tango-info)))
 	   (tango    (cdr (assq 'tango   x)))
@@ -821,6 +822,7 @@
 		     okuri-string))
 		  tango)
 	      orig)
+         ,id
 	 ,word-no    ;; 文節番号
 	 )))
 
@@ -843,17 +845,9 @@
 	      (tango-info (car  bunsetu))
 	      (kouho-info (cadr bunsetu))
 	      (spaces   (cdr (assq 'spaces   tango-info))))
-
-	 (when sumibi-debug
-	       (begin
-		 (display "#5#")
-		 (write tango-info)
-		 (newline)
-		 (display "#6#")
-		 (write kouho-info)
-		 (newline)))
        
 	 (let* (
+                (id       (caar kouho-info))
 		(method   (cdr (assq 'method tango-info)))
 		(orig     (cdr (assq 'orig tango-info)))
 		(hiragana (cdr (assq 'hiragana tango-info)))
@@ -869,7 +863,7 @@
 		 (if (eq? method 'l)
 		     ;; ---アルファベットへの絞りこみの場合
 		     (list
-		      `(l ,orig     ,word-no))
+		      `(l ,orig     ,id ,word-no))
 		     ;; ---それ以外の場合
 		     (append
 		      ;; 候補値の高い順に完成した文節を返す。
@@ -882,22 +876,22 @@
 		       (case method
 			 ('h
 			  (list
-			   (if hiragana        `(h ,hiragana ,word-no) #f)
-			   (if katakana        `(k ,katakana ,word-no) #f)
-			   (if alpha           `(l ,alpha    ,word-no) #f)))
+			   (if hiragana        `(h ,hiragana ,id ,word-no) #f)
+			   (if katakana        `(k ,katakana ,id ,word-no) #f)
+			   (if alpha           `(l ,alpha    ,id ,word-no) #f)))
 			 ('k
 			  (list
-			   (if katakana        `(k ,katakana ,word-no) #f)
-			   (if hiragana        `(h ,hiragana ,word-no) #f)
-			   (if alpha           `(l ,alpha    ,word-no) #f)))
+			   (if katakana        `(k ,katakana ,id ,word-no) #f)
+			   (if hiragana        `(h ,hiragana ,id ,word-no) #f)
+			   (if alpha           `(l ,alpha    ,id ,word-no) #f)))
 			 (else
 			  (list
-			   (if hiragana        `(h ,hiragana ,word-no) #f)
-			   (if katakana        `(k ,katakana ,word-no) #f)
-			   (if alpha           `(l ,alpha    ,word-no) #f)))))))))
+			   (if hiragana        `(h ,hiragana ,id ,word-no) #f)
+			   (if katakana        `(k ,katakana ,id ,word-no) #f)
+			   (if alpha           `(l ,alpha    ,id ,word-no) #f)))))))))
 
 	   (begin0
-	    ;; 候補の最後に、index番号を付ける
+	    ;; 候補の最後に、単語の間のスペース数を付ける
 	    (map
 	     (lambda (x)
 	       (begin0
@@ -967,8 +961,7 @@
 	 (lambda (x)
 	   (let1 _assoc (cdr x)
 		 (html:tr
-		  (html:td
-		   (car x))
+		  (html:td   (car x))
 		  (html:td   (cdr (assq 'tango        _assoc)))
 		  (html:td   (cdr (assq 'yomi         _assoc)))
 		  (html:td   (cdr (assq 'okuri        _assoc)))
@@ -982,7 +975,7 @@
 		  )))
 	 (cadr bunsetu))))))
 
-  ;; 関せいした文章をHTMLの表として出力する
+  ;; 完成した文章をHTMLの表として出力する
   (define (output-complete-sentence henkan-kouho-list)
     (html:h2 "完成した文章")
     (html:table

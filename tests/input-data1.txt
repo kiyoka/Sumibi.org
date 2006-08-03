@@ -1,4 +1,7 @@
-convert	natu ha atui
+addhistory	381241 469068
+convertsexp	nishiyama san
+addhistory	231762 467818
+convertsexp	kansei suru
 convert	bunsyou wo kousei suru
 convert	watashi no.h namae ha.h nakano desu .
 convert	tokkyo ha shinsa ni jikan ga kakari masu
