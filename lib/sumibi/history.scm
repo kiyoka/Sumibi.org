@@ -14,7 +14,9 @@
   (export
    sumibi-init-history
    sumibi-add-history
-   sumibi-debug-history)
+   sumibi-debug-history
+   sumibi-word-times-in-history
+   )
   (select-module sumibi.history))
 
 
@@ -106,6 +108,19 @@
      skip-bigram)))
 
 
+;; 指定IDの単語の出現回数を求める
+(define (sumibi-word-times-in-history id conn)
+  (let1 _result
+        (sumibi-dbi-read-query conn 
+                               (format "SELECT freq_base, id FROM h_word WHERE `id` = '~a';" id)
+                               "dd")
+        (if (< 0 (length _result))
+            (*
+             sumibi-word-times-rate
+             (caar _result))
+            0)))
+
+
 ;; 一行コマンドの対話に入る前の初期化
 (define (sumibi-debug-history conn)
   (list
@@ -125,3 +140,4 @@
                                    "SELECT id_m1, id_base, freq_base FROM h_skip_bigram ORDER BY freq_base;"
                                    "ddd")))))
    
+

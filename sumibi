@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
-;;     $Date: 2006/08/06 08:26:17 $
+;;     $Date: 2006/08/07 14:06:41 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -632,15 +632,22 @@
 	 (result-word
 	  (map
 	   (lambda (x)
-	     `(
-	       ,(list-ref x 0)
-	       (tango     . ,(list-ref x 1))
-	       (yomi      . ,(list-ref x 2))
-	       (okuri     . ,(list-ref x 3))
-	       (freq0     . ,(list-ref x 4))
-	       (sum0      . ,(list-ref x 5))
-	       (relative0 . ,(list-ref x 6))))
-
+             (let* ((id (list-ref x 0))
+                    (user_freq (sumibi-word-times-in-history id conn))
+                    (rel0_pair (if (< 0 user_freq)
+                                   (cons 'relative0
+                                         (* user_freq
+                                            (list-ref x 6)))
+                                   (cons 'relative0
+                                         (list-ref x 6)))))
+               `(
+                 ,(list-ref x 0)
+                 (tango     . ,(list-ref x 1))
+                 (yomi      . ,(list-ref x 2))
+                 (okuri     . ,(list-ref x 3))
+                 (freq0     . ,(list-ref x 4))
+                 (sum0      . ,(list-ref x 5))
+                 ,rel0_pair)))
 	   (sumibi-dbi-read-query conn 
 				  query-string
 				  "dsssddd")))

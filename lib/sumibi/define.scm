@@ -11,6 +11,7 @@
    sumibi-candidate-top-limit
    sumibi-evaluate-okurigana
    sumibi-dict-max-characters
+   sumibi-word-times-rate
    sumibi-interface
    sumibi-method-list
    sumibi-sumibidb-host
@@ -21,14 +22,13 @@
    sumibi-sumiyakidb-name
    sumibi-sumiyakidb-user
    sumibi-sumiyakidb-password))
-
 (select-module sumibi.define)
 
 
 (define sumibi-debug #f)
 
 (define sumibi-version 
-  " $Date: 2006/08/02 12:56:36 $ on CVS " ;;VERSION;;
+  " $Date: 2006/08/07 14:06:41 $ on CVS " ;;VERSION;;
   )
 
 ;; 評価バランス ( skip-2重マルコフ 2重マルコフ 1重マルコフ 2重マルコフ skip-2重マルコフ)
@@ -46,6 +46,8 @@
 ;; 辞書に登録する単語の最大文字数
 (define sumibi-dict-max-characters 30)
 
+;; ユーザー履歴中の頻度に対する重み(何倍するか)
+(define sumibi-word-times-rate 10)
 
 ;;
 ;; DBサーバーに接続するためのパラメータ ( DBサーバーソフトウェアはMySQL固定 )
