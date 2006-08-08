@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
-;;     $Date: 2006/08/07 14:06:41 $
+;;     $Date: 2006/08/08 11:01:03 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -255,32 +255,32 @@
 	  (sort result
 		(lambda (x y)
 		  (>
-		   (cdr (assq 'freq x))
-		   (cdr (assq 'freq y)))))))
+		   (assq-ref x 'freq)
+		   (assq-ref y 'freq))))))
 	  
 
     (when sumibi-debug
-	  (push! sumibi-inner-info
-		 (list
-		  2 ;; stage
-		  (list
-		   (html:h3 "候補リスト")
-		   (html:table
-		    :border 1
-		    (html:tr (html:th "id") (html:th "単語") (html:th "読み") (html:th "送り")
-			     (html:th "『単語』出現回数"))
-		    (map
-		     (lambda (x)
-		       (let1 _assoc (cdr x)
-			     (html:tr
-			      (html:td
-			       (car x))
-			      (html:td   (cdr (assq 'tango        _assoc)))
-			      (html:td   (cdr (assq 'yomi         _assoc)))
-			      (html:td   (cdr (assq 'okuri        _assoc)))
-			      (html:td   (cdr (assq 'freq         _assoc)))
-			      )))
-		     result))))))
+      (push! sumibi-inner-info
+             (list
+              2 ;; stage
+              (list
+               (html:h3 "候補リスト")
+               (html:table
+                :border 1
+                (html:tr (html:th "id") (html:th "単語") (html:th "読み") (html:th "送り")
+                         (html:th "『単語』出現回数"))
+                (map
+                 (lambda (x)
+                   (let1 _assoc (cdr x)
+                         (html:tr
+                          (html:td
+                           (car x))
+                          (html:td   (assq-ref _assoc 'tango ))
+                          (html:td   (assq-ref _assoc 'yomi  ))
+                          (html:td   (assq-ref _assoc 'okuri ))
+                          (html:td   (assq-ref _assoc 'freq  ))
+                          )))
+                 result))))))
 
     `(
       ,(append
@@ -304,8 +304,8 @@
 	    (let* (
 		   (id   (car x))
 		   (data (cdr x))
-		   (relative0 (cdr (assq 'relative0 data)))
-		   (okuri     (cdr (assq 'okuri     data)))
+		   (relative0 (assq-ref data 'relative0))
+		   (okuri     (assq-ref data 'okuri    ))
 		   (pre2  (assv id result-bigram-pre2))
 		   (pre1  (assv id result-bigram-pre1))
 		   (post1 (assv id result-bigram-post1))
@@ -315,12 +315,12 @@
 		     (*
 		      (list-ref sumibi-evaluate-balance 0)
 		      (if pre2
-			  (cdr (assq 'relative-2 (cdr pre2)))
+			  (assq-ref (cdr pre2) 'relative-2)
 			  0))
 		     (*
 		      (list-ref sumibi-evaluate-balance 1)
 		      (if pre1
-			  (cdr (assq 'relative-1 (cdr pre1)))
+			  (assq-ref (cdr pre1) 'relative-1)
 			  0))
 		     (*
 		      (list-ref sumibi-evaluate-balance 2)
@@ -328,12 +328,12 @@
 		     (*
 		      (list-ref sumibi-evaluate-balance 3)
 		      (if post1
-			  (cdr (assq 'relative1 (cdr post1)))
+			  (assq-ref (cdr post1) 'relative1)
 			  0))
 		     (*
 		      (list-ref sumibi-evaluate-balance 4)
 		      (if post2
-			  (cdr (assq 'relative2 (cdr post2)))
+			  (assq-ref (cdr post2) 'relative2)
 			  0))))
 		   ;; 送りがながある単語の評価を落とす
 		   (total 
@@ -365,8 +365,8 @@
 	  (sort result
 		(lambda (x y)
 		  (>
-		   (cdr (assq 'total x))
-		   (cdr (assq 'total y)))))))
+		   (assq-ref x 'total)
+		   (assq-ref y 'total))))))
     
     result))
 	
@@ -586,10 +586,8 @@
 			  (list
 			   (html:h3
 			    (format "~a (~a)"
-				    (cdr (assq 'orig
-					       (car center)))
-				    (cdr (assq 'hiragana
-					       (car center)))))
+				    (assq-ref (car center) 'orig)
+				    (assq-ref (car center) 'hiragana)))
 			   (html:ul
 			    (html:li
 			     (string-join
@@ -811,11 +809,11 @@
    (lambda (x)
      (let (
            (id       (car x))
-	   (hiragana (cdr (assq 'hiragana tango-info)))
-	   (orig     (cdr (assq 'orig tango-info)))
-	   (tango    (cdr (assq 'tango   x)))
-	   (okuri    (cdr (assq 'okuri   x)))
-	   (yomi     (cdr (assq 'yomi    x))))
+	   (hiragana (assq-ref tango-info 'hiragana  ))
+	   (orig     (assq-ref tango-info 'orig      ))
+	   (tango    (assq-ref x          'tango     ))
+	   (okuri    (assq-ref x          'okuri     ))
+	   (yomi     (assq-ref x          'yomi      )))
     
        `(j
 	 ,(if (or hiragana (is-kigou orig))
@@ -852,15 +850,15 @@
 	      ;; 単語情報
 	      (tango-info (car  bunsetu))
 	      (kouho-info (cadr bunsetu))
-	      (spaces   (cdr (assq 'spaces   tango-info))))
+	      (spaces   (assq-ref tango-info 'spaces)))
        
 	 (let* (
                 (id       (caar kouho-info))
-		(method   (cdr (assq 'method tango-info)))
-		(orig     (cdr (assq 'orig tango-info)))
-		(hiragana (cdr (assq 'hiragana tango-info)))
-		(katakana (cdr (assq 'katakana tango-info)))
-		(alpha    (cdr (assq 'alpha    tango-info)))
+		(method   (assq-ref tango-info 'method   ))
+		(orig     (assq-ref tango-info 'orig     ))
+		(hiragana (assq-ref tango-info 'hiragana ))
+		(katakana (assq-ref tango-info 'katakana ))
+		(alpha    (assq-ref tango-info 'alpha    ))
 	 
 		;; 候補値の高い順に完成した文節を返す。
 		(j-kouho  (sumibi-output-henkan-kouho word-no tango-info kouho-info))
@@ -944,21 +942,21 @@
       (list
        (html:table
 	:border 1
-	(html:h2 (format #f "~s" (cdr (assq 'orig      first-assoc))))
+	(html:h2 (format #f "~s" (assq-ref first-assoc 'orig)))
 	(html:tr (html:th "オリジナル") (html:th "ひらがな") (html:th "カタカナ") (html:th "アルファベット") (html:th "スペース") (html:th "メソッド"))
 	(html:tr 
 	 (html:td 
-	  (cdr (assq 'orig      first-assoc)))
+	  (assq-ref first-assoc 'orig      ))
 	 (html:td 
-	  (cdr (assq 'hiragana  first-assoc)))
+	  (assq-ref first-assoc 'hiragana  ))
 	 (html:td
-	  (cdr (assq 'katakana  first-assoc)))
+	  (assq-ref first-assoc 'katakana  ))
 	 (html:td
-	  (cdr (assq 'alpha     first-assoc)))
+	  (assq-ref first-assoc 'alpha     ))
 	 (html:td 
-	  (cdr (assq 'spaces    first-assoc)))
+	  (assq-ref first-assoc 'spaces    ))
 	 (html:td 
-	  (cdr (assq 'method    first-assoc)))))
+	  (assq-ref first-assoc 'method    ))))
        (html:h3 "候補リスト")
        (html:table
 	:border 1
@@ -970,16 +968,16 @@
 	   (let1 _assoc (cdr x)
 		 (html:tr
 		  (html:td   (car x))
-		  (html:td   (cdr (assq 'tango        _assoc)))
-		  (html:td   (cdr (assq 'yomi         _assoc)))
-		  (html:td   (cdr (assq 'okuri        _assoc)))
-		  (html:td   (cdr (assq 'freq0        _assoc)))
-		  (html:td   (cdr (assq 'sum0         _assoc)))
-		  (html:td   (cdr (assq 'relative-2   _assoc)))
-		  (html:td   (cdr (assq 'relative-1   _assoc)))
-		  (html:td   (cdr (assq 'relative0    _assoc)))
-		  (html:td   (cdr (assq 'relative1    _assoc)))
-		  (html:td   (cdr (assq 'relative2    _assoc)))
+		  (html:td   (assq-ref _assoc 'tango      ))
+		  (html:td   (assq-ref _assoc 'yomi       ))
+		  (html:td   (assq-ref _assoc 'okuri      ))
+		  (html:td   (assq-ref _assoc 'freq0      ))
+		  (html:td   (assq-ref _assoc 'sum0       ))
+		  (html:td   (assq-ref _assoc 'relative-2 ))
+		  (html:td   (assq-ref _assoc 'relative-1 ))
+		  (html:td   (assq-ref _assoc 'relative0  ))
+		  (html:td   (assq-ref _assoc 'relative1  ))
+		  (html:td   (assq-ref _assoc 'relative2  ))
 		  )))
 	 (cadr bunsetu))))))
 
@@ -1013,8 +1011,8 @@
 	    (let1 _assoc (cdr bunsetu)
 		  (html:td  
 		   (string-append
-		    (cdr (assq 'tango        _assoc))
-		    (cdr (assq 'okuri        _assoc))))))
+		    (assq-ref _assoc 'tango)
+		    (assq-ref _assoc 'okuri)))))
 	  (cadr bunsetu-kouho))))
       henkan-kouho-list)))
 
