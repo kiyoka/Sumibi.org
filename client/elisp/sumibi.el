@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2006/06/05 14:44:01 $
+;;     $Date: 2006/08/09 14:40:45 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -154,8 +154,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 		  minor-mode-map-alist)))
 
 ;; ユーザー学習辞書
-(defvar sumibi-kakutei-history '())
-
+(defvar sumibi-kakutei-history          '())    ;; ( ( unix時間 単語IDのリスト ) ( unix時間 9412 1028 ) )
 
 ;;;
 ;;; hooks
@@ -164,8 +163,14 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 (defvar sumibi-select-mode-hook nil)
 (defvar sumibi-select-mode-end-hook nil)
 
+(defconst sumibi-kind-index   0)
+(defconst sumibi-tango-index  1)
+(defconst sumibi-id-index     2)
+(defconst sumibi-wordno-index 3)
+(defconst sumibi-candno-index 4)
+(defconst sumibi-spaces-index 5)
 
-(defvar sumibi-hiragana->katakana-table
+(defconst sumibi-hiragana->katakana-table
   (mapcar
    (lambda (c)
      (cons
@@ -197,7 +202,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
      "っん"))))
 
 
-(defvar sumibi-roman->kana-table
+(defconst sumibi-roman->kana-table
   '(("kkya" . "っきゃ")
     ("kkyu" . "っきゅ")
     ("kkyo" . "っきょ")
@@ -511,6 +516,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 (defvar sumibi-timer    nil)            ; インターバルタイマー型変数
 (defvar sumibi-timer-rest  0)           ; あと何回呼出されたら、インターバルタイマの呼出を止めるか
 (defvar sumibi-guide-overlay   nil)     ; リアルタイムガイドに使用するオーバーレイ
+(defvar sumibi-last-request-time 0)     ; Sumibiサーバーにリクエストした最後の時刻(単位は秒)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -614,6 +620,18 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 
       
 ;;
+;; 現在時刻をUNIXタイムを返す(単位は秒)
+;;
+(defun sumibi-current-unixtime ()
+  (let (
+	(_ (current-time)))
+    (+
+     (* (car _)
+	65536)
+     (cadr _))))
+
+
+;;
 ;; ローマ字で書かれた文章をSumibiサーバーを使って変換する
 ;;
 (defun sumibi-henkan-request (yomi)
@@ -626,13 +644,14 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
     (sumibi-debug-print (format "henkan-result:%S\n" result))
     (if (eq (string-to-char result) ?\( )
 	(progn
-	 (message nil)
-	 (condition-case err
-	     (read result)
-	   (end-of-file
-	    (progn
-	      (message "Parse error for parsing result of Sumibi Server.")
-	      nil))))
+	  (sumibi-next-history)
+	  (message nil)
+	  (condition-case err
+	      (read result)
+	    (end-of-file
+	     (progn
+	       (message "Parse error for parsing result of Sumibi Server.")
+	       nil))))
       (progn
 	(message result)
 	nil))))
@@ -679,41 +698,29 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 	   (henkan-list (sumibi-henkan-request (sumibi-replace-keyword yomi))))
       
       (if henkan-list
-	  (progn
-	    ;; 文節が一つの場合だけユーザー辞書を利用する
-	    (when (>= 1 (length henkan-list))
-	      (let ( 
-		    (_ (assoc yomi sumibi-kakutei-history)))
-		(when _
-		  (setq henkan-list
-			(list
-			 (append
-			  `((j ,(cdr _) 0 0 0))
-			  (car henkan-list)))))))
+	  (condition-case err
+	      (progn
+		(setq
+		 ;; 変換結果の保持
+		 sumibi-henkan-list henkan-list
+		 ;; 文節選択初期化
+		 sumibi-cand-n   (make-list (length henkan-list) 0)
+		 ;; 
+		 sumibi-cand-max (mapcar
+				  (lambda (x)
+				    (length x))
+				  henkan-list))
 		
-	    (condition-case err
-		(progn
-		  (setq
-		   ;; 変換結果の保持
-		   sumibi-henkan-list henkan-list
-		   ;; 文節選択初期化
-		   sumibi-cand-n   (make-list (length henkan-list) 0)
-		   ;; 
-		   sumibi-cand-max (mapcar
-				    (lambda (x)
-				      (length x))
-				    henkan-list))
-		  
-		  (sumibi-debug-print (format "sumibi-henkan-list:%s \n" sumibi-henkan-list))
-		  (sumibi-debug-print (format "sumibi-cand-n:%s \n" sumibi-cand-n))
-		  (sumibi-debug-print (format "sumibi-cand-max:%s \n" sumibi-cand-max))
-		  ;;
-		  t)
-	      (sumibi-trap-server-down
-	       (beep)
-	       (message (error-message-string err))
-	       (setq sumibi-select-mode nil))
-	      (run-hooks 'sumibi-select-mode-end-hook)))
+		(sumibi-debug-print (format "sumibi-henkan-list:%s \n" sumibi-henkan-list))
+		(sumibi-debug-print (format "sumibi-cand-n:%s \n" sumibi-cand-n))
+		(sumibi-debug-print (format "sumibi-cand-max:%s \n" sumibi-cand-max))
+		;;
+		t)
+	    (sumibi-trap-server-down
+	     (beep)
+	     (message (error-message-string err))
+	     (setq sumibi-select-mode nil))
+	    (run-hooks 'sumibi-select-mode-end-hook))
 	nil))))
 
 
@@ -768,7 +775,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
        (let ((word (nth (nth cnt sumibi-cand-n) x)))
 	 (sumibi-debug-print (format "word:[%d] %s\n" cnt word))
 	 (setq cnt (+ 1 cnt))
-	 (cadr word)))
+	 (nth sumibi-tango-index word)))
      sumibi-henkan-list
      "")))
 
@@ -808,8 +815,8 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 		(start       (point-marker))
 		(_n          (nth cnt sumibi-cand-n))
 		(_max        (nth cnt sumibi-cand-max))
-		(spaces      (nth 4 (nth _n x)))
-		(insert-word (cadr (nth _n x)))
+		(spaces      (nth sumibi-spaces-index (nth _n x)))
+		(insert-word (nth sumibi-tango-index  (nth _n x)))
 		(_insert-word
 		 ;; スペースが2個以上入れられたら、1個のスペースを入れる。(但し、auto-fill-modeが無効の場合のみ)
 		 (if (and (< 1 spaces) (not auto-fill-function))
@@ -820,12 +827,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 		 (if (eq cnt sumibi-cand)
 		     (progn
 		       (insert _insert-word)
-		       (message (format "[%s] candidate (%d/%d)" insert-word (+ _n 1) _max))
-		       ;; ユーザー辞書に登録する
-		       (setq sumibi-kakutei-history 
-			     (append
-			      `((,ank-word . ,insert-word))
-			      sumibi-kakutei-history)))
+		       (message (format "[%s] candidate (%d/%d)" insert-word (+ _n 1) _max)))
 		   (insert _insert-word)))
 		(end         (point-marker))
 		(ov          (make-overlay start end)))
@@ -906,6 +908,43 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
    (marker-position sumibi-fence-end)
    sumibi-select-mode))
 
+
+;; 確定したIDリストを変換履歴に追加する
+(defun sumibi-next-history ()
+  (push
+   (cons 
+    (sumibi-current-unixtime)
+    '())
+   sumibi-kakutei-history)
+  (sumibi-debug-print (format "init:kakutei-history:%S\n" sumibi-kakutei-history)))
+  
+
+
+;; 確定したIDリストを更新する
+(defun sumibi-update-history( cand-n )
+  (let* ((cnt 0)
+	 (result 
+	  (mapcar
+	   (lambda (x)
+	     ;; 変換結果文字列を返す。
+	     (let ((word (nth (nth cnt cand-n) x)))
+	       (sumibi-debug-print (format "history-word:[%d] %s\n" cnt word))
+	       (setq cnt (+ 1 cnt))
+	       (nth sumibi-id-index word)))
+	   sumibi-henkan-list)))
+    ;; ヒストリデータを作り直す
+    (setq sumibi-kakutei-history
+	  (cons
+	   (cons
+	    (caar sumibi-kakutei-history)
+	    result)
+	   (if (< 1 (length sumibi-kakutei-history))
+	       (cdr sumibi-kakutei-history)
+	     '())))
+    (sumibi-debug-print (format "kakutei-history:%S\n" sumibi-kakutei-history))))
+    
+
+
 ;; 候補選択を確定する
 (defun sumibi-select-kakutei ()
   "候補選択を確定する"
@@ -914,7 +953,9 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
   (setq sumibi-cand-n-backup (copy-list sumibi-cand-n))
   (setq sumibi-select-mode nil)
   (run-hooks 'sumibi-select-mode-end-hook)
-  (sumibi-select-update-display))
+  (sumibi-select-update-display)
+  (sumibi-update-history sumibi-cand-n))
+
 
 ;; 候補選択をキャンセルする
 (defun sumibi-select-cancel ()
@@ -1445,7 +1486,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2006/06/05 14:44:01 $ on CVS " ;;VERSION;;
+  " $Date: 2006/08/09 14:40:45 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
