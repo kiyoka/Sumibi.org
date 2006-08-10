@@ -66,21 +66,25 @@
 
   ;; 隣接する単語の共起頻度の生成
   (define (make-history-bigram str)
-    (let1 bigram (convert-to-id-list str)
-          (map
-           (lambda (x) x)
-           (zip
-            (drop-right  bigram 1)
-            (drop        bigram 1)))))
+    (let1 id-list (convert-to-id-list str)
+          (if (< 1 (length id-list))
+              (map
+               (lambda (x) x)
+               (zip
+                (drop-right  id-list 1)
+                (drop        id-list 1)))
+              '())))
 
   ;; 1つ単語をスキップして隣接する単語共起頻度の生成
   (define (make-history-skip-bigram str)
-    (let1 bigram (convert-to-id-list str)
-          (map
-           (lambda (x) x)
-           (zip
-            (drop-right  bigram 2)
-            (drop        bigram 2)))))
+    (let1 id-list (convert-to-id-list str)
+          (if (< 2 (length id-list))
+              (map
+               (lambda (x) x)
+               (zip
+                (drop-right  id-list 2)
+                (drop        id-list 2)))
+              '())))
 
   (let (
         (word        

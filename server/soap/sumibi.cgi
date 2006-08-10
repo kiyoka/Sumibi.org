@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2006/05/25 15:12:08 $
+#     $Date: 2006/08/10 13:38:49 $
 #
 # This file is part of Sumibi
 #
@@ -39,9 +39,19 @@ use FileHandle;
 use IPC::Open2;
 use Sys::Syslog;
 
+sub sumibi_debug_out {
+    if ( 0 ) {
+	my( $string ) = @_;
+	openlog( __FILE__, 'Sumibi', 'user' );
+	syslog( 'warning', $string );
+	closelog();
+    }
+}
+
+
 # Sumiibエンジンを呼出す
 sub _sumibiEngine {
-    my( $arg ) = @_;
+    my( @arg ) = @_;
     my( @result );
     my( $ok ) = 1;
     my( $pid ) = 0;
@@ -52,23 +62,26 @@ sub _sumibiEngine {
 
 	local( *Reader, *Writer );
 	if ( $SUMIBI_COMMAND =~ /@/ ) {
-	    $SUMIBI_COMMAND = "/opt/bin/gosh -I./lib ./sumibi";
+	    $SUMIBI_COMMAND = "/usr/local/bin/gosh -I./lib ./sumibi";
 	}
 	$pid = open2( *Reader, *Writer, $SUMIBI_COMMAND );
-	Writer->autoflush(); # default here, actually
-	print Writer $arg;
-	$ok     = <Reader>; # ok/error
+	my( $w );
+	foreach $w ( @arg ) {
+	    Writer->autoflush(); # default here, actually
+	    print Writer $w;
+	    $ok     = <Reader>; # ok/error
 	
-	# 空行が来るまで入力を読みこむ
-	while( 1 ) {
-	    $_ = <Reader>;
-	    # 改行を落とす
-	    chomp;
-	    if ( 0 >= length( $_ )  ) {
-		last;
-	    }
-	    else {
-		push( @result, $_ );
+	    # 空行が来るまで入力を読みこむ
+	    while( 1 ) {
+		$_ = <Reader>;
+		# 改行を落とす
+		chomp;
+		if ( 0 >= length( $_ )  ) {
+		    last;
+		}
+		else {
+		    push( @result, $_ );
+		}
 	    }
 	}
 	
@@ -82,7 +95,7 @@ sub _sumibiEngine {
     if($@) {
 	if($@ =~ /timeout/) {
 	    # タイムアウト時の処理
-	    if ( $arg =~ /convert/ ) {
+	    if ( pop( @arg ) =~ /convert/ ) {
 		push( @result, "！！タイムアウトしました。サーバーに負荷がかかっています！！" );
 		openlog( __FILE__, 'Sumibi', 'user' );
 		syslog( 'warning', sprintf( "Sumibi: pid=%d timeout... sending SIGKILL", $pid ));
@@ -116,10 +129,26 @@ sub getStatus {
 # 変換:S式で返す
 sub doSumibiConvertSexp {
     shift;
-    my( $query, $sumi, $ie, $oe ) = @_;
+    my( $query, $history, $sumi, $ie, $oe ) = @_;
+
+    my( @history_list ) = split( /;/, $history );
+    my( @commands, $i );
+    foreach $i ( @history_list ) {
+	if ( $i ) {
+	    push( @commands, sprintf( "addhistory\t%s\n", $i ));
+	}
+    }
+    push( @commands, sprintf( "convertsexp\t%s\n", $query ));
+
+    # デバッグ
+    sumibi_debug_out( "1:history = [" . $history . "]" );
+    foreach $i ( @commands ) {
+	sumibi_debug_out( "2:history_commands = [" . $i . "]" );
+    }
+    sumibi_debug_out( "3:query = [" . $query . "]" );
 
     # sumibiエンジンを呼びだす
-    my( $ok, @result ) = _sumibiEngine( sprintf( "convertsexp\t%s\n", $query ));
+    my( $ok, @result ) = _sumibiEngine( @commands );
 
     return(
 	MIME::Base64::encode( 
