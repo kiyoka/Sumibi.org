@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2006/08/10 13:38:49 $
+;;     $Date: 2006/08/10 14:38:18 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -1052,7 +1052,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 
     ;; 連想リストから _type で引いた index 番号を設定するだけで良い。
     (when _element
-      (setcar (nthcdr n sumibi-cand-n) (nth 3 _element))
+      (setcar (nthcdr n sumibi-cand-n) (nth sumibi-candno-index _element))
       (sumibi-select-update-display))))
 
 (defun sumibi-select-kanji ()
@@ -1504,7 +1504,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2006/08/10 13:38:49 $ on CVS " ;;VERSION;;
+  " $Date: 2006/08/10 14:38:18 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
