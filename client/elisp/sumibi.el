@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2006/08/09 14:40:45 $
+;;     $Date: 2006/08/10 13:38:49 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -639,8 +639,9 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 
   (message "Requesting to sumibi server...")
   (let* (
-	 (result (sumibi-soap-request "doSumibiConvertSexp" (list yomi))))
-
+	 (result (sumibi-soap-request "doSumibiConvertSexp" (list yomi
+								  (sumibi-get-history-string
+								   sumibi-kakutei-history)))))
     (sumibi-debug-print (format "henkan-result:%S\n" result))
     (if (eq (string-to-char result) ?\( )
 	(progn
@@ -891,6 +892,8 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 (define-key sumibi-select-mode-map "j"                      'sumibi-select-kanji)
 (define-key sumibi-select-mode-map "h"                      'sumibi-select-hiragana)
 (define-key sumibi-select-mode-map "k"                      'sumibi-select-katakana)
+(define-key sumibi-select-mode-map "u"                      'sumibi-select-hiragana)
+(define-key sumibi-select-mode-map "i"                      'sumibi-select-katakana)
 (define-key sumibi-select-mode-map "l"                      'sumibi-select-alphabet)
 
 
@@ -910,7 +913,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 
 
 ;; 確定したIDリストを変換履歴に追加する
-(defun sumibi-next-history ()
+(defun sumibi-next-history ( )
   (push
    (cons 
     (sumibi-current-unixtime)
@@ -919,6 +922,21 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
   (sumibi-debug-print (format "init:kakutei-history:%S\n" sumibi-kakutei-history)))
   
 
+;; Sumibiサーバーに 送るヒストリリストを出す
+(defun sumibi-get-history-string (kakutei-history)
+  (mapconcat
+   (lambda (entry)
+     (mapconcat
+      (lambda (x) (number-to-string x))
+      (cdr entry)
+      " "))
+   kakutei-history
+   ";"))
+
+;;(sumibi-get-history-string
+;; '(
+;;   (1 2 3 4 5 6)
+;;   (10 20 30 40 50 60)))
 
 ;; 確定したIDリストを更新する
 (defun sumibi-update-history( cand-n )
@@ -1486,7 +1504,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2006/08/09 14:40:45 $ on CVS " ;;VERSION;;
+  " $Date: 2006/08/10 13:38:49 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"

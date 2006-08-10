@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
-;;     $Date: 2006/08/08 13:01:14 $
+;;     $Date: 2006/08/10 13:38:49 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -1173,7 +1173,10 @@
                           (sumibi-debug-history conn)
                           (html:hr))))))
              (when sumibi-debug
-               (sumibi-save-inner-info sumibi-inner-info))))
+               (sumibi-save-inner-info sumibi-inner-info))
+
+             (list
+              "ok\n")))
       ('resethistory
        ;; ユーザーの履歴をリセットして全てクリアする
        )
