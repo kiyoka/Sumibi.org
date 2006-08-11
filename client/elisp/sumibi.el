@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2006/08/11 12:30:01 $
+;;     $Date: 2006/08/11 12:48:30 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -895,6 +895,8 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 (define-key sumibi-select-mode-map "k"                      'sumibi-select-katakana)
 (define-key sumibi-select-mode-map "u"                      'sumibi-select-hiragana)
 (define-key sumibi-select-mode-map "i"                      'sumibi-select-katakana)
+(define-key sumibi-select-mode-map "\C-u"                   'sumibi-select-hiragana)
+(define-key sumibi-select-mode-map "\C-i"                   'sumibi-select-katakana)
 (define-key sumibi-select-mode-map "l"                      'sumibi-select-alphabet)
 
 
@@ -1505,7 +1507,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2006/08/11 12:30:01 $ on CVS " ;;VERSION;;
+  " $Date: 2006/08/11 12:48:30 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"

@@ -28,7 +28,7 @@
 (define sumibi-debug #f)
 
 (define sumibi-version 
-  " $Date: 2006/08/07 14:06:41 $ on CVS " ;;VERSION;;
+  " $Date: 2006/08/11 12:48:30 $ on CVS " ;;VERSION;;
   )
 
 ;; 評価バランス ( skip-2重マルコフ 2重マルコフ 1重マルコフ 2重マルコフ skip-2重マルコフ)
@@ -47,7 +47,7 @@
 (define sumibi-dict-max-characters 30)
 
 ;; ユーザー履歴中の頻度に対する重み(何倍するか)
-(define sumibi-word-times-rate 10)
+(define sumibi-word-times-rate 2)
 
 ;;
 ;; DBサーバーに接続するためのパラメータ ( DBサーバーソフトウェアはMySQL固定 )
