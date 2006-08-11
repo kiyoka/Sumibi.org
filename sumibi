@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
-;;     $Date: 2006/08/10 13:38:49 $
+;;     $Date: 2006/08/11 12:30:01 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -830,9 +830,12 @@
 	      (tango-info (car  bunsetu))
 	      (kouho-info (cadr bunsetu))
 	      (spaces   (assq-ref tango-info 'spaces)))
-       
+
 	 (let* (
-                (id       (caar kouho-info))
+                (id
+                 (if (null-list? kouho-info)
+                     0
+                     (caar kouho-info)))
 		(method   (assq-ref tango-info 'method   ))
 		(orig     (assq-ref tango-info 'orig     ))
 		(hiragana (assq-ref tango-info 'hiragana ))
