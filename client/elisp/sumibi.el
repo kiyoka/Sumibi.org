@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2006/08/10 14:38:18 $
+;;     $Date: 2006/08/11 12:30:01 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -640,6 +640,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
   (message "Requesting to sumibi server...")
   (let* (
 	 (result (sumibi-soap-request "doSumibiConvertSexp" (list yomi
+								  ""
 								  (sumibi-get-history-string
 								   sumibi-kakutei-history)))))
     (sumibi-debug-print (format "henkan-result:%S\n" result))
@@ -1504,7 +1505,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2006/08/10 14:38:18 $ on CVS " ;;VERSION;;
+  " $Date: 2006/08/11 12:30:01 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"

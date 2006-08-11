@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2006/08/10 13:38:49 $
+#     $Date: 2006/08/11 12:30:01 $
 #
 # This file is part of Sumibi
 #
@@ -40,7 +40,7 @@ use IPC::Open2;
 use Sys::Syslog;
 
 sub sumibi_debug_out {
-    if ( 0 ) {
+    if ( 1 ) {
 	my( $string ) = @_;
 	openlog( __FILE__, 'Sumibi', 'user' );
 	syslog( 'warning', $string );
@@ -129,7 +129,7 @@ sub getStatus {
 # 変換:S式で返す
 sub doSumibiConvertSexp {
     shift;
-    my( $query, $history, $sumi, $ie, $oe ) = @_;
+    my( $query, $sumi, $history, $oe ) = @_;
 
     my( @history_list ) = split( /;/, $history );
     my( @commands, $i );
@@ -140,12 +140,12 @@ sub doSumibiConvertSexp {
     }
     push( @commands, sprintf( "convertsexp\t%s\n", $query ));
 
-    # デバッグ
-    sumibi_debug_out( "1:history = [" . $history . "]" );
+    # デバッグメッセージ
+    sumibi_debug_out( "1:query = [" . $query . "]" );
+    sumibi_debug_out( "2:history = [" . $history . "]" );
     foreach $i ( @commands ) {
-	sumibi_debug_out( "2:history_commands = [" . $i . "]" );
+	sumibi_debug_out( "2:sumibi_command = [" . $i . "]" );
     }
-    sumibi_debug_out( "3:query = [" . $query . "]" );
 
     # sumibiエンジンを呼びだす
     my( $ok, @result ) = _sumibiEngine( @commands );
