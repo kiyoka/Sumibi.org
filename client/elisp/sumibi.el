@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2006/08/11 12:48:30 $
+;;     $Date: 2006/08/11 14:42:16 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -123,6 +123,11 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 (defcustom sumibi-realtime-guide-interval  0.5
   "リアルタイムガイド表示を更新する時間間隔"
   :type  'integer
+  :group 'sumibi)
+
+(defcustom sumibi-history-filename  "~/.sumibi_history"
+  "ユーザー固有の変換履歴を保存するファイル名"
+  :type  'string
   :group 'sumibi)
 
 
@@ -549,10 +554,15 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
     (with-temp-buffer
       (insert sumibi-server-cert-data)
       (write-region (point-min) (point-max) sumibi-server-cert-file  nil nil))
+    (if (file-exists-p sumibi-history-filename)
+	(load-file sumibi-history-filename))
 
     ;; Emacs終了時SSL証明書ファイルを削除する。
     (add-hook 'kill-emacs-hook
 	      (lambda ()
+		(with-temp-file
+		    sumibi-history-filename
+		  (insert (format "(setq sumibi-kakutei-history '%s)" sumibi-kakutei-history)))
 		(delete-file sumibi-server-cert-file)))
 
     ;; 初期化完了
@@ -1230,8 +1240,8 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 		     start-point
 		     (skip-chars-forward (concat "\t " sumibi-stop-chars) (point-at-eol))))))
 
-	  (sumibi-debug-print (format "(point) = %d  result = %d  limit-point = %d\n" (point) result limit-point))
-	  (sumibi-debug-print (format "a = %d b = %d \n" (+ (point) result) limit-point))
+	  ;; (sumibi-debug-print (format "(point) = %d  result = %d  limit-point = %d\n" (point) result limit-point))
+	  ;; (sumibi-debug-print (format "a = %d b = %d \n" (+ (point) result) limit-point))
 
 	  ;; パラグラフ位置でストップする
 	  (if (< (+ (point) result) limit-point)
@@ -1251,8 +1261,8 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 		   start-point
 		   (skip-chars-forward (concat "\t " sumibi-stop-chars) (point-at-eol))))))
 
-	(sumibi-debug-print (format "(point) = %d  result = %d  limit-point = %d\n" (point) result limit-point))
-	(sumibi-debug-print (format "a = %d b = %d \n" (+ (point) result) limit-point))
+	;; (sumibi-debug-print (format "(point) = %d  result = %d  limit-point = %d\n" (point) result limit-point))
+	;; (sumibi-debug-print (format "a = %d b = %d \n" (+ (point) result) limit-point))
 
 	(if (< (+ (point) result) limit-point)
 	    ;; インデント位置でストップする。
@@ -1507,7 +1517,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2006/08/11 12:48:30 $ on CVS " ;;VERSION;;
+  " $Date: 2006/08/11 14:42:16 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
