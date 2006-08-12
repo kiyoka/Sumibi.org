@@ -14,7 +14,7 @@ all:
 
 
 clean:
-	/bin/rm -rf ${TARGET} ${TARGET}.tar.gz
+	/bin/rm -rf sumibi-*
 
 
 install: sumibi sumiyaki platform-check
