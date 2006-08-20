@@ -106,15 +106,9 @@
 	    
 	    (html:div :style "text-align: center; "
 		      ;; --- Ad ---
-		      (cond
-;;		       (long-mode
-;;			(if (file-exists? "./ad1_s.txt")
-;;			    (port->string (open-input-file "./ad1_s.txt"))
-;;			    ""))
-		       (#t
-			(if (file-exists? "./ad1.txt")
-			    (port->string (open-input-file "./ad1.txt"))
-			    ""))))
+                      (if (file-exists? "./ad1.txt")
+                          (port->string (open-input-file "./ad1.txt"))
+                          ""))
 
 	    (html:br)
 	    (html:div :style "text-align: center; "
@@ -153,8 +147,12 @@
 		      (sys-strftime "%m月%d日 %k:%M" (sys-localtime (current-time))))
 	    (html:br)
 	    (html:br)
-	    )
-	   (html:script :type "text/javascript" :src "ajax/Sumibi.js")
+	    (html:div :style "text-align: center; "
+                      (if (file-exists? "./ad2.txt")
+                          (port->string (open-input-file "./ad2.txt"))
+                          ""))
+            )
+           (html:script :type "text/javascript" :src "ajax/Sumibi.js")
 	   (html:script :type "text/javascript" :src "ajax/SumibiSOAP.js")
 	   (html:script :type "text/javascript" :src "ajax/ajax_sumibi.js")
 	   (html:script :type "text/javascript" :src "ajax/SumibiCustomize.js")
