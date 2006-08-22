@@ -1,4 +1,4 @@
-function setFocusToQ() {document.getElementById('q').focus();}
+function setFocusToQ() {document.getElementById('qbox').focus();}
 
 function submitGform() {sumibi_define_candidate();document.getElementById('gform').submit();}
 function Sumibi_candidate_html_hook(space_array,words_array) {

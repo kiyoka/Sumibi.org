@@ -14,7 +14,9 @@
        u または C-u ... ひらがなキーワードを選択する
   - sumibi.cgi
     1. doSumibiConvertSexpメソッドの引数にユーザー変換履歴を追加した。
-
+  - Ajaxクライアント
+    1. JavaScriptから指定するtextareaタグのIDを q から qbox に変更した。
+       Google検索結果をAjaxクライアントに組みこむ時に、q というIDがぶつかるため
 
 [0.7.0]
   - sumibi
