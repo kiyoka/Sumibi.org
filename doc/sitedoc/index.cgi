@@ -11,7 +11,8 @@
   (cgi-main                                                              
    (lambda (params)                                                     
      (let ((long-mode     (cgi-get-parameter "long" params))
-	   (darkside-mode (cgi-get-parameter "darkside" params)))
+	   (darkside-mode (cgi-get-parameter "darkside" params))
+	   (qbox-value    (cgi-get-parameter "q" params)))
        `(,(cgi-header)                                                    
 	 ,(html-doctype)                                                  
 	 ,(html:html                                                      
@@ -55,21 +56,24 @@
 			)))
 		    
 	    (html:div :style "text-align: center; "
-		      (html:form :id "gform" :method "get" :action "http://www.google.co.jp/custom" :target "_top"
+		      (html:form :id "gform" :method "get" :action "./index.cgi" :target "_top"
 				 (html:input :type "hidden" :id "server" :name "server" :value "testing"  :onClick "select_server(this.value)")
 				 (if long-mode
 				     (html:div :style "text-align: center; "
-					       (html:textarea :id "q" :name "q" :cols "90%" :rows "12")
+					       (html:textarea :id "qbox" :name "q" :cols "90%" :rows "12")
 					       )
 				     (html:div
 				      (html:p
-				       (html:input :type "text" :id "q" :name "q" :size "41" :maxlength "2048")
+				       (html:input :type "text" :id "qbox" :name "q" :size "41" :maxlength "2048" :value
+                                                   (if qbox-value
+                                                       qbox-value
+                                                       ""))
 				       (html:input :type "submit" :name "sa" :value "Google検索"))))
 				 (html:input :type "hidden" :name "client" :value "pub-5721837636688174")
 				 (html:input :type "hidden" :name "forid"  :value "1")
 				 (html:input :type "hidden" :name "ie"     :value "UTF-8")
 				 (html:input :type "hidden" :name "oe"     :value "UTF-8")
-				 (html:input :type "hidden" :name "cof"    :value "GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:336699;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:25;LW:80;L:http://www.sumibi.org/sumibi_org_logo.png;S:http://www.sumibi.org/;LP:1;FORID:1;")
+				 (html:input :type "hidden" :name "cof"    :value "GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:336699;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:25;LW:80;L:http://www.sumibi.org/sumibi_org_logo.png;S:http://www.sumibi.org/;LP:1;FORID:11")
 				 (html:input :type "hidden" :name "hl"     :value "ja"))
 		    
 		      (html:div :id "progress")
@@ -85,6 +89,21 @@
 				     (port->string (open-input-file "./notice.txt"))))
 			  ""))
 
+            "
+<!-- Google Search Result Snippet Begins -->
+<div style=\"text-align: center;\" id=\"googleSearchUnitIframe\"></div>
+
+<script type=\"text/javascript\">
+   var googleSearchIframeName = 'googleSearchUnitIframe';
+   var googleSearchFrameWidth = 650;
+   var googleSearchFrameHeight = 1350;
+   var googleSearchFrameborder = 0 ;
+</script>
+<script type=\"text/javascript\"
+         src=\"http://www.google.com/afsonline/show_afs_search.js\">
+</script>
+<!-- Google Search Result Snippet Ends -->
+"
 
 	    (html:fieldset :class "fieldset"
 	     (html:legend :class "legend" "使い方")
@@ -151,6 +170,7 @@
                       (if (file-exists? "./ad2.txt")
                           (port->string (open-input-file "./ad2.txt"))
                           ""))
+
             )
            (html:script :type "text/javascript" :src "ajax/Sumibi.js")
 	   (html:script :type "text/javascript" :src "ajax/SumibiSOAP.js")
