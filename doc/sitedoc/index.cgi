@@ -99,7 +99,7 @@
 <script type=\"text/javascript\">
    var googleSearchIframeName = 'googleSearchUnitIframe';
    var googleSearchFrameWidth = 650;
-   var googleSearchFrameHeight = 1350;
+   var googleSearchFrameHeight = 1400;
    var googleSearchFrameborder = 0 ;
 </script>
 <script type=\"text/javascript\"
