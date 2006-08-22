@@ -37,7 +37,7 @@
 			(html:span :class "subtitle"
 				   "世界の果てから漢字変換")
 			(html:br)
-			(html:img :src "sumibi_org_WASHIlogo_small.png" :alt "Sumibi.org LOGO")
+			(html:img :src "sumibi_org_WASHIlogo_small.png" :alt "Sumibi.org LOGO" :border 0)
 			"  [長文作成モード]  "))
 	     (else
 	      (html:div :style "text-align: center; "
@@ -45,7 +45,8 @@
 			(html:span :class "subtitle"
 				   "世界の果てから漢字変換")
 			(html:br)
-			(html:img :src "sumibi_org_WASHIlogo.png" :alt "Sumibi.org LOGO")
+                        (html:a :href "http://www.sumibi.org/"
+                                (html:img :src "sumibi_org_WASHIlogo.png" :alt "Sumibi.org LOGO" :border 0))
 			(html:br)
 			
 			(html:span :class "subtitle"
@@ -88,8 +89,10 @@
 				    (html:p
 				     (port->string (open-input-file "./notice.txt"))))
 			  ""))
-
-            "
+            (if (not qbox-value)
+                ""
+                (if (< 0 (string-length qbox-value))
+                    "
 <!-- Google Search Result Snippet Begins -->
 <div style=\"text-align: center;\" id=\"googleSearchUnitIframe\"></div>
 
@@ -104,6 +107,7 @@
 </script>
 <!-- Google Search Result Snippet Ends -->
 "
+                    ""))
 
 	    (html:fieldset :class "fieldset"
 	     (html:legend :class "legend" "使い方")
