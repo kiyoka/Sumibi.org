@@ -1,5 +1,5 @@
-addhistory	381241 469068
-convertsexp	nishiyama san
+addhistory	267081 344730
+convertsexp	kogai dan
 addhistory	231762 467818
 convertsexp	kansei suru
 convert	bunsyou wo kousei suru
