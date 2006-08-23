@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2006/08/11 14:42:16 $
+;;     $Date: 2006/08/23 13:22:25 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -160,6 +160,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 
 ;; ユーザー学習辞書
 (defvar sumibi-kakutei-history          '())    ;; ( ( unix時間 単語IDのリスト ) ( unix時間 9412 1028 ) )
+(defvar sumibi-kakutei-history-saved    '())    ;; ファイルに保存されたほうのヒストリデータ)
 
 ;;;
 ;;; hooks
@@ -539,6 +540,21 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 ;;
 (defun sumibi-init ()
 
+  ;; ヒストリファイルとメモリ中のヒストリデータをマージする
+  (defun sumibi-merge-kakutei-history (base-list new-list)
+    (let ((merged-num  '())
+	  (merged-list '()))
+      (mapcar
+       (lambda (x)
+	 (when (not (member (car x) merged-num))
+	   (progn
+	     (push (car x) merged-num)
+	     (push      x  merged-list))))
+       (append
+	base-list
+	new-list))
+      merged-list))
+
   ;; テンポラリファイルを作成する。
   (defun sumibi-make-temp-file (base)
     (if	(functionp 'make-temp-file)
@@ -554,15 +570,24 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
     (with-temp-buffer
       (insert sumibi-server-cert-data)
       (write-region (point-min) (point-max) sumibi-server-cert-file  nil nil))
-    (if (file-exists-p sumibi-history-filename)
-	(load-file sumibi-history-filename))
+    (when (file-exists-p sumibi-history-filename)
+      (progn
+	(load-file sumibi-history-filename)
+	(setq sumibi-kakutei-history sumibi-kakutei-history-saved)))
 
     ;; Emacs終了時SSL証明書ファイルを削除する。
     (add-hook 'kill-emacs-hook
 	      (lambda ()
+		;; 現在のファイルをサイド読みこむ(別のEmacsプロセスが更新しているかも知れない為)
+		(when (file-exists-p sumibi-history-filename)		
+		  (load-file sumibi-history-filename))
 		(with-temp-file
 		    sumibi-history-filename
-		  (insert (format "(setq sumibi-kakutei-history '%s)" sumibi-kakutei-history)))
+		  (insert (format "(setq sumibi-kakutei-history-saved '%s)" 
+				  (pp-to-string 
+				   (sumibi-merge-kakutei-history
+				    sumibi-kakutei-history-saved
+				    sumibi-kakutei-history)))))
 		(delete-file sumibi-server-cert-file)))
 
     ;; 初期化完了
@@ -1517,7 +1542,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2006/08/11 14:42:16 $ on CVS " ;;VERSION;;
+  " $Date: 2006/08/23 13:22:25 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
