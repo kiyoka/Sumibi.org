@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2006/08/23 13:22:25 $
+;;     $Date: 2006/08/28 15:23:36 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -111,12 +111,12 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
   :group 'sumibi)
 
 (defcustom sumibi-use-viper nil
-  "*Non-nil であれば、VIPER に対応する。"
+  "*Non-nil であれば、VIPER に対応する"
   :type 'boolean
   :group 'sumibi)
 
 (defcustom sumibi-realtime-guide-running-seconds 60
-  "リアルタイムガイド表示の継続時間(秒数)・ゼロでガイド表示機能が無効になります。"
+  "リアルタイムガイド表示の継続時間(秒数)・ゼロでガイド表示機能が無効になる"
   :type  'integer
   :group 'sumibi)
 
@@ -128,6 +128,11 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 (defcustom sumibi-history-filename  "~/.sumibi_history"
   "ユーザー固有の変換履歴を保存するファイル名"
   :type  'string
+  :group 'sumibi)
+
+(defcustom sumibi-history-feature  t
+  "Non-nilであれば、ユーザー固有の変換履歴を有効にする"
+  :type  'boolean
   :group 'sumibi)
 
 
@@ -570,7 +575,10 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
     (with-temp-buffer
       (insert sumibi-server-cert-data)
       (write-region (point-min) (point-max) sumibi-server-cert-file  nil nil))
-    (when (file-exists-p sumibi-history-filename)
+
+    (when (and
+	   sumibi-history-feature
+	   (file-exists-p sumibi-history-filename))
       (progn
 	(load-file sumibi-history-filename)
 	(setq sumibi-kakutei-history sumibi-kakutei-history-saved)))
@@ -578,16 +586,20 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
     ;; Emacs終了時SSL証明書ファイルを削除する。
     (add-hook 'kill-emacs-hook
 	      (lambda ()
-		;; 現在のファイルをサイド読みこむ(別のEmacsプロセスが更新しているかも知れない為)
-		(when (file-exists-p sumibi-history-filename)		
-		  (load-file sumibi-history-filename))
-		(with-temp-file
-		    sumibi-history-filename
-		  (insert (format "(setq sumibi-kakutei-history-saved '%s)" 
-				  (pp-to-string 
-				   (sumibi-merge-kakutei-history
-				    sumibi-kakutei-history-saved
-				    sumibi-kakutei-history)))))
+		;; ユーザー変換履歴をマージして保存する
+		(when sumibi-history-feature
+		  (progn
+		    ;; 現在のファイルを再度読みこむ(別のEmacsプロセスが更新しているかも知れない為)
+		    (when (file-exists-p sumibi-history-filename)
+		      (load-file sumibi-history-filename))
+		    (with-temp-file
+			sumibi-history-filename
+		      (insert (format "(setq sumibi-kakutei-history-saved '%s)" 
+				      (pp-to-string 
+				       (sumibi-merge-kakutei-history
+					sumibi-kakutei-history-saved
+					sumibi-kakutei-history)))))))
+		;; SSL証明書のファイルを削除する
 		(delete-file sumibi-server-cert-file)))
 
     ;; 初期化完了
@@ -952,13 +964,17 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 
 ;; 確定したIDリストを変換履歴に追加する
 (defun sumibi-next-history ( )
-  (push
-   (cons 
-    (sumibi-current-unixtime)
-    '())
-   sumibi-kakutei-history)
-  (sumibi-debug-print (format "init:kakutei-history:%S\n" sumibi-kakutei-history)))
-  
+  (if sumibi-history-feature
+      (progn
+	(push
+	 (cons 
+	  (sumibi-current-unixtime)
+	  '())
+	 sumibi-kakutei-history)
+	(sumibi-debug-print (format "init:kakutei-history:%S\n" sumibi-kakutei-history))
+	sumibi-kakutei-history)
+    '()))
+
 
 ;; Sumibiサーバーに 送るヒストリリストを出す
 (defun sumibi-get-history-string (kakutei-history)
@@ -989,16 +1005,17 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 	       (nth sumibi-id-index word)))
 	   sumibi-henkan-list)))
     ;; ヒストリデータを作り直す
-    (setq sumibi-kakutei-history
-	  (cons
-	   (cons
-	    (caar sumibi-kakutei-history)
-	    result)
-	   (if (< 1 (length sumibi-kakutei-history))
-	       (cdr sumibi-kakutei-history)
-	     '())))
-    (sumibi-debug-print (format "kakutei-history:%S\n" sumibi-kakutei-history))))
-    
+    (when sumibi-history-feature
+      (setq sumibi-kakutei-history
+	    (cons
+	     (cons
+	      (caar sumibi-kakutei-history)
+	      result)
+	     (if (< 1 (length sumibi-kakutei-history))
+		 (cdr sumibi-kakutei-history)
+	       '())))
+      (sumibi-debug-print (format "kakutei-history:%S\n" sumibi-kakutei-history)))))
+  
 
 
 ;; 候補選択を確定する
@@ -1542,7 +1559,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2006/08/23 13:22:25 $ on CVS " ;;VERSION;;
+  " $Date: 2006/08/28 15:23:36 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
