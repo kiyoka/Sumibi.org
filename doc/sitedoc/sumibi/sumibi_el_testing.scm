@@ -257,6 +257,8 @@
 	(p "リアルタイムガイド表示を更新する時間間隔を設定します。")
         (li "sumibi-history-filename")
         (p "ユーザー固有の変換履歴を保存するファイル名(デフォルトは ~/.sumibi_historyです)")
+        (li "sumibi-history-feature")
+        (p "ユーザー固有の変換履歴を有効にします(デフォルトはt:有効です)")
         (li "sumibi-guide-face")
 	(p "リアルタイムガイドのフェイスを設定します。(装飾、色などの指定)")))))
 
