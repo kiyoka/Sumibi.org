@@ -24,7 +24,8 @@
 	 (conn
 	  (guard (exc
 		  ((is-a? exc <dbi-error>)
-		   ((display "error  : ")(display (ref exc 'message))(newline)
+                   ((display "MySQL  : ")(newline)
+                    (display "error  : ")(display (ref exc 'message))(newline)
 		    (display "host   : ")(display host)(newline)
 		    (display "dbname : ")(display dbname)(newline)
 		    (display "user   : ")(display user)(newline)
