@@ -3,7 +3,7 @@
 # "sumibi.cgi" is an SOAP server for sumibi engine.
 #
 #   Copyright (C) 2005 Kiyoka Nishyama
-#     $Date: 2006/08/11 12:30:01 $
+#     $Date: 2006/09/12 14:29:03 $
 #
 # This file is part of Sumibi
 #
@@ -40,7 +40,7 @@ use IPC::Open2;
 use Sys::Syslog;
 
 sub sumibi_debug_out {
-    if ( 1 ) {
+    if ( 0 ) {
 	my( $string ) = @_;
 	openlog( __FILE__, 'Sumibi', 'user' );
 	syslog( 'warning', $string );
