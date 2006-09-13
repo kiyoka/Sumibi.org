@@ -7,7 +7,8 @@
   (use dbi)
   (use gauche.collection)
   (export sumibi-dbi-connect
-	  sumibi-dbi-read-query
+          sumibi-dbi-disconnect
+          sumibi-dbi-read-query
 	  sumibi-dbi-slice-result
 	  sumibi-dbi-write-query))
 (select-module sumibi.dbiutil)
@@ -40,7 +41,22 @@
 	 (result (dbi-execute query)))
     conn))
 
-	 
+
+;;
+;; DBサーバーから切断する
+;; 戻り値は不定です。
+;;
+(define (sumibi-dbi-disconnect conn)
+  (guard (exc
+          ((is-a? exc <dbi-error>)
+           ((display "MySQL  : ")(newline)
+            (display "error  : ")(display (ref exc 'message))(newline)
+            (display "host   : ")(display host)(newline)
+            (display "dbname : ")(display dbname)(newline)
+            (display "user   : ")(display user)(newline)
+            (exit 1))))
+         (dbi-close conn)))
+
 
 ;; SQLのSELECTコマンドを発行して、結果をリストで取得する
 ;; カラムの型は、この関数専用のフォーマットで与える
