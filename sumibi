@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
-;;     $Date: 2006/08/11 12:30:01 $
+;;     $Date: 2006/09/13 13:50:57 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -1282,6 +1282,8 @@
 	 (write-tree result)
 	 (newline)
 	 (flush (current-output-port))))
-     read-line))
+     read-line)
 
+    ;; DBを切断する
+    (sumibi-dbi-disconnect conn))
   (exit 0))
