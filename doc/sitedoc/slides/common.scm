@@ -134,16 +134,15 @@
             (head
              (meta
               (@ (name "generator")
-                 (content
-                  "HTML Tidy for Linux/x86 (vers 1st November 2003), see www.w3.org")))
-             (title "HTML Slidy")
+                 (content "HTML Tidy for Linux/x86 and Sxmlcnv")))
+             (title ,_title)
              (meta
               (@ (http-equiv "Content-Type")
                  (content "text/html; charset=utf-8")))
              (meta
               (@ (name "copyright")
                  (content
-                  "Copyright (c) 2005 W3C (MIT, ERCIM, Keio)")))
+                  "Copyright &copy; 2006 Sumibi Project (Kiyoka Nishiyama)")))
              (meta
               (@ (name "font-size-adjustment") (content "-2")))
              (link
@@ -155,32 +154,31 @@
               (@ (type "text/css")
                  (rel "stylesheet")
                  (media "screen, projection, print")
-                 (href "w3c-blue.css")))
+                 (href "sumibi_sea.css")))
              (script
               (@ (type "text/javascript") (src "slidy.js"))))
             (body
              (div
               (@ (class "background"))
-              (img
-               (@ (src "icon-blue.png")
-                  (id "head-icon")
-                  (alt "")))
               (object
-               (@ (type "image/svg+xml")
-                  (title _title)
+               (@
+;;                (type "image/svg+xml")
+                  (title ,_title)
                   (id "head-logo")
-                  (data "w3c-logo-blue.svg"))
+                  (data "sumibi_org_WASHIlogo.png"))
                (a
-                (@ (href "http://www.w3.org/"))
+                (@ (href "http://www.sumibi.org/"))
                 (img
-                 (@ (src "w3c-logo-blue.gif")
-                    (id "head-logo-fallback")
-                    (alt "W3C logo"))))))
+                 (@
+                  (src "sea1.png")
+                  (id "head-logo-fallback")
+                  (alt "W3C logo"))))))
              (div
               (@ (class "background slanty"))
               (img
-               (@ (src "w3c-logo-slanted.jpg")
-                  (alt "slanted W3C logo"))))
+               (@
+                (src "sea1.png")
+                (alt "picture of sea"))))
              (div
               (@ (class "slide cover"))
               (img
@@ -228,22 +226,21 @@
                   (class "hidden")
                   (alt "")))
               (img
-               (@ (src "keys.jpg")
+               (@ (src "sumibi_org_WASHIlogo_large.png ")
                   (class "cover")
-                  (alt "Cover page images (keys)")))
+                  (alt "Cover page images (Sumibi LOGO by WASHI)")))
               (br
                (@ (clear "all")))
-              (h1
-               "HTML Slidy: Slide Shows in XHTML")
+              (h1 ,_title)
               (p
                (a
-                (@ (href "http://www.w3.org/People/Raggett/"))
-                "Dave Raggett")
+                (@ (href "http://www.netfort.gr.jp/~kiyoka/"))
+                "Kiyoka Nishiyama")
                ",
 <"
                (a
-                (@ (href "mailto:dsr@w3.org"))
-                "dsr@w3.org")
+                (@ (href "mailto:kiyoka@netfort.gr.jp"))
+                "kiyoka@netfort.gr.jp")
                ">"
                (br)
                (br)
@@ -255,4 +252,3 @@
 
              ,tree
              )))))
-
