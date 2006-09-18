@@ -100,6 +100,23 @@
              (li "2006.9月")
              (*ul
               (li "現在( 本資料の作成、発表 )")))) 
+    (*slide "システムの構成"
+            (*ul-inc
+             (li "SOAPでクライアント・サーバーが疎結合になっている")
+             (*ul
+              (li "→ SumibiWebAPI として定義されている")
+              (li "→ いろんなクライアントの実装が出てくることを期待")
+              (li "→ 今後のscimクライアント等の登場を期待")
+              (li "→ firefoxプラグインなども良いかな"))
+             (li "sumibiコマンド(変換エンジン)")
+             (li "sumiyakiコマンド(統計学習ツール)")
+             (li "MySQLを使用している")
+             (li "クライアント側の構成")
+             (ul*
+              (li "Ajax(JavaScript言語)")
+              (li "Emacs + curl"))
+             (li "デザインポリシー:No config is good config")
+             (li "Perl/Ruby/Pythonのサンプルもある")))
     ))
 
 
@@ -122,23 +139,6 @@
 3. なぜ、分かち書きか
 3. なぜ、Ajaxか
 4. なぜ、MYSQLか
-
-システムの構成
-  SOAPでクライアント・サーバーが疎結合になっている
-  → SumibiWebAPI として定義されている
-  → いろんなクライアントの実装が出てくることを期待。
-      今後scimクライアント等の登場を期待
-      firefoxプラグインなども良いかな
-  サーバー側の構成 → 図を使って説明する
-    sumibiコマンド(変換エンジン)
-    sumiyakiコマンド(統計学習ツール)
-    MySQLを使用している
-
-  クライアント側の構成
-    - Ajax(JavaScript言語)
-    - Emacs + curl
-      デザインポリシー:No config is good config
-    - Perl/Ruby/Pythonのサンプルもある
 
 
 エンジンのアルゴリズム
