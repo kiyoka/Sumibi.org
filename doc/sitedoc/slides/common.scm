@@ -172,7 +172,7 @@
                  (@
                   (src "sea1.png")
                   (id "head-logo-fallback")
-                  (alt "W3C logo"))))))
+                  (alt "picture of sea"))))))
              (div
               (@ (class "background slanty"))
               (img
