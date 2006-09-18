@@ -6,71 +6,19 @@
   ;; It's a fully static table (it uses the quote rather than a quasi-quote)
   ;; Therefore, the table (the S-expression) can be saved into a file
   `(
-    (W:sxml
-     (*link "SXML" "http://okmij.org/ftp/Scheme/SXML.html"))
-    (W:xml
-     (*link "XML"  "http://www.w3.org/XML/"))
-    (W:xml-infoset
-     (*link "XML Infoset" "http://www.w3.org/TR/xml-infoset/"))
-    (W:gauche
+    (W:infoteria
+     (*link "インフォテリア株式会社" "http://www.infoteria.com/jp/"))
+    (W:Gauche
      (*link "Gauche" "http://www.shiro.dreamhost.com/scheme/gauche/index.html"))
     (W:GPL
      (*link "GNU General Public License (GPL2)" "http://www.gnu.org/licenses/gpl.html"))
-    (W:CAcert
-     (*link "CAcert.org" "http://www.cacert.org/"))
     (W:Sumibi.org
      (*link "Sumibi.org" "http://www.sumibi.org/"))
     (W:GFDL
      (*link "GFDL" "http://ja.wikipedia.org/wiki/Wikipedia:Text_of_GNU_Free_Documentation_License"))
-    ;; sourceforge link logo
-    (W:sf-logo
-     (native
-      (@ (format "html"))
-      "
-<hr>
-  <!-- Creative Commons License -->
-  <a href=\"http://creativecommons.org/licenses/GPL/2.0/\"><img alt=\"CC-GNU GPL\" border=\"0\" src=\"http://creativecommons.org/images/public/cc-GPL-a.png\" /></a>
-  <!-- /Creative Commons License -->
-  
-  <!--
-
-  <rdf:RDF xmlns=\"http://web.resource.org/cc/\"
-     xmlns:dc=\"http://purl.org/dc/elements/1.1/\"
-     xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">
-  <Work rdf:about=\"\">
-     <license rdf:resource=\"http://creativecommons.org/licenses/GPL/2.0/\" />
-     <dc:type rdf:resource=\"http://purl.org/dc/dcmitype/Software\" />
-  </Work>
-
-  <License rdf:about=\"http://creativecommons.org/licenses/GPL/2.0/\">
-     <permits rdf:resource=\"http://web.resource.org/cc/Reproduction\" />
-     <permits rdf:resource=\"http://web.resource.org/cc/Distribution\" />
-     <requires rdf:resource=\"http://web.resource.org/cc/Notice\" />
-     <permits rdf:resource=\"http://web.resource.org/cc/DerivativeWorks\" />
-     <requires rdf:resource=\"http://web.resource.org/cc/ShareAlike\" />
-     <requires rdf:resource=\"http://web.resource.org/cc/SourceCode\" />
-  </License>
-
-  </rdf:RDF>
-
-  -->
-  <a href=\"http://www.godaddy.com/gdshop/ssl/ssl_opensource.asp\"
-     <img src=\"http://imagesak.godaddy.com/assets/ssl/img_cert_turbo_gd.jpg\"
-  	width=\"88\" height=\"62\"
-  	border=\"0\" alt=\"SourceForge.jp\">
-  </a>
-
-  <a href=\"http://sourceforge.jp/\"><img src=\"http://sourceforge.jp/sflogo.php?group_id=1476\" width=\"96\" height=\"31\" border=\"0\" alt=\"SourceForge.jp\"></a>
-
-  <a href=\"http://www.mickeynetusa.com/ranking/counter/incount.asp?countid=174\" target=\"_blank\"
-     <img src=\"http://www.mickeynet.com/e_ranklink/img/mickeynet130_35.gif\" width=\"130\" height=\"35\" border=\"0\">
-  </a>
-  <a href=\"http://www.NoSoftwarePatents.com\"
-     <img src=\"../nswpat80x15.png\" width=\"80\" height=\"15\" border=\"0\" alt=\"No Software Patents!\">
-  </a>
-"
-      ))))
-
+    (W:kato
+     (*link "Kato Atsushi" "http://d.hatena.ne.jp/ktat/"))
+    ))
 
 (define HTMLSlidy:style-sheet
   `(
@@ -130,125 +78,126 @@
            (html (@ (xmlns "http://www.w3.org/1999/xhtml")
                     (xml:lang "en")
                     (lang "en-US"))
-                  
-            (head
-             (meta
-              (@ (name "generator")
-                 (content "HTML Tidy for Linux/x86 and Sxmlcnv")))
-             (title ,_title)
-             (meta
-              (@ (http-equiv "Content-Type")
-                 (content "text/html; charset=utf-8")))
-             (meta
-              (@ (name "copyright")
-                 (content
-                  "Copyright &copy; 2006 Sumibi Project (Kiyoka Nishiyama)")))
-             (meta
-              (@ (name "font-size-adjustment") (content "-2")))
-             (link
-              (@ (type "text/css")
-                 (rel "stylesheet")
-                 (media "screen, projection, print")
-                 (href "slidy.css")))
-             (link
-              (@ (type "text/css")
-                 (rel "stylesheet")
-                 (media "screen, projection, print")
-                 (href "sumibi_sea.css")))
-             (script
-              (@ (type "text/javascript") (src "slidy.js"))))
-            (body
-             (div
-              (@ (class "background"))
-              (object
-               (@
-;;                (type "image/svg+xml")
+                 
+                 (head
+                  (meta
+                   (@ (name "generator")
+                      (content "HTML Tidy for Linux/x86 and Sxmlcnv")))
                   (title ,_title)
-                  (id "head-logo")
-                  (data "sumibi_org_WASHIlogo.png"))
-               (a
-                (@ (href "http://www.sumibi.org/"))
-                (img
-                 (@
-                  (src "sea1.png")
-                  (id "head-logo-fallback")
-                  (alt "picture of sea"))))))
-             (div
-              (@ (class "background slanty"))
-              (img
-               (@
-                (src "sea1.png")
-                (alt "picture of sea"))))
-             (div
-              (@ (class "slide cover"))
-              (img
-               (@ (src "../Slidy/bullet.png")
-                  (class "hidden")
-                  (alt "")))
-              (img
-               (@ (src "../Slidy/fold.gif")
-                  (class "hidden")
-                  (alt "")))
-              (img
-               (@ (src "../Slidy/unfold.gif")
-                  (class "hidden")
-                  (alt "")))
-              (img
-               (@ (src "../Slidy/fold-dim.gif")
-                  (class "hidden")
-                  (alt "")))
-              (img
-               (@ (src "../Slidy/nofold-dim.gif")
-                  (class "hidden")
-                  (alt "")))
-              (img
-               (@ (src "../Slidy/unfold-dim.gif")
-                  (class "hidden")
-                  (alt "")))
-              (img
-               (@ (src "../Slidy/bullet-fold.gif")
-                  (class "hidden")
-                  (alt "")))
-              (img
-               (@ (src "../Slidy/bullet-unfold.gif")
-                  (class "hidden")
-                  (alt "")))
-              (img
-               (@ (src "../Slidy/bullet-fold-dim.gif")
-                  (class "hidden")
-                  (alt "")))
-              (img
-               (@ (src "../Slidy/bullet-nofold-dim.gif")
-                  (class "hidden")
-                  (alt "")))
-              (img
-               (@ (src "../Slidy/bullet-unfold-dim.gif")
-                  (class "hidden")
-                  (alt "")))
-              (img
-               (@ (src "sumibi_org_WASHIlogo_large.png ")
-                  (class "cover")
-                  (alt "Cover page images (Sumibi LOGO by WASHI)")))
-              (br
-               (@ (clear "all")))
-              (h1 ,_title)
-              (p
-               (a
-                (@ (href "http://www.netfort.gr.jp/~kiyoka/"))
-                "Kiyoka Nishiyama")
-               ",
+                  (meta
+                   (@ (http-equiv "Content-Type")
+                      (content "text/html; charset=utf-8")))
+                  (meta
+                   (@ (name "copyright")
+                      (content
+                       "Copyright &copy; 2006 Sumibi Project (Kiyoka Nishiyama)")))
+                  (meta
+                   (@ (name "font-size-adjustment") (content "-2")))
+                  (link
+                   (@ (type "text/css")
+                      (rel "stylesheet")
+                      (media "screen, projection, print")
+                      (href "slidy.css")))
+                  (link
+                   (@ (type "text/css")
+                      (rel "stylesheet")
+                      (media "screen, projection, print")
+                      (href "sumibi_sea.css")))
+                  (script
+                   (@ (type "text/javascript") (src "slidy.js"))))
+                 (body
+                  (div
+                   (@ (class "background"))
+                   (object
+                    (@
+                     ;;                (type "image/svg+xml")
+                     (title ,_title)
+                     (id "head-logo")
+                     (data "sumibi_org_WASHIlogo.png"))
+                    (a
+                     (@ (href "http://www.sumibi.org/"))
+                     (img
+                      (@
+                       (src "sea1.png")
+                       (id "head-logo-fallback")
+                       (alt "picture of sea"))))))
+                  (div
+                   (@ (class "background slanty"))
+                   (img
+                    (@
+                     (src "sea1.png")
+                     (alt "picture of sea"))))
+                  (div
+                   (@ (class "slide cover"))
+                   (img
+                    (@ (src "../Slidy/bullet.png")
+                       (class "hidden")
+                       (alt "")))
+                   (img
+                    (@ (src "../Slidy/fold.gif")
+                       (class "hidden")
+                       (alt "")))
+                   (img
+                    (@ (src "../Slidy/unfold.gif")
+                       (class "hidden")
+                       (alt "")))
+                   (img
+                    (@ (src "../Slidy/fold-dim.gif")
+                       (class "hidden")
+                       (alt "")))
+                   (img
+                    (@ (src "../Slidy/nofold-dim.gif")
+                       (class "hidden")
+                       (alt "")))
+                   (img
+                    (@ (src "../Slidy/unfold-dim.gif")
+                       (class "hidden")
+                       (alt "")))
+                   (img
+                    (@ (src "../Slidy/bullet-fold.gif")
+                       (class "hidden")
+                       (alt "")))
+                   (img
+                    (@ (src "../Slidy/bullet-unfold.gif")
+                       (class "hidden")
+                       (alt "")))
+                   (img
+                    (@ (src "../Slidy/bullet-fold-dim.gif")
+                       (class "hidden")
+                       (alt "")))
+                   (img
+                    (@ (src "../Slidy/bullet-nofold-dim.gif")
+                       (class "hidden")
+                       (alt "")))
+                   (img
+                    (@ (src "../Slidy/bullet-unfold-dim.gif")
+                       (class "hidden")
+                       (alt "")))
+                   (img
+                    (@ (src "sumibi_org_WASHIlogo_large.png ")
+                       (class "cover")
+                       (alt "Cover page images (Sumibi LOGO by WASHI)")))
+                   (br
+                    (@ (clear "all")))
+                   (h1 ,_title)
+                   (p
+                    (a
+                     (@ (href "http://www.netfort.gr.jp/~kiyoka/"))
+                     "Kiyoka Nishiyama")
+                    ",
 <"
-               (a
-                (@ (href "mailto:kiyoka@netfort.gr.jp"))
-                "kiyoka@netfort.gr.jp")
-               ">"
-               (br)
-               (br)
-               (br)
-               (br)
-               (br)
-               (em
-                "Hit the space bar for next slide")))
+                    (a
+                     (@ (href "mailto:kiyoka@netfort.gr.jp"))
+                     "kiyoka@netfort.gr.jp")
+                    ">"
+                    (br)
+                    (br)
+                    (br)
+                    (br)
+                    (br)
+                    (em
+                     "Hit the space bar for next slide")))
 
-             ,tree
-             )))))
+                  ,tree
+
+                  )))))
