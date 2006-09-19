@@ -1,5 +1,7 @@
-;; common definition file
-
+;;
+;; HTMLSlidy用プレゼン資料の共通定義ファイル
+;;
+;;
 
 (define HTMLSlidy:abbrev-table
   ;; A table to expand abbreviations
@@ -71,7 +73,7 @@
     ))
    
    
-(define (output _title tree)
+(define (output _title _cover _slide)
   (SXML->XML 
    HTMLSlidy:style-sheet 
    `(*TOP* (*PI* xml "version='1.0' ")
@@ -106,98 +108,8 @@
                   (script
                    (@ (type "text/javascript") (src "slidy.js"))))
                  (body
-                  (div
-                   (@ (class "background"))
-                   (object
-                    (@
-                     ;;                (type "image/svg+xml")
-                     (title ,_title)
-                     (id "head-logo")
-                     (data "sumibi_org_WASHIlogo.png"))
-                    (a
-                     (@ (href "http://www.sumibi.org/"))
-                     (img
-                      (@
-                       (src "sea1.png")
-                       (id "head-logo-fallback")
-                       (alt "picture of sea"))))))
-                  (div
-                   (@ (class "background slanty"))
-                   (img
-                    (@
-                     (src "sea1.png")
-                     (alt "picture of sea"))))
-                  (div
-                   (@ (class "slide cover"))
-                   (img
-                    (@ (src "../Slidy/bullet.png")
-                       (class "hidden")
-                       (alt "")))
-                   (img
-                    (@ (src "../Slidy/fold.gif")
-                       (class "hidden")
-                       (alt "")))
-                   (img
-                    (@ (src "../Slidy/unfold.gif")
-                       (class "hidden")
-                       (alt "")))
-                   (img
-                    (@ (src "../Slidy/fold-dim.gif")
-                       (class "hidden")
-                       (alt "")))
-                   (img
-                    (@ (src "../Slidy/nofold-dim.gif")
-                       (class "hidden")
-                       (alt "")))
-                   (img
-                    (@ (src "../Slidy/unfold-dim.gif")
-                       (class "hidden")
-                       (alt "")))
-                   (img
-                    (@ (src "../Slidy/bullet-fold.gif")
-                       (class "hidden")
-                       (alt "")))
-                   (img
-                    (@ (src "../Slidy/bullet-unfold.gif")
-                       (class "hidden")
-                       (alt "")))
-                   (img
-                    (@ (src "../Slidy/bullet-fold-dim.gif")
-                       (class "hidden")
-                       (alt "")))
-                   (img
-                    (@ (src "../Slidy/bullet-nofold-dim.gif")
-                       (class "hidden")
-                       (alt "")))
-                   (img
-                    (@ (src "../Slidy/bullet-unfold-dim.gif")
-                       (class "hidden")
-                       (alt "")))
-                   (img
-                    (@ (src "sumibi_org_WASHIlogo_large.png ")
-                       (class "cover")
-                       (alt "Cover page images (Sumibi LOGO by WASHI)")))
-                   (br
-                    (@ (clear "all")))
-                   (h1 ,_title)
-                   (p
-                    (a
-                     (@ (href "http://www.netfort.gr.jp/~kiyoka/"))
-                     "Kiyoka Nishiyama")
-                    ",
-<"
-                    (a
-                     (@ (href "mailto:kiyoka@netfort.gr.jp"))
-                     "kiyoka@netfort.gr.jp")
-                    ">"
-                    (br)
-                    (br)
-                    (br)
-                    (br)
-                    (br)
-                    (em
-                     "Hit the space bar for next slide")))
 
-                  ,tree
+                  ,_cover
+                  ,_slide
 
                   )))))
