@@ -2,7 +2,58 @@
 
 (load "./common.scm")
 
-(define (L:body)
+(define (L:cover _title)
+  `(
+    (div
+     (@ (class "background"))
+     (object
+      (@
+       ;;                (type "image/svg+xml")
+       (title ,_title)
+       (id "head-logo")
+       (data "sumibi_org_WASHIlogo_large.png"))
+      (a
+       (@ (href "http://www.sumibi.org/"))
+       (img
+        (@
+         (src "sea1.png")
+         (id "head-logo-fallback")
+         (alt "picture of sea"))))))
+    (div
+     (@ (class "background slanty"))
+     (img
+      (@
+       (src "sea1.png")
+       (alt "picture of sea"))))
+    (div
+     (@ (class "slide cover"))
+     (img
+      (@ (src "sumibi_org_WASHIlogo_large.png ")
+         (class "cover")
+         (alt "Cover page images (Sumibi LOGO by WASHI)")))
+     (br
+      (@ (clear "all")))
+     (h1 ,_title)
+     (p
+      (a
+       (@ (href "http://www.netfort.gr.jp/~kiyoka/"))
+       "Kiyoka Nishiyama")
+      ",
+<"
+      (a
+       (@ (href "mailto:kiyoka@netfort.gr.jp"))
+       "kiyoka@netfort.gr.jp")
+      ">"
+      (br)
+      (br)
+      (br)
+      (br)
+      (br)
+      (em
+       "Hit the space bar for next slide")))))
+
+
+(define (L:slide)
   '(
     (*slide "Sumibiの紹介"
             (*ul 
@@ -226,7 +277,11 @@
 
 
 ;; ページの出力
-(output "世界の果てから漢字変換 Sumibiの開発 2006" (L:body))
+(let1 title "世界の果てから漢字変換 Sumibiの開発 2006"
+      (output
+       title
+       (L:cover title)
+       (L:slide)))
 
 
 ;; MLやセミナーの紹介文
