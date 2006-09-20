@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2005/11/23 01:23:04 $
+//     $Date: 2006/09/20 15:14:20 $
 //
 // This file is part of Sumibi
 //
@@ -173,7 +173,7 @@ Sumibi.prototype.format = function(array){
 	}
     }
     output += '<div style="text-align:center;">' 
-    + '<input type="button" id="define" name="define" value="確定" onClick="sumibi_define_candidate()">'
+    + '<input type="button" id="define" name="define" value="' + Sumibi_get_kakutei_button_label( ) + '" onClick="sumibi_define_candidate()">'
     + '</div>';
 
     // hook関数用の引数を作る ( 第一候補文字列の配列 )

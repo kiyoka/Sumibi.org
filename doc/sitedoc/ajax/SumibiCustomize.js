@@ -1,6 +1,41 @@
 function setFocusToQ() {document.getElementById('qbox').focus();}
 
-function submitGform() {sumibi_define_candidate();document.getElementById('gform').submit();}
+
+function getEvent (event)
+{
+    return (event) ? event : ((window.event) ? event : null);
+}
+
+function getKeyCode(event)
+{
+    var e = getEvent(event);
+    return ((e.which) ? e.which : e.keyCode);
+}
+
+function Sumibi_key_process(event)
+{
+    var e = getEvent(event);
+    var k = getKeyCode(event);
+
+    if ((k == 0x4A || k == 0x6A ) && e.ctrlKey) {
+	sumibi_define_candidate( );
+	return false;
+    }
+
+    if ((k == 0x47 || k == 0x67 ) && e.ctrlKey) {
+	Submit_kakutei_and_google_search( );
+	return false;
+    }
+
+    return true;
+}
+
+function Sumibi_get_kakutei_button_label( )
+{
+    return "確定 ( Ctrl+J )";
+}
+
+function Submit_kakutei_and_google_search() {sumibi_define_candidate();document.getElementById('gform').submit();}
 function Sumibi_candidate_html_hook(space_array,words_array) {
     var ret = '';
     var str = '';
@@ -13,7 +48,7 @@ function Sumibi_candidate_html_hook(space_array,words_array) {
     if( google_mode() ) {
 	ret = '<br>'
 	    + '<div style="text-align:center;">' 
-	    + '<input type="button" id="search" name="search" value="『' + str + '』でGoogle検索"'
+	    + '<input type="button" id="search" name="search" value="『' + str + '』でGoogle検索 ( Ctrl+G )"'
 	    + ' onClick="submitGform();">'
 	    + '</div>';
     }
