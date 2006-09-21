@@ -17,12 +17,23 @@ function Sumibi_key_process(event)
     var e = getEvent(event);
     var k = getKeyCode(event);
 
-    if ((k == 0x4A || k == 0x6A ) && e.ctrlKey) {
+    // 変換中は確定を実行しない
+    if ( sumibi.progress.style.display == 'block' ) {
+	return true;
+    }
+
+    // Ctrl + 以下のキー
+    // a b c d e f g h i j k l m n o
+    // 1 2 3 4 5 6 7 8 9 A B C D E F
+
+    if (( k == 0xA ) ||
+	((k == 0x4A || k == 0x6A ) && e.ctrlKey)) {
 	sumibi_define_candidate( );
 	return false;
     }
 
-    if ((k == 0x47 || k == 0x67 ) && e.ctrlKey) {
+    if (( k == 0x7 ) ||
+	((k == 0x47 || k == 0x67 ) && e.ctrlKey)) {
 	Submit_kakutei_and_google_search( );
 	return false;
     }
@@ -32,7 +43,7 @@ function Sumibi_key_process(event)
 
 function Sumibi_get_kakutei_button_label( )
 {
-    return "確定 ( Ctrl+J )";
+    return "確定 (Ctrl+J)";
 }
 
 function Submit_kakutei_and_google_search() {sumibi_define_candidate();document.getElementById('gform').submit();}
@@ -48,7 +59,7 @@ function Sumibi_candidate_html_hook(space_array,words_array) {
     if( google_mode() ) {
 	ret = '<br>'
 	    + '<div style="text-align:center;">' 
-	    + '<input type="button" id="search" name="search" value="『' + str + '』でGoogle検索 ( Ctrl+G )"'
+	    + '<input type="button" id="search" name="search" value="『' + str + '』でGoogle検索 (Ctrl+G)"'
 	    + ' onClick="submitGform();">'
 	    + '</div>';
     }
