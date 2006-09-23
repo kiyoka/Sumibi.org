@@ -23,22 +23,45 @@ function Sumibi_key_process(event)
     }
 
     // Ctrl + 以下のキー
-    // a b c d e f g h i j k l m n o
-    // 1 2 3 4 5 6 7 8 9 A B C D E F
+    // -----------0x0X--------------
+    // a b c d e f g h i j k l m n o 
+    // 1 2 3 4 5 6 7 8 9 A B C D E F 
+    // -----------0x1X--------------
+    // p q r s t u v w x y z
+    // 0 1 2 3 4 5 6 7 8 9 A
 
+    // Ctrl+J
     if (( k == 0xA ) ||
 	((k == 0x4A || k == 0x6A ) && e.ctrlKey)) {
 	sumibi_define_candidate( );
 	return false;
     }
 
+    // Ctrl+G
     if (( k == 0x7 ) ||
 	((k == 0x47 || k == 0x67 ) && e.ctrlKey)) {
 	Submit_kakutei_and_google_search( );
 	return false;
     }
 
+    // Ctrl+Z
+    if (( k == 0x1A ) ||
+	((k == 0x5A || k == 0x7A ) && e.ctrlKey)) {
+	sumibi_backward( );
+	return false;
+    }
+
     return true;
+}
+
+function Sumibi_get_backward_button_label( )
+{
+    return "戻る (Ctrl+Z)";
+}
+
+function Sumibi_get_forward_button_label( )
+{
+    return "進む";
 }
 
 function Sumibi_get_kakutei_button_label( )

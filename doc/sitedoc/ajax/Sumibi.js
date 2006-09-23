@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2006/09/20 15:14:20 $
+//     $Date: 2006/09/23 17:46:28 $
 //
 // This file is part of Sumibi
 //
@@ -197,9 +197,9 @@ Sumibi.prototype.format = function(array){
 //********************************************************************
 Sumibi.prototype.historyHTML = function(block){
     var output;
-    output  = '<span id="sumibi_backward" style="display:none">&lt;&lt;<a href="" onClick="sumibi_backward();return false">戻る</a></span>&nbsp;';
+    output  = '<span id="sumibi_backward" style="display:none">&lt;&lt;<a href="" onClick="sumibi_backward();return false">' + Sumibi_get_backward_button_label( ) +  '</a></span>&nbsp;';
     output += '<span id="sumibi_spacer">&nbsp;&nbsp;&nbsp;&nbsp;</span>';
-    output += '<span id="sumibi_forward" style="display:none"><a href="" onClick="sumibi_forward();return false">進む</a>&gt;&gt;</span>';
+    output += '<span id="sumibi_forward" style="display:none"><a href="" onClick="sumibi_forward();return false">' + Sumibi_get_forward_button_label( ) + '</a>&gt;&gt;</span>';
     block.innerHTML = output;
     sumibi.hb = document.getElementById('sumibi_backward'); // backward
     sumibi.hf = document.getElementById('sumibi_forward');  // forward
