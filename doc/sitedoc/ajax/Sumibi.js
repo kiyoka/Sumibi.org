@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2006/09/24 09:53:22 $
+//     $Date: 2006/09/24 10:06:17 $
 //
 // This file is part of Sumibi
 //
@@ -154,7 +154,8 @@ Sumibi.prototype.server = function(server){
 // が呼ばれるので、これは別のところで実装する必要があります。
 //********************************************************************
 Sumibi.prototype.format = function(array){
-    var output = '[変換候補] ';
+    var output = 
+    '(Ctrl+J)で次ボックスへ / SPACEで次候補へ<br>';
     for(i=0; i < array.length; i++){
 	output += ' <select  size=3  name="sumibi_candiate" id="sumibi_candidate'
 	    + i

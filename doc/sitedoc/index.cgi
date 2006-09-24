@@ -61,11 +61,11 @@
 				 (html:input :type "hidden" :id "server" :name "server" :value "testing"  :onClick "select_server(this.value)" )
 				 (if long-mode
 				     (html:div :style "text-align: center; "
-					       (html:textarea :id "qbox" :name "q" :cols "90%" :rows "12" :onKeyPress "Sumibi_key_process( event )")
+					       (html:textarea :id "qbox" :name "q" :cols "90%" :rows "12" :onKeyPress "Sumibi_key_process_in_text( event )")
 					       )
 				     (html:div
 				      (html:p
-				       (html:input :type "text" :id "qbox" :name "q" :size "41" :maxlength "2048" :onKeyPress "Sumibi_key_process( event )" :value
+				       (html:input :type "text" :id "qbox" :name "q" :size "41" :maxlength "2048" :onKeyPress "Sumibi_key_process_in_text( event )" :value
                                                    (if qbox-value
                                                        qbox-value
                                                        ""))
