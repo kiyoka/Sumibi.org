@@ -176,10 +176,10 @@
                           ""))
 
             )
+	   (html:script :type "text/javascript" :src "ajax/SumibiCustomize.js")
            (html:script :type "text/javascript" :src "ajax/Sumibi.js")
 	   (html:script :type "text/javascript" :src "ajax/SumibiSOAP.js")
 	   (html:script :type "text/javascript" :src "ajax/ajax_sumibi.js")
-	   (html:script :type "text/javascript" :src "ajax/SumibiCustomize.js")
 	   (if long-mode
 "
 <script>
