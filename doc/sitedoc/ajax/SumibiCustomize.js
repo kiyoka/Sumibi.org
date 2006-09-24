@@ -8,11 +8,68 @@ function getEvent (event)
 
 function getKeyCode(event)
 {
-    var e = getEvent(event);
+    //    var e = getEvent(event);
+    var e = event;
+
     return ((e.which) ? e.which : e.keyCode);
 }
 
-function Sumibi_key_process(event)
+function resetEvent(event)
+{
+    event.returnValue = false;
+}
+
+
+
+function Sumibi_key_process_in_select(event,cur_no)
+{
+    var e = getEvent(event);
+    var k = getKeyCode(event);
+
+    // 変換中は確定を実行しない
+    if ( sumibi.progress.style.display == 'block' ) {
+	return true;
+    }
+
+    // カーソルコントロール系のキーコード
+    var space_key=32;      //Spaceキー
+    var return_key=13;     //Returnキー
+
+    var cand = document.getElementById('sumibi_candidate' + cur_no);
+    // 次のselectボックスに移動
+    if (( k == 0xA ) ||
+	((k == 0x4A || k == 0x6A ) && e.ctrlKey)) {
+	cand     = document.getElementById('sumibi_candidate' + (cur_no + 1));
+	if ( null == cand ) {
+	    // queryボックスにフォーカスを戻す
+	    var query     = document.getElementById('qbox');
+	    query.focus();
+	}
+	else {
+	    cand.focus();
+	}
+	resetEvent( event );
+	return false;
+    }
+    
+    if ( k == space_key ) {
+	cand.selectedIndex++;
+
+	resetEvent( event );
+	return false;
+    }
+
+    if ( k == return_key ) {
+	sumibi_define_candidate();
+
+	resetEvent( event );
+	return false;
+    }
+
+    return true;
+}
+
+function Sumibi_key_process_in_text(event)
 {
     var e = getEvent(event);
     var k = getKeyCode(event);
@@ -33,7 +90,12 @@ function Sumibi_key_process(event)
     // Ctrl+J
     if (( k == 0xA ) ||
 	((k == 0x4A || k == 0x6A ) && e.ctrlKey)) {
-	sumibi_define_candidate( );
+	
+	var kakutei     = document.getElementById('sumibi_candidate0'); // kakutei button
+	resetEvent( event );
+	kakutei.focus();
+
+	resetEvent( event );
 	return false;
     }
 
@@ -41,6 +103,8 @@ function Sumibi_key_process(event)
     if (( k == 0x7 ) ||
 	((k == 0x47 || k == 0x67 ) && e.ctrlKey)) {
 	Submit_kakutei_and_google_search( );
+
+	resetEvent( event );
 	return false;
     }
 
@@ -48,6 +112,8 @@ function Sumibi_key_process(event)
     if (( k == 0x1A ) ||
 	((k == 0x5A || k == 0x7A ) && e.ctrlKey)) {
 	sumibi_backward( );
+
+	resetEvent( event );
 	return false;
     }
 
@@ -66,7 +132,7 @@ function Sumibi_get_forward_button_label( )
 
 function Sumibi_get_kakutei_button_label( )
 {
-    return "確定 (Ctrl+J)";
+    return "確定";
 }
 
 function Submit_kakutei_and_google_search() {sumibi_define_candidate();document.getElementById('gform').submit();}

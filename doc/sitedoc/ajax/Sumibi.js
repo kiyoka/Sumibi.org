@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2006/09/23 19:35:57 $
+//     $Date: 2006/09/24 09:53:22 $
 //
 // This file is part of Sumibi
 //
@@ -156,24 +156,26 @@ Sumibi.prototype.server = function(server){
 Sumibi.prototype.format = function(array){
     var output = '[変換候補] ';
     for(i=0; i < array.length; i++){
-        if(array[i].length > 1){
-	    output += ' <select  name="sumibi_candiate" id="sumibi_candidate' + i + '" onChange="sumibi_display_result()" onKeyPress="Sumibi_key_process( event )">';
-	    for(ii=0; ii < array[i].length; ii++){
-		output += '<option value="'
-		    + array[i][ii]["space"] + array[i][ii]["word"] + '"';
-		output += '>'
-		    + array[i][ii]["space_mark"] + array[i][ii]["word"];
+	output += ' <select  size=3  name="sumibi_candiate" id="sumibi_candidate'
+	    + i
+	    + '" onChange="sumibi_display_result()" onKeyPress="Sumibi_key_process_in_select( event, '
+	    + i
+	    + ' )">';
+	for(ii=0; ii < array[i].length; ii++){
+	    output += '<option value="'
+		+ array[i][ii]["space"] + array[i][ii]["word"] + '"';
+	    if ( 0 == ii ) {
+		output += ' selected ';
 	    }
-	    output += '</select>';
-	}else{
-	    output += '<input type="hidden" name="sumibi_candidate" id="sumibi_candidate' + i + '" value="' 
-		+ array[i][0]["space"] + array[i][0]["word"]
-		+'">' 
-		+ array[i][0]["space_mark"] + array[i][0]["word"];
+	    output += '>'
+		+ array[i][ii]["space_mark"] + array[i][ii]["word"];
 	}
+	output += '</select>';
     }
     output += '<div style="text-align:center;">' 
-    + '<input type="button" id="define" name="define" value="' + Sumibi_get_kakutei_button_label( ) + '" onClick="sumibi_define_candidate()">'
+    + '<input type="button" id="define" name="define" value="'
+    + Sumibi_get_kakutei_button_label( )
+    + '" onClick="sumibi_define_candidate()">'
     + '</div>';
 
     // hook関数用の引数を作る ( 第一候補文字列の配列 )
