@@ -1,5 +1,7 @@
 ;;
-;; HTMLSlidyç”¨ãƒ—ãƒ¬ã‚¼ãƒ³è³‡æ–™ã®å…±é€šå®šç¾©ãƒ•ã‚¡ã‚¤ãƒ«
+;; [’è‹`ƒtƒ@ƒCƒ‹]
+;;
+;; HTMLSlidy—p‹¤’Ê’è‹`ƒtƒ@ƒCƒ‹
 ;;
 ;;
 
@@ -9,7 +11,7 @@
   ;; Therefore, the table (the S-expression) can be saved into a file
   `(
     (W:infoteria
-     (*link "ã‚¤ãƒ³ãƒ•ã‚©ãƒ†ãƒªã‚¢æ ªå¼ä¼šç¤¾" "http://www.infoteria.com/jp/"))
+     (*link "ƒCƒ“ƒtƒHƒeƒŠƒAŠ”Ž®‰ïŽÐ" "http://www.infoteria.com/jp/"))
     (W:Gauche
      (*link "Gauche" "http://www.shiro.dreamhost.com/scheme/gauche/index.html"))
     (W:GPL
@@ -60,6 +62,23 @@
      . ,(lambda (_insert-file file-name)
 	  `(program
 	    ,(port->string (open-input-file file-name)))))
+
+
+    ;; (*img url)
+    ;; expand contents of file at path
+    (*img
+     *macro*
+     . ,(lambda (_img url)
+	  `(img (@ (src ,url)))))
+
+
+    ;; (*code string)
+    ;; expand contents of file at path
+    (*code
+     *macro*
+     . ,(lambda (_code string)
+	  `(pre (@ (class "code"))
+                ,string)))
 
 
     ;; expand an abbreviation according to the HTMLSlidy:abbrev-table

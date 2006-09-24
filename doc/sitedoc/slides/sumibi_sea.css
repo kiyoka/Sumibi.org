@@ -87,7 +87,7 @@ div.slide h1 {
   margin-right: 4em;
   color: black;
   height: 1.5em;
-  font-size: 250%;
+  font-size: 200%;
   line-height: 1.1em;
 }
 
@@ -469,8 +469,17 @@ div.slide.cover a:hover, div.slide.cover a:active {
     color: yellow; text-decoration: underline;
 }
 
+pre.code {
+  background-color: white;
+  padding-left: 4em;
+  width: 70%;
+  border: 1px solid gray;
+}
+
+
 /* for Bert as an ardent user of the old W3C slidemaker tool */
 
 div.comment { display: none; visibility: hidden }
 
 @media print { div.comment { display: block; visibility: visible } }
+
