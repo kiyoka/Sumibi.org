@@ -149,7 +149,7 @@ function Sumibi_candidate_html_hook(space_array,words_array) {
 	ret = '<br>'
 	    + '<div style="text-align:center;">' 
 	    + '<input type="button" id="search" name="search" value="『' + str + '』でGoogle検索 (Ctrl+G)"'
-	    + ' onClick="submitGform();">'
+	    + ' onClick="Submit_kakutei_and_google_search();">'
 	    + '</div>';
     }
 
