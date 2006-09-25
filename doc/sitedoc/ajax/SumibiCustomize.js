@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2006 Kiyoka Nishiyama
-//     $Date: 2006/09/25 13:50:38 $
+//     $Date: 2006/09/25 14:55:51 $
 //
 // This file is part of Sumibi
 //
@@ -82,9 +82,8 @@ function Sumibi_key_process_in_select(event,cur_no)
 
     var cand = document.getElementById('sumibi_candidate' + cur_no);
     // 次のselectボックスに移動
-    if (( k == 0xA ) ||
-	((k == 0x4A || k == 0x6A ) && e.ctrlKey) ||
-	( k == 57 && e.ctrlKey)) {
+    if (( k == 0x3 ) ||
+	((k == 0x43 || k == 0x63 ) && e.ctrlKey)) {
 	cand     = document.getElementById('sumibi_candidate' + (cur_no + 1));
 	if ( null == cand ) {
 	    // queryボックスにフォーカスを戻す
@@ -137,9 +136,8 @@ function Sumibi_key_process_in_text(event)
     // 0 1 2 3 4 5 6 7 8 9 A
 
     // Ctrl+J
-    if (( k == 0xA ) ||
-	((k == 0x4A || k == 0x6A ) && e.ctrlKey) ||
-	( k == 57 && e.ctrlKey)) {
+    if (( k == 0x3 ) ||
+	((k == 0x43 || k == 0x63 ) && e.ctrlKey)) {
 	var kakutei     = document.getElementById('sumibi_candidate0'); // kakutei button
 	resetEvent( event );
 	kakutei.focus();
@@ -168,7 +166,7 @@ function Sumibi_get_kakutei_button_label( )
 
 function Sumibi_get_kouho_desc_label( )
 {
-    return '(Ctrl+J)か(Ctrl+9)で次ボックスへ / SPACEで次候補へ<br>';
+    return '(Ctrl+C)で次ボックスへ / SPACEで次候補へ<br>';
 }
 
 function Submit_kakutei_and_google_search() {sumibi_define_candidate();document.getElementById('gform').submit();}
