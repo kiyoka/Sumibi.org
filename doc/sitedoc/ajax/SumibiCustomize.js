@@ -1,3 +1,27 @@
+/////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Sumibi Ajax is a client for Sumibi server.
+//
+//   Copyright (C) 2006 Kiyoka Nishiyama
+//     $Date: 2006/09/25 13:43:27 $
+//
+// This file is part of Sumibi
+//
+// Sumibi is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2, or (at your option)
+// any later version.
+// 
+// Sumibi is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Sumibi; see the file COPYING.
+//
+/////////////////////////////////////////////////////////////////////////////////////////////
+
 function setFocusToQ() {document.getElementById('qbox').focus();}
 
 
@@ -8,9 +32,7 @@ function getEvent (event)
 
 function getKeyCode(event)
 {
-    //    var e = getEvent(event);
-    var e = event;
-
+    var e = getEvent(event);
     return ((e.which) ? e.which : e.keyCode);
 }
 
@@ -18,7 +40,6 @@ function resetEvent(event)
 {
     event.returnValue = false;
 }
-
 
 
 function Sumibi_key_process_in_select(event,cur_no)
@@ -38,17 +59,19 @@ function Sumibi_key_process_in_select(event,cur_no)
     var cand = document.getElementById('sumibi_candidate' + cur_no);
     // 次のselectボックスに移動
     if (( k == 0xA ) ||
-	((k == 0x4A || k == 0x6A ) && e.ctrlKey)) {
+	((k == 0x4A || k == 0x6A ) && e.ctrlKey) ||
+	( k == 57 && e.ctrlKey)) {
 	cand     = document.getElementById('sumibi_candidate' + (cur_no + 1));
 	if ( null == cand ) {
 	    // queryボックスにフォーカスを戻す
 	    var query     = document.getElementById('qbox');
+	    resetEvent( event );
 	    query.focus();
 	}
 	else {
+	    resetEvent( event );
 	    cand.focus();
 	}
-	resetEvent( event );
 	return false;
     }
     
@@ -89,13 +112,11 @@ function Sumibi_key_process_in_text(event)
 
     // Ctrl+J
     if (( k == 0xA ) ||
-	((k == 0x4A || k == 0x6A ) && e.ctrlKey)) {
-	
+	((k == 0x4A || k == 0x6A ) && e.ctrlKey) ||
+	( k == 57 && e.ctrlKey)) {
 	var kakutei     = document.getElementById('sumibi_candidate0'); // kakutei button
 	resetEvent( event );
 	kakutei.focus();
-
-	resetEvent( event );
 	return false;
     }
 
@@ -133,6 +154,11 @@ function Sumibi_get_forward_button_label( )
 function Sumibi_get_kakutei_button_label( )
 {
     return "確定";
+}
+
+function Sumibi_get_kouho_desc_label( )
+{
+    return '(Ctrl+J)か(Ctrl+9)で次ボックスへ / SPACEで次候補へ<br>';
 }
 
 function Submit_kakutei_and_google_search() {sumibi_define_candidate();document.getElementById('gform').submit();}
