@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2006 Kiyoka Nishiyama
-//     $Date: 2006/09/25 14:55:51 $
+//     $Date: 2006/09/25 23:56:23 $
 //
 // This file is part of Sumibi
 //
@@ -81,7 +81,7 @@ function Sumibi_key_process_in_select(event,cur_no)
     var return_key=13;     //Returnキー
 
     var cand = document.getElementById('sumibi_candidate' + cur_no);
-    // 次のselectボックスに移動
+    // Ctrl+C:次のselectボックスに移動
     if (( k == 0x3 ) ||
 	((k == 0x43 || k == 0x63 ) && e.ctrlKey)) {
 	cand     = document.getElementById('sumibi_candidate' + (cur_no + 1));
@@ -135,13 +135,13 @@ function Sumibi_key_process_in_text(event)
     // p q r s t u v w x y z
     // 0 1 2 3 4 5 6 7 8 9 A
 
-    // Ctrl+J
+    // Ctrl+C
     if (( k == 0x3 ) ||
 	((k == 0x43 || k == 0x63 ) && e.ctrlKey)) {
 	var kakutei     = document.getElementById('sumibi_candidate0'); // kakutei button
-	resetEvent( event );
+//	resetEvent( event ); 
 	kakutei.focus();
-	return false;
+	return true;
     }
 
     // 共通処理
