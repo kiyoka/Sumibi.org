@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2006 Kiyoka Nishiyama
-//     $Date: 2006/09/25 13:43:27 $
+//     $Date: 2006/09/25 13:50:38 $
 //
 // This file is part of Sumibi
 //
@@ -41,6 +41,30 @@ function resetEvent(event)
     event.returnValue = false;
 }
 
+
+function Sumibi_key_process_common(event)
+{
+    var e = getEvent(event);
+    var k = getKeyCode(event);
+
+    // Ctrl+G
+    if (( k == 0x7 ) ||
+	((k == 0x47 || k == 0x67 ) && e.ctrlKey)) {
+	Submit_kakutei_and_google_search( );
+
+	resetEvent( event );
+	return false;
+    }
+
+    // Ctrl+Z
+    if (( k == 0x1A ) ||
+	((k == 0x5A || k == 0x7A ) && e.ctrlKey)) {
+	sumibi_backward( );
+
+	resetEvent( event );
+	return false;
+    }
+}
 
 function Sumibi_key_process_in_select(event,cur_no)
 {
@@ -89,6 +113,8 @@ function Sumibi_key_process_in_select(event,cur_no)
 	return false;
     }
 
+    // 共通処理
+    Sumibi_key_process_common(event);
     return true;
 }
 
@@ -120,24 +146,8 @@ function Sumibi_key_process_in_text(event)
 	return false;
     }
 
-    // Ctrl+G
-    if (( k == 0x7 ) ||
-	((k == 0x47 || k == 0x67 ) && e.ctrlKey)) {
-	Submit_kakutei_and_google_search( );
-
-	resetEvent( event );
-	return false;
-    }
-
-    // Ctrl+Z
-    if (( k == 0x1A ) ||
-	((k == 0x5A || k == 0x7A ) && e.ctrlKey)) {
-	sumibi_backward( );
-
-	resetEvent( event );
-	return false;
-    }
-
+    // 共通処理
+    Sumibi_key_process_common(event);
     return true;
 }
 
