@@ -41,7 +41,6 @@
 			"  [長文作成モード]  "))
 	     (else
 	      (html:div :style "text-align: center; "
-			(html:br)
 			(html:span :class "subtitle"
 				   "世界の果てから漢字変換")
 			(html:br)
