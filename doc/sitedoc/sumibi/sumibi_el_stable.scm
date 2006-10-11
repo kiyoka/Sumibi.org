@@ -54,7 +54,8 @@
 	"export https_proxy=http://your.proxy.server:8080/")
        (li ".emacsに次のコードを追加します。")
        (program
-	"(load \"sumibi\")\n")
+	"(load \"sumibi\")\n"
+	"(global-sumibi-mode 1)\n")
        (p 
 	"※変数 sumibi-server-use-cert を nil にするとSSL証明書を利用しなくても通信できます。"
 	"但し、この設定ではSumibi Serverとの通信の安全性が低下しますので、"
