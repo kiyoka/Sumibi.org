@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2006/08/28 15:23:36 $
+;;     $Date: 2006/10/19 14:03:43 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -595,10 +595,15 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 		    (with-temp-file
 			sumibi-history-filename
 		      (insert (format "(setq sumibi-kakutei-history-saved '%s)" 
-				      (pp-to-string 
-				       (sumibi-merge-kakutei-history
-					sumibi-kakutei-history-saved
-					sumibi-kakutei-history)))))))
+				      (if (functionp 'pp-to-string)
+					  (pp-to-string
+					   (sumibi-merge-kakutei-history
+					    sumibi-kakutei-history-saved
+					    sumibi-kakutei-history))
+					(prin1-to-string
+					 (sumibi-merge-kakutei-history
+					  sumibi-kakutei-history-saved
+					  sumibi-kakutei-history))))))))
 		;; SSL証明書のファイルを削除する
 		(delete-file sumibi-server-cert-file)))
 
@@ -1559,7 +1564,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2006/08/28 15:23:36 $ on CVS " ;;VERSION;;
+  " $Date: 2006/10/19 14:03:43 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"

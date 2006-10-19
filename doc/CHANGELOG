@@ -11,6 +11,8 @@
        サンプルでは"戻る(Ctrl+Z)"という文字列にしている
     4. Undoのキー入力をフック関数で横取り出来るようにした。
        サンプルではCtrl+ZでUndo処理にしている
+  - sumibi.el
+    1. バグ修正:Emacs version 20で動かした場合、pp-to-stringが存在しないというエラーがでる。
 
 [0.7.1]
   - sumiyaki
