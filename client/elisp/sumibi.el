@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2006/10/22 01:00:50 $
+;;     $Date: 2006/10/22 06:50:50 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -133,6 +133,11 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 (defcustom sumibi-history-feature  t
   "Non-nilであれば、ユーザー固有の変換履歴を有効にする"
   :type  'boolean
+  :group 'sumibi)
+
+(defcustom sumibi-history-max  100
+  "ユーザー固有の変換履歴の最大保存件数を指定する(最新から指定件数のみが保存される)"
+  :type  'integer
   :group 'sumibi)
 
 
@@ -545,6 +550,18 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 ;;
 (defun sumibi-init ()
 
+  ;; 最初の n 件のリストを取得する
+  (defun sumibi-take (arg-list arg-n)
+    (defun recur (head tail n)
+      (if (and (< 0 n) (< 0 (length tail)))
+	  (progn
+	    (recur
+	     (append head (list (car tail)))
+	     (cdr tail)
+	     (- n 1)))
+	head))
+    (recur '() arg-list arg-n))
+
   ;; ヒストリファイルとメモリ中のヒストリデータをマージする
   (defun sumibi-merge-kakutei-history (base-list new-list)
     (let ((merged-num  '())
@@ -595,15 +612,15 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 		    (with-temp-file
 			sumibi-history-filename
 		      (insert (format "(setq sumibi-kakutei-history-saved '%s)" 
-				      (if (functionp 'pp-to-string)
-					  (pp-to-string
-					   (sumibi-merge-kakutei-history
-					    sumibi-kakutei-history-saved
-					    sumibi-kakutei-history))
-					(prin1-to-string
-					 (sumibi-merge-kakutei-history
-					  sumibi-kakutei-history-saved
-					  sumibi-kakutei-history))))))))
+				      (let ((lst
+					     (sumibi-take 
+					      (sumibi-merge-kakutei-history
+					       sumibi-kakutei-history-saved
+					       sumibi-kakutei-history)
+					      sumibi-history-max)))
+					(if (functionp 'pp-to-string)
+					    (pp-to-string lst)
+					  (prin1-to-string lst))))))))
 		;; SSL証明書のファイルを削除する
 		(delete-file sumibi-server-cert-file)))
 
@@ -1565,7 +1582,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2006/10/22 01:00:50 $ on CVS " ;;VERSION;;
+  " $Date: 2006/10/22 06:50:50 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"

@@ -12,7 +12,7 @@
      (*en
       (p "No documents in English, sorry..." ))
      (*ja
-      (p "このドキュメントは、sumibi.el 0.7.1についての解説です。")))
+      (p "このドキュメントは、sumibi.el 0.7.2についての解説です。")))
 
     (*section
      "sumibi.elの特徴"
@@ -259,6 +259,8 @@
         (p "ユーザー固有の変換履歴を保存するファイル名(デフォルトは ~/.sumibi_historyです)")
         (li "sumibi-history-feature")
         (p "ユーザー固有の変換履歴を有効にします(デフォルトはt:有効です)")
+        (li "sumibi-history-max")
+        (p "ユーザー固有の変換履歴の最大保存件数を指定します(デフォルトは100件です)")
         (li "sumibi-guide-face")
 	(p "リアルタイムガイドのフェイスを設定します。(装飾、色などの指定)")))))
 
