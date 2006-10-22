@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2006/10/19 14:03:43 $
+;;     $Date: 2006/10/22 01:00:50 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -625,7 +625,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 		(error "Error : cert file create miss!")
 	      (format "--cacert '%s' " sumibi-server-cert-file))
 	    " --insecure ")
-	  (format " --header 'Content-Type: text/xml' " sumibi-server-timeout)
+	  (format " --header 'Content-Type: text/xml' ")
 	  (format " --header 'SOAPAction:urn:SumibiConvert#%s' " func-name)
 	  sumibi-server-url " "
 	  (format (concat "--data '"
@@ -1389,7 +1389,8 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
   "リアルタイムで変換中のガイドを出す
 sumibi-modeがONの間中呼び出される可能性がある・"
   (cond
-   ((> 1 sumibi-timer-rest)
+   ((or (null sumibi-mode)
+	(> 1 sumibi-timer-rest))
     (cancel-timer sumibi-timer)
     (setq sumibi-timer nil)
     (delete-overlay sumibi-guide-overlay))
@@ -1564,7 +1565,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2006/10/19 14:03:43 $ on CVS " ;;VERSION;;
+  " $Date: 2006/10/22 01:00:50 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"

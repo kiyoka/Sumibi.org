@@ -29,3 +29,7 @@ D: Patch for sumibi.el 0.4.0
 N: Yusuke Muraoka
 E: yusuke.muraoka@gmail.com
 D: Author of SumibiWebApiSample.py ( sample in python )
+
+N: Yoichi NAKAYAMA
+E: yoichi@geiin.org
+D: Patch for sumibi.el 0.7.2
