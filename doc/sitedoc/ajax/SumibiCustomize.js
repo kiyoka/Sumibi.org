@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2006 Kiyoka Nishiyama
-//     $Date: 2006/10/12 13:10:28 $
+//     $Date: 2006/10/23 13:03:54 $
 //
 // This file is part of Sumibi
 //
@@ -21,6 +21,17 @@
 // along with Sumibi; see the file COPYING.
 //
 /////////////////////////////////////////////////////////////////////////////////////////////
+
+// CHANGELOG
+//  - Ajaxクライアント
+//    1. 変換確定ボタンの文字列をカスタマイズ可能にした
+//       サンプルでは"確定(Ctrl+J)"という文字列にしている
+//    2. テキスト入力エリアでのキー入力をフック関数で横取り出来るようにした。
+//       サンプルではCtrl+Jで確定処理にしている
+//    3. Undoボタンの文字列をカスタマイズ可能にした
+//       サンプルでは"戻る(Ctrl+Z)"という文字列にしている
+//    4. Undoのキー入力をフック関数で横取り出来るようにした。
+//       サンプルではCtrl+ZでUndo処理にしている
 
 function setFocusToQ() {document.getElementById('qbox').focus();}
 
