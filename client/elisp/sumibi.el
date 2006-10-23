@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2006/10/22 06:50:50 $
+;;     $Date: 2006/10/23 13:13:20 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -549,18 +549,13 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
 ;; 初期化
 ;;
 (defun sumibi-init ()
-
   ;; 最初の n 件のリストを取得する
-  (defun sumibi-take (arg-list arg-n)
-    (defun recur (head tail n)
-      (if (and (< 0 n) (< 0 (length tail)))
-	  (progn
-	    (recur
-	     (append head (list (car tail)))
-	     (cdr tail)
-	     (- n 1)))
-	head))
-    (recur '() arg-list arg-n))
+  (defun sumibi-take (arg-list n)
+    (let ((lst '()))
+      (dotimes (i n (reverse lst))
+	(let ((item (nth i arg-list)))
+	  (when item
+	    (push item lst))))))
 
   ;; ヒストリファイルとメモリ中のヒストリデータをマージする
   (defun sumibi-merge-kakutei-history (base-list new-list)
@@ -1582,7 +1577,7 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2006/10/22 06:50:50 $ on CVS " ;;VERSION;;
+  " $Date: 2006/10/23 13:13:20 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
