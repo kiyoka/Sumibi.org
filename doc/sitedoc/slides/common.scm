@@ -1,7 +1,7 @@
 ;;
-;; [定義ファイル]
+;; [螳夂ｾｩ繝輔ぃ繧､繝ｫ]
 ;;
-;; HTMLSlidy用共通定義ファイル
+;; HTMLSlidy逕ｨ蜈ｱ騾壼ｮ夂ｾｩ繝輔ぃ繧､繝ｫ
 ;;
 ;;
 
@@ -11,7 +11,7 @@
   ;; Therefore, the table (the S-expression) can be saved into a file
   `(
     (W:infoteria
-     (*link "インフォテリア株式会社" "http://www.infoteria.com/jp/"))
+     (*link "繧､繝ｳ繝輔か繝�繝ｪ繧｢譬ｪ蠑丈ｼ夂､ｾ" "http://www.infoteria.com/jp/"))
     (W:Gauche
      (*link "Gauche" "http://www.shiro.dreamhost.com/scheme/gauche/index.html"))
     (W:GPL
