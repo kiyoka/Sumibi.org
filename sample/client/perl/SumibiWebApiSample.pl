@@ -3,7 +3,7 @@
 # "SumibiWebApiSample.pl" is a sample program.
 #
 #   Copyright (C) 2005 Kiyoka Nishiyama
-#     $Date: 2005/10/30 10:31:29 $
+#     $Date: 2006/10/28 06:51:58 $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -27,14 +27,14 @@ if( 1 > scalar(@ARGV)) {
 }
 
 # make parameters
-my $query = join( ' ', @ARGV );
-my $sumi  = "sumi_current";
-my $ie    = "utf-8";
-my $oe    = "utf-8";
-
+my $query   = join( ' ', @ARGV );
+my $sumi    = "sumi_current";
+my $ie      = "utf-8";
+my $oe      = "utf-8";
+my $history = "";
 
 my $sumibi = SOAP::Lite -> service("http://sumibi.org/sumibi/Sumibi_testing.wsdl");
-#my $sumibi = SOAP::Lite -> service("http://sumibi.org/test/Sumibi.wsdl");
+#my $sumibi = SOAP::Lite -> service("http://sumibi.org/test/Sumibi_unstable.wsdl");
 
 #
 # getStatus();
@@ -46,7 +46,7 @@ print "version : ", $som->{version}, "\n";
 #
 # doSumibiConvertSexp()
 #
-my $som = $sumibi -> doSumibiConvertSexp( $query, $sumi, $ie, $oe );
+my $som = $sumibi -> doSumibiConvertSexp( $query, $sumi, $history, $oe );
 print "sexp    : ", $som, "\n";
 
 

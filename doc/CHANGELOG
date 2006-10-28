@@ -9,6 +9,8 @@
        2) バグ修正:sumibi-mode をオフにした後や、sumibi-mode でないバッファにおいても
           ガイド表示が出てしまう。
     3. ユーザー変換履歴の保存件数を制限する変数 sumibi-history-max を追加した。
+  - SumibiWebApiSample.pl,SumibiWebApiSample.py,SumibiWebApiSample.rb
+    1. doSumibiConvertSexp() APIの引数変更に伴って testing版へのアクセスが通るように修正した
 
 [0.7.1]
   - sumiyaki
