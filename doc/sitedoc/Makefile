@@ -8,3 +8,4 @@ all:
 
 install:
 	scp -r * black:/home/http/docroot
+	/bin/cp -r * /home/http/docroot
