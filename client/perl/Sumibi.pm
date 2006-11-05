@@ -1,15 +1,17 @@
 package Sumibi;
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 
 use strict;
 
 use Term::ReadLine ();
 use LWP::UserAgent ();
 use Data::Dumper ();
+use SOAP::Lite ();
+use Encode ();
 
-use constant SUMIBI => 'https://sumibi.org/cgi-bin/sumibi/unstable/sumibi.cgi';
-use constant SUMIBIDEV => 'https://sumibi.org/cgi-bin/sumibi/develop/sumibi.cgi';
+use constant SUMIBI_WSDL_STABLE  => 'http://sumibi.org/sumibi/Sumibi_stable.wsdl';
+use constant SUMIBI_WSDL_TESTING => 'http://sumibi.org/sumibi/Sumibi_testing.wsdl';
 
 sub new{
   my $class = shift;
@@ -17,16 +19,23 @@ sub new{
   my %hash = @_;
   my $self =
     {
-     ua      => $ua,
+     soap    => undef,
      count   => 0,
      encode  => 'euc-jp',
      history => $ENV{HOME} . '/.sumibi_history',
      ca_file => undef,
-     server  => SUMIBI,
+     wsdl    => SUMIBI_WSDL_STABLE,
      can_choose => undef,
     };
-  foreach my $key (qw/encode history ca_file server/){
+  foreach my $key (qw/encode history ca_file wsdl/){
     $self->{$key} = $hash{$key} if exists $hash{$key};
+  }
+  if(my $server = $hash{wsdl}){
+    if($server eq 'tesing'){
+      $self->{server} = SUMIBI_WSDL_TESTING
+    }elsif($server eq 'stable'){
+      $self->{server} = SUMIBI_WSDL_STABLE;
+    }
   }
   return bless $self => $class;
 }
@@ -36,19 +45,19 @@ sub ca_file{
   $ENV{HTTPS_CA_FILE} = shift if @_;
 }
 
-sub ua{
+sub soap{
   my $self = shift;
-  return $self->{ua};
+  return $self->{soap} ||= SOAP::Lite->service($self->wsdl) or die;
 }
 
-sub server{
+sub wsdl{
   my $self = shift;
-  return $self->{server};
+  return $self->{wsdl};
 }
 
-sub dev_server{
+sub test_wsdl{
   my $self = shift;
-  return $self->{server} = SUMIBIDEV;
+  return $self->{wsdl} = SUMIBI_WSDL_TESTING;
 }
 
 sub encode{
@@ -61,11 +70,11 @@ sub convert{
   my $self = shift;
   $self->count_plus();
   my $str = shift;
-  my $r = $self->ua->post($self->server, {string => $str, encode => $self->encode});
-  if($r->is_success){
-    return $self->parse($r->content);
+  my $r = $self->soap->doSumibiConvert($str);
+  if($r){
+    return $self->parse($r->{resultElements});
   }else{
-    $self->current_error({status => $r->status_line, content => $r->content});
+    $self->current_error({content => $r});
   }
 }
 
@@ -73,8 +82,8 @@ sub _parse{
   my($self, $result, $ret, $choosen, $candidate) = @_;
   my $i = 0;
  LOOP: while($_ = shift @$result){
-    my @candidate_list = split /\s/, $_;
-    foreach my $string (grep s/"//g, @candidate_list){
+    my @candidate_list = @$_;
+    foreach my $string (@candidate_list){
       if(!$self->can_choose){
         push @$ret, shift @candidate_list;
       }elsif(!$candidate){
@@ -91,8 +100,14 @@ sub _parse{
 sub parse{
   my $self = shift;
   my $contents = shift;
-  $contents =~s/\((.+)\)/$1/;
-  my @result = $contents =~/\((.+?)\)/g;
+  my @result;
+  my $encode = $self->encode;
+
+  foreach (@$contents){
+    $_->{word} = Encode::encode("utf-8", $_->{word});
+    Encode::from_to($_->{word}, "utf-8", $encode);
+    push @{$result[$_->{no}] ||= []}, $_->{word};
+  }
   $self->result(@result);
   my @ret;
   my $candidate = [];
@@ -250,15 +265,17 @@ sub shell_mode{
   return $self->{shell_mode};
 }
 
+1;
+
 =pod
 
 =head1 名前
 
-Sumibi -- Sumibi用 Perlモジュール
+Sumibi -- Sumibi(http://sumibi.org/)用 Perlモジュール
 
 =head1 概要
 
-Sumibi は kiyokaさんが作成したローマ字漢字変換エンジンです。
+Sumibi(http://sumibi.org/) は kiyokaさんが作成したローマ字漢字変換エンジンです。
 sourceforge.jp にプロジェクトがあります(http://sourceforge.jp/projects/sumibi/)。
 これは、Sumibiを楽しむためのPerlモジュールです。
 
@@ -290,7 +307,7 @@ Sumibi shell が立ち上がり、下記のように入力できます。
  encode .... 使用するエンコード(デフォルトはeuc-jp)
  history ... shell の場合に使用される履歴ファイル(デフォルトは $ENV{HOME}/.sumibi_history)
  ca_file ... $ENV{HTTPS_CA_FILE} に入ります
- server .... sumibi サーバを指定します(デフォルトは、https://sumibi.org/cgi-bin/sumibi/unstable/sumibi.cgi)
+ wsdl ...... SumibiのWSDLファイルの場所を指定します(デフォルトは、http://sumibi.org/sumibi/Sumibi_stable.wsdl)
 
 =item shell
 
@@ -301,7 +318,7 @@ Sumibi shell が立ち上がり、下記のように入力できます。
  Sumibi->shell;
  Sumibi::shell()
 
-この場合、引数を与えると new に与える引数と同じになります。
+これに引数を与える場合は new に与える引数と同じになります。
 
 =item ca_file
 
@@ -310,17 +327,17 @@ Sumibi shell が立ち上がり、下記のように入力できます。
 
 $ENV{HTTPS_CA_FILE} に値を出し入れします。クラスメソッドとしても使用できます。
 
-=item server
+=item wsdl
 
- $sumibi->server($url);
+ $sumibi->wsdl($url);
 
-サーバを変更します。
+WSDLファイルの場所を変更します。
 
-=item dev_server
+=item test_wsdl
 
- $sumibi->dev_server;
+ $sumibi->test_server;
 
-サーバを開発用サーバにします。https://sumibi.org/cgi-bin/sumibi/develop/sumibi.cgi
+WSDLをテスト用にします。http://sumibi.org/sumibi/Sumibi_testing.wsdl
 
 =item encode
 
@@ -328,6 +345,15 @@ $ENV{HTTPS_CA_FILE} に値を出し入れします。クラスメソッドとしても使用できます。
  $sumibi->encode('sjis');
 
 Sumibi が返すエンコードを指定します。デフォルトは euc-jp です。
+ここで指定するものは、Encodeモジュールで使用する文字コード名にしてください。
+
+=item soap
+
+ $sumibi->soap;
+
+SOAP::Lite->service($wsdl_url)の結果が返ってきます。
+http://sumibi.org/sumibi/sumibi_api_stable.html で定義されているメソッドを
+呼び出すことが出来ます。
 
 =item convert
 
@@ -339,28 +365,29 @@ Sumibi が返すエンコードを指定します。デフォルトは euc-jp です。
 
  $sumibi->can_choose(1);
 
-変換候補選択できるかどうか。shell モードでは、指定がない限りは1を返します。
-
-=item current_error
-
- $sumibi->current_error;
-
-現在のエラーを返します。
-
-=item dump_error
-
- $sumibi->dump_error;
-
-全体のエラー情報を Data::Dumper の形式で返します。
-
-=item error
-
-全体のエラー情報が入っている、$sumibi->{error} を返します。
+変換候補選択できるかどうか。デフォルトは0です。
+shell モードでは、指定がない限りは1を返します。
 
 =item history
 
 履歴を保存するファイル名を指定します。
 デフォルトは、 $ENV{HOME}/.sumibi_history です。
+
+=item current_error
+
+ $sumibi->current_error;
+
+現在のエラーを返します(うまく動きません)。
+
+=item dump_error
+
+ $sumibi->dump_error;
+
+全体のエラー情報を Data::Dumper の形式で返します(うまく動きません)。
+
+=item error
+
+全体のエラー情報が入っている、$sumibi->{error} を返します(うまく動きません)。
 
 =back
 
@@ -397,13 +424,16 @@ shell のプロンプトが下記のように変わります。
 
 =head1 バグ
 
-全然テストしてません。きっとどこかバグっていることでしょう。特にエラー関係は使ってないので。
+エラー関係はEmacs Lisp用のCGI用に作ったメソッドが残っているだけなので、まったく使えません。
+その他も全然テストしてません。きっとどこかバグっていることでしょう。
 
 =head1 謝辞
 
 面白いローマ字漢字変換エンジンを作ってくださった kiyokaさんに感謝。
 http://www.netfort.gr.jp/~kiyoka/
+http://sumibi.org/
 http://sourceforge.jp/projects/sumibi/
+
 
 =head1 著者
 
@@ -411,7 +441,7 @@ http://sourceforge.jp/projects/sumibi/
 
 =head1 著作権
 
- Copyright 2005 by Ktat <atusi@pure.ne.jp>.
+ Copyright 2005-2006 by Ktat <atusi@pure.ne.jp>.
 
  This program is free software; you can redistribute it
  and/or modify it under the same terms as Perl itself.
@@ -419,5 +449,3 @@ http://sourceforge.jp/projects/sumibi/
  See http://www.perl.com/perl/misc/Artistic.html
 
 =cut
-
-1;
