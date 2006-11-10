@@ -5,7 +5,6 @@ our $VERSION = '0.09';
 use strict;
 
 use Term::ReadLine ();
-use LWP::UserAgent ();
 use Data::Dumper ();
 use SOAP::Lite ();
 use Encode ();
@@ -15,7 +14,6 @@ use constant SUMIBI_WSDL_TESTING => 'http://sumibi.org/sumibi/Sumibi_testing.wsd
 
 sub new{
   my $class = shift;
-  my $ua = LWP::UserAgent->new();
   my %hash = @_;
   my $self =
     {
@@ -70,7 +68,7 @@ sub convert{
   my $self = shift;
   $self->count_plus();
   my $str = shift;
-  my $r = $self->soap->doSumibiConvert($str);
+  my $r = $self->soap->doSumibiConvert($str, 'sumibi_current', 'utf-8', 'utf-8');
   if($r){
     return $self->parse($r->{resultElements});
   }else{
