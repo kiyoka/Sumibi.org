@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2006/11/10 09:31:53 $
+//     $Date: 2006/11/13 13:21:28 $
 //
 // This file is part of Sumibi
 //
@@ -35,16 +35,12 @@
 var XMLHTTP_LOAD_COMPLETE = 4;
 var XMLHTTP_HTTP_STATUS = 200;
 var MSXMLHTTP = false;
-// var URL_PREFIX = "./nph-proxy.cgi/010110A/https/sumibi.org/cgi-bin/sumibi/";
-var URL_PREFIX = "/";
+var URL_PREFIX = "./nph-proxy.cgi/010110A/https/sumibi.org/cgi-bin/sumibi/";
+// var URL_PREFIX = "/";
 var PROGRESS_MESSAGE = '&nbsp;&nbsp;&nbsp;<blink>waiting server response ...</blink>';
 var PROGRESS_MESSAGE_COLOR = '#000000';
 var PROGRESS_MESSAGE_ERROR = 'cannot convert';
 var PROGRESS_MESSAGE_ERROR_COLOR = '#FF00000';
-
-//********************************************************************
-// クラス変数(っていえる?)
-//********************************************************************
 
 //********************************************************************
 // コンストラクタ
@@ -202,13 +198,13 @@ Sumibi.prototype.historyHTML = function(){
     var block = this.history_html;
     var output;
     var qbox_id = this.qbox.id;
-    output = '<span id="sumibi_backward" style="display:none">&lt;&lt;<a href="#" onClick="sumibi_backward(\'' + qbox_id + '\');return false">' + Sumibi_get_backward_button_label( ) +  '</a></span>&nbsp;';
-    output += '<span id="sumibi_spacer">&nbsp;&nbsp;&nbsp;&nbsp;</span>';
-    output += '<span id="sumibi_forward" style="display:none"><a href="#" onClick="sumibi_forward(\'' + qbox_id + '\');return false">' + Sumibi_get_forward_button_label( ) + '</a>&gt;&gt;</span>';
+    output = '<span id="sumibi_backward' +  qbox_id + '" style="display:none">&lt;&lt;<a href="#" onClick="sumibi_backward(\'' + qbox_id + '\');return false">' + Sumibi_get_backward_button_label( ) +  '</a></span>&nbsp;';
+    output += '<span id="sumibi_spacer' +  qbox_id + '">&nbsp;&nbsp;&nbsp;&nbsp;</span>';
+    output += '<span id="sumibi_forward' +  qbox_id + '" style="display:none"><a href="#" onClick="sumibi_forward(\'' + qbox_id + '\');return false">' + Sumibi_get_forward_button_label( ) + '</a>&gt;&gt;</span>';
     block.innerHTML = output;
-    this.hb = document.getElementById('sumibi_backward'); // backward
-    this.hf = document.getElementById('sumibi_forward');  // forward
-    this.hs = document.getElementById('sumibi_spacer');   // spacer
+    this.hb = document.getElementById('sumibi_backward' + qbox_id); // backward
+    this.hf = document.getElementById('sumibi_forward' + qbox_id);  // forward
+    this.hs = document.getElementById('sumibi_spacer' + qbox_id);   // spacer
 }
 
 Sumibi.prototype.forward = function(h){
