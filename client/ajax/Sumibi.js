@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2006/11/13 13:21:28 $
+//     $Date: 2006/11/14 14:41:50 $
 //
 // This file is part of Sumibi
 //
@@ -35,8 +35,8 @@
 var XMLHTTP_LOAD_COMPLETE = 4;
 var XMLHTTP_HTTP_STATUS = 200;
 var MSXMLHTTP = false;
-var URL_PREFIX = "./nph-proxy.cgi/010110A/https/sumibi.org/cgi-bin/sumibi/";
-// var URL_PREFIX = "/";
+// var URL_PREFIX = "./nph-proxy.cgi/010110A/https/sumibi.org/cgi-bin/sumibi/";
+var URL_PREFIX = "/";
 var PROGRESS_MESSAGE = '&nbsp;&nbsp;&nbsp;<blink>waiting server response ...</blink>';
 var PROGRESS_MESSAGE_COLOR = '#000000';
 var PROGRESS_MESSAGE_ERROR = 'cannot convert';
@@ -67,7 +67,7 @@ function Sumibi( progress, ime, type){
 // XMLhttpRequest オブジェクトの作成
 //********************************************************************
 Sumibi.prototype.createXmlHttp = function() {
-    xmlhttp = false;
+    var xmlhttp = false;
     if(this.old_xmlhttp && this.old_xmlhttp.readyState != 0){
 	// 古いリクエストをabort()する
 	this.old_xmlhttp.abort();
@@ -109,7 +109,7 @@ Sumibi.prototype.setQueryFrom = function(q){
 	    r += m[i];
 	}
 	if(this.query[this.query.length - 1] != r){
-	    // alert('0:' + r);
+	    // alert('0:' + r + ' ' + this.query[this.query.length - 1] );
 	    // alert('1:' + this.query);
 	    if(r.length > 0){
 		var n = this.query.length;
@@ -152,7 +152,7 @@ type = 'stable';
 Sumibi.prototype.format = function(array){
     var output = Sumibi_get_kouho_desc_label( );
     for(i=0; i < array.length; i++){
-	output += ' <select  size=3  name="sumibi_candiate" id="sumibi_candidate'
+	output += ' <select  size=3  name="sumibi_candiate" id="sumibi_candidate' + this.qbox.id
 	    + i
 //	    + '" onChange="sumibi_display_result()" onKeyPress="Sumibi_key_process_in_select( "' + this.qbox.id + '", event, '
 	    + '" onKeyPress="Sumibi_key_process_in_select( "' + this.qbox.id + '", event, '
@@ -207,7 +207,8 @@ Sumibi.prototype.historyHTML = function(){
     this.hs = document.getElementById('sumibi_spacer' + qbox_id);   // spacer
 }
 
-Sumibi.prototype.forward = function(h){
+Sumibi.prototype.forward = function(){
+    var h = this.history_number
     var query = this.qbox;
     if(this.hist[h + 1]){
 	h += 1;
@@ -220,10 +221,11 @@ Sumibi.prototype.forward = function(h){
 	    this.hf.style.display = 'none';
 	}
     }
-    return h;
+    this.history_number = h;
 }
 
 Sumibi.prototype.backward = function(h){
+    var h = this.history_number
     var query = this.qbox;
     if(this.hist[h - 1]){
 	h -= 1;
@@ -236,7 +238,7 @@ Sumibi.prototype.backward = function(h){
 	    this.hb.style.display = 'none';
 	}
     }
-    return h;
+    this.history_number = h;
 }
 
 //********************************************************************
@@ -245,7 +247,7 @@ Sumibi.prototype.backward = function(h){
 Sumibi.prototype.displayResult = function(){
     var select;
     var output = '';
-    for(i = 0;select  = document.getElementById('sumibi_candidate' + i); i++){
+    for(i = 0;select  = document.getElementById('sumibi_candidate' + this.qbox.id + i); i++){
 	if(select.type == 'hidden'){
 	    output += select.value;
 	}else{
@@ -279,12 +281,16 @@ Sumibi.prototype.defineCandidate = function(){
 //********************************************************************
 Sumibi.prototype.replaceQueryByResult = function(q){
     this.hist[this.sumibi_convert_count] = q;
-    var query = this.query[this.query.length - 1];
+    var query = q;
+//this.query[this.query.length - 1];
+//alert('0. ' + query);
     var defined = this.defineCandidate(q);
     var regexp  = query.replace(/(\W)/g, "\\$1");
     regexp  = regexp.replace(/\\\s+$/, "");
     var reg = new RegExp(regexp);
+//alert('1. ' + q + ' ' + defined +  ' ' + regexp);
     q = q.replace(reg, defined);
+//alert('2. ' + q + ' ' + defined + ' ' + reg);
     // definedCndidate で this.sumibi_convert_count は 1 増加してる
     this.hist[this.sumibi_convert_count] = q;
     return q;
@@ -370,14 +376,14 @@ function sumibi_create_object(qbox, array){
     if(! array){
 	var server_type = 'unstable';
 	var sumibi_set = document.createElement('div'); // progress, ime, hist を格納するdiv
-	var progress = document.createElement('div');
-	var ime      = document.createElement('div');
-	var hist     = document.createElement('div');
-	sumibi_set.appendChild(hist);
+	var progress     = document.createElement('div');
+	var ime          = document.createElement('div');
+	var history_html = document.createElement('div');
+	sumibi_set.appendChild(history_html);
 	sumibi_set.appendChild(ime);
 	sumibi_set.appendChild(progress);
 	qbox.nextSibling.appendChild(sumibi_set);
-	array = [progress, ime, server_type, hist];
+	array = [progress, ime, server_type, history_html];
     }
 
     var sumibi = new SumibiSOAP(array[0], array[1], array[2], array[3]);
@@ -413,7 +419,7 @@ function sumibi_define_candidate(qbox_id){
     // 決定テキストボックスがある場合
     // defined.value += sumibi.defineCandidate(query.value);
     var query = document.getElementById(qbox_id);
-    var sumibi = document.getElementById(qbox_id).sumibi;
+    var sumibi = query.sumibi;
     query.value = sumibi.replaceQueryByResult(query.value);
     sumibi.ime.innerHTML = '';
     sumibi.history_number = sumibi.hist.length - 1;
@@ -427,13 +433,13 @@ function sumibi_define_candidate(qbox_id){
 
 function sumibi_forward(qbox_id){
     var sumibi = document.getElementById(qbox_id).sumibi;
-    sumibi.history_number = sumibi.forward(sumibi.history_number);
+    sumibi.forward();
     sumibi_spacer(sumibi);
 }
 
 function sumibi_backward(qbox_id){
     var sumibi = document.getElementById(qbox_id).sumibi;
-    sumibi.history_number = sumibi.backward(sumibi.history_number);
+    sumibi.backward();
     sumibi_spacer(sumibi);
 }
 
@@ -450,8 +456,9 @@ function sumibinize(target, i){
     if(target.sumibi){
 	return;
     }
-    if (   (target.type == "text" || target.type == "textarea")
-	   && target.nextSibling.getAttribute('class') == 'use_sumibi'
+    var class_name = target.nextSibling.getAttribute('class') || target.nextSibling.getAttribute('className');
+    if (      (target.type == "text" || target.type == "textarea")
+	   && class_name == 'use_sumibi' 
 	   ){
 	// input_ids[i] = target.id;
 	var type;
