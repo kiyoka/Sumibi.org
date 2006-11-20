@@ -123,10 +123,10 @@
 		   "』ページが便利です。"))
 	      (if long-mode
 		  (html:li "助詞『は』『を』『と』『に』等 はスペースで区切って入力します。(例: watashi ha ryokou ga sukidesu.  →  私は旅行が好きです。)")
-                  (html:li "スペースは、スペースを二回入力して下さい。 (例: kaigai&nbsp;&nbsp;&nbsp;tensyoku →  海外&nbsp;転職)"))
+                  (html:li "スペースは、スペースを二回入力して下さい。 (例: keitai&nbsp;&nbsp;&nbsp;rentaru →  携帯&nbsp;レンタル)"))
               (html:a :href "sumibi_video.gif"
                       (html:img :src "sumibi_usage_icon.png" :alt "Sumibi.org usage icon" :border 0 :width 100))))
-
+            
 	    (html:br)
 	    
 	    (html:div :style "text-align: center; "
