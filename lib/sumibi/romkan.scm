@@ -10,7 +10,8 @@
    romkan-hiragana->katakana
    romkan-katakana->hiragana
    romkan-is-katakana
-   romkan-is-hiragana))
+   romkan-is-hiragana
+   generate-roman->kana-table))
 (select-module sumibi.romkan)
 
 ;; このテーブルはruby-romkan から変換した

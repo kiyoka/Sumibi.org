@@ -1,10 +1,11 @@
 ;; common definition file
 
 
+(use util.list)
 
 (define page-alist
   '(
-    ( sumibi    
+    ( sumibi
       "Sumibi"
       "sumibi.html")
     ( el-stable
@@ -34,6 +35,9 @@
     ( sumiyaki
       "sumiyaki"
       "sumiyaki.html")
+    ( romaji-table
+      "RomajiTable"
+      "romaji_table.html")
     ))
 
 
@@ -119,10 +123,10 @@
 	    (@ (format "html"))
 	    "<link rel=\"shortcut icon\" href=\"/favicon.ico\">  <link rel=\"icon\" href=\"/favicon.png\" type=\"image/png\">")
 	   (title 
-	    ,(cadr (assoc key page-alist)))
+	    ,(car (assq-ref page-alist key)))
 	   (author " Kiyoka Nishiyama ")
 	   (hp " http://www.sumibi.org/ ")
-	   (date " $Date: 2006/05/28 11:53:15 $ "))
+	   (date " $Date: 2006/11/23 01:48:55 $ "))
 	  (body
 
 	   ;; navigation tab
