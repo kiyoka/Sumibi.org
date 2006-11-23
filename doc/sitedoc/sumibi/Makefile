@@ -10,6 +10,7 @@
 all :
 	/bin/cp ../../../server/soap/Sumibi.testing.wsdl   Sumibi_testing.wsdl
 	/bin/cp ../../../server/soap/Sumibi.stable.wsdl    Sumibi_stable.wsdl
+	pod2html --backlink='back to top' --css='../sumibi.css' --title='Sumibi.pm (Perl module for SumibiWebAPI)' ../../../client/perl/Sumibi.pm | iconv -f=euc-jp -t=utf-8 > sumibi_pm.html
 	./convert_doc  romaji_table
 	./convert_doc  sumiyaki
 	./convert_doc  sumi
