@@ -12,7 +12,6 @@ all :
 	/bin/cp ../../../server/soap/Sumibi.stable.wsdl    Sumibi_stable.wsdl
 	./convert_doc  romaji_table
 	./convert_doc  sumiyaki
-	./convert_doc  sumiyaki
 	./convert_doc  sumi
 	./convert_doc  sumibi
 	./convert_doc  faq                t
