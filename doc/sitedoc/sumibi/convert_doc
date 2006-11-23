@@ -8,5 +8,5 @@ if [[ "$2" != "" ]] ; then
     CSS_OP="-toc:true"
 fi
 
-sxmlcnv  -p  ${base}.scm > ${base}.sdoc
+gosh -I../../../lib /usr/local/bin/sxmlcnv  -p  ${base}.scm > ${base}.sdoc
 /usr/local/bin/sdoc ${CSS} ${CSS_OP} ${base}.sdoc
