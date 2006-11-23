@@ -13,7 +13,8 @@
      (*ja
       (ul 
        (li "最新のSumibiエンジンのローマ字-仮名対応表です。")
-       (li "最新のtestingバージョンに追従しています。")))
+       (li "最新のtestingバージョンに追従しています。")
+       (li "ローマ字の文字数の長いものから順に並べています。")))
      (*en
       (ul 
        (li "This is a romaji - kana table. Please see Japanese page.")))
