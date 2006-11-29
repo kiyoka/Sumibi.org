@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2006/11/14 14:41:50 $
+//     $Date: 2006/11/29 18:45:34 $
 //
 // This file is part of Sumibi
 //
@@ -68,7 +68,7 @@ function Sumibi( progress, ime, type){
 //********************************************************************
 Sumibi.prototype.createXmlHttp = function() {
     var xmlhttp = false;
-    if(this.old_xmlhttp && this.old_xmlhttp.readyState != 0){
+    if(this.old_xmlhttp && this.old_xmlhttp.readyState !== 0){
 	// 古いリクエストをabort()する
 	this.old_xmlhttp.abort();
 	this.old_xmlhttp = null;
@@ -122,7 +122,7 @@ Sumibi.prototype.setQueryFrom = function(q){
 	    }
 	}
     }
-    return 0;
+    return(0);
 }
 
 //********************************************************************
@@ -224,7 +224,7 @@ Sumibi.prototype.forward = function(){
     this.history_number = h;
 }
 
-Sumibi.prototype.backward = function(h){
+Sumibi.prototype.backward = function(){
     var h = this.history_number
     var query = this.qbox;
     if(this.hist[h - 1]){
@@ -252,7 +252,7 @@ Sumibi.prototype.displayResult = function(){
 	    output += select.value;
 	}else{
 	    for(ii = 0; ii < select.length; ii++){
-		if(select[ii].selected == true){
+		if(select[ii].selected === true){
 		    output += select[ii].value;
 		}
 	    }
@@ -281,16 +281,15 @@ Sumibi.prototype.defineCandidate = function(){
 //********************************************************************
 Sumibi.prototype.replaceQueryByResult = function(q){
     this.hist[this.sumibi_convert_count] = q;
-    var query = q;
-//this.query[this.query.length - 1];
+    var query = this.query[this.query.length - 1];
 //alert('0. ' + query);
     var defined = this.defineCandidate(q);
     var regexp  = query.replace(/(\W)/g, "\\$1");
     regexp  = regexp.replace(/\\\s+$/, "");
     var reg = new RegExp(regexp);
-//alert('1. ' + q + ' ' + defined +  ' ' + regexp);
+// alert('1. ' + q + ': ' + defined +  ': ' + reg + ': ' + regexp);
     q = q.replace(reg, defined);
-//alert('2. ' + q + ' ' + defined + ' ' + reg);
+// alert('2. ' + q + ': ' + defined + ': ' + reg);
     // definedCndidate で this.sumibi_convert_count は 1 増加してる
     this.hist[this.sumibi_convert_count] = q;
     return q;
@@ -393,6 +392,7 @@ function sumibi_create_object(qbox, array){
     sumibi.history_html = array[3];
     sumibi.historyHTML();
     checkKeyInput(sumibi, qbox.id);
+    return sumibi;
 }
 
 function checkKeyInput(sumibi, query_id){
@@ -400,11 +400,10 @@ function checkKeyInput(sumibi, query_id){
     if(! sumibi){
 	sumibi = query.sumibi;
     }
-    if(query.use_sumibi == true && query && query.value){
+    if(query.use_sumibi === true && query && query.value){
 	var ret;
 	if(ret = sumibi.setQueryFrom(query.value)){
-
-	    sumibi.doConvert(ret, frames[0]);
+	    sumibi.doConvert(ret);
 	}
     }
     var func = "checkKeyInput('', '" + query_id + "')";
@@ -471,6 +470,22 @@ function sumibinize(target, i){
 	var sumi =  target.nextSibling;
 	var sumi_mark = document.createElement('span');
 	sumi.style.display = 'inline';
+
+
+	var isIE = (document.documentElement.getAttribute("style") ==
+        	    document.documentElement.style);
+	if(isIE){
+	sumi_mark.setAttribute
+            ('onclick', new Function(
+             'if(this.style.color == "red"){' +
+             'this.style.color = "";' +
+             'document.getElementsByTagName("' + type + '")[' + i + '].use_sumibi = false' +
+             '}else{' +
+             'this.style.color = "red";' +
+             'document.getElementsByTagName("' + type + '")[' + i + '].use_sumibi = true' +
+             '}')
+             );
+	}else{
 	sumi_mark.setAttribute
 	    ('onClick',
 	     'if(this.style.color == "red"){' + 
@@ -481,11 +496,23 @@ function sumibinize(target, i){
 	     'document.getElementsByTagName("' + type + '")[' + i + '].use_sumibi = true' +
 	     '}'
 	     );
+	}
 	sumi_mark.innerHTML = ' SUMI ';
 	sumi.appendChild(sumi_mark);
-	return target.id;
+	return(target.id);
     }
-    return;
+    return(null);
+}
+
+function sumibi_enable(e){
+ 	   if(e.style.color == "red"){
+            	e.style.color = "";
+            	document.getElementsByTagName("' + type + '")[' + i + '].use_sumibi = false
+            }else{
+            	e.style.color = "red";
+            	document.getElementsByTagName("' + type + '")[' + i + '].use_sumibi = true;
+            }
+
 }
 
 onload = function ()
@@ -493,8 +520,10 @@ onload = function ()
    var inputs = document.getElementsByTagName("input");
    var input_ids = new Array;
    for (var i = 0; i < inputs.length; ++i) {
-     var id = sumibinize(inputs[i], i);
-     if(id) input_ids.push(id);
+     if(inputs[i].type == "text"){
+       var id = sumibinize(inputs[i], i);
+       if(id) input_ids.push(id);
+     }
    }
    var textareas = document.getElementsByTagName("textarea");
    for (var i = 0; i < textareas.length; ++i) {
