@@ -20,7 +20,7 @@ sub new{
      soap    => undef,
      count   => 0,
      encode  => 'euc-jp',
-     history => $ENV{HOME} . '/.sumibi_history',
+     history => $ENV{HOME} . '/.sumibi_pm_history',
      ca_file => undef,
      wsdl    => SUMIBI_WSDL_STABLE,
      can_choose => undef,
@@ -298,12 +298,12 @@ Sumibi shell が立ち上がり、下記のように入力できます。
 
 =item new
 
- my $sumibi = Sumibi->new(encode => 'euc-jp', history => '.sumibi_history');
+ my $sumibi = Sumibi->new(encode => 'euc-jp', history => '.sumibi_pm_history');
 
 コンストラクタ。引数は下記の通り。
 
  encode .... 使用するエンコード(デフォルトはeuc-jp)
- history ... shell の場合に使用される履歴ファイル(デフォルトは $ENV{HOME}/.sumibi_history)
+ history ... shell の場合に使用される履歴ファイル(デフォルトは $ENV{HOME}/.sumibi_pm_history)
  ca_file ... $ENV{HTTPS_CA_FILE} に入ります
  wsdl ...... SumibiのWSDLファイルの場所を指定します(デフォルトは、http://sumibi.org/sumibi/Sumibi_stable.wsdl)
 
@@ -369,7 +369,7 @@ shell モードでは、指定がない限りは1を返します。
 =item history
 
 履歴を保存するファイル名を指定します。
-デフォルトは、 $ENV{HOME}/.sumibi_history です。
+デフォルトは、 $ENV{HOME}/.sumibi_pm_history です。
 
 =item current_error
 
