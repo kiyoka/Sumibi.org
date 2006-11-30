@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2006/11/29 18:45:34 $
+//     $Date: 2006/11/30 17:26:50 $
 //
 // This file is part of Sumibi
 //
@@ -139,7 +139,6 @@ Sumibi.prototype.server = function(server){
     }else{
 	type = 'stable';
     }
-type = 'stable';
     return URL_PREFIX + type + "/sumibi.cgi";
 }
 
@@ -282,14 +281,11 @@ Sumibi.prototype.defineCandidate = function(){
 Sumibi.prototype.replaceQueryByResult = function(q){
     this.hist[this.sumibi_convert_count] = q;
     var query = this.query[this.query.length - 1];
-//alert('0. ' + query);
     var defined = this.defineCandidate(q);
     var regexp  = query.replace(/(\W)/g, "\\$1");
     regexp  = regexp.replace(/\\\s+$/, "");
     var reg = new RegExp(regexp);
-// alert('1. ' + q + ': ' + defined +  ': ' + reg + ': ' + regexp);
     q = q.replace(reg, defined);
-// alert('2. ' + q + ': ' + defined + ': ' + reg);
     // definedCndidate で this.sumibi_convert_count は 1 増加してる
     this.hist[this.sumibi_convert_count] = q;
     return q;
@@ -505,14 +501,13 @@ function sumibinize(target, i){
 }
 
 function sumibi_enable(e){
- 	   if(e.style.color == "red"){
-            	e.style.color = "";
-            	document.getElementsByTagName("' + type + '")[' + i + '].use_sumibi = false
-            }else{
-            	e.style.color = "red";
-            	document.getElementsByTagName("' + type + '")[' + i + '].use_sumibi = true;
-            }
-
+    if(e.style.color == "red"){
+	e.style.color = "";
+	document.getElementsByTagName("' + type + '")[' + i + '].use_sumibi = false;
+    }else{
+	e.style.color = "red";
+	document.getElementsByTagName("' + type + '")[' + i + '].use_sumibi = true;
+    }
 }
 
 onload = function ()
