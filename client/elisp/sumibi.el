@@ -5,7 +5,7 @@
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
 ;;   This program was derived from yc.el-4.0.13(auther: knak)
 ;;
-;;     $Date: 2006/10/23 13:13:20 $
+;;     $Date: 2006/12/06 13:35:30 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -702,6 +702,7 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
   (sumibi-debug-print (format "henkan-input :[%s]\n"  yomi))
 
   (message "Requesting to sumibi server...")
+  
   (let* (
 	 (result (sumibi-soap-request "doSumibiConvertSexp" (list yomi
 								  ""
@@ -1156,6 +1157,14 @@ W/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd
   (interactive)
 ;  (print last-command)			; DEBUG
 
+  ;; 非SSLの警告を出す
+  (when (and (string-match "^[ ]*http:" sumibi-server-url)
+	     (> 1 sumibi-timer-rest))
+    (progn
+      ;; 警告を出してポーズする
+      (message "sumibi.el: !! 非SSLで通信する設定になっています。 !!")
+      (sleep-for 2)))
+
   (cond 
    ;; タイマーイベントを設定しない条件
    ((or
@@ -1577,10 +1586,11 @@ point から行頭方向に同種の文字列が続く間を漢字変換します。
 (setq default-input-method "japanese-sumibi")
 
 (defconst sumibi-version
-  " $Date: 2006/10/23 13:13:20 $ on CVS " ;;VERSION;;
+  " $Date: 2006/12/06 13:35:30 $ on CVS " ;;VERSION;;
   )
 (defun sumibi-version (&optional arg)
   "入力モード変更"
   (interactive "P")
   (message sumibi-version))
+
 (provide 'sumibi)
