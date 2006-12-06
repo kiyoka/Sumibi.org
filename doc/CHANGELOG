@@ -1,9 +1,11 @@
 
 [0.7.3]
   - Sumibi.pm
-    1. 0.7.3のSOAPプロトコルに対応した。(Kato Atsushi)
+    1. SOAPプロトコルに対応した。(Kato Atsushi)
     2. 本リリースから配布物に含めた。
   - Ajaxクライアント
+  - sumibi.el
+    1. 非SSLの設定になっていたら漢字変換の度に警告を出すようにした。
 
 [0.7.2]
   - sumibi
