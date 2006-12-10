@@ -3,6 +3,9 @@
   - Sumibi.pm
     1. SOAPプロトコルに対応した。(Kato Atsushi)
     2. 本リリースから配布物に含めた。
+  - sumibi.cgi
+    1. doSumibiConvertメソッドの"no"フィールドのバグ修正
+       文節IDではなく、単語IDが入っていた
   - Ajaxクライアント
   - sumibi.el
     1. 非SSLの設定になっていたら漢字変換の度に警告を出すようにした。
