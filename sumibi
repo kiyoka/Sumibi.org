@@ -3,7 +3,7 @@
 ;; "Sumibi" is an Ank kana kanji conversion system.
 ;;
 ;;   Copyright (C) 2002,2003,2004,2005 Kiyoka Nishiyama
-;;     $Date: 2006/09/13 13:50:57 $
+;;     $Date: 2006/12/10 12:06:10 $
 ;;
 ;; This file is part of Sumibi
 ;;
@@ -896,6 +896,18 @@
 ;;
 ;; 文章文字列を変換する。
 ;;
+;; 戻り値:
+;;         (((j "Α"  148176 0 0 0)
+;;           (j "あ" 468779 0 1 0)
+;;           (j "ア" 469656 0 2 0) ...)
+;;          ((j "位" 183468 1 0 1)
+;;           (j "い" 468780 1 1 1)
+;;           (j "為" 183505 1 2 1)
+;;           (j "イ" 468739 1 3 1) ...))
+;;  左から、( 候補種別jklh  "候補文字列"  単語ID(ヒストリ用)
+;;            文節番号(0から)  候補番号(0から)  スペースの有無(0 or 1) )
+;;  となる。
+;;
 (define (sumibi-convert-sentence str conn)
 
   ;; ユーザー入力を表示(デバッグ用)
@@ -1208,12 +1220,13 @@
 	   (lambda (word)
 	     (map
 	      (lambda (kouho)
-		(format "~a ~a ~a ~a ~a\n"
+		(format "~a ~a ~a ~a ~a ~a\n"
 			(first   kouho)
 			(second  kouho)
 			(third   kouho)
 			(fourth  kouho)
 			(fifth   kouho)
+			(sixth   kouho)
 			))
 	      word))
 	   result))))

@@ -46,7 +46,7 @@
 	  (thead
 	   (tr  (td "名前") (td "値")))
 	  (tbody
-	   (tr   (td "version")   (td "APIのバージョン番号(例:0.3.3)")))))
+	   (tr   (td "version")   (td "APIのバージョン番号(例:0.7.3)")))))
 
 	(li "doSumibiConvertメソッド")
 	(ul
@@ -57,8 +57,8 @@
 	  (tbody
 	   (tr   (td "query")   (td "変換したいローマ字文字列"))
 	   (tr   (td "sumi")    (td "変換に使用する辞書名(未使用)"))
-	   (tr   (td "ie")      (td "入力文字エンコード(utf-8固定)"))
-	   (tr   (td "oe")      (td "出力文字エンコード(utf-8固定)"))))
+	   (tr   (td "history") (td "変換履歴文字列(変換候補IDのリストを ; 記号で分離したもの)"))
+	   (tr   (td "dummy")   (td "(未使用)"))))
 	 (li "戻り値")
 	 (p "SumibiResult型")
 	 (table 
@@ -72,6 +72,7 @@
 	  (thead
 	   (tr  (td "名前") (td "値")))
 	  (tbody
+	   (tr   (td "id")         (td "単語ID(DB内での識別番号:ヒストリデータの返信に使用)"))
 	   (tr   (td "no")         (td "文節番号"))
 	   (tr   (td "candidate")  (td "変換候補番号(ゼロが一番適合率が高い)"))
 	   (tr   (td "spaces")     (td "文節と文節の間のスペースの数"))
@@ -87,8 +88,8 @@
 	  (tbody
 	   (tr   (td "query")   (td "変換したいローマ字文字列"))
 	   (tr   (td "sumi")    (td "変換に使用する辞書名(未使用)"))
-	   (tr   (td "ie")      (td "入力文字エンコード(utf-8固定)"))
-	   (tr   (td "oe")      (td "出力文字エンコード(utf-8固定)"))))
+	   (tr   (td "history") (td "変換履歴文字列(変換候補IDのリストを ; 記号で分離したもの)"))
+	   (tr   (td "dummy")   (td "(未使用)"))))
 	 (li "戻り値")
 	 (p "ローマ字を平仮名に変換した文字列(UTF-8固定)"))
 

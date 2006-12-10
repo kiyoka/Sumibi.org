@@ -3,7 +3,7 @@
 # "SumibiWebApiSample.pl" is a sample program.
 #
 #   Copyright (C) 2005 Kiyoka Nishiyama
-#     $Date: 2006/10/28 06:51:58 $
+#     $Date: 2006/12/10 12:07:48 $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -29,12 +29,11 @@ if( 1 > scalar(@ARGV)) {
 # make parameters
 my $query   = join( ' ', @ARGV );
 my $sumi    = "sumi_current";
-my $ie      = "utf-8";
-my $oe      = "utf-8";
 my $history = "";
+my $dummy   = "";
 
 my $sumibi = SOAP::Lite -> service("http://sumibi.org/sumibi/Sumibi_testing.wsdl");
-#my $sumibi = SOAP::Lite -> service("http://sumibi.org/test/Sumibi_unstable.wsdl");
+#my $sumibi = SOAP::Lite -> service("http://doorway.sumibi.org/test/Sumibi_unstable.wsdl");
 
 #
 # getStatus();
@@ -46,14 +45,14 @@ print "version : ", $som->{version}, "\n";
 #
 # doSumibiConvertSexp()
 #
-my $som = $sumibi -> doSumibiConvertSexp( $query, $sumi, $history, $oe );
+my $som = $sumibi -> doSumibiConvertSexp( $query, $sumi, $history, $dummy );
 print "sexp    : ", $som, "\n";
 
 
 #
 # doSumibiConvert()
 #
-my $som = $sumibi -> doSumibiConvert( $query, $sumi, $ie, $oe );
+my $som = $sumibi -> doSumibiConvert( $query, $sumi, $history, $dummy );
 
 print "time    : ", $som->{convertTime}, "\n";
 my $ar = $som->{resultElements};
@@ -63,7 +62,7 @@ print "dump    : ", Dumper($ar);
 #
 # doSumibiConvertHira()
 #
-my $som = $sumibi -> doSumibiConvertHira( $query, $sumi, $ie, $oe );
+my $som = $sumibi -> doSumibiConvertHira( $query, $sumi, $history, $dummy );
 print "hiragana: ", $som, "\n";
 
 
