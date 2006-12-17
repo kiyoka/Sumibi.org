@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2006 Kiyoka Nishiyama
-//     $Date: 2006/12/17 16:01:48 $
+//     $Date: 2006/12/17 16:17:58 $
 //
 // This file is part of Sumibi
 //
@@ -99,9 +99,8 @@ function judge_key(event, check_key)
 }
 
 
-function Sumibi_key_process_common(qbox_id, event, cur_no)
+function Sumibi_key_process_common(qbox_id, event)
 {
-    qbox_id = 'sumibi_candidate' + qbox_id + cur_no;
     // Ctrl+G
     if ( judge_key( event, 'G' )) {
 	Submit_kakutei_and_google_search( );
