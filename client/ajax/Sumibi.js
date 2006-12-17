@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2006/11/30 17:26:50 $
+//     $Date: 2006/12/17 16:01:48 $
 //
 // This file is part of Sumibi
 //
@@ -31,16 +31,19 @@
 //********************************************************************
 // 定数定義
 //********************************************************************
-
 var XMLHTTP_LOAD_COMPLETE = 4;
 var XMLHTTP_HTTP_STATUS = 200;
 var MSXMLHTTP = false;
-// var URL_PREFIX = "./nph-proxy.cgi/010110A/https/sumibi.org/cgi-bin/sumibi/";
+var SUMIBI_DEBUG = 'sumibi_debug'; // div id for debug
+// var URL_PREFIX = "./nph-proxy.cgi/010110A/http/sumibi.org/cgi-bin/sumibi/";
 var URL_PREFIX = "/";
-var PROGRESS_MESSAGE = '&nbsp;&nbsp;&nbsp;<blink>waiting server response ...</blink>';
+var PROGRESS_MESSAGE = '<blink>waiting server response ... </blink><br>';
 var PROGRESS_MESSAGE_COLOR = '#000000';
 var PROGRESS_MESSAGE_ERROR = 'cannot convert';
 var PROGRESS_MESSAGE_ERROR_COLOR = '#FF00000';
+var SUMIBI_IME_COLOR = '#EEDDDD';
+var SUMIBI_IME_LAYER_N = '100';
+var SUMIBI_DEFAULT_SERVER = 'stable';
 
 //********************************************************************
 // コンストラクタ
@@ -52,7 +55,7 @@ var PROGRESS_MESSAGE_ERROR_COLOR = '#FF00000';
 // progress  ... 進行メッセージ用ブロックオブジェクト
 //
 //********************************************************************
-function Sumibi( progress, ime, type){
+function Sumibi( progress, ime, type, guide){
     this.progress = progress;  // 進捗メッセージ用ブロックオブジェクト
     this.type = type;          // タイプ(stable, testing, unstable)
     this.ime = ime;            // 変換選択用フォームを格納するブロックオブジェクト
@@ -130,15 +133,18 @@ Sumibi.prototype.setQueryFrom = function(q){
 //********************************************************************
 Sumibi.prototype.server = function(server){
     if(server){
-	this.type = server;
+	this.type = server
+    }else{
+    	this.type = SUMIBI_DEFAULT_SERVER;
     }
     if(this.type == 'unstable'){
-	type = 'for_toppage';
+	type = 'unstable';
     }else if(this.type == 'testing'){
 	type = 'testing';
     }else{
 	type = 'stable';
     }
+    sdebug(URL_PREFIX + type + "/sumibi.cgi")
     return URL_PREFIX + type + "/sumibi.cgi";
 }
 
@@ -151,11 +157,9 @@ Sumibi.prototype.server = function(server){
 Sumibi.prototype.format = function(array){
     var output = Sumibi_get_kouho_desc_label( );
     for(i=0; i < array.length; i++){
-	output += ' <select  size=3  name="sumibi_candiate" id="sumibi_candidate' + this.qbox.id
-	    + i
+	output += ' <select  size=3  name="sumibi_candiate" id="sumibi_candidate' + this.qbox.id + i
 //	    + '" onChange="sumibi_display_result()" onKeyPress="Sumibi_key_process_in_select( "' + this.qbox.id + '", event, '
-	    + '" onKeyPress="Sumibi_key_process_in_select( "' + this.qbox.id + '", event, '
-	    + i
+	    + '" onKeyPress="Sumibi_key_process_in_select( \'' + this.qbox.id + '\', event, ' + i
 	    + ' )">';
 	for(ii=0; ii < array[i].length; ii++){
 	    output += '<option value="'
@@ -168,7 +172,7 @@ Sumibi.prototype.format = function(array){
 	}
 	output += '</select>';
     }
-    output += '<div style="text-align:center;">' 
+    output += '<div style="display:inline;">' 
     + '<input type="button" id="define" name="define" value="'
     + Sumibi_get_kakutei_button_label( )
     + '" onClick="sumibi_define_candidate(\'' + this.qbox.id + '\')">'
@@ -180,6 +184,9 @@ Sumibi.prototype.format = function(array){
     for(i=0; i < array.length; i++){
 	space_for_hook[i] = array[i][0]["space"];
 	words_for_hook[i] = array[i][0]["word"];
+    }
+    if(this.qbox.sumibi_set){
+	this.qbox.sumibi_set.style.zIndex = (SUMIBI_IME_LAYER_N = SUMIBI_IME_LAYER_N + 1);
     }
     // hook関数の呼び出し
     output += Sumibi_candidate_html_hook(this, space_for_hook, words_for_hook );
@@ -197,9 +204,15 @@ Sumibi.prototype.historyHTML = function(){
     var block = this.history_html;
     var output;
     var qbox_id = this.qbox.id;
-    output = '<span id="sumibi_backward' +  qbox_id + '" style="display:none">&lt;&lt;<a href="#" onClick="sumibi_backward(\'' + qbox_id + '\');return false">' + Sumibi_get_backward_button_label( ) +  '</a></span>&nbsp;';
-    output += '<span id="sumibi_spacer' +  qbox_id + '">&nbsp;&nbsp;&nbsp;&nbsp;</span>';
-    output += '<span id="sumibi_forward' +  qbox_id + '" style="display:none"><a href="#" onClick="sumibi_forward(\'' + qbox_id + '\');return false">' + Sumibi_get_forward_button_label( ) + '</a>&gt;&gt;</span>';
+    output = '<span id="sumibi_backward' +  qbox_id + '" style="display:none">&lt;&lt;<a href="#" onClick="sumibi_backward(\'' + qbox_id + '\');return false">';
+    output += Sumibi_get_backward_button_label( ) +  '</a>&nbsp;</span>';
+    output += '<span id="sumibi_spacer' +  qbox_id + '" style="display:none"></span>'
+    output += '<span id="sumibi_forward' +  qbox_id + '" style="display:none">&nbsp;<a href="#" onClick="sumibi_forward(\'' + qbox_id + '\');return false">';
+    output += Sumibi_get_forward_button_label( ) + '</a>&gt;&gt;</span>';
+    if(this.qbox.sumibi_set){
+	output += '<a href="#" id="sumibi_close"' + qbox_id + ' onClick="document.getElementById(\'' + qbox_id + '\').sumibi_set.style.display = \'none\'; return false">';
+	output += Sumibi_close_history_button_label() + '</a>';
+    }
     block.innerHTML = output;
     this.hb = document.getElementById('sumibi_backward' + qbox_id); // backward
     this.hf = document.getElementById('sumibi_forward' + qbox_id);  // forward
@@ -272,6 +285,10 @@ Sumibi.prototype.defineCandidate = function(){
     if(this.hf){
 	this.hf.style.display = 'none';
     }
+    if(this.guide){
+	this.guide.innerHTML = "";
+    }
+    sumibi_spacer(this);
     return result;
 }
 
@@ -299,6 +316,9 @@ Sumibi.prototype.replaceQueryByResult = function(q){
 //********************************************************************
 Sumibi.prototype.doSoapRequest = function(xml_message, num){
     var sumibi  = this;
+    if(sumibi.qbox.sumibi_set){
+	sumibi.qbox.sumibi_set.style.display = 'inline';
+    }
     var xmlhttp = this.createXmlHttp();
     // alert(this.query.length);  alert(num);
     try {
@@ -307,11 +327,11 @@ Sumibi.prototype.doSoapRequest = function(xml_message, num){
 	xmlhttp.setRequestHeader("Content-Type", "text/xml");
 	xmlhttp.onreadystatechange = function () {
 	    sumibi.progress.innerHTML = PROGRESS_MESSAGE;
-	    sumibi.progress.style.display = 'block';
-	    //alert( xmlhttp.readyState );
+	    sumibi.progress.style.display = 'inline';
+	    sdebug( xmlhttp.readyState );
 	    if (xmlhttp.readyState == XMLHTTP_LOAD_COMPLETE ) {
 		if(xmlhttp.responseText) {
-		    // alert(xmlhttp.responseText);
+		    sdebug(xmlhttp.responseText);
 		    var candidate_array = sumibi.parseXML(xmlhttp.responseXML);
 		    if (candidate_array) {
 			sumibi.ime.innerHTML = sumibi.format(candidate_array);
@@ -332,6 +352,18 @@ Sumibi.prototype.doSoapRequest = function(xml_message, num){
     } catch (e) {
 	this.progress.innerHTML = e;
 	this.progress.style.display = 'block';
+    }
+}
+
+Sumibi.prototype.guideRoman2Kana = function(q){
+    q = q[0];
+    if(this.guide){
+	q = q.replace(/([cdkstnfhmyrwgzdbpjv])\1/g, "っ$1");
+	for (var i = 0; i < ROMAN2KANA.length; i += 2) {
+	    var reg = new RegExp(ROMAN2KANA[i], 'g');
+	    q = q.replace(reg, ROMAN2KANA[i + 1]);
+	}
+	this.guide.innerHTML = q + '<br>';
     }
 }
 
@@ -357,6 +389,7 @@ Sumibi.prototype.doConvert = function(){
 
 //************************************************************
 // レスポンスXMLの解析
+
 //************************************************************
 Sumibi.prototype.parseXML = function(){
     alert('this method needs to be defined in subclass.');
@@ -369,53 +402,73 @@ Sumibi.prototype.parseXML = function(){
 // Sumibi オブジェクト作成関数
 function sumibi_create_object(qbox, array){
     if(! array){
-	var server_type = 'unstable';
-	var sumibi_set = document.createElement('div'); // progress, ime, hist を格納するdiv
-	var progress     = document.createElement('div');
-	var ime          = document.createElement('div');
-	var history_html = document.createElement('div');
+	var sumibi_set   = document.createElement('span'); // guide, progress, ime, hist を格納するdiv
+	var guide        = document.createElement('span');
+	var progress     = document.createElement('span');
+	var ime          = document.createElement('span');
+	var history_html = document.createElement('span');
+	sumibi_set.appendChild(guide);
+	sumibi_set.appendChild(progress);
 	sumibi_set.appendChild(history_html);
 	sumibi_set.appendChild(ime);
-	sumibi_set.appendChild(progress);
-	qbox.nextSibling.appendChild(sumibi_set);
-	array = [progress, ime, server_type, history_html];
+	var pos = getElementPosition(qbox);
+	var sumibi_customize_func = 'Sumibi_key_process_in_text(\'' + qbox.id + '\', event)';
+        var isIE = (document.documentElement.getAttribute("style") ==
+                    document.documentElement.style);
+        if(isIE){
+		qbox.setAttribute("onkeypress", new Function(sumibi_customize_func));
+	}else{
+		qbox.setAttribute("onKeyPress", sumibi_customize_func);
+	}
+	qbox.setAttribute("onclick", new Function(sumibi_customize_func));
+	document.body.appendChild(sumibi_set);
+	sumibi_set.style.position = 'absolute';
+	sumibi_set.style.backgroundColor = SUMIBI_IME_COLOR;
+	sumibi_set.style.left = pos['left'] + 'px';
+	sumibi_set.style.top = pos['top'] + qbox.offsetHeight + 'px';;
+	sumibi_set.style.border = 'solid';
+	sumibi_set.style.borderWidth = '1px';
+	sumibi_set.style.display = 'none';
+	progress.style.display = 'inline';
+	ime.style.display = 'inline';
+	history_html.style.display = 'inline';
+	array = [progress, ime, SUMIBI_DEFAULT_SERVER, guide, history_html];
+	qbox.sumibi_set = sumibi_set;
     }
 
     var sumibi = new SumibiSOAP(array[0], array[1], array[2], array[3]);
 
     qbox.sumibi = sumibi;
     sumibi.qbox = qbox;
-    sumibi.history_html = array[3];
+    sumibi.history_html = array[4];
     sumibi.historyHTML();
     checkKeyInput(sumibi, qbox.id);
     return sumibi;
 }
 
-function checkKeyInput(sumibi, query_id){
-    var query = document.getElementById(query_id);
+function checkKeyInput(sumibi, qbox_id){
+    var qbox = document.getElementById(qbox_id);
     if(! sumibi){
-	sumibi = query.sumibi;
+	sumibi = qbox.sumibi;
     }
-    if(query.use_sumibi === true && query && query.value){
+    // if(qbox.use_sumibi === true && qbox && qbox.value){
+    if(qbox && qbox.value){
 	var ret;
-	if(ret = sumibi.setQueryFrom(query.value)){
+	if(ret = sumibi.setQueryFrom(qbox.value)){
 	    sumibi.doConvert(ret);
+	    sumibi.guideRoman2Kana(ret);
 	}
     }
-    var func = "checkKeyInput('', '" + query_id + "')";
+    var func = "checkKeyInput('', '" + qbox_id + "')";
     setTimeout(func, 1000);
-}
-
-function select_server(server){
-    sumibi.server(server);
 }
 
 function sumibi_define_candidate(qbox_id){
     // 決定テキストボックスがある場合
     // defined.value += sumibi.defineCandidate(query.value);
-    var query = document.getElementById(qbox_id);
-    var sumibi = query.sumibi;
-    query.value = sumibi.replaceQueryByResult(query.value);
+    var qbox = document.getElementById(qbox_id);
+    var sumibi = qbox.sumibi;
+    qbox.value = sumibi.replaceQueryByResult(qbox.value);
     sumibi.ime.innerHTML = '';
     sumibi.history_number = sumibi.hist.length - 1;
     sumibi.historyHTML();
@@ -423,7 +476,7 @@ function sumibi_define_candidate(qbox_id){
 	sumibi.hb.style.display = 'inline';
     }
     // テキストボックスにフォーカスを返しておく
-    query.focus();
+    qbox.focus();
 }
 
 function sumibi_forward(qbox_id){
@@ -439,74 +492,38 @@ function sumibi_backward(qbox_id){
 }
 
 function sumibi_spacer(sumibi){
-    //    alert(sumibi.hf.style.display == 'none');
-    if(sumibi.hb.style.display == 'none' || sumibi.hf.style.display == 'none'){
+    var spacer = '';
+    if(sumibi.hb.style.display == 'none' && sumibi.hf.style.display == 'none'){
+	for(var i = 0; i <= Sumibi_get_backward_button_label( ).length + 2; i++){
+	    spacer += '&nbsp;';
+	}
+	for(var i = 0; i <= Sumibi_get_forward_button_label( ).length + 2; i++){
+	    spacer += '&nbsp;';
+	}
 	sumibi.hs.style.display = 'inline';
+	sumibi.hs.innerHTML = spacer;
+    }else if(sumibi.hb.style.display == 'none'){
+	for(var i = 0; i <= Sumibi_get_backward_button_label( ).length + 2; i++){
+	    spacer += '&nbsp;';
+	}
+	sumibi.hs.style.display = 'inline';
+	sumibi.hs.innerHTML = spacer;
+    }else if(sumibi.hf.style.display == 'none'){
+	for(var i = 0; i <= Sumibi_get_forward_button_label( ).length + 2; i++){
+	    spacer += '&nbsp;';
+	}
+	sumibi.hs.style.display = 'inline';
+	sumibi.hs.innerHTML = spacer;
     }else{
-	sumibi.hs.style.display = 'none';
+	sumibi.hs.style.display = 'none';	
     }
 }
 
-function sumibinize(target, i){
-    if(target.sumibi){
-	return;
-    }
-    var class_name = target.nextSibling.getAttribute('class') || target.nextSibling.getAttribute('className');
-    if (      (target.type == "text" || target.type == "textarea")
-	   && class_name == 'use_sumibi' 
-	   ){
-	// input_ids[i] = target.id;
-	var type;
-	if(target.type == 'text'){
-	    type = 'input';
-	}else if(target.type == 'textarea'){
-	    type = 'textarea';
-	}
-	
-	var sumi =  target.nextSibling;
-	var sumi_mark = document.createElement('span');
-	sumi.style.display = 'inline';
-
-
-	var isIE = (document.documentElement.getAttribute("style") ==
-        	    document.documentElement.style);
-	if(isIE){
-	sumi_mark.setAttribute
-            ('onclick', new Function(
-             'if(this.style.color == "red"){' +
-             'this.style.color = "";' +
-             'document.getElementsByTagName("' + type + '")[' + i + '].use_sumibi = false' +
-             '}else{' +
-             'this.style.color = "red";' +
-             'document.getElementsByTagName("' + type + '")[' + i + '].use_sumibi = true' +
-             '}')
-             );
-	}else{
-	sumi_mark.setAttribute
-	    ('onClick',
-	     'if(this.style.color == "red"){' + 
-	     'this.style.color = "";' + 
-	     'document.getElementsByTagName("' + type + '")[' + i + '].use_sumibi = false' +
-	     '}else{' + 
-	     'this.style.color = "red";' +
-	     'document.getElementsByTagName("' + type + '")[' + i + '].use_sumibi = true' +
-	     '}'
-	     );
-	}
-	sumi_mark.innerHTML = ' SUMI ';
-	sumi.appendChild(sumi_mark);
-	return(target.id);
-    }
-    return(null);
-}
-
-function sumibi_enable(e){
-    if(e.style.color == "red"){
-	e.style.color = "";
-	document.getElementsByTagName("' + type + '")[' + i + '].use_sumibi = false;
-    }else{
-	e.style.color = "red";
-	document.getElementsByTagName("' + type + '")[' + i + '].use_sumibi = true;
+function sdebug(message){
+    var sdebug = document.getElementById(SUMIBI_DEBUG);
+    if(sdebug){
+	// var m  = message.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>");
+	sdebug.value += message + "\n\n";
     }
 }
 
@@ -516,19 +533,170 @@ onload = function ()
    var input_ids = new Array;
    for (var i = 0; i < inputs.length; ++i) {
      if(inputs[i].type == "text"){
-       var id = sumibinize(inputs[i], i);
-       if(id) input_ids.push(id);
+	 if(! inputs[i].use_sumibi){
+	     input_ids.push(inputs[i].id);
+	 }
      }
    }
    var textareas = document.getElementsByTagName("textarea");
    for (var i = 0; i < textareas.length; ++i) {
-     var id = sumibinize(textareas[i], i);
-     if(id) input_ids.push(id);
+       if(textareas[i].id != SUMIBI_DEBUG){
+	   if(! textareas[i].use_sumibi){
+	       input_ids.push(textareas[i].id);
+	   }
+       }
    }
    for (var i = 0; i < input_ids.length; ++i) {
        sumibi_create_object(document.getElementById(input_ids[i]));
    }
  }
+
+//**************************************************************
+// ローマ字かな変換テーブル(順番が重要なので配列)
+//**************************************************************
+
+var ROMAN2KANA =
+    [
+     'nnn', 'んn',
+     "[lx]wa","ゎ",
+     '[lx]a', 'ぁ',
+     '[lx]i', 'ぃ',
+     '[lx]u', 'ぅ',
+     'vu', 'う゛',
+     'va', 'う゛ぁ',
+     'vi', 'う゛ぃ',
+     've', 'う゛ぇ',
+     'vo', 'う゛ぉ',
+     '[lx]e', 'ぇ',
+     '[lx]o', 'ぉ',
+     '[ck]a', 'か',
+     'ga', 'が',
+     '[ck]i', 'き',
+     'kya', 'きゃ',
+     'kyu', 'きゅ',
+     'kyo', 'きょ',
+     'gi', 'ぎ',
+     '[ck]u', 'く',
+     'gu', 'ぐ',
+     '[ck]e', 'け',
+     'ge', 'げ',
+     '[ck]o', 'こ',
+     'go', 'ご',
+     'sa', 'さ',
+     'za', 'ざ',
+     'sh?i', 'し',
+     'sha', 'しゃ',
+     's[hy]e', 'しぇ',
+     's[hy]a', 'しゃ',
+     's[hy]u', 'しゅ',
+     's[hy]o', 'しょ',
+     '[zj]i', 'じ',
+     'ja', 'じゃ',
+     'zya', 'じゃ',
+     'ju', 'じゅ',
+     'zyu', 'じゅ',
+     'jo', 'じょ',
+     'zyo', 'じょ',
+     'su', 'す',
+     'zu', 'ず',
+     'se', 'せ',
+     'ze', 'ぜ',
+     'so', 'そ',
+     'zo', 'ぞ',
+     'ta', 'た',
+     'da', 'だ',
+     'da', 'だ',
+     'chi', 'ち',
+     'ti', 'ち',
+     '[ct]ya', 'ちゃ',
+     '[ct]yu', 'ちゅ',
+     '[ct]yo', 'ちょ',
+     'di', 'ぢ',
+     'di', 'ぢ',
+     'dyi', 'ぢぃ',
+     'dye', 'ぢぇ',
+     'dya', 'ぢゃ',
+     'dyu', 'ぢゅ',
+     'dyo', 'ぢょ',
+     'xtu', 'っ',
+     'ts?u', 'つ',
+     'du', 'づ',
+     'du', 'づ',
+     'te', 'て',
+     'de', 'で',
+     'de', 'で',
+     'dhi', 'でぃ',
+     'to', 'と',
+     'do', 'ど',
+     'do', 'ど',
+     'na', 'な',
+     'ni', 'に',
+     'nya', 'にゃ',
+     'nyu', 'にゅ',
+     'nyo', 'にょ',
+     'nu', 'ぬ',
+     'ne', 'ね',
+     'no', 'の',
+     'ma', 'ま',
+     'mi', 'み',
+     'mya', 'みゃ',
+     'myu', 'みゅ',
+     'myo', 'みょ',
+     'mu', 'む',
+     'me', 'め',
+     'mo', 'も',
+     '[lx]ya', 'ゃ',
+     '[lx]yu', 'ゅ',
+     '[lx]yo', 'ょ',
+     'ra', 'ら',
+     'ri', 'り',
+     'rya', 'りゃ',
+     'ryu', 'りゅ',
+     'ryo', 'りょ',
+     'ru', 'る',
+     're', 'れ',
+     'ro', 'ろ',
+     'wa', 'わ',
+     'wi', 'ゐ',
+     'we', 'ゑ',
+     'wo', 'を',
+     'ha', 'は',
+     'ba', 'ば',
+     'pa', 'ぱ',
+     'hi', 'ひ',
+     'hya', 'ひゃ',
+     'hyu', 'ひゅ',
+     'hyo', 'ひょ',
+     'bi', 'び',
+     'pi', 'ぴ',
+     'pya', 'ぴゃ',
+     'pyu', 'ぴゅ',
+     'pyo', 'ぴょ',
+     '[hf]u', 'ふ',
+     'fa', 'ふぁ',
+     'fi', 'ふぃ',
+     'fe', 'ふぇ',
+     'fo', 'ふぉ',
+     'bu', 'ぶ',
+     'pu', 'ぷ',
+     'he', 'へ',
+     'be', 'べ',
+     'pe', 'ぺ',
+     'ho', 'ほ',
+     'bo', 'ぼ',
+     'po', 'ぽ',
+     'ya', 'や',
+     'yu', 'ゆ',
+     'yo', 'よ',
+     'a', 'あ',
+     'i', 'い',
+     'u', 'う',
+     'e', 'え',
+     'o', 'お',
+     'nn?', 'ん',
+     '\-', 'ー'
+     //'ー', '\^', 
+];
 
 //**************************************************************
 // 結果テキストボックスがある場合
@@ -544,4 +712,3 @@ onload = function ()
 // function sumibi_display_result(){
 //     resultbox.value = sumibi.displayResult();
 // }
-

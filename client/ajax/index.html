@@ -47,15 +47,16 @@ Copyright&copy 2005, Ktat
 
 <form name="sumibi">
 変換サーバ
- <input type="radio" id="server" name="server" value="stable" onClick="select_server(this.value)" checked>stable
- <input type="radio" id="server" name="server" value="unstable" onClick="select_server(this.value)">unstable
+ <input type="radio" name="server" value="stable" onClick="select_server(this.value)" checked>stable
+ <input type="radio" name="server" value="unstable" onClick="select_server(this.value)">unstable
 <table width=460>
 <tr><th>入力</th>
 <tr>
-<td><textarea id=qbox name=q rows=5></textarea></td>
+<td><textarea id=qbox name=q rows=5  onKeyPress="Sumibi_key_process_in_text('qbox', event)" ></textarea></td>
 </tr>
 </form>
 <tr><td>
+<div id="guide"></div>
 <div id="progress"></div>
 </div>
 <div id="ime"></div>
@@ -63,9 +64,11 @@ Copyright&copy 2005, Ktat
 </div>
 </td></tr>
 </table>
+<textarea id="sumibi_debug" cols="100" rows=20></textarea>
 </body>
 </html>
 <script type="text/javascript" src="SumibiCustomize.js"></script>
 <script type="text/javascript" src="Sumibi.js"></script>
 <script type="text/javascript" src="SumibiSOAP.js"></script>
 <script type="text/javascript" src="ajax_sumibi.js"></script>
+

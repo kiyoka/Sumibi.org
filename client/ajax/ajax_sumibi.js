@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2006/11/29 18:45:34 $
+//     $Date: 2006/12/17 16:01:48 $
 //
 // This file is part of Sumibi
 //
@@ -26,9 +26,14 @@ var progress  = document.getElementById('progress'); // 進行状況を表示す
 var ime       = document.getElementById('ime');      // IMEを表示するブロックオブジェクト
 var query     = document.getElementById('qbox');     // query box
 var hist      = document.getElementById('hist');     // 
+var guide     = document.getElementById('guide');    // 
 // var resultbox = document.getElementById('r');        // 結果テキストボックス
 // var defined   = document.getElementById('defined');  // 決定テキストボックス
 var server_type = 'unstable';
 
-sumibi_create_object(query, [progress, ime, server_type, hist]);
+var sumibi = sumibi_create_object(query, [progress, ime, server_type, guide, hist]);
 query.use_sumibi = true;
+
+function select_server(s){
+	sumibi.server(s);
+}
