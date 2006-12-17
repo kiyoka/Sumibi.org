@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2006 Kiyoka Nishiyama
-//     $Date: 2006/11/10 09:31:53 $
+//     $Date: 2006/12/17 16:01:48 $
 //
 // This file is part of Sumibi
 //
@@ -99,8 +99,9 @@ function judge_key(event, check_key)
 }
 
 
-function Sumibi_key_process_common(qbox_id, event)
+function Sumibi_key_process_common(qbox_id, event, cur_no)
 {
+    qbox_id = 'sumibi_candidate' + qbox_id + cur_no;
     // Ctrl+G
     if ( judge_key( event, 'G' )) {
 	Submit_kakutei_and_google_search( );
@@ -119,12 +120,11 @@ function Sumibi_key_process_common(qbox_id, event)
     return true;
 }
 
-function Sumibi_key_process_in_select(qbox_id, event,cur_no)
+function Sumibi_key_process_in_select(qbox_id, event, cur_no)
 {
     var sumibi = document.getElementById(qbox_id).sumibi;
     var e = getEvent(event);
     var k = getKeyCode(event);
-
     // 変換中は確定を実行しない
     if ( sumibi.progress.style.display == 'block' ) {
 	return true;
@@ -134,10 +134,11 @@ function Sumibi_key_process_in_select(qbox_id, event,cur_no)
     var space_key=32;      //Spaceキー
     var return_key=13;     //Returnキー
 
-    var cand = document.getElementById('sumibi_candidate' + cur_no);
+    var cand = document.getElementById('sumibi_candidate' + qbox_id + cur_no);
     // Ctrl+Cまたは、Ctrl+Jで次のselectボックスに移動
     if ( judge_key( event, 'C' ) || judge_key( event, 'J' )) {
-	cand     = document.getElementById('sumibi_candidate' + (cur_no + 1));
+	sdebug('sumibi_candidate' + qbox_id + (cur_no + 1));
+	cand     = document.getElementById('sumibi_candidate' + qbox_id + (cur_no + 1));
 	if ( null == cand ) {
 	    // queryボックスにフォーカスを戻す
 	    var query     = document.getElementById(qbox_id);
@@ -152,7 +153,11 @@ function Sumibi_key_process_in_select(qbox_id, event,cur_no)
     }
     
     if ( k == space_key ) {
-	cand.selectedIndex++;
+	if(cand.selectedIndex >= cand.length - 1){ // WHY ???
+		cand.selectedIndex = 0;
+	}else{
+		cand.selectedIndex++;
+	}
 
 	resetEvent( event );
 	return false;
@@ -166,13 +171,13 @@ function Sumibi_key_process_in_select(qbox_id, event,cur_no)
     }
 
     // 共通処理
-    Sumibi_key_process_common(qbox_id, event);
+    Sumibi_key_process_common(qbox_id, event, cur_no);
     return true;
 }
 
-function Sumibi_key_process_in_text(qbox, event)
+function Sumibi_key_process_in_text(qbox_id, event)
 {
-    var sumibi = qbox.sumibi;
+    var sumibi = document.getElementById(qbox_id).sumibi;
     var e = getEvent(event);
     var k = getKeyCode(event);
 
@@ -184,14 +189,14 @@ function Sumibi_key_process_in_text(qbox, event)
 
     // Ctrl+Cまたは、Ctrl+J
     if ( judge_key( event, 'C' ) || judge_key( event, 'J' )) {
-	var kakutei     = document.getElementById('sumibi_candidate0'); // kakutei button
+	var kakutei     = document.getElementById('sumibi_candidate' + qbox_id + 0); // kakutei button
 //	resetEvent( event ); 
 	kakutei.focus();
 	return true;
     }
 
     // 共通処理
-    Sumibi_key_process_common(sumibi.qbox.id, event);
+    Sumibi_key_process_common(qbox_id, event);
     return true;
 }
 
@@ -203,6 +208,11 @@ function Sumibi_get_backward_button_label( )
 function Sumibi_get_forward_button_label( )
 {
     return "進む";
+}
+
+function Sumibi_close_history_button_label( )
+{
+    return "閉";
 }
 
 function Sumibi_get_kakutei_button_label( )

@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2006/11/14 14:41:50 $
+//     $Date: 2006/12/17 16:01:48 $
 //
 // This file is part of Sumibi
 //
@@ -28,15 +28,16 @@
 //
 //********************************************************************
 
-function SumibiSOAP(progress, ime, type, hist){
+function SumibiSOAP(progress, ime, type, guide){
     this.progress = progress;
     this.ime      = ime;
     this.type     = type;
     this.hist     = new Array;
     this.query    = new Array;
+    this.guide    = guide;
 }
 
-SumibiSOAP.prototype = new Sumibi(this.progress, this.ime, this.type, this.history);
+SumibiSOAP.prototype = new Sumibi(this.progress, this.ime, this.type, this.guide);
 
 SumibiSOAP.prototype.doConvert = function(array){
     this.doSoapRequest(this.doConvertXML(array[0]), array[1]);
