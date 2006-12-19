@@ -9,6 +9,8 @@
   - Ajaxクライアント
   - sumibi.el
     1. 非SSLの設定になっていたら漢字変換の度に警告を出すようにした。
+  - サンプルクライアント(SumibiWebApiSample.rb,SumibiWebApiSample.py,SumibiWebApiSample.pl)
+    1. SumibiWebApiの引数の変更に追従した。
 
 [0.7.2]
   - sumibi

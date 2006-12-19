@@ -3,7 +3,7 @@
 # "SumibiWebApiSample.py" is a sample program.
 #
 #   Copyright (C) 2006 Yusuke Muraoka(yusuke.muraoka@gmail.com)
-#     $Date: 2006/10/28 06:51:58 $
+#     $Date: 2006/12/19 13:14:40 $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -29,11 +29,11 @@ if len(sys.argv) < 2:
 	print "usage : SumibiWebApiSample.py string"
 	sys.exit(0)
 
+url     = 'http://sumibi.org/sumibi/Sumibi_testing.wsdl'
 query   = " ".join(sys.argv[1:])
-sumibi  = SOAPpy.WSDL.Proxy('http://www.sumibi.org/sumibi/Sumibi_testing.wsdl')
-ie      = "utf-8"
-oe      = "utf-8"
+sumibi  = SOAPpy.WSDL.Proxy(url)
 history = ""
+dummy   = ""
 
 #
 # getStatus();
@@ -44,19 +44,19 @@ print "version : ", som.version
 #
 # doSumibiConvertSexp();
 #
-som = sumibi.doSumibiConvertSexp(query, None, history, oe)
+som = sumibi.doSumibiConvertSexp(query, None, history, dummy)
 print "sexp    : ", som
 
 #
 # doSumibiConvert();
 #
-som = sumibi.doSumibiConvert(query, None, ie, oe)
-fmt = string.Template("cand:$candidate no:$no spaces:$spaces type:$type word:$word")
+som = sumibi.doSumibiConvert(query, None, history, dummy)
+fmt = string.Template("cand:$candidate id:$id no:$no spaces:$spaces type:$type word:$word")
 for el in som['resultElements']:
 	print fmt.safe_substitute(el)
 
 #
 # doSumibiConvertHira()
 #
-som = sumibi.doSumibiConvertHira(query, None, ie, oe)
+som = sumibi.doSumibiConvertHira(query, None, history, dummy)
 print "hiragana: ", som
