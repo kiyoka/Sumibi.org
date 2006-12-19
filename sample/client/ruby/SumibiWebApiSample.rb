@@ -3,7 +3,7 @@
 # "SumibiWebApiSample.rb" is a sample program.
 #
 #   Copyright (C) 2005 Kiyoka Nishiyama
-#     $Date: 2006/10/28 06:51:58 $
+#     $Date: 2006/12/19 13:14:40 $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -19,7 +19,7 @@
 # [ Tested on Ruby 1.8.3 ]
 #
 require 'soap/wsdlDriver'
-wsdl = 'http://www.sumibi.org/sumibi/Sumibi_testing.wsdl'
+wsdl   ='http://sumibi.org/sumibi/Sumibi_testing.wsdl'
 sumibi = SOAP::WSDLDriverFactory.new(wsdl).create_rpc_driver
 
 if 1 > ARGV.length
@@ -29,9 +29,8 @@ end
 
 query   = ARGV.join( ' ' )
 sumi    = "sumi_current"
-ie      = "utf-8"
-oe      = "utf-8"
 history = ""
+dummy   = "utf-8"
 
 #
 # getStatus()
@@ -41,18 +40,19 @@ print "version : ", sumibi.getStatus( ).version, "\n"
 #
 # doSumibiConvertSexp()
 #
-print "sexp    : ", sumibi.doSumibiConvertSexp( query, sumi, history, oe ), "\n"
+print "sexp    : ", sumibi.doSumibiConvertSexp( query, sumi, history, dummy ), "\n"
 
 #
 # doSumibiConvert()
 #
-result = sumibi.doSumibiConvert( query, sumi, ie, oe )
+result = sumibi.doSumibiConvert( query, sumi, history, dummy )
 
 print "time    : ", result.convertTime, "\n"
 print "dump    : \n"
 result.resultElements.each {|cand|
-  printf( " cand:%d no:%d spaces:%d type:%s word:%s\n",
+  printf( " cand:%d id:%d no:%d spaces:%d type:%s word:%s\n",
           cand.candidate,
+          cand.id,
           cand.no,
           cand.spaces,
           cand.type,
@@ -62,7 +62,7 @@ result.resultElements.each {|cand|
 #
 # doSumibiConvertHira()
 #
-print "hiragana: ", sumibi.doSumibiConvertHira( query, sumi, ie, oe ), "\n"
+print "hiragana: ", sumibi.doSumibiConvertHira( query, sumi, history, dummy ), "\n"
 
 
 exit 0

@@ -3,7 +3,7 @@
 # "SumibiWebApiSample.pl" is a sample program.
 #
 #   Copyright (C) 2005 Kiyoka Nishiyama
-#     $Date: 2006/12/10 12:07:48 $
+#     $Date: 2006/12/19 13:14:40 $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -33,7 +33,6 @@ my $history = "";
 my $dummy   = "";
 
 my $sumibi = SOAP::Lite -> service("http://sumibi.org/sumibi/Sumibi_testing.wsdl");
-#my $sumibi = SOAP::Lite -> service("http://doorway.sumibi.org/test/Sumibi_unstable.wsdl");
 
 #
 # getStatus();
