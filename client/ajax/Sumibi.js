@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2006/12/17 16:07:04 $
+//     $Date: 2006/12/19 15:41:59 $
 //
 // This file is part of Sumibi
 //
@@ -134,7 +134,7 @@ Sumibi.prototype.setQueryFrom = function(q){
 Sumibi.prototype.server = function(server){
     if(server){
 	this.type = server
-    }else{
+    }else if(! this.type){
     	this.type = SUMIBI_DEFAULT_SERVER;
     }
     if(this.type == 'unstable'){
