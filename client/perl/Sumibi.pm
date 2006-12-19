@@ -68,7 +68,7 @@ sub convert{
   my $self = shift;
   $self->count_plus();
   my $str = shift;
-  my $r = $self->soap->doSumibiConvert($str, 'sumibi_current', 'utf-8', 'utf-8');
+  my $r = $self->soap->doSumibiConvert($str, 'sumibi_current', '', '');
   if($r){
     return $self->parse($r->{resultElements});
   }else{
