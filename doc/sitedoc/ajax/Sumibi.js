@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2006/12/23 01:43:29 $
+//     $Date: 2006/12/23 04:52:15 $
 //
 // This file is part of Sumibi
 //
@@ -549,7 +549,11 @@ onload = function ()
    for (var i = 0; i < input_ids.length; ++i) {
        sumibi_create_object(document.getElementById(input_ids[i]));
    }
+
+   // onload hook function
+   Sumibi_onload_hook();
  }
+
 
 //**************************************************************
 // ローマ字かな変換テーブル(順番が重要なので配列)

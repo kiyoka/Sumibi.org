@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2006 Kiyoka Nishiyama
-//     $Date: 2006/12/23 01:43:29 $
+//     $Date: 2006/12/23 04:52:15 $
 //
 // This file is part of Sumibi
 //
@@ -33,8 +33,7 @@
 //    4. Undoのキー入力をフック関数で横取り出来るようにした。
 //       サンプルではCtrl+ZでUndo処理にしている
 
-function setFocusToQ() {document.getElementById('qbox').focus();}
-
+function Sumibi_onload_hook() {document.getElementById('qbox').focus();}
 
 function getEvent (event)
 {
@@ -99,7 +98,7 @@ function judge_key(event, check_key)
 }
 
 
-function Sumibi_key_process_common(qbox_id, event)
+function Sumibi_key_process_common(qbox_id, event, cur_no)
 {
     // Ctrl+G
     if ( judge_key( event, 'G' )) {
@@ -163,7 +162,7 @@ function Sumibi_key_process_in_select(qbox_id, event, cur_no)
     }
 
     if ( k == return_key ) {
-	sumibi_define_candidate();
+	sumibi_define_candidate( qbox_id );
 
 	resetEvent( event );
 	return false;
@@ -224,7 +223,7 @@ function Sumibi_get_kouho_desc_label( )
     return '(Ctrl+CまたはCtrl+J)で次ボックスへ / SPACEで次候補へ<br>';
 }
 
-function Sumibi_kakutei_and_google_search() {sumibi_define_candidate();document.getElementById('gform').submit();}
+function Submit_kakutei_and_google_search() {sumibi_define_candidate('qbox');document.getElementById('gform').submit();}
 function Sumibi_candidate_html_hook(sumibi, space_array,words_array) {
     var ret = '';
     var str = '';
@@ -234,23 +233,14 @@ function Sumibi_candidate_html_hook(sumibi, space_array,words_array) {
 	str += space_array[i] + words_array[i];
     }
 
-//    if( google_mode() ) {
-//	ret = '<br>'
-//	    + '<div style="text-align:center;">' 
-//	    + '<input type="button" id="search" name="search" value="『' + str + '』でGoogle検索 (Ctrl+G)"'
-//	    + ' onClick="Submit_kakutei_and_google_search();">'
-//	    + '</div>';
-//    }
+    if( google_mode() ) {
+    	ret = '<br>'
+	    + '<div style="text-align:center;">' 
+	    + '<input type="button" id="search" name="search" value="『' + str + '』でGoogle検索 (Ctrl+G)"'
+	    + ' onClick="Submit_kakutei_and_google_search();">'
+	    + '</div>';
+    }
 
-//    if( amazon_mode() ) {
-//	ret += '<br>';
-//	for(i=0; i < words_array.length; i++){
-//	    if ( ! includeHiragana( words_array[i] )) {
-//		ret += generate_amazon( words_array[i] );
-//		search_str += ' ' + words_array[i];
-//	    }
-//	}
-//    }
     return ret;
 }
 
@@ -278,9 +268,3 @@ function includeHiragana(str){
    return false;
 }
 
-function generate_amazon(keyword){
-   var ret = '';
-   ret += '<iframe src=\"http://rcm-jp.amazon.co.jp/e/cm?t=kiye-22&o=9&p=8&l=st1&mode=books-jp&search=' + keyword + '&=1&fc1=&lt1=&lc1=&bg1=&f=ifr\"';
-   ret += ' marginwidth=\"0\" marginheight=\"0\" width=\"120\" height=\"240\" border=\"0\" frameborder=\"0\" style=\"border:none;\" scrolling=\"no\"></iframe>';
-   return ret;
-}

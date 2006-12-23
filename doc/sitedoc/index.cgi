@@ -11,7 +11,6 @@
   (cgi-main                                                              
    (lambda (params)                                                     
      (let ((long-mode     (cgi-get-parameter "long" params))
-	   (darkside-mode (cgi-get-parameter "darkside" params))
 	   (qbox-value    (cgi-get-parameter "q" params)))
        `(,(cgi-header)                                                    
 	 ,(html-doctype)                                                  
@@ -30,7 +29,6 @@
 	    (html:link :rel "shortcut icon" :href "/favicon.ico")
 	    (html:link :rel "icon" :href "/favicon.png" :type "image/png"))
 	   (html:body
-	    :onLoad "setFocusToQ()"
 	    (cond
 	     (long-mode
 	      (html:div :style "text-align: center; "
@@ -61,7 +59,7 @@
 		    
 	    (html:div :style "text-align: center; "
 		      (html:form :id "gform" :method "get" :action "./index.cgi" :target "_top"
-				 (html:input :type "hidden" :id "server" :name "server" :value "testing"  :onClick "select_server(this.value)" )
+				 (html:input :type "hidden" :id "server" :name "server" :value "stable"  :onClick "select_server(this.value)" )
 				 (if long-mode
 				     (html:div :style "text-align: center; "
 					       (html:textarea :id "qbox" :name "q" :cols "90%" :rows "12" :onKeyPress "Sumibi_key_process_in_text( 'qbox', event )")
@@ -182,38 +180,11 @@
                           ""))
 
             )
+           (if long-mode
+               (html:script :type "text/javascript"       "function google_mode() { return false; }")
+               (html:script :type "text/javascript"       "function google_mode() { return true;  }"))
 	   (html:script :type "text/javascript" :src "ajax/SumibiCustomize.js")
            (html:script :type "text/javascript" :src "ajax/Sumibi.js")
 	   (html:script :type "text/javascript" :src "ajax/SumibiSOAP.js")
-	   (html:script :type "text/javascript" :src "ajax/ajax_sumibi.js")
-	   (if long-mode
-"
-<script>
-<!--
-function google_mode() { return false; }
--->
-</script>
-"
-"
-<script>
-<!--
-function google_mode() { return true; }
--->
-</script>
-")
-	   (if darkside-mode
-"
-<script>
-<!--
-function amazon_mode() { return true; }
--->
-</script>
-"
-"
-<script>
-<!--
-function amazon_mode() { return false; }
--->
-</script>
-")
-	   ))))))
+           (html:script :type "text/javascript" :src "ajax/ajax_sumibi.js")
+           ))))))
