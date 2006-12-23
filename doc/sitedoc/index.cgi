@@ -59,7 +59,6 @@
 		    
 	    (html:div :style "text-align: center; "
 		      (html:form :id "gform" :method "get" :action "./index.cgi" :target "_top"
-				 (html:input :type "hidden" :id "server" :name "server" :value "stable"  :onClick "select_server(this.value)" )
 				 (if long-mode
 				     (html:div :style "text-align: center; "
 					       (html:textarea :id "qbox" :name "q" :cols "90%" :rows "12" :onKeyPress "Sumibi_key_process_in_text( 'qbox', event )")
