@@ -7,6 +7,8 @@
     1. doSumibiConvertメソッドの"no"フィールドのバグ修正
        文節IDではなく、単語IDが入っていた
   - Ajaxクライアント
+    1. 同一ページ内の複数のテキストボックス化に対応した。(Kato Atsushi)
+    2. キーによる操作ができるようになった。
   - sumibi.el
     1. 非SSLの設定になっていたら漢字変換の度に警告を出すようにした。
   - サンプルクライアント(SumibiWebApiSample.rb,SumibiWebApiSample.py,SumibiWebApiSample.pl)
