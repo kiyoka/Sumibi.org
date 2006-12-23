@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2006/12/17 16:01:48 $
+//     $Date: 2006/12/23 05:00:19 $
 //
 // This file is part of Sumibi
 //
@@ -56,8 +56,8 @@ SumibiSOAP.prototype.doConvertXML = function(q) {
     ' SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
     '<query xsi:type="xsd:string">' + q + '</query>' +
     '<sumi xsi:type="xsd:string">sumi_current</sumi>'+
-    '<ie xsi:type="xsd:string">utf-8</ie>'+
-    '<oe xsi:type="xsd:string">utf-8</oe>'+
+    '<history xsi:type="xsd:string"></history>'+
+    '<dummy xsi:type="xsd:string"></dummy>'+
     '</mns:doSumibiConvert>'+
     '</SOAP-ENV:Body>'+
     '</SOAP-ENV:Envelope>';
