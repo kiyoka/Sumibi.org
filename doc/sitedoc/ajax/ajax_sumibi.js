@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2006/08/22 12:48:50 $
+//     $Date: 2006/12/23 01:43:29 $
 //
 // This file is part of Sumibi
 //
@@ -26,84 +26,14 @@ var progress  = document.getElementById('progress'); // 進行状況を表示す
 var ime       = document.getElementById('ime');      // IMEを表示するブロックオブジェクト
 var query     = document.getElementById('qbox');     // query box
 var hist      = document.getElementById('hist');     // 
+var guide     = document.getElementById('guide');    // 
 // var resultbox = document.getElementById('r');        // 結果テキストボックス
 // var defined   = document.getElementById('defined');  // 決定テキストボックス
 var server_type = 'unstable';
 
-var sumibi = new SumibiSOAP(progress, ime, server_type);
+var sumibi = sumibi_create_object(query, [progress, ime, server_type, guide, hist]);
+query.use_sumibi = true;
 
-sumibi.historyHTML(hist);
-
-function displayResult(){
-    sumibi.displayResult();
+function select_server(s){
+	sumibi.server(s);
 }
-
-checkKeyInput();
-
-function checkKeyInput(){
-    if(query && query.value){
-	var ret;
-	if(ret = sumibi.setQueryFrom(query.value)){
-	    sumibi.doConvert(ret);
-	}
-    }
-    setTimeout("checkKeyInput()", 1000);
-}
-
-function select_server(server){
-    sumibi.server(server);
-}
-
-function sumibi_define_candidate(){
-    // 決定テキストボックスがある場合
-    // defined.value += sumibi.defineCandidate(query.value);
-    var h = location.hash;
-    h = h.replace(/^#/,'') - 0;
-    query.value = sumibi.replaceQueryByResult(query.value);
-    sumibi.ime.innerHTML = '';
-    location.hash = sumibi.hist.length - 1;
-    if(sumibi.hb){
-	sumibi.hb.style.display = 'inline';
-    }
-    // テキストボックスにフォーカスを返しておく
-    query.focus();
-}
-
-function sumibi_forward(){
-    var h = location.hash;
-    h = h.replace(/^#/,'') - 0;
-    location.hash = sumibi.forward(h);
-    sumibi_spacer();
-}
-
-function sumibi_backward(){
-    var h = location.hash;
-    h = h.replace(/^#/,'') - 0;
-    location.hash = sumibi.backward(h);
-    sumibi_spacer();
-}
-
-function sumibi_spacer(){
-    //    alert(sumibi.hf.style.display == 'none');
-    if(sumibi.hb.style.display == 'none' || sumibi.hf.style.display == 'none'){
-	sumibi.hs.style.display = 'inline';
-    }else{
-	sumibi.hs.style.display = 'none';
-    }
-}
-
-//**************************************************************
-// 結果テキストボックスがある場合
-//**************************************************************
-
-// checkResultBox();
-
-// function checkResultBox(){
-//    sumibi_display_result();
-//    setTimeout("checkResultBox()", 100);
-// }
-
-// function sumibi_display_result(){
-//     resultbox.value = sumibi.displayResult();
-// }
-
