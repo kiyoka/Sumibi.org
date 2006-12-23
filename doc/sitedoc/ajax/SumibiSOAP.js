@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2005/08/05 14:17:57 $
+//     $Date: 2006/12/23 01:43:29 $
 //
 // This file is part of Sumibi
 //
@@ -28,14 +28,16 @@
 //
 //********************************************************************
 
-function SumibiSOAP(progress, ime, type, hist){
+function SumibiSOAP(progress, ime, type, guide){
     this.progress = progress;
     this.ime      = ime;
     this.type     = type;
-    this.history  = hist;
+    this.hist     = new Array;
+    this.query    = new Array;
+    this.guide    = guide;
 }
 
-SumibiSOAP.prototype = new Sumibi(this.progress, this.ime, this.type, this.history);
+SumibiSOAP.prototype = new Sumibi(this.progress, this.ime, this.type, this.guide);
 
 SumibiSOAP.prototype.doConvert = function(array){
     this.doSoapRequest(this.doConvertXML(array[0]), array[1]);
@@ -54,8 +56,8 @@ SumibiSOAP.prototype.doConvertXML = function(q) {
     ' SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
     '<query xsi:type="xsd:string">' + q + '</query>' +
     '<sumi xsi:type="xsd:string">sumi_current</sumi>'+
-    '<ie xsi:type="xsd:string">utf-8</ie>'+
-    '<oe xsi:type="xsd:string">utf-8</oe>'+
+    '<history xsi:type="xsd:string"></history>'+
+    '<dummy xsi:type="xsd:string"></dummy>'+
     '</mns:doSumibiConvert>'+
     '</SOAP-ENV:Body>'+
     '</SOAP-ENV:Envelope>';
@@ -69,13 +71,13 @@ SumibiSOAP.prototype.parseXML = function(xml) {
     try{
 	xml = xml.documentElement;
     }catch(e){
-	sumibi.progress.innerHTML = e;
+	this.progress.innerHTML = e;
 	return;
     }
     var candidate_array = new Array();
     var item = xml.getElementsByTagName('item');
     // ********************************************************
-    //  —¥π∑Î≤Ã§ÚDOM API§Úª»§√§∆•—°º•π§π§Î°£
+    // Â§âÊèõÁµêÊûú„ÇíDOM API„Çí‰Ωø„Å£„Å¶„Éë„Éº„Çπ„Åô„Çã„ÄÇ
     // ********************************************************
     for(i=0; i < item.length; i += 1){
 	var nodeValue = new Array;
@@ -84,7 +86,7 @@ SumibiSOAP.prototype.parseXML = function(xml) {
 		nodeValue[item[i].childNodes[i2].nodeName] = item[i].childNodes[i2].childNodes[0].nodeValue;
 	    }
 	} catch (e){
-	    sumibi.progress.innerHTML = e + '; i = ' + i;
+	    this.progress.innerHTML = e + '; i = ' + i;
 	}
 	if(! candidate_array[nodeValue["no"]]){
 	    candidate_array[nodeValue["no"]] = new Array();
