@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2006 Kiyoka Nishiyama
-//     $Date: 2006/12/23 05:56:22 $
+//     $Date: 2006/12/23 06:14:55 $
 //
 // This file is part of Sumibi
 //
@@ -35,7 +35,7 @@
 
 function Sumibi_onload_hook() {
     document.getElementById('qbox').focus();
-    select_server('testing');
+    select_server('unstable');
 }
 
 function getEvent (event)
