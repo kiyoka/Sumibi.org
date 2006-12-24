@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2006/12/23 04:52:15 $
+//     $Date: 2006/12/24 13:26:43 $
 //
 // This file is part of Sumibi
 //
@@ -60,6 +60,7 @@ function Sumibi( progress, ime, type, guide){
     this.type = type;          // タイプ(stable, testing, unstable)
     this.ime = ime;            // 変換選択用フォームを格納するブロックオブジェクト
     this.query = new Array();  // 変換する文字を格納する配列
+    this.guide_query = '';
     this.hist = new Array();
     this.old_xmlhttp = null;
     this.sumibi_convert_count = 0;
@@ -126,6 +127,18 @@ Sumibi.prototype.setQueryFrom = function(q){
 	}
     }
     return(0);
+}
+
+Sumibi.prototype.setQueryFromForGuide = function(q){
+    var g;
+    g = q.match(/[\x20-\x7e]+$/i);
+    if(g){
+	if(this.guide_query != g){
+	    this.guide_query = g;
+	}
+	return this.guide_query;
+    }
+    return;
 }
 
 //********************************************************************
@@ -443,6 +456,9 @@ function sumibi_create_object(qbox, array){
     sumibi.history_html = array[4];
     sumibi.historyHTML();
     checkKeyInput(sumibi, qbox.id);
+    if(array[3]){
+	checkKeyInputGuide(sumibi, qbox.id);
+    }
     return sumibi;
 }
 
@@ -451,16 +467,29 @@ function checkKeyInput(sumibi, qbox_id){
     if(! sumibi){
 	sumibi = qbox.sumibi;
     }
-    // if(qbox.use_sumibi === true && qbox && qbox.value){
     if(qbox && qbox.value){
 	var ret;
 	if(ret = sumibi.setQueryFrom(qbox.value)){
 	    sumibi.doConvert(ret);
+	}
+    }
+    var func  = "checkKeyInput('', '" + qbox_id + "')";
+    setTimeout(func, 1000);
+}
+
+function checkKeyInputGuide(sumibi, qbox_id){
+    var qbox = document.getElementById(qbox_id);
+    if(! sumibi){
+	sumibi = qbox.sumibi;
+    }
+    if(qbox && qbox.value){
+	var ret;
+	if(ret = sumibi.setQueryFromForGuide(qbox.value)){
 	    sumibi.guideRoman2Kana(ret);
 	}
     }
-    var func = "checkKeyInput('', '" + qbox_id + "')";
-    setTimeout(func, 1000);
+    var func = "checkKeyInputGuide('', '" + qbox_id + "')";
+    setTimeout(func, 500);
 }
 
 function sumibi_define_candidate(qbox_id){
@@ -527,33 +556,28 @@ function sdebug(message){
     }
 }
 
-onload = function ()
- {
-   var inputs = document.getElementsByTagName("input");
-   var input_ids = new Array;
-   for (var i = 0; i < inputs.length; ++i) {
-     if(inputs[i].type == "text"){
-	 if(! inputs[i].use_sumibi){
-	     input_ids.push(inputs[i].id);
-	 }
-     }
-   }
-   var textareas = document.getElementsByTagName("textarea");
-   for (var i = 0; i < textareas.length; ++i) {
-       if(textareas[i].id != SUMIBI_DEBUG){
-	   if(! textareas[i].use_sumibi){
-	       input_ids.push(textareas[i].id);
-	   }
-       }
-   }
-   for (var i = 0; i < input_ids.length; ++i) {
-       sumibi_create_object(document.getElementById(input_ids[i]));
-   }
-
-   // onload hook function
-   Sumibi_onload_hook();
- }
-
+function sumibi_onload(){
+    var inputs = document.getElementsByTagName("input");
+    var input_ids = new Array;
+    for (var i = 0; i < inputs.length; ++i) {
+	if(inputs[i].type == "text"){
+	    if(! inputs[i].use_sumibi){
+		input_ids.push(inputs[i].id);
+	    }
+	}
+    }
+    var textareas = document.getElementsByTagName("textarea");
+    for (var i = 0; i < textareas.length; ++i) {
+	if(textareas[i].id != SUMIBI_DEBUG){
+	    if(! textareas[i].use_sumibi){
+		input_ids.push(textareas[i].id);
+	    }
+	}
+    }
+    for (var i = 0; i < input_ids.length; ++i) {
+	sumibi_create_object(document.getElementById(input_ids[i]));
+    }
+}
 
 //**************************************************************
 // ローマ字かな変換テーブル(順番が重要なので配列)
