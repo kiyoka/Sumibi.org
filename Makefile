@@ -64,7 +64,9 @@ dist:
 	/bin/cp     ./doc/CREDITS                          ${TARGET}
 	/bin/cp     ./doc/README                           ${TARGET}
 	awk -v VERSION=${VERSION}  '{ if ( /;;VERSION;;/ ) { printf( "\"%s\"\n", VERSION ); } else { print; } }' < ./client/elisp/sumibi.el  >  ${TARGET}/client/elisp/sumibi.el
+	/bin/cp -rf ./client/perl                          ${TARGET}/client
 	/bin/cp -rf ./client/ajax                          ${TARGET}/client
+	/bin/rm  -f                                        ${TARGET}/client/ajax/multiple.html
 	/bin/cp -rf ./sample/client/perl                   ${TARGET}/sample/client
 	/bin/cp -rf ./sample/client/ruby                   ${TARGET}/sample/client
 	/bin/cp -rf ./sample/client/python                 ${TARGET}/sample/client
@@ -77,5 +79,6 @@ dist:
 	echo        "#!@GOSH@"                    >        ${TARGET}/sumiyaki.in
 	/bin/cat    ./sumiyaki                    >>       ${TARGET}/sumiyaki.in
 	/bin/cp -f  ./Makefile                             ${TARGET}
-	find        ${TARGET} -name CVS -type d | xargs /bin/rm -rf 
+	find        ${TARGET} -name CVS -type d  | xargs /bin/rm -rf 
+	find        ${TARGET} -name '*~' -type f | xargs /bin/rm -f
 	tar zcf ${TARGET}.tar.gz  ${TARGET}
