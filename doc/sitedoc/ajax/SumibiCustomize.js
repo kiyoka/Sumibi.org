@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2006 Kiyoka Nishiyama
-//     $Date: 2006/12/23 06:14:55 $
+//     $Date: 2006/12/24 13:27:38 $
 //
 // This file is part of Sumibi
 //
@@ -32,11 +32,6 @@
 //       サンプルでは"戻る(Ctrl+Z)"という文字列にしている
 //    4. Undoのキー入力をフック関数で横取り出来るようにした。
 //       サンプルではCtrl+ZでUndo処理にしている
-
-function Sumibi_onload_hook() {
-    document.getElementById('qbox').focus();
-    select_server('unstable');
-}
 
 function getEvent (event)
 {
@@ -101,7 +96,7 @@ function judge_key(event, check_key)
 }
 
 
-function Sumibi_key_process_common(qbox_id, event, cur_no)
+function Sumibi_key_process_common(qbox_id, event)
 {
     // Ctrl+G
     if ( judge_key( event, 'G' )) {
@@ -172,7 +167,7 @@ function Sumibi_key_process_in_select(qbox_id, event, cur_no)
     }
 
     // 共通処理
-    Sumibi_key_process_common(qbox_id, event, cur_no);
+    Sumibi_key_process_common(qbox_id, event);
     return true;
 }
 
@@ -236,13 +231,13 @@ function Sumibi_candidate_html_hook(sumibi, space_array,words_array) {
 	str += space_array[i] + words_array[i];
     }
 
-    if( google_mode() ) {
-    	ret = '<br>'
-	    + '<div style="text-align:center;">' 
-	    + '<input type="button" id="search" name="search" value="『' + str + '』でGoogle検索 (Ctrl+G)"'
-	    + ' onClick="Submit_kakutei_and_google_search();">'
-	    + '</div>';
-    }
+//    if( google_mode() ) {
+//    	ret = '<br>'
+//	    + '<div style="text-align:center;">' 
+//	    + '<input type="button" id="search" name="search" value="『' + str + '』でGoogle検索 (Ctrl+G)"'
+//	    + ' onClick="Submit_kakutei_and_google_search();">'
+//	    + '</div>';
+//    }
 
     return ret;
 }

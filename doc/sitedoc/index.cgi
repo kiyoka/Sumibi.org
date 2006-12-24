@@ -29,6 +29,7 @@
 	    (html:link :rel "shortcut icon" :href "/favicon.ico")
 	    (html:link :rel "icon" :href "/favicon.png" :type "image/png"))
 	   (html:body
+            :onLoad "document.getElementById('qbox').focus()"
 	    (cond
 	     (long-mode
 	      (html:div :style "text-align: center; "
