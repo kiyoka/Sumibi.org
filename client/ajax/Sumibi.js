@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2005 ktat atusi@pure.ne.jp
-//     $Date: 2006/12/24 08:44:29 $
+//     $Date: 2006/12/24 11:59:50 $
 //
 // This file is part of Sumibi
 //
@@ -35,8 +35,8 @@ var XMLHTTP_LOAD_COMPLETE = 4;
 var XMLHTTP_HTTP_STATUS = 200;
 var MSXMLHTTP = false;
 var SUMIBI_DEBUG = 'sumibi_debug'; // div id for debug
-var URL_PREFIX = "./nph-proxy.cgi/010110A/http/sumibi.org/cgi-bin/sumibi/";
-// var URL_PREFIX = "/cgi-bin/sumibi/";
+// var URL_PREFIX = "./nph-proxy.cgi/010110A/http/sumibi.org/cgi-bin/sumibi/";
+var URL_PREFIX = "/cgi-bin/sumibi/";
 var PROGRESS_MESSAGE = '<blink>waiting server response ... </blink><br>';
 var PROGRESS_MESSAGE_COLOR = '#000000';
 var PROGRESS_MESSAGE_ERROR = 'cannot convert';
