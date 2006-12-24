@@ -3,7 +3,7 @@
 // Sumibi Ajax is a client for Sumibi server.
 //
 //   Copyright (C) 2006 Kiyoka Nishiyama
-//     $Date: 2006/12/24 08:44:29 $
+//     $Date: 2006/12/24 13:28:52 $
 //
 // This file is part of Sumibi
 //
@@ -32,8 +32,6 @@
 //       サンプルでは"戻る(Ctrl+Z)"という文字列にしている
 //    4. Undoのキー入力をフック関数で横取り出来るようにした。
 //       サンプルではCtrl+ZでUndo処理にしている
-
-function Sumibi_onload_hook() {document.getElementById('qbox').focus();}
 
 function getEvent (event)
 {
@@ -98,7 +96,7 @@ function judge_key(event, check_key)
 }
 
 
-function Sumibi_key_process_common(qbox_id, event, cur_no)
+function Sumibi_key_process_common(qbox_id, event)
 {
     // Ctrl+G
     if ( judge_key( event, 'G' )) {
