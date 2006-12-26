@@ -33,19 +33,15 @@
 	    (cond
 	     (long-mode
 	      (html:div :style "text-align: center; "
-                        (html:img :src "xmas-17.gif" :alt "xmas-17.gif" :border 0)
 			(html:span :class "subtitle"
 				   "世界の果てから漢字変換")
-                        (html:img :src "xmas-19.gif" :alt "xmas-19.gif" :border 0)
 			(html:br)
 			(html:img :src "sumibi_org_WASHIlogo_small.png" :alt "Sumibi.org LOGO" :border 0)
 			"  [長文作成モード]  "))
 	     (else
 	      (html:div :style "text-align: center; "
-                        (html:img :src "xmas-17.gif" :alt "xmas-17.gif" :border 0)
 			(html:span :class "subtitle"
 				   "世界の果てから漢字変換")
-                        (html:img :src "xmas-19.gif" :alt "xmas-19.gif" :border 0)
 			(html:br)
                         (html:a :href "http://www.sumibi.org/"
                                 (html:img :src "sumibi_org_WASHIlogo.png" :alt "Sumibi.org LOGO" :border 0))
