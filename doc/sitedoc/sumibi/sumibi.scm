@@ -53,12 +53,12 @@
      "More and more..."
      (*ja
       (ul
-       (li (*link "SumibiWebAPIを使う(安定版)"          "sumibi_api_stable.html"))
-       (li (*link "SumibiWebAPIを使う(テスト版)"        "sumibi_api_testing.html"))
-       (li (*link "SumibiWebAPIをSumibi.pmから呼びだす" "sumibi_pm.html"))
-       (li (*link "Sumibi Serverを自分で用意する"       "sumibi_server_setup.html"))
-       (li (*link "辞書をダウンロードする"              "sumi.html"))
-       (li (*link "辞書を育てる"                        "sumiyaki.html"))
+       (li (*link "SumibiWebAPIを使う(安定版)"                 "sumibi_api_stable.html"))
+       (li (*link "SumibiWebAPIを使う(テスト版)"               "sumibi_api_testing.html"))
+       (li (*link "SumibiWebAPIをperlモジュールから呼びだす"   "sumibi_pm.html"))
+       (li (*link "Sumibi Serverを自分で用意する"              "sumibi_server_setup.html"))
+       (li (*link "辞書をダウンロードする"                     "sumi.html"))
+       (li (*link "辞書を育てる"                               "sumiyaki.html"))
        ))
      (*en
       (p
