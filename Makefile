@@ -63,6 +63,7 @@ dist:
 	/bin/cp     ./doc/CHANGELOG                        ${TARGET}
 	/bin/cp     ./doc/CREDITS                          ${TARGET}
 	/bin/cp     ./doc/README                           ${TARGET}
+	/bin/cp -rf ./dot.sumibi                           ${TARGET}
 	awk -v VERSION=${VERSION}  '{ if ( /;;VERSION;;/ ) { printf( "\"%s\"\n", VERSION ); } else { print; } }' < ./client/elisp/sumibi.el  >  ${TARGET}/client/elisp/sumibi.el
 	/bin/cp -rf ./client/perl                          ${TARGET}/client
 	/bin/cp -rf ./client/ajax                          ${TARGET}/client
