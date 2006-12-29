@@ -1,9 +1,9 @@
-#!/usr/local/bin/ruby
+#!/usr/local/bin/ruby -K utf-8
 #
 # "SumibiWebApiSample.rb" is a sample program.
 #
 #   Copyright (C) 2005 Kiyoka Nishiyama
-#     $Date: 2006/12/19 13:14:40 $
+#     $Date: 2006/12/29 03:03:59 $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -30,7 +30,7 @@ end
 query   = ARGV.join( ' ' )
 sumi    = "sumi_current"
 history = ""
-dummy   = "utf-8"
+dummy   = ""
 
 #
 # getStatus()

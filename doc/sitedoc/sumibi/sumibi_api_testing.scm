@@ -188,17 +188,45 @@ hiragana: すみび
 	 (p "./SumibiWebApiSample.rb sumibi")
 	 (p "[結果]")
 	 (program "
-version : 0.6.0
-sexp    : KCgoaiAiw7qy0CIgMCAwIDApIChoICKkuaTfpNMiIDAgMSAwKSAoayAipbml36XTIiAwIDIgMCkgKGwgInN1bWliaSIgMCAzIDApKSk=
+version : 0.7.3
+sexp    : KCgoaiAiw7qy0CIgMzE3ODg1IDAgMCAwKSAoaCAipLmk36TTIiAzMTc4ODUgMCAxIDApIChrICKluaXfpdMiIDMxNzg4NSAwIDIgMCkgKGwgInN1bWliaSIgMzE3ODg1IDAgMyAwKSkp
 time    : 1
 dump    : 
- cand:0 no:0 spaces:0 type:j word:炭火
- cand:1 no:0 spaces:0 type:h word:すみび
- cand:2 no:0 spaces:0 type:k word:スミビ
- cand:3 no:0 spaces:0 type:l word:sumibi
+ cand:0 id:317885 no:0 spaces:0 type:j word:炭火
+ cand:1 id:317885 no:0 spaces:0 type:h word:すみび
+ cand:2 id:317885 no:0 spaces:0 type:k word:スミビ
+ cand:3 id:317885 no:0 spaces:0 type:l word:sumibi
 hiragana: すみび
 "
-		 ))))))
+                  )))))
+     
+     (*subsection
+      "Pythonからsumibi.orgのサービスを呼びだす"
+      "Using sumibi.org with Python"
+      (*en
+       (p "No documents in English, sorry..." ))
+      (*ja
+       (p
+	(p "サンプルプログラムの中にはGPLではなくLGPLのものもあります。")
+	(p "ライセンスはサンプルプログラムに明記していますので、"
+	   "再配布する場合は、ファイルの中身を良く確認してください。")
+	(p "以下の手順で ruby のサンプルプログラムを動かすことができます。")
+	(ul
+	 (li "Python 2.4.3以上をインストールする")
+	 (li "必要なモジュール -SOAPpy -PyXML -fpconst")
+	 (li "SumibiWebApiSample.pyを起動する")
+	 (p "./SumibiWebApiSample.py sumibi")
+	 (p "[結果]")
+	 (program "
+version :  0.7.3
+sexp    :  KCgoaiAiw7qy0CIgMzE3ODg1IDAgMCAwKSAoaCAipLmk36TTIiAzMTc4ODUgMCAxIDApIChrICKluaXfpdMiIDMxNzg4NSAwIDIgMCkgKGwgInN1bWliaSIgMzE3ODg1IDAgMyAwKSkp
+cand:0 id:317885 no:0 spaces:0 type:j word:炭火
+cand:1 id:317885 no:0 spaces:0 type:h word:すみび
+cand:2 id:317885 no:0 spaces:0 type:k word:スミビ
+cand:3 id:317885 no:0 spaces:0 type:l word:sumibi
+hiragana:  すみび
+"
+                  ))))))
 
     (*section
      "サンプルプログラム提供のおねがい"
