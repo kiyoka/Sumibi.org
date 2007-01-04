@@ -1,4 +1,8 @@
 
+[0.7.4]
+  - sumibi.el
+    1. バグ修正:テンポラリのSSL証明書ファイルが既に削除されていたら、Emacsが終了出来なくなるバグ
+
 [0.7.3]
   - Sumibi.pm
     1. SOAPプロトコルに対応した。(Kato Atsushi)
@@ -24,7 +28,7 @@
   - sumibi.el
     1. バグ修正:Emacs version 20で動かした場合、pp-to-stringが存在しないというエラーがでる。
     2. Yoichi NAKAYAMA氏のパッチを適用した。
-       1) バグ修正:format の引数にゴミが入っいた。
+       1) バグ修正:format の引数にゴミが入っていた。
        2) バグ修正:sumibi-mode をオフにした後や、sumibi-mode でないバッファにおいても
           ガイド表示が出てしまう。
     3. ユーザー変換履歴の保存件数を制限する変数 sumibi-history-max を追加した。
