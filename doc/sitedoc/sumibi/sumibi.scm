@@ -10,17 +10,21 @@
      "Sumibiとは？"
      "What is Sumibi?"
      (*ja
-      (ul 
-       (li "Sumibiはオープンソースの日本語入力メソッドです。")
-       (li "Internet上のドキュメントを読み込んでひとりでに賢くなる新感覚の漢字変換エンジンを持っています。")
-       (li (*link "sourceforge.jp" "http://sourceforge.jp/projects/sumibi/") "からダウンロードできます。")
-       (li ,W:GPL "のもとで配布されています。(サンプル等はLGPLになっています。)")))
+      (p
+       (img (@ (src "sumibi_picture.png")))
+       (ul 
+        (li "Sumibiはオープンソースの日本語入力メソッドです。")
+        (li "Internet上のドキュメントを読み込んでひとりでに賢くなる新感覚の漢字変換エンジンを持っています。")
+        (li (*link "sourceforge.jp" "http://sourceforge.jp/projects/sumibi/") "からダウンロードできます。")
+        (li ,W:GPL "のもとで配布されています。(サンプル等はLGPLになっています。)"))))
      (*en
-      (ul 
-       (li "Sumibi is an opensource software. ( roman to kanji input method. )")
-       (li "Sumibi has unique kanji conversion engine. Sumibi's dictionary can be built from Intenet pages.")
-       (li "It hosted on " (*link "sourceforge.jp" "http://sourceforge.jp/projects/sumibi/") " site.")
-       (li "You can use and redistribute Sumibi under the terms of the " ,W:GPL))))
+      (p
+       (img (@ (src "sumibi_picture.png")))
+       (ul 
+        (li "Sumibi is an opensource software. ( roman to kanji input method. )")
+        (li "Sumibi has unique kanji conversion engine. Sumibi's dictionary can be built from Intenet pages.")
+        (li "It hosted on " (*link "sourceforge.jp" "http://sourceforge.jp/projects/sumibi/") " site.")
+        (li "You can use and redistribute Sumibi under the terms of the " ,W:GPL)))))
 
     (*section 
      "さっそく使ってみる"
