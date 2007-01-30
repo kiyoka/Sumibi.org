@@ -148,7 +148,7 @@
 		      (html:a :href "http://www.netfort.gr.jp/~kiyoka/diary/" "開発者ブログ")
 		      ")"
 		      "("
-		      (html:a :href "mailto:kiyoka@netfort.gr.jp" "メール")
+		      (html:a :href "mailto:kiyoka@sumibi.org" "メール")
 		      ")"
 		      " / Sumibi Ajax:Copyright&copy 2005,2006 Kato Atsushi"
 		      "("
