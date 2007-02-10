@@ -66,13 +66,15 @@
 
        (li "Meadowをお使いの場合は、次の環境変数を設定が必要です。")
        (p "パス名はそれぞれの環境に合わせて読みかえて下さい。")
-       (p "cygwinではなく Windowsの環境変数に設定してください。そうしないとMeadowに環境変数がわたりません。")
+       (p "cygwinではなく Windowsの環境変数に設定してください。そうしないとMeadowに環境変数が渡りません。")
        (table 
 	(thead
-	 (tr  (td "環境変数") (td "設定値")))
+	 (tr  (td "[環境変数]") (td "[設定値]")                (td "[設定値(二つ目のパターン)]")))
 	(tbody
-	 (tr   (td "SHELL")   (td "c:\\cygwin\\bin\\bash")))))))
-       
+	 (tr   (td "SHELL")     (td "c:\\cygwin\\bin\\bash")   (td ""))
+	 (tr   (td "PATH")      (td "$PATH;c:\\cygwin\\bin")   (td "c:\\cygwin\\bin;$PATH"))))
+       (p "環境変数にcygwin\\binを追加したくない場合 カスタマイズ変数 sumibi-curl を /usr/bin/curl などに変更してください。"))))
+    
     (*section 
      "キー操作"
      "Key bindings"
