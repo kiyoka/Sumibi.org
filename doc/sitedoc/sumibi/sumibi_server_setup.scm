@@ -56,7 +56,7 @@
 	 (tbody
 	  (tr (td "Apache")            (td "1.3.x or 2.0.x")   (td "¡û"))
 	  (tr (td "MySQL")             (td "4.1.x")            (td "¡û"))
-	  (tr (td "Gauche")            (td "0.8.7 or later")   (td "¡û"))
+	  (tr (td "Gauche")            (td "0.8.7 or later")   (td "¡ß"))
 	  (tr (td "Gauche-kakasi")     (td "0.1.0")            (td "¡ß"))
 	  (tr (td "Gauche-dbd-mysql" ) (td "0.2.2 or later")   (td "¡ß"))
 	  (tr (td "Perl")              (td "5.8.x or later")   (td "¡û"))
