@@ -175,6 +175,21 @@ hiragana: すみび
 		 ))))))
 
     (*section
+     "サンプルが提供されているサイトの紹介"
+     "Other samples on the other site."
+     (*en
+      (p "No documents in English, sorry..." ))
+     (*subsection
+      "SumibiWebAPIを呼びだすサンプル(PHP版)"
+      "A sample program in PHP"
+      (*en
+       (p "No documents in English, sorry..." ))
+      (*ja
+       (ul
+        (li "タカさんが、PHPからSumibiWebAPIを呼びだすサンプルを公開されています。公開ありがとうございます。")
+        (p (*link "サンプルについて解説されたブログ記事" "http://twocupsofcoffee.com/index.php?itemid=346"))))))
+
+    (*section
      "サンプルプログラム提供のおねがい"
      "Please send me your sample program."
      (*en

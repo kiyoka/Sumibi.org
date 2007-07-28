@@ -1,4 +1,4 @@
-VERSION=0.7.3
+VERSION=0.7.4
 TARGET=./sumibi-${VERSION}
 
 PREFIX = /usr/local
