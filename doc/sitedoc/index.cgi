@@ -167,7 +167,11 @@
 		      "&nbsp;"
 		      "&nbsp;"
 		      "現在の日本時間:"
-		      (sys-strftime "%m月%d日 %k:%M" (sys-localtime (current-time))))
+		      (sys-strftime "%m月%d日 %k:%M" (sys-localtime (current-time)))
+		      "&nbsp;"
+		      "&nbsp;"
+                      (html:a :href "http://worldtickr.com/" "世界の時間を確認できるサイト")
+                      )
 	    (html:br)
 	    (html:br)
 	    (html:div :style "text-align: center; "
