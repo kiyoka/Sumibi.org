@@ -145,7 +145,7 @@
 	    (html:div :class "copyright"
 		      "Sumibi Engine:Copyright&copy 2005,2006 Kiyoka Nishiyama"
 		      "("
-		      (html:a :href "http://oldtype.sumibi.org/show-page/!kiyoka:blog" "開発者ブログ")
+		      (html:a :href "http://oldtype.sumibi.org/show-page/!kiyoka.blog" "開発者ブログ")
 		      ")"
 		      "("
 		      (html:a :href "mailto:kiyoka@sumibi.org" "メール")
