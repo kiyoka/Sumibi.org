@@ -143,7 +143,7 @@ make install
 	 (p "No documents in English, sorry..." ))
 	(*ja
 	 (ul
-	  (li (*link "プレーンテキスト変換済みWikipedia日本語版 (166M) [md5=5199a7e92fdf2152951f43f94c2a77f0]" "wikipedia_ja_text.tar.gz")
+	  (li (*link "プレーンテキスト変換済みWikipedia日本語版 (166M) [md5=5199a7e92fdf2152951f43f94c2a77f0]" "sumibi_dist/wikipedia_ja_text.tar.gz")
 	      "をダウンロードする")
 	  (li "プレーンテキストに変換するのは面倒なのであらかじめ変換したデータを配布します。")
 	  (li "このデータのライセンスはWikipedia日本語版のオリジナルのライセンスを加工したものなので、" ,W:GFDL "です。"))))
@@ -157,7 +157,7 @@ make install
 	 (ul
 	  (li "WikiepdiaのXMLアーカイブをダウンロードする")
 	  (ul
-	   (li (*link "XMLフォーマットのWikipedia日本語版 2005年7月13日のスナップショット (176M) [md5=b09538c3a1bf7b3d039d091993ae64ac]" "20050713_pages_current.xml.gz")
+	   (li (*link "XMLフォーマットのWikipedia日本語版 2005年7月13日のスナップショット (176M) [md5=b09538c3a1bf7b3d039d091993ae64ac]" "sumibi_dist/20050713_pages_current.xml.gz")
 	       "をダウンロードする")
 	   (li "このデータのライセンスは" ,W:GFDL "です。")
 	   (li "Wikipedia本家のサイトでは最新のスナップショットしか置いていないため、"

@@ -34,12 +34,12 @@
      (*ja
       (ul
        (li "Sumibiの初期状態辞書 (6.1M) [md5=de099411b35c77567d0dcecd559ad0cc]"
-	   (*link "[sumi_bincho_1_starter.sql.gz]" "sumi_bincho_1_starter.sql.gz"))
+	   (*link "[sumi_bincho_1_starter.sql.gz]" "sumibi_dist/sumi_bincho_1_starter.sql.gz"))
        (p "SKKJISYO関連のみ読みこんだものです。")
        (li "small辞書")
        (ul
 	(li "正式版(商用利用可能) (48M) [md5=ab558521f736a1e6911d79149ad5cc95]"
-	    (*link "[sumi_bincho_1_small.sql.gz]" "sumi_bincho_1_small.sql.gz"))
+	    (*link "[sumi_bincho_1_small.sql.gz]" "sumibi_dist/sumi_bincho_1_small.sql.gz"))
 	(p "Wikipedia日本語版だけを約10000ファイル読みこんだ辞書です。商用利用が可能です。")
 	(p "長期間使ってみた感覚では、日常的な喋り言葉以外の用途に使うには十分な変換精度を持っていると思います。")
 	(p "喋り言葉の変換精度を上げるためにはこのsmall辞書を起点にして『はてな』などの喋り言葉が多く含まれる"
@@ -47,7 +47,7 @@
        (li "medium辞書")
        (ul
 	(li "正式版(商用利用可能) (115M) [md5=3f45b3881f4ee4c2b1b318c7521d2eb7]"
-	    (*link "[sumi_bincho_1_medium.sql.gz]" "sumi_bincho_1_medium.sql.gz"))
+	    (*link "[sumi_bincho_1_medium.sql.gz]" "sumibi_dist/sumi_bincho_1_medium.sql.gz"))
 	(p "Wikipedia日本語版だけを約50000ファイル読みこんだ辞書です。商用利用が可能です。")
 	(p "長期間使ってみた感覚では、smallよりもさらに、変換精度が上がっています。")
 	(p "但しsmallと同じように喋り言葉の変換精度は高くありません。"))
