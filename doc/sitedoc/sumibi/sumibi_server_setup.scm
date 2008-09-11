@@ -85,16 +85,16 @@
       (p "No documents in English, sorry..." ))
 
      (*subsection
-      "MySQLに辞書DBをリストアする"
+      "MySQLに" (*link "辞書DB" "sumi.html") "をリストアする"
       "Restore dictionary DB"
       (*ja
        (ol
 	(li "sumibiエンジンからアクセスするためのアカウントを作成する")
 	(p "※ 読みだし専用アカウントで構いません")
-	(li "辞書DBを作成する")
+	(li (*link "辞書DB" "sumi.html") "を作成する")
 	(p "例)")
 	(program "echo 'create database sumi_bincho_1  DEFAULT CHARACTER SET utf8;' | mysql -u アドミンユーザー")
-	(li "辞書DBをリストアする")
+	(li (*link "辞書DB" "sumi.html")  "をリストアする")
 	(p "例)")
 	(program "mysql -u アドミンユーザー  sumi_bincho_1 < 辞書DBイメージ"))))
 
