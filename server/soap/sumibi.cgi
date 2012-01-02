@@ -23,6 +23,7 @@
 #
 my( $TIMEOUT_SECOND ) = 10;
 my( $SUMIBI_COMMAND ) = '@GOSH@';
+use Encode;
 use utf8;
 use strict;
 use SOAP::Transport::HTTP;
@@ -62,7 +63,7 @@ sub _sumibiEngine {
 
 	local( *Reader, *Writer );
 	if ( $SUMIBI_COMMAND =~ /@/ ) {
-	    $SUMIBI_COMMAND = "/usr/local/bin/gosh -I./lib ./sumibi";
+	    $SUMIBI_COMMAND = "/usr/bin/gosh -I./lib ./sumibi";
 	}
 	$pid = open2( *Reader, *Writer, $SUMIBI_COMMAND );
 	my( $w );
@@ -172,7 +173,7 @@ sub doSumibiConvert {
 	push( @ar
 	      ,{
 		  type      => $member[0],
-		  word      => SOAP::Data->type('string')->value($member[1]),
+		  word      => SOAP::Data->type('string')->value(Encode::decode("utf8", $member[1])),
 		  id        => $member[2],
 		  no        => $member[3],
 		  candidate => $member[4],
