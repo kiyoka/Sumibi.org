@@ -1,4 +1,11 @@
 
+[0.7.5]
+  - sumibi.cgi
+    1. perl 5.10のSOAPの日本語エンコードの挙動に対応するためEncode.pmでエンコード変換するようにした。
+  - Makefile
+    2. tarボールのインストール時、defaultパスは /usr にした。
+       Debian 6.0の標準添付のgauche 0.9の利用を想定。
+
 [0.7.4]
   - sumibi.el
     1. バグ修正:テンポラリのSSL証明書ファイルが既に削除されていたら、Emacsが終了出来なくなるバグ
