@@ -4,7 +4,10 @@ TARGET=./sumibi-${VERSION}
 PREFIX = /usr/local
 BINDIR = $(PREFIX)/bin
 DATADIR = $(PREFIX)/share/sumibi
-SITELIBDIR = `gauche-config --sitelibdir`
+SITELIBDIR = `/usr/bin/gauche-config --sitelibdir`
+
+GOSH="/usr/bin/gosh"
+GOSH_LONG="/usr/bin/gosh -I${TARGET}/lib ./sumibi"
 
 
 .PHONY=all dist platform-check
@@ -29,18 +32,18 @@ install: sumibi sumiyaki platform-check
 
 deploy: sumibi sumiyaki platform-check
 	cp -fp sumibi                  ../
-	GOSH="`which gosh` -I${TARGET}/lib ./sumibi"&& cat server/soap/sumibi.cgi | sed -e "s!@GOSH@!$$GOSH!g" > ../sumibi.cgi
+	GOSH_LONG=$(GOSH_LONG) && cat server/soap/sumibi.cgi | sed -e "s!@GOSH@!$$GOSH_LONG!g" > ../sumibi.cgi
 	chmod +x ../sumibi.cgi
 
 
 platform-check:
-	@gauche-package list | grep Gauche-dbd-mysql
-	@gauche-package list | grep Gauche-kakasi
+	@/usr/bin/gauche-package list | grep Gauche-dbd-mysql
+#	@/usr/bin/gauche-package list | grep Gauche-kakasi
 
 
 sumibi: sumibi.in Makefile
 	rm -f sumibi
-	GOSH=`which gosh` && sed -e "s!@GOSH@!$$GOSH!g" \
+	GOSH=$(GOSH) && sed -e "s!@GOSH@!$$GOSH!g" \
 	    sumibi.in > sumibi.tmp
 	mv sumibi.tmp sumibi
 	chmod 555 sumibi
@@ -48,7 +51,7 @@ sumibi: sumibi.in Makefile
 
 sumiyaki: sumiyaki.in Makefile
 	rm -f sumiyaki
-	GOSH=`which gosh` && sed -e "s!@GOSH@!$$GOSH!g" \
+	GOSH=$(GOSH) && sed -e "s!@GOSH@!$$GOSH!g" \
 	    sumiyaki.in > sumiyaki.tmp
 	mv sumiyaki.tmp sumiyaki
 	chmod 555 sumiyaki
